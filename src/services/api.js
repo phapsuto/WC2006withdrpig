@@ -1,5 +1,6 @@
 // Football API Integration Service (Dual-Mode Data Layer)
 import { subscribeToMatches } from './simulator';
+import { getGoogleSportsData } from './gemini';
 
 // State management for API settings
 let config = {
@@ -148,6 +149,52 @@ export const subscribeToFootballData = (callback) => {
     return subscribeToMatches(callback);
   }
 
+  let simulatorUnsubscribe = null;
+  let isUsingFallback = false;
+
+  const triggerFallback = (notes) => {
+    if (!isUsingFallback) {
+      isUsingFallback = true;
+      simulatorUnsubscribe = subscribeToMatches((simData) => {
+        callback(simData.map(m => ({
+          ...m,
+          notes
+        })));
+      });
+    }
+  };
+
+  const removeFallback = () => {
+    if (simulatorUnsubscribe) {
+      simulatorUnsubscribe();
+      simulatorUnsubscribe = null;
+      isUsingFallback = false;
+    }
+  };
+
+  if (config.apiMode === 'AI_LIVE') {
+    const handler = async () => {
+      try {
+        const matches = await getGoogleSportsData('MATCHES');
+        if (matches && matches.length > 0) {
+          removeFallback();
+          callback(matches);
+        } else {
+          triggerFallback('Google Sports AI tạm thời ngoại tuyến, hiển thị mô phỏng 🐷');
+        }
+      } catch (e) {
+        console.error('Lỗi lấy dữ liệu AI Live:', e);
+        triggerFallback('Google Sports AI lỗi, hiển thị mô phỏng 🐷');
+      }
+    };
+    handler();
+    const intervalId = setInterval(handler, 20000);
+    return () => {
+      clearInterval(intervalId);
+      removeFallback();
+    };
+  }
+
   // If in LIVE mode, poll the active APIs every 10 seconds
   const handler = async () => {
     let matches = [];
@@ -159,18 +206,17 @@ export const subscribeToFootballData = (callback) => {
     
     // If API calls failed or empty, fallback to simulator to avoid blank screen
     if (matches.length === 0) {
-      subscribeToMatches((simData) => {
-        callback(simData.map(m => ({
-          ...m,
-          notes: 'Fallback: Real-time API key not responding or rate limited'
-        })));
-      });
+      triggerFallback('Fallback: Real-time API key not responding or rate limited');
     } else {
+      removeFallback();
       callback(matches);
     }
   };
 
   handler();
   const intervalId = setInterval(handler, 10000);
-  return () => clearInterval(intervalId);
+  return () => {
+    clearInterval(intervalId);
+    removeFallback();
+  };
 };

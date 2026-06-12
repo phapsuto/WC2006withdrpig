@@ -26,6 +26,10 @@ export async function fetchRssFeeds() {
               }
             }
 
+            if (image) {
+              image = image.replace(/&amp;/g, '&');
+            }
+
             // Fallback default soccer image if still empty
             if (!image) {
               image = 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop';
@@ -58,5 +62,21 @@ export async function fetchRssFeeds() {
   }
 
   // Sort by publication date descending
-  return allItems.sort((a, b) => b.pubDate - a.pubDate);
+  const sortedItems = allItems.sort((a, b) => b.pubDate - a.pubDate);
+
+  // Add soccer video clips to some articles to make them interactive
+  const SOCCER_CLIPS = [
+    '/videos/clip_1.mp4',
+    '/videos/clip_2.mp4',
+    '/videos/clip_3.mp4',
+    '/videos/clip_4.mp4'
+  ];
+
+  sortedItems.forEach((item, index) => {
+    if (index % 3 === 0) {
+      item.videoUrl = SOCCER_CLIPS[index % SOCCER_CLIPS.length];
+    }
+  });
+
+  return sortedItems;
 }

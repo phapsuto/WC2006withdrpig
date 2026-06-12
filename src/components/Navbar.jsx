@@ -1,5 +1,5 @@
 import React from 'react';
-import { Settings, Play, Radio, Trophy, Newspaper } from 'lucide-react';
+import { Settings, Play, Radio, Trophy, Newspaper, Sparkles } from 'lucide-react';
 
 export default function Navbar({ apiMode, setApiMode, onOpenSettings, activePage, setActivePage }) {
   return (
@@ -14,7 +14,7 @@ export default function Navbar({ apiMode, setApiMode, onOpenSettings, activePage
         </a>
 
         {/* Page Switcher Tabs */}
-        <nav style={{ display: 'flex', gap: '0.5rem' }}>
+        <nav className="navbar-nav">
           <button 
             onClick={() => setActivePage('DASHBOARD')}
             className={`mode-btn ${activePage === 'DASHBOARD' ? 'active' : ''}`}
@@ -51,6 +51,15 @@ export default function Navbar({ apiMode, setApiMode, onOpenSettings, activePage
           >
             <Radio size={12} />
             Trực tiếp API
+          </button>
+          <button 
+            className={`mode-btn ${apiMode === 'AI_LIVE' ? 'active' : ''}`}
+            onClick={() => setApiMode('AI_LIVE')}
+            title="Dữ liệu thực tế từ Google Sports qua Gemini AI"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+          >
+            <Sparkles size={12} />
+            AI Google Sports
           </button>
         </div>
         
