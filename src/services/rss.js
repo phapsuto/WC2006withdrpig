@@ -1,4 +1,40 @@
 // RSS Feed Aggregator for World Cup 2026
+// Only shows World Cup & football-related news — NO fake placeholder videos
+
+// Keywords to filter World Cup related news
+const WC_KEYWORDS = [
+  'world cup', 'wc 2026', 'fifa', 'world cup 2026',
+  'bảng a', 'bảng b', 'bảng c', 'bảng d', 'bảng e', 'bảng f',
+  'bảng g', 'bảng h', 'bảng i', 'bảng j', 'bảng k', 'bảng l',
+  'group a', 'group b', 'group c', 'group d', 'group e', 'group f',
+  'group g', 'group h', 'group i', 'group j', 'group k', 'group l',
+  // Country & team names (Vietnamese + English)
+  'mexico', 'nam phi', 'hàn quốc', 'south korea', 'séc', 'czechia',
+  'canada', 'bosnia', 'qatar', 'thụy sĩ', 'switzerland',
+  'brazil', 'morocco', 'scotland', 'haiti',
+  'mỹ', 'usa', 'paraguay', 'úc', 'australia', 'thổ nhĩ kỳ', 'turkey', 'türkiye',
+  'đức', 'germany', 'curaçao', 'bờ biển ngà', 'ivory coast', 'ecuador',
+  'hà lan', 'netherlands', 'nhật bản', 'japan', 'thụy điển', 'sweden', 'tunisia',
+  'bỉ', 'belgium', 'ai cập', 'egypt',
+  'tây ban nha', 'spain', 'cape verde', 'ả rập saudi', 'saudi', 'uruguay',
+  'pháp', 'france', 'senegal', 'iraq', 'na uy', 'norway',
+  'argentina', 'algeria', 'áo', 'austria', 'jordan',
+  'bồ đào nha', 'portugal', 'congo', 'anh', 'england', 'croatia',
+  'ghana', 'panama', 'uzbekistan', 'colombia',
+  // Star players
+  'messi', 'mbappé', 'mbappe', 'ronaldo', 'neymar', 'vinícius', 'vinicius',
+  'son heung', 'pulisic', 'bellingham', 'haaland', 'musiala',
+  'pedri', 'yamal', 'griezmann', 'modric', 'kane',
+  // Vietnamese football terms
+  'vòng bảng', 'vòng chung kết', 'tuyển', 'đội tuyển', 'khai mạc',
+  'bóng đá', 'world cup', 'giải vô địch', 'cúp thế giới',
+  'kết quả', 'tỷ số', 'bàn thắng', 'penalty', 'var'
+];
+
+function isWorldCupRelated(title, description) {
+  const text = `${title} ${description}`.toLowerCase();
+  return WC_KEYWORDS.some(keyword => text.includes(keyword.toLowerCase()));
+}
 
 export async function fetchRssFeeds() {
   const feeds = [
@@ -11,7 +47,6 @@ export async function fetchRssFeeds() {
 
   for (const feed of feeds) {
     try {
-      // Fetch feeds via rss2json API (free & no CORS issues)
       const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`);
       if (res.ok) {
         const data = await res.json();
@@ -38,6 +73,12 @@ export async function fetchRssFeeds() {
             // Strip HTML tags from description
             const cleanDesc = item.description?.replace(/<[^>]*>/g, '').trim() || '';
 
+            // Check for real video in enclosure
+            let videoUrl = null;
+            if (item.enclosure?.type?.startsWith('video/')) {
+              videoUrl = item.enclosure.link;
+            }
+
             allItems.push({
               source: feed.name,
               lang: feed.lang,
@@ -51,7 +92,8 @@ export async function fetchRssFeeds() {
               }),
               link: item.link,
               description: cleanDesc,
-              image: image
+              image: image,
+              videoUrl: videoUrl // Only real videos from RSS, NO fake placeholders
             });
           });
         }
@@ -61,22 +103,17 @@ export async function fetchRssFeeds() {
     }
   }
 
+  // Filter: only keep World Cup related articles from the last 7 days (1 week)
+  const oneWeekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const wcItems = allItems.filter(item => 
+    isWorldCupRelated(item.title, item.description) && 
+    item.pubDate >= oneWeekAgo
+  );
+
+  // If filter returns too few results (< 3), fallback to all items from the last 7 days
+  const recentAllItems = allItems.filter(item => item.pubDate >= oneWeekAgo);
+  const finalItems = wcItems.length >= 3 ? wcItems : (recentAllItems.length >= 3 ? recentAllItems : allItems);
+
   // Sort by publication date descending
-  const sortedItems = allItems.sort((a, b) => b.pubDate - a.pubDate);
-
-  // Add soccer video clips to some articles to make them interactive
-  const SOCCER_CLIPS = [
-    '/videos/clip_1.mp4',
-    '/videos/clip_2.mp4',
-    '/videos/clip_3.mp4',
-    '/videos/clip_4.mp4'
-  ];
-
-  sortedItems.forEach((item, index) => {
-    if (index % 3 === 0) {
-      item.videoUrl = SOCCER_CLIPS[index % SOCCER_CLIPS.length];
-    }
-  });
-
-  return sortedItems;
+  return finalItems.sort((a, b) => b.pubDate - a.pubDate);
 }

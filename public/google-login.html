@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=device-width">
+  <title>Đăng nhập bằng Google</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #000000;
+      color: #e3e3e3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background: #1c1c1e;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      width: 360px;
+      padding: 24px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+    .google-logo {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 16px;
+    }
+    h2 {
+      margin: 0 0 8px 0;
+      font-size: 20px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    p {
+      margin: 0 0 24px 0;
+      font-size: 14px;
+      color: #8e8e93;
+    }
+    .account-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      text-align: left;
+    }
+    .account-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 12px;
+      background: #3a3a3c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #ffffff;
+      font-size: 16px;
+    }
+    .info {
+      display: flex;
+      flex-direction: column;
+    }
+    .name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .email {
+      font-size: 12px;
+      color: #8e8e93;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <!-- Inline Google Logo (Vector SVG) -->
+    <svg class="google-logo" viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+      <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+      <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+      <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+    </svg>
+    <h2>Đăng nhập bằng Google</h2>
+    <p>Chọn một tài khoản để tiếp tục đến ứng dụng World Cup 2026 cùng Heo Hồng 🐷</p>
+    
+    <div class="account-item" onclick="login('Nguyễn Văn A', 'nguyena@gmail.com', 'N')">
+      <div class="avatar" style="background-color: #007aff;">N</div>
+      <div class="info">
+        <span class="name">Nguyễn Văn A</span>
+        <span class="email">nguyena@gmail.com</span>
+      </div>
+    </div>
+    
+    <div class="account-item" onclick="login('Trần Thị B', 'tranb@gmail.com', 'T')">
+      <div class="avatar" style="background-color: #34c759;">T</div>
+      <div class="info">
+        <span class="name">Trần Thị B</span>
+        <span class="email">tranb@gmail.com</span>
+      </div>
+    </div>
+
+    <div class="account-item" onclick="login('Heo Hồng Fan', 'heohongfan@gmail.com', '🐷')">
+      <div class="avatar" style="background-color: #ff2d55; font-size: 20px;">🐷</div>
+      <div class="info">
+        <span class="name">Heo Hồng Fan</span>
+        <span class="email">heohongfan@gmail.com</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function login(name, email, initials) {
+      if (window.opener) {
+        window.opener.postMessage({
+          type: 'GOOGLE_LOGIN_SUCCESS',
+          user: {
+            name: name,
+            email: email,
+            initials: initials,
+            photo: null
+          }
+        }, window.location.origin);
+        window.close();
+      } else {
+        alert('Lỗi: Không tìm thấy cửa sổ cha.');
+      }
+    }
+  </script>
+</body>
+</html>

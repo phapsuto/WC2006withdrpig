@@ -1,90 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Ticket, X, CheckCircle2, Loader2, History, Trash2 } from 'lucide-react';
 import { placeBet } from '../services/simulator';
 
-export default function BetSlip({ activeBet, onClearBet, matches = [] }) {
-  const [stake, setStake] = useState('100'); // Default stake: 100k
+export default function BetSlip({ activeBet, onClearBet, matches = [], user, onPlaceBet, onClearBetHistory }) {
+  const [stake, setStake] = useState('10'); // Default stake: 10 xu
   const [isPlacing, setIsPlacing] = useState(false);
   const [betResult, setBetResult] = useState(null); // { success: true, betId: '...' }
-  const [history, setHistory] = useState([]);
 
-  // Load history from LocalStorage
-  useEffect(() => {
-    try {
-      const savedHistory = localStorage.getItem('bet_history');
-      if (savedHistory) {
-        setHistory(JSON.parse(savedHistory));
-      }
-    } catch (e) {
-      console.error('Failed to load bet history', e);
-    }
-  }, []);
+  const history = user ? (user.betHistory || []) : [];
 
   // Reset result state when activeBet changes
   useEffect(() => {
-    setBetResult(null);
+    setTimeout(() => {
+      setBetResult(null);
+    }, 0);
   }, [activeBet]);
 
   const { match, label, value } = activeBet || {};
-
-  // Dynamically update bet results when matches update or finish
-  useEffect(() => {
-    if (history.length === 0 || matches.length === 0) return;
-
-    let updated = false;
-    const newHistory = history.map((bet) => {
-      if (bet.status !== 'RUNNING') return bet;
-
-      const liveMatch = matches.find((m) => m.id === bet.matchId);
-      if (!liveMatch) return bet;
-
-      // Check if match is finished
-      if (liveMatch.status === 'FINISHED') {
-        updated = true;
-        const homeScore = liveMatch.homeScore;
-        const awayScore = liveMatch.awayScore;
-        let won = false;
-
-        // Simple bet resolution logic
-        if (bet.betKey.includes('1x2-home')) {
-          won = homeScore > awayScore;
-        } else if (bet.betKey.includes('1x2-draw')) {
-          won = homeScore === awayScore;
-        } else if (bet.betKey.includes('1x2-away')) {
-          won = awayScore > homeScore;
-        } else if (bet.betKey.includes('ou-over')) {
-          // e.g. "ou-over-2.5"
-          const parts = bet.betKey.split('-');
-          const line = parseFloat(parts[parts.length - 1]) || 2.5;
-          won = (homeScore + awayScore) > line;
-        } else if (bet.betKey.includes('ou-under')) {
-          const parts = bet.betKey.split('-');
-          const line = parseFloat(parts[parts.length - 1]) || 2.5;
-          won = (homeScore + awayScore) < line;
-        } else if (bet.betKey.includes('handicap-home')) {
-          // Simply check if home score + handicap line is greater than away score
-          const parts = bet.betKey.split('-');
-          const line = parseFloat(parts[parts.length - 1]) || 0;
-          won = (homeScore + line) > awayScore;
-        } else if (bet.betKey.includes('handicap-away')) {
-          const parts = bet.betKey.split('-');
-          const line = parseFloat(parts[parts.length - 1]) || 0;
-          won = (awayScore + line) > homeScore;
-        }
-
-        return {
-          ...bet,
-          status: won ? 'WIN' : 'LOSE'
-        };
-      }
-      return bet;
-    });
-
-    if (updated) {
-      setHistory(newHistory);
-      localStorage.setItem('bet_history', JSON.stringify(newHistory));
-    }
-  }, [matches, history]);
 
   const handleStakeChange = (e) => {
     const val = e.target.value.replace(/[^0-9]/g, '');
@@ -92,29 +24,29 @@ export default function BetSlip({ activeBet, onClearBet, matches = [] }) {
   };
 
   const handlePlaceBet = async () => {
-    if (!stake || parseFloat(stake) <= 0) return;
+    const stakeNum = parseInt(stake, 10);
+    if (!stakeNum || stakeNum <= 0) return;
+    if (stakeNum % 10 !== 0) {
+      alert('Số xu cược phải là bội số của 10 (ví dụ: 10, 20, 50, 100...).');
+      return;
+    }
+    if (!user) {
+      alert('Vui lòng đăng nhập bằng Google để thực hiện đặt cược vui!');
+      return;
+    }
+    if (user.balance < stakeNum) {
+      alert('Số dư xu Heo Vàng không đủ để đặt cược vui!');
+      return;
+    }
     setIsPlacing(true);
     try {
-      const result = await placeBet(activeBet, parseFloat(stake));
-      setBetResult(result);
-      
-      const newHistoryItem = {
-        id: result.betId,
-        matchId: match.id,
-        matchTitle: `${match.home.name} vs ${match.away.name}`,
-        choice: label,
-        betKey: activeBet.key,
-        odds: value,
-        stake: parseFloat(stake),
-        status: 'RUNNING', // RUNNING, WIN, LOSE
-        time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
-      };
-      
-      const updatedHistory = [newHistoryItem, ...history].slice(0, 10);
-      setHistory(updatedHistory);
-      localStorage.setItem('bet_history', JSON.stringify(updatedHistory));
+      if (onPlaceBet) {
+        const result = await onPlaceBet(activeBet, stakeNum);
+        setBetResult(result);
+      }
     } catch (e) {
       console.error(e);
+      alert('Có lỗi xảy ra khi đặt cược');
     } finally {
       setIsPlacing(false);
     }
@@ -122,142 +54,172 @@ export default function BetSlip({ activeBet, onClearBet, matches = [] }) {
 
   const clearHistory = () => {
     if (window.confirm("Bạn muốn xóa toàn bộ lịch sử cược?")) {
-      setHistory([]);
-      localStorage.removeItem('bet_history');
+      if (onClearBetHistory) {
+        onClearBetHistory();
+      }
     }
   };
 
   const potentialPayout = (stake && value) ? (parseFloat(stake) * value).toFixed(2) : '0.00';
 
   return (
-    <div className="card bet-slip-card">
-      <div className="section-header">
-        <h3 className="section-title">
+    <div className="bento-glass p-5 flex flex-col gap-4">
+      {/* Header */}
+      <div className="flex justify-between items-center pb-2 border-b border-white/40">
+        <h3 className="font-bold text-sm flex items-center gap-1.5 text-primary">
           <Ticket size={16} className="text-primary" />
-          Phiếu cược
+          Phiếu cược vui
         </h3>
         {activeBet && !betResult && (
-          <button className="modal-close" onClick={onClearBet}>
-            <X size={16} />
+          <button 
+            onClick={onClearBet}
+            className="w-6 h-6 rounded-full bg-white/40 border border-white/50 flex items-center justify-center text-on-surface-variant hover:bg-white hover:text-primary active:scale-95 transition-all"
+          >
+            <X size={12} />
           </button>
         )}
       </div>
 
       {betResult ? (
-        <div className="success-msg">
-          <CheckCircle2 size={36} className="text-primary" />
-          <h4 style={{ fontWeight: 700, fontSize: '0.95rem' }}>Đặt cược thành công!</h4>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-            Mã vé cược: <code style={{ background: 'var(--bg-tertiary)', padding: '2px 4px', borderRadius: 4 }}>{betResult.betId}</code>
+        <div className="flex flex-col items-center justify-center text-center p-6 gap-3">
+          <CheckCircle2 size={36} className="text-tertiary animate-bounce" />
+          <h4 className="text-xs font-black text-on-background">Đặt cược thành công!</h4>
+          <p className="text-[10px] text-on-surface-variant/80">
+            Vé cược: <code className="bg-white/60 border border-white/80 px-1.5 py-0.5 rounded font-black text-on-surface">{betResult.betId}</code>
           </p>
           <button 
-            className="btn-primary" 
-            style={{ marginTop: '0.75rem', width: 'auto', padding: '0.4rem 1.25rem', fontSize: '0.8rem' }}
             onClick={onClearBet}
+            className="mt-2 px-5 py-2 bg-primary text-white text-[11px] font-black rounded-xl hover:brightness-105 active:scale-95 transition-all shadow"
           >
-            Đóng
+            Đóng phiếu cược
           </button>
         </div>
       ) : activeBet ? (
-        <>
-          <div className="bets-container" style={{ padding: '0.75rem' }}>
-            <div className="bet-item">
-              <div className="bet-item-header">
-                <span>{match.league.name}</span>
-              </div>
-              <div className="bet-match-title" style={{ fontSize: '0.8rem' }}>
-                {match.home.name} vs {match.away.name}
-              </div>
-              <div className="bet-choice-row">
-                <span className="bet-choice-name" style={{ fontSize: '0.8rem' }}>{label}</span>
-                <span className="bet-choice-odds" style={{ fontSize: '0.9rem' }}>{value.toFixed(2)}</span>
-              </div>
+        <div className="flex flex-col gap-4">
+          {/* Active Bet Item details */}
+          <div className="p-3.5 bg-white/45 border border-white/60 rounded-2xl space-y-2 text-xs">
+            <div className="flex justify-between items-center text-[10px] text-on-surface-variant/70 font-bold uppercase tracking-wider">
+              <span>{match.league.name}</span>
+              <span>Kèo Trực tiếp</span>
+            </div>
+            
+            <div className="font-black text-on-surface leading-tight text-sm">
+              {match.home.name} vs {match.away.name}
+            </div>
+            
+            <div className="flex justify-between items-center pt-2 border-t border-dashed border-white/40 font-bold">
+              <span className="text-primary">{label}</span>
+              <span className="text-sm font-black text-on-surface">x{value.toFixed(2)}</span>
             </div>
           </div>
 
-          <div className="betslip-footer">
-            <div className="stake-input-container">
-              <span className="stake-label">Tiền cược</span>
-              <div className="stake-input-wrapper">
+          {/* Stake input container */}
+          <div className="space-y-3">
+            <div className="flex justify-between items-center p-3 bg-white/50 border border-white/60 rounded-xl">
+              <span className="text-xs font-bold text-on-surface-variant">Xu cược</span>
+              <div className="flex items-center gap-1">
                 <input
                   type="text"
-                  className="stake-input"
                   value={stake}
                   onChange={handleStakeChange}
                   placeholder="0"
+                  className="w-16 bg-transparent border-none text-right font-black text-sm text-on-surface outline-none p-0 focus:ring-0"
                 />
-                <span className="currency-symbol">K</span>
+                <span className="text-xs font-black text-on-surface-variant">xu 🐷</span>
               </div>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', marginBottom: '0.75rem' }}>
-              <div className="summary-row">
-                <span>Tỷ lệ cược</span>
-                <span className="summary-value">{value.toFixed(2)}</span>
+            {/* Payout summary row */}
+            <div className="p-1.5 space-y-1.5 text-[11px] font-bold text-on-surface-variant">
+              <div className="flex justify-between items-center">
+                <span>Tỉ lệ cược</span>
+                <span className="text-on-surface font-extrabold">x{value.toFixed(2)}</span>
               </div>
-              <div className="summary-row">
-                <span>Thắng dự kiến</span>
-                <span className="summary-value payout">
-                  {potentialPayout} K
-                </span>
+              <div className="flex justify-between items-center text-xs">
+                <span>Nhận lại dự kiến</span>
+                <span className="text-tertiary font-black">{potentialPayout} xu Heo Vàng 🐷</span>
               </div>
             </div>
 
+            {/* Submit betting button */}
             <button 
-              className="bet-button btn-primary" 
               onClick={handlePlaceBet}
               disabled={isPlacing || !stake || parseFloat(stake) <= 0}
+              className={`w-full py-2.5 rounded-xl text-xs font-black text-white flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all ${
+                isPlacing || !stake || parseFloat(stake) <= 0 
+                  ? 'bg-on-surface-variant/20 cursor-not-allowed shadow-none' 
+                  : 'bg-primary hover:brightness-105 shadow-primary/10'
+              }`}
             >
               {isPlacing ? (
                 <>
-                  <Loader2 size={14} className="animate-spin" />
-                  Đang xử lý...
+                  <Loader2 size={12} className="animate-spin" />
+                  Đang giao dịch cược...
                 </>
               ) : (
                 'Đặt cược ngay'
               )}
             </button>
           </div>
-        </>
+        </div>
       ) : (
-        <div className="betslip-empty-state">
-          <Ticket size={36} strokeWidth={1.5} />
-          <p style={{ fontSize: '0.8rem' }}>Phiếu cược trống</p>
-          <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>
-            Chọn bất kỳ tỷ lệ cược nào ở bảng chi tiết để đặt cược.
+        <div className="flex flex-col items-center justify-center text-center py-12 gap-2 text-on-surface-variant/80">
+          <Ticket size={36} strokeWidth={1.5} className="opacity-45" />
+          <div className="text-xs font-black text-on-surface">Phiếu cược trống</div>
+          <span className="text-[10px] text-on-surface-variant leading-relaxed max-w-[190px]">
+            Chọn bất kỳ nút kèo cược nào trong bảng chi tiết trận đấu để bắt đầu.
           </span>
         </div>
       )}
 
-      {/* Bet History section */}
+      {/* Bet History lists footer */}
       {history.length > 0 && (
-        <div style={{ borderTop: '1px solid var(--border)' }}>
-          <div className="bet-history-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+        <div className="border-t border-white/40 pt-4 flex flex-col gap-3">
+          <div className="flex justify-between items-center text-xs font-bold text-on-surface-variant">
+            <span className="flex items-center gap-1">
               <History size={12} />
               Lịch sử cược ({history.length})
             </span>
+            
             <button 
               onClick={clearHistory} 
-              style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}
-              title="Xóa lịch sử"
+              className="text-on-surface-variant hover:text-secondary active:scale-95 transition-all"
+              title="Xóa lịch sử cược"
             >
               <Trash2 size={12} />
             </button>
           </div>
-          <div className="bet-history-list">
-            {history.map((bet) => (
-              <div key={bet.id} className="history-item">
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.1rem' }}>
-                  <span className="history-bet-title">{bet.matchTitle}</span>
-                  <span className="history-bet-choice">{bet.choice} (x{bet.odds.toFixed(2)})</span>
-                  <span style={{ fontSize: '0.65rem', color: 'var(--text-muted)' }}>Tiền: {bet.stake}K • {bet.time}</span>
+
+          <div className="flex flex-col gap-2 max-h-[160px] overflow-y-auto no-scrollbar">
+            {history.slice().reverse().map((bet) => {
+              const isWon = bet.status === 'WON' || bet.status === 'WIN';
+              const isPending = bet.status === 'PENDING' || bet.status === 'RUNNING';
+              
+              const statusClass = isPending 
+                ? 'bg-primary/10 text-primary border-primary/10' 
+                : isWon 
+                  ? 'bg-tertiary/10 text-tertiary border-tertiary/10' 
+                  : 'bg-secondary/10 text-secondary border-secondary/10';
+
+              const statusLabel = isPending ? 'Đang chạy' : isWon ? 'Thắng' : 'Thua';
+              const displayStake = bet.stake;
+
+              return (
+                <div 
+                  key={bet.id} 
+                  className="flex items-center justify-between p-2.5 bg-white/40 border border-white/50 rounded-xl text-[10px] font-bold"
+                >
+                  <div className="flex flex-col gap-0.5 leading-tight truncate mr-2">
+                    <span className="text-on-surface truncate">{bet.matchTeams || bet.matchTitle}</span>
+                    <span className="text-on-surface-variant/80 truncate">Bắt: {bet.optionLabel || bet.choice} (x{bet.odds.toFixed(2)})</span>
+                    <span className="text-[9px] text-on-surface-variant/65">Vốn: {displayStake} xu 🐷 • lúc {bet.time}</span>
+                  </div>
+                  <span className={`px-2 py-0.5 rounded border font-black text-[9px] whitespace-nowrap flex-shrink-0 ${statusClass}`}>
+                    {statusLabel}
+                  </span>
                 </div>
-                <span className={`history-status ${bet.status.toLowerCase()}`}>
-                  {bet.status === 'RUNNING' ? 'Đang chạy' : bet.status === 'WIN' ? 'Thắng' : 'Thua'}
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
