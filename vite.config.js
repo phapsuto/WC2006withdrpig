@@ -195,4 +195,20 @@ export default defineConfig({
       }
     }
   ],
+  server: {
+    proxy: {
+      '/api-proxy/worldcup26': {
+        target: 'https://worldcup26.ir',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api-proxy\/worldcup26/, ''),
+        secure: false
+      },
+      '/api-proxy/sportmonks': {
+        target: 'https://api.sportmonks.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api-proxy\/sportmonks/, ''),
+        secure: false
+      }
+    }
+  }
 })

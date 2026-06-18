@@ -10,9 +10,11 @@ import Profile from './components/Profile';
 import OracleChat from './components/OracleChat';
 import { subscribeToFootballData, getApiConfig } from './services/api';
 import { Trophy, ArrowRight, ArrowLeft } from 'lucide-react';
+import { useLanguage } from './utils/LanguageContext';
 import './App.css';
 
 function App() {
+  const { language, changeLanguage, t } = useLanguage();
   const [apiMode, setApiMode] = useState(getApiConfig().apiMode || 'DEMO');
   const [matches, setMatches] = useState([]);
   const [activeMatchId, setActiveMatchId] = useState(null);
@@ -215,7 +217,8 @@ function App() {
       balance: 10000, // 10,000 xu Heo Vàng cược vui
       bookmarks: [],
       favoriteTeams: [],
-      betHistory: []
+      betHistory: [],
+      language
     };
     setUser(newUser);
     localStorage.setItem('wc2026_user_profile', JSON.stringify(newUser));
@@ -696,26 +699,26 @@ function App() {
       />
 
       {activePage === 'ADMIN_PORTAL' ? (
-        <div className="pt-28 px-8 w-full max-w-7xl mx-auto">
+        <div className="pt-28 px-4 md:px-8 w-full max-w-7xl mx-auto">
           <AdminDashboard setActivePage={setActivePage} />
         </div>
       ) : (
-        <main className="pt-28 pb-16 px-8 w-full max-w-7xl mx-auto flex flex-col gap-6 relative z-10">
+        <main className="pt-28 pb-16 px-4 md:px-8 w-full max-w-7xl mx-auto flex flex-col gap-6 relative z-10">
           
           {/* Grid Layout containing Hero Mascot & AI Oracle Banner (only on Dashboard homepage when no match is selected) */}
           {activePage === 'DASHBOARD' && !activeMatchId && (
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
               {/* Hero Mascot Tile */}
-              <div className="bento-tile md:col-span-8 flex flex-col md:flex-row items-center gap-8 min-h-[320px] p-8">
+              <div className="bento-tile md:col-span-8 flex flex-col lg:flex-row items-center gap-4 lg:gap-8 min-h-[320px] p-6 lg:p-8">
                 <div className="flex-1 space-y-4">
                   <span className="inline-block px-3 py-1 bg-secondary-container/20 text-secondary border border-secondary/20 rounded-full font-bold text-xs uppercase tracking-wider">
-                    Sắp đến giờ bóng lăn
+                    {t('wc2026Season')}
                   </span>
                   <h1 className="text-3xl md:text-5xl font-black text-on-background leading-tight">
-                    Trải nghiệm Sự kỳ diệu cùng <span className="text-primary">Heo Hồng</span>
+                    {t('heroHeading')} <span className="text-primary">Heo Hồng 🐷</span>
                   </h1>
                   <p className="text-base text-on-surface-variant max-w-md">
-                    Người bạn đồng hành AI dễ thương của bạn cho World Cup 2026. Nhận dự đoán, số liệu thống kê trực tiếp và tham gia dự đoán nhận quà áo Labubu Hồng!
+                    {t('heroDesc')}
                   </p>
                   <button 
                     onClick={() => {
@@ -726,10 +729,10 @@ function App() {
                     className="mt-4 px-6 py-3 bg-primary text-white rounded-2xl font-bold hover:brightness-110 transition-all flex items-center gap-2 w-fit shadow-md"
                   >
                     <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>play_circle</span>
-                    Soi kèo ngay
+                    {t('predictNowBtn')}
                   </button>
                 </div>
-                <div className="w-full md:w-5/12 h-64 md:h-full relative rounded-xl overflow-hidden bg-white/40 border border-white/50 shadow-inner flex items-center justify-center">
+                <div className="w-full lg:w-5/12 h-64 lg:h-full relative rounded-xl overflow-hidden bg-white/40 border border-white/50 shadow-inner flex items-center justify-center">
                   <img 
                     alt="Cute 3D pig mascot playing soccer" 
                     className="w-[85%] h-[85%] object-contain drop-shadow-xl" 
@@ -740,14 +743,14 @@ function App() {
               </div>
 
               {/* Oracle AI Prediction */}
-              <div className="bento-tile md:col-span-4 bg-gradient-to-br from-tertiary-container/10 to-tertiary/20 text-on-surface flex flex-col justify-between p-8">
+              <div className="bento-tile md:col-span-4 bg-gradient-to-br from-tertiary-container/10 to-tertiary/20 text-on-surface flex flex-col justify-between p-6 lg:p-8">
                 <div className="flex justify-between items-start">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <span className="material-symbols-outlined text-tertiary text-[24px]">auto_awesome</span>
-                      <h2 className="text-lg font-bold">Tiên tri Heo Hồng</h2>
+                      <h2 className="text-lg font-bold">{t('navOracle')}</h2>
                     </div>
-                    <p className="text-xs text-on-surface-variant/80">Dự đoán trận đấu bằng AI</p>
+                    <p className="text-xs text-on-surface-variant/80">{language === 'vi' ? 'Dự đoán trận đấu bằng AI' : 'AI Match Predictions'}</p>
                   </div>
                   <div className="w-10 h-10 rounded-full bg-white/50 backdrop-blur-md flex items-center justify-center shadow-sm">
                     <span className="material-symbols-outlined text-tertiary" style={{ fontVariationSettings: "'FILL' 1" }}>psychology</span>
@@ -757,16 +760,19 @@ function App() {
                 <div className="mt-6 p-4 bg-white/45 rounded-xl border border-white/60 backdrop-blur-md space-y-3">
                   <div className="flex justify-between items-center text-xs font-bold">
                     <span>USA vs ENG</span>
-                    <span className="text-tertiary">Độ tin cậy 82%</span>
+                    <span className="text-tertiary">{language === 'vi' ? 'Độ tin cậy 82%' : '82% Confidence'}</span>
                   </div>
                   <div className="h-2 bg-white/50 rounded-full overflow-hidden">
                     <div className="h-full bg-gradient-to-r from-tertiary to-primary w-[82%] rounded-full shadow-[0_0_10px_rgba(0,107,91,0.3)]"></div>
                   </div>
                   <p className="text-xs text-on-surface-variant leading-relaxed">
-                    Heo Hồng 🐷 dự kiến USA có lợi thế sân nhà cực lớn. Trận đấu hứa hẹn đôi công rực lửa, khả năng xuất hiện nhiều góc và bàn thắng!
+                    {language === 'vi' 
+                      ? 'Heo Hồng 🐷 dự kiến USA có lợi thế sân nhà cực lớn. Trận đấu hứa hẹn đôi công rực lửa, khả năng xuất hiện nhiều góc và bàn thắng!'
+                      : 'Piggy 🐷 predicts USA will have a huge home advantage. The match promises high offensive tempo, likely with many corners and goals!'}
                   </p>
                 </div>
               </div>
+
             </div>
           )}
 
@@ -842,16 +848,16 @@ function App() {
               <div className="col-span-12 md:col-span-4 flex flex-col gap-6">
                 
                 {/* Mascot Promo Card */}
-                <div className="bento-tile bg-gradient-to-br from-white/70 to-secondary-fixed/10 p-6 flex items-center gap-4">
+                <div className="bento-tile bg-gradient-to-br from-white/70 to-secondary-fixed/10 p-4 sm:p-6 flex items-center gap-4">
                   <img 
                     src="/drpig_mascot.png" 
                     alt="Heo Hồng Mascot" 
                     className="w-16 h-16 object-cover rounded-full border-2 border-accent-gold shadow-[0_0_8px_rgba(200,168,75,0.3)] flex-shrink-0" 
                   />
                   <div className="flex-1 space-y-1">
-                    <h4 className="font-bold text-sm text-secondary">Đại chiến WC2026!</h4>
+                    <h4 className="font-bold text-sm text-secondary">{t('clashWc2026')}</h4>
                     <p className="text-xs text-on-surface-variant leading-relaxed">
-                      Cùng chú heo <strong>Heo Hồng 🐷</strong> nhận định chuẩn xác, bắt trọn từng khoảnh khắc kèo trực tiếp hấp dẫn nhất!
+                      {t('clashWc2026Desc')}
                     </p>
                   </div>
                 </div>
@@ -870,19 +876,19 @@ function App() {
                 {!activeMatchId && <Standings matches={matches} />}
 
                 {/* Mini Promo Card */}
-                <div className="bento-tile p-6 space-y-3">
+                <div className="bento-tile p-4 sm:p-6 space-y-3">
                   <h4 className="font-bold text-xs flex items-center gap-1.5 text-primary uppercase tracking-wide">
-                    <span className="material-symbols-outlined text-[16px] text-primary">trophy</span> Nhận định & Quà tặng
+                    <span className="material-symbols-outlined text-[16px] text-primary">trophy</span> {t('giftAndPredictions')}
                   </h4>
                   <p className="text-xs text-on-surface-variant leading-relaxed">
-                    Tham gia dự đoán tỷ số cùng Heo Hồng nhận ngay phần quà áo đấu Labubu hồng cầu thủ giới hạn cực độc!
+                    {t('giftPromoDesc')}
                   </p>
                   <a 
                     href="#gift" 
                     className="inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl bg-primary-fixed/20 hover:bg-primary-fixed/40 transition-colors text-primary font-bold text-xs"
-                    onClick={(e) => { e.preventDefault(); alert("Chương trình quà tặng Heo Hồng Labubu đang chuẩn bị ra mắt!"); }}
+                    onClick={(e) => { e.preventDefault(); alert(t('giftPromoAlert')); }}
                   >
-                    <span>Xem chi tiết</span> 
+                    <span>{t('giftPromoDetail')}</span> 
                     <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
                   </a>
                 </div>
@@ -904,9 +910,36 @@ function App() {
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
               </svg>
             </div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>Đăng nhập bằng Google</h3>
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>Chọn tài khoản để tiếp tục với AI Football World Cup 2026</p>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>{t('loginGoogleTitle')}</h3>
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>{t('loginGoogleDesc')}</p>
             
+            {/* Choose Display Language in Login Modal */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem', borderBottom: '1px solid rgba(0,0,0,0.06)', paddingBottom: '1rem' }}>
+              <span style={{ fontSize: '0.72rem', fontWeight: 700, color: 'var(--text-secondary)' }}>{t('chooseLanguageLabel')}</span>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: '0.75rem' }}>
+                <button 
+                  onClick={() => changeLanguage('vi')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    language === 'vi' 
+                      ? 'bg-primary text-white shadow-sm' 
+                      : 'bg-white/50 border border-white/60 hover:bg-white/80'
+                  }`}
+                >
+                  <span>🇻🇳</span> {t('vietnameseOption')}
+                </button>
+                <button 
+                  onClick={() => changeLanguage('en')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                    language === 'en' 
+                      ? 'bg-primary text-white shadow-sm' 
+                      : 'bg-white/50 border border-white/60 hover:bg-white/80'
+                  }`}
+                >
+                  <span>🇬🇧</span> {t('englishOption')}
+                </button>
+              </div>
+            </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1rem' }}>
               <button 
                 className="flex items-center gap-3 p-3 w-full bg-white/40 hover:bg-white/80 transition-colors border border-white/60 rounded-xl"
@@ -934,21 +967,22 @@ function App() {
                 className="flex items-center justify-center p-3 w-full bg-transparent hover:bg-white/40 transition-colors border border-dashed border-white/60 rounded-xl text-on-surface-variant font-bold text-xs"
                 onClick={handleCustomGoogleAccount}
               >
-                Sử dụng tài khoản khác...
+                {t('useAnotherAccount')}
               </button>
             </div>
           </div>
         </div>
       )}
 
-      <footer className="w-full max-w-7xl mx-auto px-8 mt-12 py-6 border-t border-white/30 text-center text-xs text-on-surface-variant/75 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
+      <footer className="w-full max-w-7xl mx-auto px-4 md:px-8 mt-12 py-6 border-t border-white/30 text-center text-xs text-on-surface-variant/75 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10">
         <p className="max-w-xl text-left md:text-center leading-relaxed">
-          ⚠️ Cảnh báo: Cá độ bóng đá là hành vi vi phạm pháp luật tại Việt Nam. Mọi thông tin về tỷ lệ cược và đặt cược trên trang web này chỉ mang tính chất mô phỏng và giải trí vui vẻ, không có giá trị thực tế hoặc quy đổi.
+          {t('bettingLegalWarning')}
         </p>
         <p className="font-bold">
-          © 2026 FIFA World Cup - Thiết kế Glassmorphism
+          {t('copyrightFooter')}
         </p>
       </footer>
+
     </div>
   );
 }

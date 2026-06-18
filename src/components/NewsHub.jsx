@@ -13,8 +13,27 @@ import {
   MessageCircle, 
   Share2, 
   Flame, 
-  CheckCircle2 
+  CheckCircle2,
+  Play
 } from 'lucide-react';
+
+const SOCCER_CLIPS = [
+  '/videos/clip_1.mp4',
+  '/videos/clip_2.mp4',
+  '/videos/clip_3.mp4',
+  '/videos/clip_4.mp4'
+];
+
+const injectClips = (newsList) => {
+  if (!newsList) return [];
+  return newsList.map((item, idx) => {
+    const hasVideo = idx % 3 === 0;
+    return {
+      ...item,
+      videoUrl: hasVideo ? SOCCER_CLIPS[idx % SOCCER_CLIPS.length] : null
+    };
+  });
+};
 
 export default function NewsHub({ matches = [] }) {
   const [articles, setArticles] = useState([]);
@@ -31,17 +50,17 @@ export default function NewsHub({ matches = [] }) {
       const response = await fetch('/data/news.json');
       if (response.ok) {
         const news = await response.json();
-        setArticles(news);
+        setArticles(injectClips(news));
       } else {
         const news = await fetchRssFeeds();
-        setArticles(news);
+        setArticles(injectClips(news));
       }
       setFirstLoadDone(true);
     } catch (e) {
       console.error('Không thể tải tin tức từ JSON, chuyển hướng RSS:', e);
       try {
         const news = await fetchRssFeeds();
-        setArticles(news);
+        setArticles(injectClips(news));
       } catch (err) {
         console.error('Không thể tải tin tức dự phòng:', err);
       }
@@ -121,17 +140,31 @@ export default function NewsHub({ matches = [] }) {
           )}
         </div>
 
-        {/* Featured Image */}
-        {selectedArticle.image && (
-          <div className="w-full h-[220px] md:h-[420px] rounded-2xl overflow-hidden bg-black border border-white/30 shadow-md relative group">
-            <img 
-              src={selectedArticle.image} 
-              alt={selectedArticle.titleVi || selectedArticle.title} 
-              className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-700" 
-              referrerPolicy="no-referrer" 
+        {/* Featured Video or Image */}
+        {selectedArticle.videoUrl ? (
+          <div className="w-full h-[220px] md:h-[420px] rounded-2xl overflow-hidden bg-black border border-white/30 shadow-md relative">
+            <video 
+              src={selectedArticle.videoUrl} 
+              controls 
+              autoPlay 
+              muted 
+              loop 
+              playsInline 
+              className="w-full h-full object-cover" 
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
           </div>
+        ) : (
+          selectedArticle.image && (
+            <div className="w-full h-[220px] md:h-[420px] rounded-2xl overflow-hidden bg-black border border-white/30 shadow-md relative group">
+              <img 
+                src={selectedArticle.image} 
+                alt={selectedArticle.titleVi || selectedArticle.title} 
+                className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-700" 
+                referrerPolicy="no-referrer" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+            </div>
+          )
         )}
 
         {/* Segmented Detail Tabs Bar (Glassmorphic) */}
@@ -363,13 +396,20 @@ export default function NewsHub({ matches = [] }) {
                     </div>
 
                     {article.image && (
-                      <div className="w-full md:w-[150px] h-[100px] rounded-xl overflow-hidden bg-black border border-white/30 flex-shrink-0 shadow-sm">
+                      <div className="w-full md:w-[150px] h-[100px] rounded-xl overflow-hidden bg-black border border-white/30 flex-shrink-0 shadow-sm relative">
                         <img 
                           src={article.image} 
                           alt="Live Match" 
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                           referrerPolicy="no-referrer" 
                         />
+                        {article.videoUrl && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/35 transition-colors">
+                            <div className="w-8 h-8 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-md">
+                              <Play size={12} fill="currentColor" className="ml-0.5" />
+                            </div>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
@@ -389,8 +429,15 @@ export default function NewsHub({ matches = [] }) {
                         className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" 
                         referrerPolicy="no-referrer" 
                       />
-                      <span className="absolute top-3 left-3 px-2 py-1 rounded bg-secondary text-white text-[9px] font-black uppercase tracking-wider shadow-sm">
-                        TIN ĐẶC BIỆT
+                      {article.videoUrl && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/35 transition-colors">
+                          <div className="w-12 h-12 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
+                            <Play size={20} fill="currentColor" className="ml-1" />
+                          </div>
+                        </div>
+                      )}
+                      <span className="absolute top-3 left-3 px-2 py-1 rounded bg-secondary text-white text-[9px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1">
+                        {article.videoUrl ? 'VIDEO 🎥' : 'TIN ĐẶC BIỆT'}
                       </span>
                     </div>
                     
@@ -491,6 +538,18 @@ export default function NewsHub({ matches = [] }) {
                         className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" 
                         referrerPolicy="no-referrer" 
                       />
+                      {article.videoUrl && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/35 transition-colors">
+                          <div className="w-9 h-9 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-md transform group-hover:scale-110 transition-transform">
+                            <Play size={14} fill="currentColor" className="ml-0.5" />
+                          </div>
+                        </div>
+                      )}
+                      {article.videoUrl && (
+                        <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded bg-primary text-white text-[8px] font-black uppercase tracking-wider shadow-sm">
+                          VIDEO 🎥
+                        </span>
+                      )}
                     </div>
                     <div className="p-4 flex-1 flex flex-col justify-between gap-4">
                       <div className="space-y-1.5">
@@ -536,13 +595,20 @@ export default function NewsHub({ matches = [] }) {
                         </div>
                         
                         {article.image && (
-                          <div className="w-16 h-16 rounded-xl overflow-hidden bg-black border border-white/30 flex-shrink-0 shadow-sm">
+                          <div className="w-16 h-16 rounded-xl overflow-hidden bg-black border border-white/30 flex-shrink-0 shadow-sm relative">
                             <img 
                               src={article.image} 
                               alt="Thumbnail" 
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                               referrerPolicy="no-referrer" 
                             />
+                            {article.videoUrl && (
+                              <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
+                                <div className="w-6 h-6 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-sm">
+                                  <Play size={10} fill="currentColor" className="ml-0.5" />
+                                </div>
+                              </div>
+                            )}
                           </div>
                         )}
                       </div>

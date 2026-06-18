@@ -1,5 +1,10 @@
 {
   "appId": "com.drto.wc2026",
   "appName": "World Cup 2026",
-  "webDir": "dist"
+  "webDir": "dist",
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": true
+    }
+  }
 }

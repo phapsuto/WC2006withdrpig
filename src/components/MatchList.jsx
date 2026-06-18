@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { predictMatch } from '../utils/aiPredictor';
 import { convertToUserTimezone } from '../services/worldcup26api';
 import { useLiveMatchClock } from '../services/useLiveMatchClock';
+import { useLanguage } from '../utils/LanguageContext';
 
 function LiveClockDisplay({ minute, second, isLive }) {
   const clock = useLiveMatchClock(minute, second, isLive);
@@ -17,6 +18,31 @@ function LiveClockDisplay({ minute, second, isLive }) {
 export default function MatchList({ matches = [], onSelectMatch, activeMatchId, user, onToggleBookmark }) {
   const [activeTab, setActiveTab] = useState('ALL'); // ALL, LIVE, UPCOMING, FINISHED
   const [selectedGroupFilter, setSelectedGroupFilter] = useState('ALL'); // ALL, A, B, C, ... L
+  const { language, t } = useLanguage();
+  const [apiStatus, setApiStatus] = useState({ online: true, message: '' });
+
+  useEffect(() => {
+    // Check initial config mode
+    const currentConfig = window.localStorage.getItem('football_app_config');
+    if (currentConfig) {
+      try {
+        const parsed = JSON.parse(currentConfig);
+        if (parsed.apiMode === 'DEMO') {
+          setApiStatus({ online: false, message: 'mô phỏng' });
+        }
+      } catch (e) {}
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleStatusChange = (e) => {
+      if (e.detail) {
+        setApiStatus(e.detail);
+      }
+    };
+    window.addEventListener('football-api-status', handleStatusChange);
+    return () => window.removeEventListener('football-api-status', handleStatusChange);
+  }, []);
 
   // 1. Process matches to add localDateObj (User local time)
   const processedMatches = matches.map(match => {
@@ -50,7 +76,7 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
   // 4. Group matches by local date string
   const groupedMatches = {};
   filteredMatches.forEach(match => {
-    const dateStr = match.localDateObj.toLocaleDateString('vi-VN', {
+    const dateStr = match.localDateObj.toLocaleDateString(language === 'vi' ? 'vi-VN' : 'en-US', {
       weekday: 'long',
       day: 'numeric',
       month: 'numeric',
@@ -74,8 +100,8 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
     else if (match.homeScore < match.awayScore) actualOutcome = 'AWAY_WIN';
 
     const prediction = predictMatch(
-      match.home?.name || 'Unknown',
-      match.away?.name || 'Unknown',
+      match.home?.nameEn || match.home?.name || 'Unknown',
+      match.away?.nameEn || match.away?.name || 'Unknown',
       0,
       0,
       'UPCOMING',
@@ -105,25 +131,49 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
       <div className="flex justify-between items-center pb-2 border-b border-white/40">
         <h3 className="font-bold text-base flex items-center gap-1.5 text-primary">
           <span className="material-symbols-outlined text-[20px] text-primary">trophy</span>
-          Lịch thi đấu & Tỷ số
+          {t('scheduleAndScores')}
         </h3>
         {liveCount > 0 && (
           <span className="flex items-center gap-1 px-2.5 py-0.5 rounded-full border border-danger/20 bg-danger/10 text-danger text-[10px] font-black uppercase tracking-wider animate-pulse">
             <span className="w-1.5 h-1.5 rounded-full bg-danger"></span>
-            {liveCount} Trực tiếp
+            {t('liveCountText', { count: liveCount })}
           </span>
         )}
       </div>
+
+      {/* API Connection Warning Banner */}
+      {!apiStatus.online && (
+        <div 
+          className="flex items-start gap-2.5 p-3.5 rounded-2xl text-[11px] leading-snug animate-fade-in shadow-inner"
+          style={{ 
+            backgroundColor: apiStatus.message?.includes('mô phỏng') ? 'rgba(0, 122, 255, 0.08)' : 'rgba(255, 149, 0, 0.1)', 
+            border: apiStatus.message?.includes('mô phỏng') ? '1px solid rgba(0, 122, 255, 0.2)' : '1px solid rgba(255, 149, 0, 0.25)', 
+            color: apiStatus.message?.includes('mô phỏng') ? '#005ecb' : '#a35f00' 
+          }}
+        >
+          <span className="material-symbols-outlined text-[18px] shrink-0" style={{ color: apiStatus.message?.includes('mô phỏng') ? '#007aff' : '#ff9500' }}>
+            {apiStatus.message?.includes('mô phỏng') ? 'science' : 'signal_wifi_off'}
+          </span>
+          <div className="flex-1">
+            <span className="font-black block mb-0.5" style={{ color: apiStatus.message?.includes('mô phỏng') ? '#0051b0' : '#b86b00' }}>
+              {apiStatus.message?.includes('mô phỏng') ? 'Chế độ mô phỏng' : 'Mất kết nối API bóng đá'}
+            </span>
+            {apiStatus.message?.includes('mô phỏng') 
+              ? 'Ứng dụng đang hiển thị các trận đấu giả lập để kiểm thử tính năng.' 
+              : `Đang hiển thị dữ liệu lưu đệm thực tế gần nhất và tự động kết nối lại... (${apiStatus.message || 'Lỗi kết nối'})`}
+          </div>
+        </div>
+      )}
 
       {/* AI Prediction Performance Tracker */}
       {finishedMatches.length > 0 && (
         <div className="p-4 bg-gradient-to-br from-primary-container/10 to-tertiary-container/10 border border-white/50 rounded-2xl shadow-sm space-y-2">
           <div className="flex justify-between items-center">
             <span className="text-[10px] font-bold text-secondary tracking-wide flex items-center gap-1">
-              🤖 HIỆU SUẤT DỰ ĐOÁN AI (TRACK RECORD)
+              {t('aiTrackRecord')}
             </span>
             <span className="text-[9px] text-on-surface-variant/70 font-semibold">
-              Mô hình ELO & Poisson
+              {t('eloPoissonModels')}
             </span>
           </div>
           
@@ -133,10 +183,10 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-xs font-bold text-on-surface leading-none mb-1">
-                Đúng {correctCount} trên {finishedMatches.length} trận đã kết thúc
+                {t('aiAccuracyText', { correct: correctCount, total: finishedMatches.length })}
               </div>
               <div className="text-[10px] text-on-surface-variant/85 leading-tight">
-                Tỷ lệ chính xác dựa trên dự đoán pre-match trước giờ bóng lăn.
+                {t('aiAccuracyDesc')}
               </div>
             </div>
           </div>
@@ -154,15 +204,15 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
       <div className="flex flex-col sm:flex-row gap-2">
         {/* Group Filter */}
         <div className="flex-1 flex items-center gap-2 px-3 py-1.5 bg-white/40 border border-white/50 rounded-xl">
-          <span className="text-[10px] font-bold text-on-surface-variant/70 whitespace-nowrap uppercase">Bảng đấu:</span>
+          <span className="text-[10px] font-bold text-on-surface-variant/70 whitespace-nowrap uppercase">{t('groupFilterLabel')}</span>
           <select 
             value={selectedGroupFilter} 
             onChange={(e) => setSelectedGroupFilter(e.target.value)}
             className="flex-1 bg-transparent border-none text-xs font-bold text-on-surface outline-none cursor-pointer focus:ring-0 p-0"
           >
-            <option value="ALL" className="bg-[#f2f4f6] text-on-background">Tất cả các bảng (A - L)</option>
+            <option value="ALL" className="bg-[#f2f4f6] text-on-background">{t('allGroupsOption')}</option>
             {Array.from({ length: 12 }, (_, i) => String.fromCharCode(65 + i)).map(g => (
-              <option key={g} value={g} className="bg-[#f2f4f6] text-on-background">Bảng {g}</option>
+              <option key={g} value={g} className="bg-[#f2f4f6] text-on-background">{t('groupLabel', { group: g })}</option>
             ))}
           </select>
         </div>
@@ -178,7 +228,7 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
           }`}
           onClick={() => setActiveTab('ALL')}
         >
-          Tất cả
+          {t('tabAll')}
         </button>
         <button 
           className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1 ${
@@ -188,7 +238,7 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
           }`}
           onClick={() => setActiveTab('LIVE')}
         >
-          <span>Live</span>
+          <span>{t('tabLive')}</span>
           {liveCount > 0 && (
             <span className="w-1.5 h-1.5 rounded-full bg-danger animate-ping"></span>
           )}
@@ -201,7 +251,7 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
           }`}
           onClick={() => setActiveTab('UPCOMING')}
         >
-          Sắp đá
+          {t('tabUpcoming')}
         </button>
         <button 
           className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-center ${
@@ -211,7 +261,7 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
           }`}
           onClick={() => setActiveTab('FINISHED')}
         >
-          Đã xong
+          {t('tabFinished')}
         </button>
       </div>
 
@@ -219,8 +269,8 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
       <div className="flex flex-col divide-y divide-white/25 max-h-[600px] overflow-y-auto pr-1">
         {Object.keys(groupedMatches).length === 0 ? (
           <div className="py-12 text-center text-xs text-on-surface-variant/80 flex flex-col items-center justify-center gap-2">
-            <span className="material-symbols-outlined text-[36px] text-outline">shield_alert</span>
-            <p className="font-bold">Không có trận đấu nào trong mục này</p>
+            <span className="material-symbols-outlined text-[36px] text-outline">info</span>
+            <p className="font-bold">{t('noMatchesInCategory')}</p>
           </div>
         ) : (
           Object.keys(groupedMatches).map((dateHeader) => (
@@ -239,8 +289,8 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
                   const isBookmarked = user?.bookmarks?.includes(match.id);
                   
                   const prediction = predictMatch(
-                    match.home?.name || 'Unknown',
-                    match.away?.name || 'Unknown',
+                    match.home?.nameEn || match.home?.name || 'Unknown',
+                    match.away?.nameEn || match.away?.name || 'Unknown',
                     match.homeScore,
                     match.awayScore,
                     match.status,
@@ -253,6 +303,9 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
                     minute: '2-digit',
                     hour12: false
                   });
+
+                  const homeName = language === 'vi' ? match.home.name : match.home.nameEn;
+                  const awayName = language === 'vi' ? match.away.name : match.away.nameEn;
 
                   return (
                     <div 
@@ -275,7 +328,7 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
                             className={`flex items-center justify-center p-0.5 rounded-full hover:bg-white/50 transition-colors ${
                               isBookmarked ? 'text-secondary' : 'text-outline/60'
                             }`}
-                            title={isBookmarked ? 'Bỏ theo dõi' : 'Theo dõi trận đấu'}
+                            title={isBookmarked ? t('unfollow') : t('followMatch')}
                           >
                             <span 
                               className="material-symbols-outlined text-[14px]"
@@ -285,7 +338,7 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
                             </span>
                           </button>
                           <span className="text-[9px] font-bold text-on-surface-variant/70 uppercase">
-                            Bảng {match.group}
+                            {t('groupLabel', { group: match.group })}
                           </span>
                         </div>
                         
@@ -306,11 +359,11 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
                           <div className="flex items-center gap-2">
                             <img 
                               src={`https://flagcdn.com/w40/${match.home.flag}.png`} 
-                              alt={match.home.name} 
+                              alt={homeName} 
                               className="w-5 h-3.5 object-cover rounded shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
                               onError={(e) => { e.target.style.display = 'none'; }}
                             />
-                            <span className="text-xs font-semibold truncate max-w-[80px] sm:max-w-[120px]">{match.home.name}</span>
+                            <span className="text-xs font-semibold truncate max-w-[80px] sm:max-w-[120px]">{homeName}</span>
                           </div>
                           {(isLive || isFinished) && (
                             <span className="text-xs font-black font-mono">{match.homeScore}</span>
@@ -320,11 +373,11 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
                           <div className="flex items-center gap-2">
                             <img 
                               src={`https://flagcdn.com/w40/${match.away.flag}.png`} 
-                              alt={match.away.name} 
+                              alt={awayName} 
                               className="w-5 h-3.5 object-cover rounded shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
                               onError={(e) => { e.target.style.display = 'none'; }}
                             />
-                            <span className="text-xs font-semibold truncate max-w-[80px] sm:max-w-[120px]">{match.away.name}</span>
+                            <span className="text-xs font-semibold truncate max-w-[80px] sm:max-w-[120px]">{awayName}</span>
                           </div>
                           {(isLive || isFinished) && (
                             <span className="text-xs font-black font-mono">{match.awayScore}</span>
@@ -335,7 +388,7 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
                       {/* Right odds & AI prediction column */}
                       <div className="col-span-3 flex flex-col items-end gap-1.5 pl-1 border-l border-white/20">
                         <span className="text-[9px] text-on-surface-variant/75 text-right font-medium">
-                          AI: {homeWin}%|{awayWin}%
+                          {t('aiProbText', { home: homeWin, away: awayWin })}
                         </span>
                         <span className="bg-primary-fixed/40 border border-primary/10 text-primary px-1.5 py-0.5 rounded-lg text-[10px] font-black font-mono">
                           1: {match.odds.h2h.home.toFixed(2)}

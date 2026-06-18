@@ -1,9 +1,12 @@
 import { Lock } from 'lucide-react';
+import { useLanguage } from '../utils/LanguageContext';
 
 export default function Navbar({ activePage, setActivePage, user, onGoogleLoginClick }) {
+  const { t } = useLanguage();
+
   return (
-    <header className="hidden md:block fixed top-0 w-full z-50 bg-white/70 backdrop-blur-3xl border-b border-white/40 shadow-[0px_10px_30px_rgba(0,0,0,0.04)]">
-      <div className="flex justify-between items-center h-20 px-8 w-full max-w-7xl mx-auto">
+    <header className="hidden md:block fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-3xl border-b border-white/40 shadow-[0px_10px_30px_rgba(0,0,0,0.04)]">
+      <div className="flex justify-between items-center h-20 px-4 md:px-8 w-full max-w-7xl mx-auto">
         {/* Brand Logo & Mascot */}
         <a 
           href="/" 
@@ -17,12 +20,12 @@ export default function Navbar({ activePage, setActivePage, user, onGoogleLoginC
           />
           <div className="flex flex-col text-left">
             <span className="text-lg md:text-xl font-black text-primary leading-none">World Cup 2026</span>
-            <span className="text-[10px] md:text-[11px] font-semibold text-on-surface-variant opacity-70 leading-none mt-1">Cùng Heo Hồng 🐷</span>
+            <span className="text-[10px] md:text-[11px] font-semibold text-on-surface-variant opacity-70 leading-none mt-1">{t('withHeoHong')}</span>
           </div>
         </a>
 
         {/* Page Switcher Links */}
-        <nav className="hidden md:flex items-center gap-6">
+        <nav className="hidden md:flex items-center gap-3 xl:gap-6">
           <button 
             onClick={() => setActivePage('DASHBOARD')}
             className={`font-semibold transition-all duration-200 px-3 py-1.5 rounded-lg text-sm ${
@@ -31,7 +34,7 @@ export default function Navbar({ activePage, setActivePage, user, onGoogleLoginC
                 : 'text-on-surface-variant hover:text-primary hover:bg-white/20'
             }`}
           >
-            Trận đấu
+            {t('navMatches')}
           </button>
           
           <button 
@@ -42,7 +45,7 @@ export default function Navbar({ activePage, setActivePage, user, onGoogleLoginC
                 : 'text-on-surface-variant hover:text-primary hover:bg-white/20'
             }`}
           >
-            Bảng xếp hạng
+            {t('navStandings')}
           </button>
           
           <button 
@@ -53,9 +56,9 @@ export default function Navbar({ activePage, setActivePage, user, onGoogleLoginC
                 : 'text-on-surface-variant hover:text-primary hover:bg-white/20'
             }`}
           >
-            Tin nóng WC
+            {t('navNews')}
           </button>
-
+ 
           <button 
             onClick={() => setActivePage('ORACLE')}
             className={`font-semibold transition-all duration-200 px-3 py-1.5 rounded-lg text-sm ${
@@ -64,9 +67,9 @@ export default function Navbar({ activePage, setActivePage, user, onGoogleLoginC
                 : 'text-on-surface-variant hover:text-primary hover:bg-white/20'
             }`}
           >
-            Tiên tri AI 🐷
+            {t('navOracle')}
           </button>
-
+ 
           <button 
             onClick={() => setActivePage('PROFILE')}
             className={`font-semibold transition-all duration-200 px-3 py-1.5 rounded-lg text-sm ${
@@ -75,7 +78,7 @@ export default function Navbar({ activePage, setActivePage, user, onGoogleLoginC
                 : 'text-on-surface-variant hover:text-primary hover:bg-white/20'
             }`}
           >
-            Hồ sơ & Ví
+            {t('navProfile')}
           </button>
         </nav>
 
@@ -93,7 +96,7 @@ export default function Navbar({ activePage, setActivePage, user, onGoogleLoginC
                 <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
                 <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
               </svg>
-              <span>Đăng nhập</span>
+              <span>{t('navLogin')}</span>
             </button>
           ) : (
             <button 
@@ -128,7 +131,7 @@ export default function Navbar({ activePage, setActivePage, user, onGoogleLoginC
                 }
               }
             }}
-            title="Cổng Quản trị Admin Portal"
+            title={t('navAdminPortal')}
           >
             <Lock size={15} />
           </button>
@@ -137,3 +140,4 @@ export default function Navbar({ activePage, setActivePage, user, onGoogleLoginC
     </header>
   );
 }
+

@@ -69,7 +69,7 @@ export function convertToUserTimezone(localDateStr, stadiumId) {
   return new Date(utcTimestamp);
 }
 
-const BASE_URL = 'https://worldcup26.ir';
+const BASE_URL = import.meta.env.DEV ? '/api-proxy/worldcup26' : 'https://worldcup26.ir';
 
 // Cache to avoid hammering the API
 let cache = {
@@ -181,27 +181,46 @@ export const ISO2_TO_FLAG = {
 };
 
 // ────────────────────────────────────────────────────────────
-// Generic fetch with caching
+// Generic fetch with caching (with timeout and concurrent request deduplication)
 // ────────────────────────────────────────────────────────────
-async function fetchWithCache(endpoint, cacheKey) {
+let pendingRequests = {};
+
+async function fetchWithCache(endpoint, cacheKey, timeoutMs = 5000) {
   const now = Date.now();
   if (cache[cacheKey] && (now - cache[`${cacheKey}Timestamp`]) < CACHE_TTL[cacheKey]) {
     return cache[cacheKey];
   }
 
-  try {
-    const response = await fetch(`${BASE_URL}${endpoint}`);
-    if (!response.ok) throw new Error(`API Error ${response.status}`);
-    const data = await response.json();
-    cache[cacheKey] = data;
-    cache[`${cacheKey}Timestamp`] = now;
-    return data;
-  } catch (error) {
-    console.error(`[worldcup26api] Fetch error for ${endpoint}:`, error);
-    // Return cached data if available, even if stale
-    if (cache[cacheKey]) return cache[cacheKey];
-    throw error;
+  // Deduplicate concurrent requests
+  if (pendingRequests[cacheKey]) {
+    return pendingRequests[cacheKey];
   }
+
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeoutMs);
+
+  const promise = (async () => {
+    try {
+      const response = await fetch(`${BASE_URL}${endpoint}`, { signal: controller.signal });
+      clearTimeout(id);
+      if (!response.ok) throw new Error(`API Error ${response.status}`);
+      const data = await response.json();
+      cache[cacheKey] = data;
+      cache[`${cacheKey}Timestamp`] = now;
+      return data;
+    } catch (error) {
+      clearTimeout(id);
+      console.error(`[worldcup26api] Fetch error for ${endpoint}:`, error);
+      // Return cached data if available, even if stale
+      if (cache[cacheKey]) return cache[cacheKey];
+      throw error;
+    } finally {
+      delete pendingRequests[cacheKey];
+    }
+  })();
+
+  pendingRequests[cacheKey] = promise;
+  return promise;
 }
 
 // ────────────────────────────────────────────────────────────
@@ -518,9 +537,12 @@ export function subscribeToLiveData(callback, intervalMs = 30000) {
 // Health check
 // ────────────────────────────────────────────────────────────
 export async function checkApiHealth() {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), 5000);
   try {
     const start = Date.now();
-    const response = await fetch(`${BASE_URL}/get/teams`);
+    const response = await fetch(`${BASE_URL}/get/teams`, { signal: controller.signal });
+    clearTimeout(id);
     const latency = Date.now() - start;
     return {
       online: response.ok,
@@ -529,6 +551,7 @@ export async function checkApiHealth() {
       message: response.ok ? `worldcup26.ir OK (${latency}ms)` : `Error: ${response.status}`
     };
   } catch (error) {
+    clearTimeout(id);
     return {
       online: false,
       latency: -1,

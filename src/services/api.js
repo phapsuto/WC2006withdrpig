@@ -8,7 +8,7 @@ import { trackApiCall } from '../utils/apiTracker';
 // State management for API settings
 let config = {
   apiMode: 'SMART', // 'SMART' (default), 'SPORTMONKS', 'LIVE_WC26', 'DEMO', 'AI_LIVE'
-  sportmonksToken: '',
+  sportmonksToken: '1fcudBrrac5U8DpQYl97jUeowGVDj74AGgniiz637ySI2v7ZFn0C8XpkJXoV',
   apiFootballKey: '',
   theOddsApiKey: '',
   geminiApiKey: ''
@@ -513,6 +513,8 @@ const factorial = (n) => {
 // Module-level caches for Sportmonks optimization
 let cachedAllSportmonksMatches = [];
 let lastFullFetchTime = 0;
+let lastSportmonksFailureTime = 0;
+const SPORTMONKS_RETRY_DELAY = 5 * 60 * 1000; // 5 minutes
 
 const mapSportmonksFixtureToApp = (fixture) => {
   const homeParticipant = fixture.participants?.find(p => p.meta && p.meta.location === 'home') || fixture.participants?.[0];
@@ -618,13 +620,18 @@ const mapSportmonksFixtureToApp = (fixture) => {
   };
 };
 
+const getSportmonksUrl = (pathAndQuery) => {
+  const base = import.meta.env.DEV ? '/api-proxy/sportmonks' : 'https://api.sportmonks.com';
+  return `${base}${pathAndQuery}`;
+};
+
 const fetchSportmonksMatches = async (token) => {
   try {
     let allFixtures = [];
     let hasMore = true;
     let cursor = null;
     while (hasMore) {
-      let url = `https://api.sportmonks.com/v3/football/seasons/26618/fixtures?include=participants;scores;events;periods;statistics.type;lineups;venue;group;predictions;odds&per_page=50`;
+      let url = getSportmonksUrl(`/v3/football/fixtures?filters=seasons:26618&include=participants;scores;events;periods;statistics.type;lineups;venue;group;predictions;odds&per_page=50`);
       if (cursor) {
         url += `&cursor=${cursor}`;
       }
@@ -639,8 +646,12 @@ const fetchSportmonksMatches = async (token) => {
       if (resJson.data && Array.isArray(resJson.data)) {
         allFixtures = [...allFixtures, ...resJson.data];
       }
-      if (resJson.meta && resJson.meta.pagination && resJson.meta.pagination.has_more) {
-        cursor = resJson.meta.pagination.next_cursor;
+      if (resJson.meta && resJson.meta.pagination && resJson.meta.pagination.has_more && resJson.meta.pagination.next_cursor) {
+        if (resJson.meta.pagination.next_cursor === cursor) {
+          hasMore = false;
+        } else {
+          cursor = resJson.meta.pagination.next_cursor;
+        }
       } else {
         hasMore = false;
       }
@@ -654,7 +665,7 @@ const fetchSportmonksMatches = async (token) => {
 
 const fetchSportmonksInplayMatches = async (token) => {
   try {
-    const url = `https://api.sportmonks.com/v3/football/livescores/inplay?include=participants;scores;events;periods;statistics.type;lineups;venue;group;predictions;odds`;
+    const url = getSportmonksUrl(`/v3/football/livescores/inplay?include=participants;scores;events;periods;statistics.type;lineups;venue;group;predictions;odds`);
     const response = await fetch(url, {
       headers: {
         'Authorization': `Bearer ${token}`
@@ -680,8 +691,24 @@ export const subscribeToFootballData = (callback) => {
   
   let simulatorFallback = null;
   let isUsingFallback = false;
+  let lastValidMatches = [];
   
   const triggerFallback = (notes) => {
+    // Notify the UI that there is an API connection issue
+    window.dispatchEvent(new CustomEvent('football-api-status', {
+      detail: { online: false, message: notes }
+    }));
+
+    // KHAI TỬ GIẢ LẬP: Nếu không phải chế độ DEMO, tuyệt đối KHÔNG chuyển sang hiển thị trận giả lập
+    if (activeMode !== 'DEMO') {
+      console.warn(`[API Fallback Suppressed] Mode: ${activeMode}. Lỗi: ${notes}`);
+      // Trả về dữ liệu thực tế cuối cùng nếu có
+      if (lastValidMatches.length > 0) {
+        callback(lastValidMatches);
+      }
+      return;
+    }
+
     if (!isUsingFallback) {
       isUsingFallback = true;
       simulatorFallback = subscribeToMatches((simData) => {
@@ -695,6 +722,10 @@ export const subscribeToFootballData = (callback) => {
   };
 
   const removeFallback = () => {
+    // Notify the UI that connection is healthy
+    window.dispatchEvent(new CustomEvent('football-api-status', {
+      detail: { online: true, message: 'Connected' }
+    }));
     if (simulatorFallback) {
       simulatorFallback();
       simulatorFallback = null;
@@ -744,41 +775,85 @@ export const subscribeToFootballData = (callback) => {
           nextDelay = 30000;
         } else {
           const nowTime = Date.now();
-          const needsFullFetch = cachedAllSportmonksMatches.length === 0 || (nowTime - lastFullFetchTime > 120000);
+          const isSportmonksDown = (nowTime - lastSportmonksFailureTime) < SPORTMONKS_RETRY_DELAY;
           
-          if (needsFullFetch) {
-            console.log('[Sportmonks] Đang cào toàn bộ danh sách trận đấu...');
-            const smMatches = await fetchSportmonksMatches(config.sportmonksToken);
-            if (smMatches && smMatches.length > 0) {
-              cachedAllSportmonksMatches = smMatches;
-              lastFullFetchTime = nowTime;
-            }
+          let smMatches = [];
+          let smCallSuccess = false;
+          
+          if (isSportmonksDown) {
+            console.warn('[Sportmonks Circuit Breaker] Bỏ qua cào Sportmonks do các lỗi gần đây. Sử dụng thẳng worldcup26.ir...');
           } else {
-            // Check if there is any live match in the cache
-            const hasLiveMatch = cachedAllSportmonksMatches.some(m => m.status === 'LIVE');
-            if (hasLiveMatch) {
-              console.log('[Sportmonks] Phát hiện trận live. Tiến hành cào livescores in-play cực nhanh...');
-              const liveMatches = await fetchSportmonksInplayMatches(config.sportmonksToken);
-              
-              // Merge live matches into our cached full list
-              if (liveMatches && liveMatches.length > 0) {
-                cachedAllSportmonksMatches = cachedAllSportmonksMatches.map(cachedMatch => {
-                  const updated = liveMatches.find(l => l.apiId === cachedMatch.apiId);
-                  return updated || cachedMatch;
-                });
+            const needsFullFetch = cachedAllSportmonksMatches.length === 0 || (nowTime - lastFullFetchTime > 120000);
+            
+            try {
+              if (needsFullFetch) {
+                console.log('[Sportmonks] Đang cào toàn bộ danh sách trận đấu...');
+                smMatches = await fetchSportmonksMatches(config.sportmonksToken);
+                if (smMatches && smMatches.length > 0) {
+                  cachedAllSportmonksMatches = smMatches;
+                  lastFullFetchTime = nowTime;
+                  smCallSuccess = true;
+                } else {
+                  // If fetch returns empty, treat as failure (invalid token/CORS/network error)
+                  lastSportmonksFailureTime = nowTime;
+                }
+              } else {
+                // Check if there is any live match in the cache
+                const hasLiveMatch = cachedAllSportmonksMatches.some(m => m.status === 'LIVE');
+                if (hasLiveMatch) {
+                  console.log('[Sportmonks] Phát hiện trận live. Tiến hành cào livescores in-play cực nhanh...');
+                  const liveMatches = await fetchSportmonksInplayMatches(config.sportmonksToken);
+                  
+                  // Merge live matches into our cached full list
+                  if (liveMatches && liveMatches.length > 0) {
+                    cachedAllSportmonksMatches = cachedAllSportmonksMatches.map(cachedMatch => {
+                      const updated = liveMatches.find(l => l.apiId === cachedMatch.apiId);
+                      return updated || cachedMatch;
+                    });
+                  }
+                }
+                smMatches = cachedAllSportmonksMatches;
+                smCallSuccess = true;
               }
-            } else {
-              console.log('[Sportmonks] Không có trận live, bỏ qua cào livescores...');
+            } catch (err) {
+              console.error('[Sportmonks Poll Error]', err);
+              lastSportmonksFailureTime = nowTime;
             }
           }
           
-          if (cachedAllSportmonksMatches && cachedAllSportmonksMatches.length > 0) {
+          if (smCallSuccess && cachedAllSportmonksMatches && cachedAllSportmonksMatches.length > 0) {
             removeFallback();
+            lastValidMatches = cachedAllSportmonksMatches;
             callback(cachedAllSportmonksMatches);
             nextDelay = getNextInterval(cachedAllSportmonksMatches);
           } else {
-            triggerFallback('Sportmonks tạm thời ngoại tuyến, hiển thị mô phỏng 🐷');
-            nextDelay = 30000;
+            // SPORTMONKS failed, is offline, or circuit breaker is active. Try falling back to LIVE_WC26 (worldcup26.ir) as real-time source!
+            console.warn('[Sportmonks Fallback] Sportmonks call failed or bypassed. Trying worldcup26.ir as fallback...');
+            try {
+              const health = await checkApiHealth();
+              let wcMatches = [];
+              if (health.online) {
+                wcMatches = await getLiveMatchesForApp();
+              }
+              
+              if (wcMatches && wcMatches.length > 0) {
+                removeFallback();
+                lastValidMatches = wcMatches;
+                callback(wcMatches);
+                nextDelay = getNextInterval(wcMatches);
+                // Dispatch warning message but keep online state
+                window.dispatchEvent(new CustomEvent('football-api-status', {
+                  detail: { online: true, message: 'Sportmonks lỗi/bị bỏ qua, đã tự động chuyển sang worldcup26.ir 🐷' }
+                }));
+              } else {
+                triggerFallback('Sportmonks và worldcup26.ir đều ngoại tuyến, hiển thị mô phỏng 🐷');
+                nextDelay = 30000;
+              }
+            } catch (fallbackError) {
+              console.error('[Sportmonks Fallback Error]', fallbackError);
+              triggerFallback('Sportmonks và worldcup26.ir đều ngoại tuyến, hiển thị mô phỏng 🐷');
+              nextDelay = 30000;
+            }
           }
         }
       } else if (activeMode === 'LIVE_WC26') {
@@ -787,6 +862,7 @@ export const subscribeToFootballData = (callback) => {
           const wcMatches = await getLiveMatchesForApp();
           if (wcMatches && wcMatches.length > 0) {
             removeFallback();
+            lastValidMatches = wcMatches;
             callback(wcMatches);
             nextDelay = getNextInterval(wcMatches);
           } else {
@@ -805,6 +881,7 @@ export const subscribeToFootballData = (callback) => {
         const aiMatches = await getGoogleSportsData('MATCHES');
         if (aiMatches && aiMatches.length > 0) {
           removeFallback();
+          lastValidMatches = aiMatches;
           callback(aiMatches);
           nextDelay = getNextInterval(aiMatches);
         } else {
@@ -824,6 +901,7 @@ export const subscribeToFootballData = (callback) => {
           nextDelay = 30000;
         } else {
           removeFallback();
+          lastValidMatches = fallbackMatches;
           callback(fallbackMatches);
           nextDelay = getNextInterval(fallbackMatches);
         }
