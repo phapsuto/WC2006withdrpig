@@ -169,15 +169,50 @@ export const TEAM_COLORS = {
 
 // ISO2 → flagcdn code
 export const ISO2_TO_FLAG = {
-  'MX': 'mx', 'ZA': 'za', 'KR': 'kr', 'CZ': 'cz', 'CA': 'ca', 'BA': 'ba',
-  'QA': 'qa', 'CH': 'ch', 'BR': 'br', 'MA': 'ma', 'HT': 'ht', 'SCO': 'gb-sct',
-  'US': 'us', 'PY': 'py', 'AU': 'au', 'TR': 'tr', 'DE': 'de', 'CW': 'cw',
-  'CI': 'ci', 'EC': 'ec', 'NL': 'nl', 'JP': 'jp', 'SE': 'se', 'TN': 'tn',
-  'BE': 'be', 'EG': 'eg', 'SA': 'sa', 'UY': 'uy', 'ES': 'es', 'CV': 'cv',
-  'FR': 'fr', 'SN': 'sn', 'IQ': 'iq', 'NO': 'no', 'AR': 'ar', 'DZ': 'dz',
-  'AT': 'at', 'JO': 'jo', 'PT': 'pt', 'CD': 'cd', 'GB': 'gb-eng', 'HR': 'hr',
+  // ── All 48 WC2026 Teams + Common Sportmonks ISO2 codes ──
+  // Group A
+  'MX': 'mx', 'ZA': 'za', 'KR': 'kr', 'CZ': 'cz',
+  // Group B
+  'CA': 'ca', 'BA': 'ba', 'QA': 'qa', 'CH': 'ch',
+  // Group C
+  'BR': 'br', 'MA': 'ma', 'HT': 'ht',
+  // Group D
+  'US': 'us', 'PY': 'py', 'AU': 'au', 'TR': 'tr',
+  // Group E
+  'DE': 'de', 'CW': 'cw', 'CI': 'ci',
+  // Group F
+  'EC': 'ec', 'NL': 'nl', 'JP': 'jp', 'SE': 'se',
+  // Group G
+  'TN': 'tn', 'BE': 'be', 'EG': 'eg',
+  // Group H
+  'SA': 'sa', 'UY': 'uy', 'ES': 'es', 'CV': 'cv',
+  // Group I
+  'FR': 'fr', 'SN': 'sn', 'IQ': 'iq', 'NO': 'no',
+  // Group J
+  'AR': 'ar', 'DZ': 'dz', 'AT': 'at', 'JO': 'jo',
+  // Group K
+  'PT': 'pt', 'CD': 'cd', 'HR': 'hr',
+  // Group L
   'GH': 'gh', 'PA': 'pa', 'UZ': 'uz', 'CO': 'co',
-  'IR': 'ir', 'NZ': 'nz',
+  // Additional common Sportmonks ISO2 codes
+  'IR': 'ir', 'NZ': 'nz', 'PE': 'pe', 'CL': 'cl', 'NG': 'ng',
+  'CM': 'cm', 'IT': 'it', 'PL': 'pl', 'DK': 'dk', 'RS': 'rs',
+  'RO': 'ro', 'HU': 'hu', 'SK': 'sk', 'FI': 'fi', 'IE': 'ie',
+  'IS': 'is', 'AL': 'al', 'GE': 'ge', 'UA': 'ua', 'RU': 'ru',
+  'CN': 'cn', 'IN': 'in', 'TH': 'th', 'VN': 'vn', 'PH': 'ph',
+  'MY': 'my', 'SG': 'sg', 'ID': 'id', 'AE': 'ae', 'KW': 'kw',
+  'BH': 'bh', 'OM': 'om', 'LB': 'lb', 'SY': 'sy', 'PS': 'ps',
+  'TZ': 'tz', 'KE': 'ke', 'UG': 'ug', 'ZW': 'zw', 'ML': 'ml',
+  'BF': 'bf', 'GN': 'gn', 'NE': 'ne', 'BJ': 'bj', 'TG': 'tg',
+  'MZ': 'mz', 'AO': 'ao', 'MG': 'mg', 'GA': 'ga', 'MW': 'mw',
+  // UK nations (special flags)
+  'GB': 'gb-eng', 'SCO': 'gb-sct', 'WAL': 'gb-wls', 'NIR': 'gb-nir',
+  'EN': 'gb-eng', 'SC': 'gb-sct', 'WLS': 'gb-wls',
+  // Caribbean & Central America
+  'JM': 'jm', 'TT': 'tt', 'CU': 'cu', 'HN': 'hn', 'CR': 'cr',
+  'GT': 'gt', 'SV': 'sv', 'NI': 'ni', 'DO': 'do', 'BS': 'bs',
+  // South America
+  'BO': 'bo', 'VE': 've', 'GY': 'gy', 'SR': 'sr',
 };
 
 // ────────────────────────────────────────────────────────────
@@ -410,14 +445,14 @@ export async function getLiveMatchesForApp() {
         country: 'USA/MEX/CAN'
       },
       home: {
-        name: TEAM_NAME_VI[homeNameEn] || homeNameEn,
+        name: homeNameEn,
         nameEn: homeNameEn,
         short: homeTeam.fifa_code || homeNameEn.substring(0, 3).toUpperCase(),
         flag: homeFlag,
         ...homeColors
       },
       away: {
-        name: TEAM_NAME_VI[awayNameEn] || awayNameEn,
+        name: awayNameEn,
         nameEn: awayNameEn,
         short: awayTeam.fifa_code || awayNameEn.substring(0, 3).toUpperCase(),
         flag: awayFlag,
@@ -477,7 +512,7 @@ export async function getLiveGroupStandings() {
       const flag = ISO2_TO_FLAG[teamInfo.iso2] || teamInfo.iso2?.toLowerCase() || 'xx';
       
       return {
-        name: TEAM_NAME_VI[nameEn] || nameEn,
+        name: nameEn,
         nameEn,
         flag,
         fifaCode: teamInfo.fifa_code || '',

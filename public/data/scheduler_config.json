@@ -2,39 +2,361 @@
   "autoEnabled": true,
   "liveIntervalMin": 10,
   "normalIntervalMin": 180,
-  "lastRunTime": 1781776846362,
-  "nextRunTime": 1781787646362,
+  "lastRunTime": 1781994314028,
+  "nextRunTime": 1782005114028,
   "currentMode": "NORMAL",
   "logs": [
-    "[20:00:46 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[20:00:46 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[20:00:46 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[20:00:45 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[20:00:44 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[20:00:44 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[17:34:32 18/6/2026] [Thủ công] Kích hoạt cào tin (Chế độ: LIVE) -> Thành công",
-    "[16:53:10 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[16:53:10 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[16:53:09 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[16:53:09 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[16:53:09 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[16:53:09 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[13:51:27 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[13:51:26 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[13:51:12 18/6/2026] [Auto] Chạy cào tin ở chế độ LIVE (Trận live: Có) -> Thành công",
-    "[10:50:28 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[10:50:25 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[10:49:30 18/6/2026] [Auto] Chạy cào tin ở chế độ LIVE (Trận live: Có) -> Thành công",
-    "[07:48:58 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[07:48:53 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[07:48:51 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[04:46:37 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[04:46:09 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[04:46:07 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[01:44:42 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[01:44:42 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[01:44:41 18/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[22:42:11 17/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công",
-    "[22:42:10 17/6/2026] [Auto] Chạy cào tin ở chế độ NORMAL (Trận live: Không) -> Thành công"
-  ]
+    "[09:24:54 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:54 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:54 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:48 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:48 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:48 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:48 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:48 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:48 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:47 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:47 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:47 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:46 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:46 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:46 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:45 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:44 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:43 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:33 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:32 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:32 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:32 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:24:32 21/6/2026] [Match Scraper] Cào tin Tunisia vs Japan (ID: sm-19609175, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:21:54 21/6/2026] [Match Scraper] Cào tin Ecuador vs Curacao (ID: sm-19609174, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:21:54 21/6/2026] [Match Scraper] Cào tin Ecuador vs Curacao (ID: sm-19609174, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:21:54 21/6/2026] [Match Scraper] Cào tin Ecuador vs Curacao (ID: sm-19609174, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:21:53 21/6/2026] [Match Scraper] Cào tin Ecuador vs Curacao (ID: sm-19609174, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:21:53 21/6/2026] [Match Scraper] Cào tin Ecuador vs Curacao (ID: sm-19609174, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:21:53 21/6/2026] [Match Scraper] Cào tin Ecuador vs Curacao (ID: sm-19609174, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công",
+    "[09:21:53 21/6/2026] [Match Scraper] Cào tin Ecuador vs Curacao (ID: sm-19609174, Chế độ: UPCOMING, Chu kỳ: 10m) -> Thành công"
+  ],
+  "matchStates": {
+    "sm-19609175": {
+      "lastRunTime": 1781997894410,
+      "nextRunTime": 1781998494410,
+      "currentIntervalMin": 10
+    },
+    "sm-19609158": {
+      "lastRunTime": 1781990244610,
+      "nextRunTime": 1782001044610,
+      "currentIntervalMin": 180
+    },
+    "sm-19609138": {
+      "lastRunTime": 1781990444384,
+      "nextRunTime": 1782001244384,
+      "currentIntervalMin": 180
+    },
+    "sm-19609157": {
+      "lastRunTime": 1781990394911,
+      "nextRunTime": 1782001194911,
+      "currentIntervalMin": 180
+    },
+    "sm-19609159": {
+      "lastRunTime": 1781990572487,
+      "nextRunTime": 1782001372487,
+      "currentIntervalMin": 180
+    },
+    "sm-19609162": {
+      "lastRunTime": 1781990537522,
+      "nextRunTime": 1782001337522,
+      "currentIntervalMin": 180
+    },
+    "sm-19609139": {
+      "lastRunTime": 1781990577064,
+      "nextRunTime": 1782001377064,
+      "currentIntervalMin": 180
+    },
+    "sm-19609161": {
+      "lastRunTime": 1781990557225,
+      "nextRunTime": 1782001357225,
+      "currentIntervalMin": 180
+    },
+    "sm-19609160": {
+      "lastRunTime": 1781990625801,
+      "nextRunTime": 1782001425801,
+      "currentIntervalMin": 180
+    },
+    "sm-19609143": {
+      "lastRunTime": 1781990700397,
+      "nextRunTime": 1782001500397,
+      "currentIntervalMin": 180
+    },
+    "sm-19609163": {
+      "lastRunTime": 1781990726566,
+      "nextRunTime": 1782001526566,
+      "currentIntervalMin": 180
+    },
+    "sm-19609145": {
+      "lastRunTime": 1781990767065,
+      "nextRunTime": 1782001567065,
+      "currentIntervalMin": 180
+    },
+    "sm-19609164": {
+      "lastRunTime": 1781990806070,
+      "nextRunTime": 1782001606070,
+      "currentIntervalMin": 180
+    },
+    "sm-19609166": {
+      "lastRunTime": 1781990840127,
+      "nextRunTime": 1782001640127,
+      "currentIntervalMin": 180
+    },
+    "sm-19609149": {
+      "lastRunTime": 1781991022797,
+      "nextRunTime": 1782001822797,
+      "currentIntervalMin": 180
+    },
+    "sm-19609167": {
+      "lastRunTime": 1781991029455,
+      "nextRunTime": 1782001829455,
+      "currentIntervalMin": 180
+    },
+    "sm-19609165": {
+      "lastRunTime": 1781991051419,
+      "nextRunTime": 1782001851419,
+      "currentIntervalMin": 180
+    },
+    "sm-19609168": {
+      "lastRunTime": 1781991089921,
+      "nextRunTime": 1782001889921,
+      "currentIntervalMin": 180
+    },
+    "sm-19609169": {
+      "lastRunTime": 1781991116182,
+      "nextRunTime": 1782001916182,
+      "currentIntervalMin": 180
+    },
+    "sm-19609170": {
+      "lastRunTime": 1781991097214,
+      "nextRunTime": 1782001897214,
+      "currentIntervalMin": 180
+    },
+    "sm-19609128": {
+      "lastRunTime": 1781991108241,
+      "nextRunTime": 1782001908241,
+      "currentIntervalMin": 180
+    },
+    "sm-19609134": {
+      "lastRunTime": 1781991208447,
+      "nextRunTime": 1782002008447,
+      "currentIntervalMin": 180
+    },
+    "sm-19609171": {
+      "lastRunTime": 1781991306060,
+      "nextRunTime": 1782002106060,
+      "currentIntervalMin": 180
+    },
+    "sm-19609172": {
+      "lastRunTime": 1781991418907,
+      "nextRunTime": 1782002218907,
+      "currentIntervalMin": 180
+    },
+    "sm-19609173": {
+      "lastRunTime": 1781991383877,
+      "nextRunTime": 1782002183877,
+      "currentIntervalMin": 180
+    },
+    "sm-19609176": {
+      "lastRunTime": 1781991586968,
+      "nextRunTime": 1782002386968,
+      "currentIntervalMin": 180
+    },
+    "sm-19609135": {
+      "lastRunTime": 1781992731152,
+      "nextRunTime": 1782003531152,
+      "currentIntervalMin": 180
+    },
+    "sm-19609174": {
+      "lastRunTime": 1781997714246,
+      "nextRunTime": 1781998314246,
+      "currentIntervalMin": 10
+    },
+    "sm-19609142": {
+      "lastRunTime": 1781997407560,
+      "nextRunTime": 1781998007560,
+      "currentIntervalMin": 10
+    },
+    "sm-19609152": {
+      "lastRunTime": 1781991710895,
+      "nextRunTime": 1782002510895,
+      "currentIntervalMin": 180
+    },
+    "sm-19609178": {
+      "lastRunTime": 1781991754537,
+      "nextRunTime": 1782002554537,
+      "currentIntervalMin": 180
+    },
+    "sm-19609177": {
+      "lastRunTime": 1781991794225,
+      "nextRunTime": 1782002594225,
+      "currentIntervalMin": 180
+    },
+    "sm-19609146": {
+      "lastRunTime": 1781991872672,
+      "nextRunTime": 1782002672672,
+      "currentIntervalMin": 180
+    },
+    "sm-19609179": {
+      "lastRunTime": 1781991951279,
+      "nextRunTime": 1782002751279,
+      "currentIntervalMin": 180
+    },
+    "sm-19609180": {
+      "lastRunTime": 1781992014855,
+      "nextRunTime": 1782002814855,
+      "currentIntervalMin": 180
+    },
+    "sm-19609181": {
+      "lastRunTime": 1781992071114,
+      "nextRunTime": 1782002871114,
+      "currentIntervalMin": 180
+    },
+    "sm-19609148": {
+      "lastRunTime": 1781992092950,
+      "nextRunTime": 1782002892950,
+      "currentIntervalMin": 180
+    },
+    "sm-19609183": {
+      "lastRunTime": 1781992265515,
+      "nextRunTime": 1782003065515,
+      "currentIntervalMin": 180
+    },
+    "sm-19609151": {
+      "lastRunTime": 1781992310094,
+      "nextRunTime": 1782003110094,
+      "currentIntervalMin": 180
+    },
+    "sm-19609197": {
+      "lastRunTime": 1781992344827,
+      "nextRunTime": 1782003144827,
+      "currentIntervalMin": 180
+    },
+    "sm-19609198": {
+      "lastRunTime": 1781992406249,
+      "nextRunTime": 1782003206249,
+      "currentIntervalMin": 180
+    },
+    "sm-19609182": {
+      "lastRunTime": 1781992413480,
+      "nextRunTime": 1782003213480,
+      "currentIntervalMin": 180
+    },
+    "sm-19609129": {
+      "lastRunTime": 1781992417394,
+      "nextRunTime": 1782003217394,
+      "currentIntervalMin": 180
+    },
+    "sm-19609186": {
+      "lastRunTime": 1781992484081,
+      "nextRunTime": 1782003284081,
+      "currentIntervalMin": 180
+    },
+    "sm-19609132": {
+      "lastRunTime": 1781992598795,
+      "nextRunTime": 1782003398795,
+      "currentIntervalMin": 180
+    },
+    "sm-19609187": {
+      "lastRunTime": 1781992681450,
+      "nextRunTime": 1782003481450,
+      "currentIntervalMin": 180
+    },
+    "sm-19609184": {
+      "lastRunTime": 1781992726393,
+      "nextRunTime": 1782003526393,
+      "currentIntervalMin": 180
+    },
+    "sm-19609185": {
+      "lastRunTime": 1781992703438,
+      "nextRunTime": 1782003503438,
+      "currentIntervalMin": 180
+    },
+    "sm-19609136": {
+      "lastRunTime": 1781992703841,
+      "nextRunTime": 1782003503841,
+      "currentIntervalMin": 180
+    },
+    "sm-19609191": {
+      "lastRunTime": 1781992704793,
+      "nextRunTime": 1782003504793,
+      "currentIntervalMin": 180
+    },
+    "sm-19609137": {
+      "lastRunTime": 1781992874225,
+      "nextRunTime": 1782003674225,
+      "currentIntervalMin": 180
+    },
+    "sm-19609190": {
+      "lastRunTime": 1781993012089,
+      "nextRunTime": 1782003812089,
+      "currentIntervalMin": 180
+    },
+    "sm-19609188": {
+      "lastRunTime": 1781992986790,
+      "nextRunTime": 1782003786790,
+      "currentIntervalMin": 180
+    },
+    "sm-19609189": {
+      "lastRunTime": 1781993034619,
+      "nextRunTime": 1782003834619,
+      "currentIntervalMin": 180
+    },
+    "sm-19609144": {
+      "lastRunTime": 1781993104457,
+      "nextRunTime": 1782003904457,
+      "currentIntervalMin": 180
+    },
+    "sm-19609195": {
+      "lastRunTime": 1781993131184,
+      "nextRunTime": 1782003931184,
+      "currentIntervalMin": 180
+    },
+    "sm-19609141": {
+      "lastRunTime": 1781993131205,
+      "nextRunTime": 1782003931205,
+      "currentIntervalMin": 180
+    },
+    "sm-19609194": {
+      "lastRunTime": 1781993160824,
+      "nextRunTime": 1782003960824,
+      "currentIntervalMin": 180
+    },
+    "sm-19609192": {
+      "lastRunTime": 1781993198377,
+      "nextRunTime": 1782003998377,
+      "currentIntervalMin": 180
+    },
+    "sm-19609193": {
+      "lastRunTime": 1781993265345,
+      "nextRunTime": 1782004065345,
+      "currentIntervalMin": 180
+    },
+    "sm-19609150": {
+      "lastRunTime": 1781993348433,
+      "nextRunTime": 1782004148433,
+      "currentIntervalMin": 180
+    },
+    "sm-19609199": {
+      "lastRunTime": 1781993500461,
+      "nextRunTime": 1782004300461,
+      "currentIntervalMin": 180
+    },
+    "sm-19609147": {
+      "lastRunTime": 1781993509822,
+      "nextRunTime": 1782004309822,
+      "currentIntervalMin": 180
+    },
+    "sm-19609196": {
+      "lastRunTime": 1781993518368,
+      "nextRunTime": 1782004318368,
+      "currentIntervalMin": 180
+    }
+  }
 }

@@ -1,38 +1,15 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { ArrowLeft, BarChart2, ListTodo, Users, BadgePercent, ArrowUp, ArrowDown, MessageSquare, ThumbsUp, Newspaper, Loader2, RefreshCw, Cpu, CheckCircle2, Share2, Send, Star } from 'lucide-react';
-import { getHeoHongPrediction, getDynamicSocialReactions, getSportsAnalytics, chatWithHeoHong } from '../services/gemini';
+import { ArrowLeft, BarChart2, ListTodo, Users, BadgePercent, ArrowUp, ArrowDown, MessageSquare, Newspaper, Loader2, RefreshCw, Cpu, Send, Star, History, Play } from 'lucide-react';
+import { getHeoHongPrediction, getSportsAnalytics, chatWithHeoHong } from '../services/gemini';
 import { predictMatch } from '../utils/aiPredictor';
+import { fetchSportmonksFixtureDetail, fetchSportmonksH2H } from '../services/api';
 import { STADIUMS_INFO, convertToUserTimezone } from '../services/worldcup26api';
 import { useLiveMatchClock } from '../services/useLiveMatchClock';
 
-const getSocialAvatar = (source, index) => {
-  const AVATARS = [
-    'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&auto=format&fit=crop&q=80',
-    'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&auto=format&fit=crop&q=80'
-  ];
-  const srcLower = source.toLowerCase();
-  if (srcLower.includes('romano') || srcLower.includes('sky') || srcLower.includes('espn') || srcLower.includes('goal')) {
-    return 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100&auto=format&fit=crop&q=80';
-  }
-  if (srcLower.includes('quân') || srcLower.includes('cương') || srcLower.includes('huy')) {
-    return 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&auto=format&fit=crop&q=80';
-  }
-  return AVATARS[index % AVATARS.length];
-};
-
-const SOCCER_CLIPS = [
-  '/videos/clip_1.mp4',
-  '/videos/clip_2.mp4',
-  '/videos/clip_3.mp4',
-  '/videos/clip_4.mp4'
-];
-
-export default function MatchDetail({ match, onAddBet, activeBetId, onClose, user, onToggleBookmark }) {
+export default function MatchDetail({ match, onAddBet, activeBetId, onClose, user, onToggleBookmark, matches = [] }) {
   const [activeTab, setActiveTab] = useState('ODDS'); // STATS, TIMELINE, LINEUPS, ODDS, NEWS, ANALYTICS, CHAT
   const [aiPrediction, setAiPrediction] = useState('');
-  const [aiReactions, setAiReactions] = useState([]);
+  const [matchNews, setMatchNews] = useState([]);
   const [loadingAi, setLoadingAi] = useState(false);
   const [analyticsData, setAnalyticsData] = useState(null);
   const [loadingAnalytics, setLoadingAnalytics] = useState(false);
@@ -45,41 +22,47 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
   const [chatInput, setChatInput] = useState('');
   const [sendingChat, setSendingChat] = useState(false);
   const chatEndRef = useRef(null);
+  
+  // Sportmonks enriched match data
+  const [enrichedMatch, setEnrichedMatch] = useState(null);
+  const [h2hData, setH2hData] = useState(null);
+  const [loadingH2h, setLoadingH2h] = useState(false);
+  const [socialReactions, setSocialReactions] = useState([]);
+  const [loadingSocial, setLoadingSocial] = useState(false);
+  const [currentTime] = useState(() => Date.now());
 
   const isBookmarked = user?.bookmarks?.includes(match.id);
 
   const fetchAiInsights = useCallback(async () => {
     setLoadingAi(true);
     try {
-      const pred = await getHeoHongPrediction(match);
+      const pred = await getHeoHongPrediction(match, matches);
       setAiPrediction(pred);
-      const react = await getDynamicSocialReactions(match);
-      setAiReactions(react);
     } catch (e) {
       console.error('Lỗi khi tải thông tin từ Gemini:', e);
     } finally {
       setLoadingAi(false);
     }
-  }, [match]);
+  }, [match, matches]);
 
   const fetchAnalytics = useCallback(async () => {
     setLoadingAnalytics(true);
     try {
-      const data = await getSportsAnalytics(match);
+      const data = await getSportsAnalytics(match, matches);
       setAnalyticsData(data);
     } catch (e) {
       console.error('Lỗi khi tải AI Phân tích xG:', e);
     } finally {
       setLoadingAnalytics(false);
     }
-  }, [match]);
+  }, [match, matches]);
 
   // Reset states when match changes
   useEffect(() => {
     setTimeout(() => {
       setActiveTab('ODDS');
       setAiPrediction('');
-      setAiReactions([]);
+      setMatchNews([]);
       setAnalyticsData(null);
       setSelectedSocial(null);
       setChatMessages([
@@ -88,6 +71,212 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
       setChatInput('');
     }, 0);
   }, [match.id]);
+
+  // Fetch match-specific media (news & clips) with on-demand crawl fallback
+  useEffect(() => {
+    if (!match.id) return;
+
+    let isSubscribed = true;
+    setLoadingSocial(true);
+    setMatchNews([]);
+    setSocialReactions([]);
+
+    const TEAM_KEYWORDS = {
+      // Vietnamese name keys (from TEAM_NAME_VI mapping)
+      'Mỹ': ['united states', 'usa', 'mỹ', 'hoa kỳ', 'america', 'usmnt'],
+      'Úc': ['australia', 'úc', 'socceroos'],
+      'Hàn Quốc': ['korea', 'hàn quốc', 'han quoc'],
+      'Nam Phi': ['south africa', 'nam phi'],
+      'Séc': ['czech', 'séc', 'ch séc', 'czechia'],
+      'Thụy Sĩ': ['switzerland', 'thụy sĩ', 'thuy si'],
+      'Ma Rốc': ['morocco', 'maroc', 'ma rốc'],
+      'Thổ Nhĩ Kỳ': ['turkey', 'türkiye', 'thổ nhĩ kỳ', 'tho nhi ky'],
+      'Đức': ['germany', 'đức', 'duc'],
+      'Bờ Biển Ngà': ['ivory coast', 'bờ biển ngà', "côte d'ivoire"],
+      'Hà Lan': ['netherlands', 'hà lan', 'ha lan', 'holland'],
+      'Nhật Bản': ['japan', 'nhật bản', 'nhat ban'],
+      'Thụy Điển': ['sweden', 'thụy điển'],
+      'Bỉ': ['belgium', 'bỉ'],
+      'Ai Cập': ['egypt', 'ai cập'],
+      'Tây Ban Nha': ['spain', 'tây ban nha'],
+      'Ả Rập Xê Út': ['saudi', 'ả rập', 'saudi arabia'],
+      'Pháp': ['france', 'pháp'],
+      'Na Uy': ['norway', 'na uy'],
+      'Áo': ['austria', 'áo'],
+      'Bồ Đào Nha': ['portugal', 'bồ đào nha'],
+      'Anh': ['england', 'anh quốc'],
+      // English name keys (direct from Sportmonks)
+      'United States': ['united states', 'usa', 'mỹ', 'hoa kỳ', 'america', 'usmnt'],
+      'Australia': ['australia', 'úc', 'socceroos'],
+      'Mexico': ['mexico', 'mê-hi-cô', 'mêhicô'],
+      'Korea Republic': ['korea', 'hàn quốc', 'han quoc'],
+      'South Africa': ['south africa', 'nam phi'],
+      'Czechia': ['czech', 'séc', 'ch séc'],
+      'Canada': ['canada'],
+      'Qatar': ['qatar'],
+      'Switzerland': ['switzerland', 'thụy sĩ', 'thuy si'],
+      'Brazil': ['brazil', 'bra-xin'],
+      'Morocco': ['morocco', 'maroc', 'ma rốc'],
+      'Scotland': ['scotland'],
+      'Haiti': ['haiti'],
+      'Paraguay': ['paraguay'],
+      'Türkiye': ['turkey', 'türkiye', 'thổ nhĩ kỳ', 'tho nhi ky'],
+      'Germany': ['germany', 'đức', 'duc'],
+      "Côte d'Ivoire": ['ivory coast', 'bờ biển ngà', "côte d'ivoire"],
+      'Ecuador': ['ecuador'],
+      'Netherlands': ['netherlands', 'hà lan', 'ha lan', 'holland'],
+      'Japan': ['japan', 'nhật bản', 'nhat ban'],
+      'Sweden': ['sweden', 'thụy điển'],
+      'Tunisia': ['tunisia'],
+      'Belgium': ['belgium', 'bỉ'],
+      'Egypt': ['egypt', 'ai cập'],
+      'Iran': ['iran'],
+      'New Zealand': ['new zealand'],
+      'Spain': ['spain', 'tây ban nha'],
+      'Saudi Arabia': ['saudi', 'ả rập', 'saudi arabia'],
+      'Uruguay': ['uruguay'],
+      'France': ['france', 'pháp'],
+      'Senegal': ['senegal'],
+      'Iraq': ['iraq'],
+      'Norway': ['norway', 'na uy'],
+      'Argentina': ['argentina'],
+      'Algeria': ['algeria'],
+      'Austria': ['austria', 'áo'],
+      'Jordan': ['jordan'],
+      'Portugal': ['portugal', 'bồ đào nha'],
+      'Colombia': ['colombia'],
+      'England': ['england', 'anh quốc'],
+      'Croatia': ['croatia'],
+      'Ghana': ['ghana'],
+      'Panama': ['panama'],
+    };
+
+    const getKeywords = (teamName, teamNameEn) => {
+      const kw1 = TEAM_KEYWORDS[teamName];
+      const kw2 = TEAM_KEYWORDS[teamNameEn];
+      const result = new Set();
+      if (kw1) kw1.forEach(k => result.add(k));
+      if (kw2) kw2.forEach(k => result.add(k));
+      if (teamName) result.add(teamName.toLowerCase());
+      if (teamNameEn) result.add(teamNameEn.toLowerCase());
+      return [...result];
+    };
+
+    const matchesKeyword = (text, kw) => {
+      if (kw.length <= 2) {
+        const words = text.split(/[^a-z0-9àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]+/i);
+        return words.some(word => word === kw);
+      }
+      return text.includes(kw);
+    };
+
+    const loadMedia = async () => {
+      try {
+        const resp = await fetch(`/data/match_media/media_${match.id}.json`);
+        if (resp.ok) {
+          const media = await resp.json();
+          if (isSubscribed && media) {
+            setMatchNews(media.news || []);
+            setSocialReactions(media.clips || []);
+            setLoadingSocial(false);
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('[MatchDetail] Fetch media_id.json failed:', e);
+      }
+
+      // Trigger on-demand crawl
+      try {
+        const homeName = match.home?.name || 'Home';
+        const awayName = match.away?.name || 'Away';
+        const status = match.status || 'UPCOMING';
+        
+        const runResp = await fetch(`/api/run-scraper?mode=match&match_id=${match.id}&home=${encodeURIComponent(homeName)}&away=${encodeURIComponent(awayName)}&status=${status}`);
+        if (runResp.ok) {
+          const resp2 = await fetch(`/data/match_media/media_${match.id}.json`);
+          if (resp2.ok) {
+            const media2 = await resp2.json();
+            if (isSubscribed && media2) {
+              setMatchNews(media2.news || []);
+              setSocialReactions(media2.clips || []);
+              setLoadingSocial(false);
+              return;
+            }
+          }
+        }
+      } catch (err) {
+        console.error('[MatchDetail] On-demand scrape failed:', err);
+      }
+
+      // Fallback to global news filter
+      if (!isSubscribed) return;
+      try {
+        let articles = [];
+        const cached = localStorage.getItem('wc2026_news_data');
+        if (cached) {
+          try { articles = JSON.parse(cached); } catch { /* ignore */ }
+        }
+        if (!articles || articles.length === 0) {
+          const resp = await fetch('/data/news.json');
+          if (resp.ok) articles = await resp.json();
+        }
+        if (articles && articles.length > 0) {
+          const homeKw = getKeywords(match.home?.name || '', match.home?.nameEn || '');
+          const awayKw = getKeywords(match.away?.name || '', match.away?.nameEn || '');
+          const allKw = [...new Set([...homeKw, ...awayKw])].filter(Boolean);
+
+          const filtered = articles.filter(a => {
+            const title = (a.titleVi || a.title || '').toLowerCase();
+            const desc = (a.descriptionVi || a.description || '').toLowerCase();
+            const combined = title + ' ' + desc;
+            return allKw.some(kw => matchesKeyword(combined, kw));
+          });
+          setMatchNews(filtered.slice(0, 8));
+        }
+      } catch (fallbackErr) {
+        console.error('[MatchDetail] Fallback load failed:', fallbackErr);
+      }
+      setSocialReactions([]);
+      setLoadingSocial(false);
+    };
+
+    loadMedia();
+
+    return () => {
+      isSubscribed = false;
+    };
+  }, [match.id, match.home?.name, match.home?.nameEn, match.away?.name, match.away?.nameEn, match.status]);
+
+  // Fetch Sportmonks enriched detail when match opens
+  useEffect(() => {
+    if (match.apiId) {
+      fetchSportmonksFixtureDetail(match.apiId)
+        .then(data => {
+          if (data) {
+            setEnrichedMatch(data);
+            console.log(`[MatchDetail] Enriched match ${match.apiId} with Sportmonks detail`);
+          }
+        })
+        .catch(e => console.error('[MatchDetail] Detail fetch error:', e));
+    }
+    // Reset H2H & Social
+    setH2hData(null);
+    setSocialReactions([]);
+  }, [match.apiId]);
+
+  // Fetch H2H when H2H or analytics tab is active
+  useEffect(() => {
+    if ((activeTab === 'H2H' || activeTab === 'ANALYTICS') && !h2hData && match.homeTeamId && match.awayTeamId) {
+      setLoadingH2h(true);
+      fetchSportmonksH2H(match.homeTeamId, match.awayTeamId)
+        .then(data => { if (data) setH2hData(data); })
+        .catch(e => console.error('[MatchDetail] H2H error:', e))
+        .finally(() => setLoadingH2h(false));
+    }
+  }, [activeTab, h2hData, match.homeTeamId, match.awayTeamId]);
+
+
 
   // Fetch AI insights when tabs are selected
   useEffect(() => {
@@ -127,22 +316,29 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
     }
   };
 
-  const { home, away, homeScore, awayScore, status, minute, league, stats, timeline, lineups, odds, news, date, stadiumId } = match;
+  // Use enriched data from Sportmonks detail endpoint if available
+  const activeMatch = enrichedMatch || match;
+  const { home, away, homeScore, awayScore, status, minute, league, stats, timeline, lineups, odds, date, stadiumId } = activeMatch;
 
-  const hasSmPred = match.sportmonksPredictions && match.sportmonksPredictions.probabilities;
-  const smPred = hasSmPred ? match.sportmonksPredictions : null;
+  const hasSmPred = !!(match.sportmonksPredictions && match.sportmonksPredictions.probabilities);
+  const prediction = predictMatch(home.name, away.name, homeScore, awayScore, status, minute, matches, odds);
+  
+  // Use our upgraded prediction engine directly to show state-of-the-art AI insights
+  const homeWin = prediction.probabilities.homeWin;
+  const draw = prediction.probabilities.draw;
+  const awayWin = prediction.probabilities.awayWin;
+  const over25 = prediction.probabilities.over25;
+  const under25 = prediction.probabilities.under25;
+  const btts = prediction.probabilities.btts;
+  const homeCleanSheet = prediction.probabilities.homeCleanSheet;
+  const awayCleanSheet = prediction.probabilities.awayCleanSheet;
 
-  const prediction = predictMatch(home.name, away.name, homeScore, awayScore, status, minute);
-  const homeWin = smPred ? smPred.probabilities.homeWin : prediction.probabilities.homeWin;
-  const draw = smPred ? smPred.probabilities.draw : prediction.probabilities.draw;
-  const awayWin = smPred ? smPred.probabilities.awayWin : prediction.probabilities.awayWin;
-  const over25 = smPred ? smPred.probabilities.over25 : prediction.probabilities.over25;
-  const under25 = smPred ? smPred.probabilities.under25 : prediction.probabilities.under25;
-
-  const homeElo = smPred ? smPred.analytics.homeElo : prediction.analytics.homeElo;
-  const awayElo = smPred ? smPred.analytics.awayElo : prediction.analytics.awayElo;
-  const mostLikelyScore = smPred ? smPred.analytics.mostLikelyScore : prediction.analytics.mostLikelyScore;
-  const topScorelines = smPred ? smPred.analytics.topScorelines : prediction.analytics.topScorelines;
+  const homeElo = prediction.analytics.homeElo;
+  const awayElo = prediction.analytics.awayElo;
+  const mostLikelyScore = prediction.analytics.mostLikelyScore;
+  const topScorelines = prediction.analytics.topScorelines;
+  const heatmapGrid = prediction.analytics.heatmapGrid;
+  const valueBets = prediction.analytics.valueBets;
 
   const evHome = (homeWin / 100) * odds.h2h.home - 1;
   const evDraw = (draw / 100) * odds.h2h.draw - 1;
@@ -173,6 +369,13 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
   const getDetailedStats = () => {
     if (!stats) return null;
     
+    // Deterministic seed random based on match ID to satisfy purity constraints
+    const seedRandom = (offset) => {
+      const s = parseInt(match.id) || 0;
+      const x = Math.sin(s + offset) * 10000;
+      return x - Math.floor(x);
+    };
+    
     const possessionHome = stats.possession?.home ?? 50;
     const possessionAway = stats.possession?.away ?? (100 - possessionHome);
     
@@ -182,38 +385,38 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
     const sotHome = stats.shotsOnTarget?.home ?? Math.max(homeScore, Math.round(shotsHome * 0.4));
     const sotAway = stats.shotsOnTarget?.away ?? Math.max(awayScore, Math.round(shotsAway * 0.4));
     
-    const xgHome = stats.xg?.home ?? parseFloat((homeScore * 0.35 + shotsHome * 0.06 + Math.random() * 0.3).toFixed(2));
-    const xgAway = stats.xg?.away ?? parseFloat((awayScore * 0.35 + shotsAway * 0.06 + Math.random() * 0.3).toFixed(2));
+    const xgHome = stats.xg?.home ?? parseFloat((homeScore * 0.35 + shotsHome * 0.06 + seedRandom(1) * 0.3).toFixed(2));
+    const xgAway = stats.xg?.away ?? parseFloat((awayScore * 0.35 + shotsAway * 0.06 + seedRandom(2) * 0.3).toFixed(2));
     
-    const attacksHome = stats.attacks?.home ?? Math.round(possessionHome * 1.6 + Math.random() * 10);
-    const attacksAway = stats.attacks?.away ?? Math.round(possessionAway * 1.6 + Math.random() * 10);
+    const attacksHome = stats.attacks?.home ?? Math.round(possessionHome * 1.6 + seedRandom(3) * 10);
+    const attacksAway = stats.attacks?.away ?? Math.round(possessionAway * 1.6 + seedRandom(4) * 10);
     
-    const dangHome = stats.dangerousAttacks?.home ?? Math.round(attacksHome * 0.45 + Math.random() * 5);
-    const dangAway = stats.dangerousAttacks?.away ?? Math.round(attacksAway * 0.45 + Math.random() * 5);
+    const dangHome = stats.dangerousAttacks?.home ?? Math.round(attacksHome * 0.45 + seedRandom(5) * 5);
+    const dangAway = stats.dangerousAttacks?.away ?? Math.round(attacksAway * 0.45 + seedRandom(6) * 5);
     
-    const passesHome = stats.passes?.home ?? Math.round(possessionHome * 8.5 + Math.random() * 40);
-    const passesAway = stats.passes?.away ?? Math.round(possessionAway * 8.5 + Math.random() * 40);
+    const passesHome = stats.passes?.home ?? Math.round(possessionHome * 8.5 + seedRandom(7) * 40);
+    const passesAway = stats.passes?.away ?? Math.round(possessionAway * 8.5 + seedRandom(8) * 40);
     
     const accPassHome = stats.accuratePasses?.home ?? Math.round(passesHome * (0.75 + (possessionHome / 500)));
     const accPassAway = stats.accuratePasses?.away ?? Math.round(passesAway * (0.75 + (possessionAway / 500)));
     
-    const foulsHome = stats.fouls?.home ?? (8 + Math.floor(Math.random() * 7));
-    const foulsAway = stats.fouls?.away ?? (8 + Math.floor(Math.random() * 7));
+    const foulsHome = stats.fouls?.home ?? (8 + Math.floor(seedRandom(9) * 7));
+    const foulsAway = stats.fouls?.away ?? (8 + Math.floor(seedRandom(10) * 7));
     
-    const cornersHome = stats.corners?.home ?? Math.round(shotsHome * 0.35 + Math.random() * 2);
-    const cornersAway = stats.corners?.away ?? Math.round(shotsAway * 0.35 + Math.random() * 2);
+    const cornersHome = stats.corners?.home ?? Math.round(shotsHome * 0.35 + seedRandom(11) * 2);
+    const cornersAway = stats.corners?.away ?? Math.round(shotsAway * 0.35 + seedRandom(12) * 2);
     
-    const offHome = stats.offsides?.home ?? Math.floor(Math.random() * 3);
-    const offAway = stats.offsides?.away ?? Math.floor(Math.random() * 3);
+    const offHome = stats.offsides?.home ?? Math.floor(seedRandom(13) * 3);
+    const offAway = stats.offsides?.away ?? Math.floor(seedRandom(14) * 3);
     
     const savesHome = stats.saves?.home ?? Math.max(0, sotAway - awayScore);
     const savesAway = stats.saves?.away ?? Math.max(0, sotHome - homeScore);
     
-    const tacklesHome = stats.tackles?.home ?? (10 + Math.floor(Math.random() * 10));
-    const tacklesAway = stats.tackles?.away ?? (10 + Math.floor(Math.random() * 10));
+    const tacklesHome = stats.tackles?.home ?? (10 + Math.floor(seedRandom(15) * 10));
+    const tacklesAway = stats.tackles?.away ?? (10 + Math.floor(seedRandom(16) * 10));
     
-    const clearancesHome = stats.clearances?.home ?? (12 + Math.floor(Math.random() * 12));
-    const clearancesAway = stats.clearances?.away ?? (12 + Math.floor(Math.random() * 12));
+    const clearancesHome = stats.clearances?.home ?? (12 + Math.floor(seedRandom(17) * 12));
+    const clearancesAway = stats.clearances?.away ?? (12 + Math.floor(seedRandom(18) * 12));
     
     const ycHome = stats.yellowCards?.home ?? 0;
     const ycAway = stats.yellowCards?.away ?? 0;
@@ -304,7 +507,10 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 src={`https://flagcdn.com/w160/${home.flag}.png`} 
                 alt={home.name} 
                 className="w-full h-full object-cover"
-                onError={(e) => { e.target.style.display = 'none'; }}
+                onError={(e) => { 
+                  if (home.logo) { e.target.onerror = () => { e.target.style.display = 'none'; }; e.target.src = home.logo; e.target.className = 'w-16 h-16 object-contain'; }
+                  else { e.target.style.display = 'none'; }
+                }}
               />
             </div>
             <div className="text-lg md:text-xl font-extrabold text-on-surface text-center leading-tight">
@@ -354,7 +560,10 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 src={`https://flagcdn.com/w160/${away.flag}.png`} 
                 alt={away.name} 
                 className="w-full h-full object-cover"
-                onError={(e) => { e.target.style.display = 'none'; }}
+                onError={(e) => { 
+                  if (away.logo) { e.target.onerror = () => { e.target.style.display = 'none'; }; e.target.src = away.logo; e.target.className = 'w-16 h-16 object-contain'; }
+                  else { e.target.style.display = 'none'; }
+                }}
               />
             </div>
             <div className="text-lg md:text-xl font-extrabold text-on-surface text-center leading-tight">
@@ -408,6 +617,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
           { key: 'ANALYTICS', icon: <Cpu size={14} />, label: 'AI Nhận định' },
           { key: 'CHAT', icon: <MessageSquare size={14} />, label: 'Hỏi Heo Hồng' },
           { key: 'STATS', icon: <BarChart2 size={14} />, label: 'Thống kê' },
+          { key: 'H2H', icon: <History size={14} />, label: 'Đối đầu' },
           { key: 'TIMELINE', icon: <ListTodo size={14} />, label: 'Diễn biến' },
           { key: 'NEWS', icon: <Newspaper size={14} />, label: 'Tin tức & MXH' },
           { key: 'LINEUPS', icon: <Users size={14} />, label: 'Đội hình' }
@@ -636,32 +846,157 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   </div>
                 </div>
 
+                {/* Score Probability Heatmap Grid */}
+                <div className="p-4 bg-white/50 border border-white/60 rounded-2xl">
+                  <h4 className="text-xs font-black text-on-background flex items-center gap-1.5 mb-3 uppercase tracking-wider">
+                    <span className="material-symbols-outlined text-primary text-[18px]">grid_on</span>
+                    Bản đồ nhiệt xác suất tỷ số (Dixon-Coles)
+                  </h4>
+                  <div className="overflow-x-auto min-w-[280px]">
+                    <div className="grid grid-cols-6 gap-1 text-center font-bold text-[9px]">
+                      {/* Header row */}
+                      <div className="p-1 text-on-surface-variant/70 flex items-center justify-center border border-white/20 bg-white/20 rounded-md">Nhà \ Khách</div>
+                      <div className="p-1 bg-white/40 rounded-md flex items-center justify-center">0</div>
+                      <div className="p-1 bg-white/40 rounded-md flex items-center justify-center">1</div>
+                      <div className="p-1 bg-white/40 rounded-md flex items-center justify-center">2</div>
+                      <div className="p-1 bg-white/40 rounded-md flex items-center justify-center">3</div>
+                      <div className="p-1 bg-white/40 rounded-md flex items-center justify-center">4+</div>
+                      
+                      {/* Grid content */}
+                      {heatmapGrid?.map((row, h) => (
+                        <div key={`h-row-${h}`} className="contents">
+                          <div className="p-1 bg-white/40 rounded-md flex items-center justify-center font-black text-on-surface-variant">
+                            {h}
+                          </div>
+                          {row.map((cell, a) => {
+                            const prob = cell.probability;
+                            // Scale opacity up to 0.85
+                            const opacity = Math.min(0.85, prob / 10);
+                            return (
+                              <div 
+                                key={`c-${h}-${a}`} 
+                                style={{ 
+                                  backgroundColor: prob > 0.5 ? `rgba(236, 72, 153, ${opacity})` : 'rgba(255,255,255,0.2)',
+                                  color: prob > 3 ? '#ffffff' : 'var(--md-sys-color-on-surface)'
+                                }}
+                                className={`p-1.5 rounded-md border border-black/[0.02] flex flex-col justify-center items-center ${
+                                  prob > 3 ? 'font-black shadow-sm' : 'font-medium'
+                                }`}
+                              >
+                                <span className="text-[10px] leading-tight">{cell.scoreText}</span>
+                                <span className="text-[8px] opacity-80 leading-none mt-0.5">{prob}%</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="text-[10px] text-on-surface-variant/80 mt-2 leading-relaxed">
+                    * Ô có màu hồng càng đậm biểu hiện tỷ số có khả năng xuất hiện càng cao theo thuật toán phân phối Poisson hiệu chỉnh.
+                  </p>
+                </div>
+
                 {/* Expected Goals Comparison Card */}
                 <div className="p-4 bg-white/50 border border-white/60 rounded-2xl space-y-3">
                   <h4 className="text-xs font-black text-on-background flex items-center gap-1.5">
                     <span className="material-symbols-outlined text-secondary text-[18px]">sports_soccer</span>
                     Chỉ số xG (Bàn thắng kỳ vọng dự tính của AI)
                   </h4>
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between items-center text-xs font-bold">
-                      <span className="text-primary">{home.name}: {analyticsData.homeXG?.toFixed(2)} xG</span>
-                      <span className="text-secondary">{away.name}: {analyticsData.awayXG?.toFixed(2)} xG</span>
+                  <div className="space-y-2">
+                    <div className="space-y-1">
+                      <div className="flex justify-between items-center text-xs font-bold">
+                        <span className="text-primary">{home.name}: {prediction.analytics.expectedHomeGoals?.toFixed(2)} xG</span>
+                        <span className="text-secondary">{away.name}: {prediction.analytics.expectedAwayGoals?.toFixed(2)} xG</span>
+                      </div>
+                      <div className="h-2 w-full bg-white/60 border border-white/30 rounded-full overflow-hidden flex">
+                        <div 
+                          style={{ width: `${(prediction.analytics.expectedHomeGoals / (prediction.analytics.expectedHomeGoals + prediction.analytics.expectedAwayGoals || 1)) * 100}%` }} 
+                          className="h-full bg-primary animate-pulse"
+                        ></div>
+                        <div 
+                          style={{ width: `${(prediction.analytics.expectedAwayGoals / (prediction.analytics.expectedHomeGoals + prediction.analytics.expectedAwayGoals || 1)) * 100}%` }} 
+                          className="h-full bg-secondary"
+                        ></div>
+                      </div>
                     </div>
-                    <div className="h-2 w-full bg-white/60 border border-white/30 rounded-full overflow-hidden flex">
-                      <div 
-                        style={{ width: `${(analyticsData.homeXG / (analyticsData.homeXG + analyticsData.awayXG || 1)) * 100}%` }} 
-                        className="h-full bg-primary"
-                      ></div>
-                      <div 
-                        style={{ width: `${(analyticsData.awayXG / (analyticsData.homeXG + analyticsData.awayXG || 1)) * 100}%` }} 
-                        className="h-full bg-secondary"
-                      ></div>
+                    
+                    {/* Strengths & Forms display */}
+                    <div className="grid grid-cols-2 gap-3 pt-2 text-[10px] border-t border-black/[0.05]">
+                      <div>
+                        <div className="font-black text-primary uppercase">Phong độ {home.name}:</div>
+                        <div className="text-on-surface-variant font-medium">{prediction.analytics.homeFormDesc}</div>
+                        {prediction.analytics.homeIsHost && (
+                          <div className="text-[9px] text-secondary font-black mt-0.5">🏟️ Lợi thế nước chủ nhà (+10% Tấn công)</div>
+                        )}
+                      </div>
+                      <div>
+                        <div className="font-black text-secondary uppercase">Phong độ {away.name}:</div>
+                        <div className="text-on-surface-variant font-medium">{prediction.analytics.awayFormDesc}</div>
+                        {prediction.analytics.awayIsHost && (
+                          <div className="text-[9px] text-secondary font-black mt-0.5">🏟️ Lợi thế nước chủ nhà (+10% Tấn công)</div>
+                        )}
+                      </div>
                     </div>
                   </div>
                   <p className="text-xs text-on-surface-variant leading-relaxed">
                     {analyticsData.xgTimeline}
                   </p>
                 </div>
+
+                {/* BTTS & Clean Sheet Percentages Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {/* BTTS */}
+                  <div className="p-3 bg-white/50 border border-white/60 rounded-2xl text-center flex flex-col justify-between">
+                    <div className="text-[9px] font-black uppercase text-on-surface-variant/80 tracking-wider">Cả hai đội ghi bàn (BTTS)</div>
+                    <div className="text-xl font-black text-primary my-1">{btts}%</div>
+                    <div className="h-1.5 w-full bg-white/60 border border-white/30 rounded-full overflow-hidden">
+                      <div style={{ width: `${btts}%` }} className="h-full bg-primary"></div>
+                    </div>
+                  </div>
+                  {/* Home Clean Sheet */}
+                  <div className="p-3 bg-white/50 border border-white/60 rounded-2xl text-center flex flex-col justify-between">
+                    <div className="text-[9px] font-black uppercase text-on-surface-variant/80 tracking-wider">Sạch lưới ({home.name})</div>
+                    <div className="text-xl font-black text-secondary my-1">{homeCleanSheet}%</div>
+                    <div className="h-1.5 w-full bg-white/60 border border-white/30 rounded-full overflow-hidden">
+                      <div style={{ width: `${homeCleanSheet}%` }} className="h-full bg-secondary"></div>
+                    </div>
+                  </div>
+                  {/* Away Clean Sheet */}
+                  <div className="p-3 bg-white/50 border border-white/60 rounded-2xl text-center flex flex-col justify-between">
+                    <div className="text-[9px] font-black uppercase text-on-surface-variant/80 tracking-wider">Sạch lưới ({away.name})</div>
+                    <div className="text-xl font-black text-on-surface-variant my-1">{awayCleanSheet}%</div>
+                    <div className="h-1.5 w-full bg-white/60 border border-white/30 rounded-full overflow-hidden">
+                      <div style={{ width: `${awayCleanSheet}%` }} className="h-full bg-on-surface-variant"></div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Value Bets Highlight Card */}
+                {valueBets && valueBets.length > 0 && (
+                  <div className="p-4 bg-primary/10 border border-primary/20 rounded-2xl space-y-3">
+                    <h4 className="text-xs font-black text-primary flex items-center gap-1.5 uppercase tracking-wide">
+                      <span className="material-symbols-outlined text-[18px]">verified</span>
+                      Gợi ý Kèo Thơm của Heo Hồng (+EV Value Bets)
+                    </h4>
+                    <div className="flex flex-col gap-2">
+                      {valueBets.map((item, idx) => (
+                        <div key={idx} className="flex items-center justify-between p-3 bg-white/60 border border-white/80 rounded-xl hover:bg-white/80 transition-colors">
+                          <div className="flex flex-col">
+                            <span className="text-xs font-black text-on-surface">{item.label}</span>
+                            <span className="text-[10px] text-on-surface-variant/70">Kèo: {item.odds} • Lợi nhuận kỳ vọng: +{(item.ev * 100).toFixed(1)}%</span>
+                          </div>
+                          <span className="px-2.5 py-1 bg-primary text-white rounded-lg text-[10px] font-black flex items-center gap-1 shadow-sm">
+                            🔥 +{(item.ev * 100).toFixed(1)}% EV
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-[9px] text-on-surface-variant/85 italic leading-relaxed">
+                      * Kèo thơm (+EV) là các cược có tỷ lệ nhà cái trả thưởng cao hơn tỷ số xác suất thực của trận đấu. Chọn kèo này đem lại lợi nhuận toán học lâu dài.
+                    </p>
+                  </div>
+                )}
 
                 {/* Tactical & Player Matchups Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1007,138 +1342,125 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
               )}
             </div>
 
-            {/* Social Posts and Scraped News Grid list */}
-            <div className="flex flex-col gap-4">
-              {loadingAi ? (
-                Array.from({ length: 2 }).map((_, i) => (
-                  <div key={i} className="h-28 w-full bg-white/30 rounded-2xl border border-white/40 animate-pulse"></div>
-                ))
-              ) : (
-                <>
-                  {/* Scraped dynamic reactions from Gemini */}
-                  {aiReactions && aiReactions.length > 0 ? (
-                    aiReactions.map((item, i) => {
-                      const videoUrl = item.hasVideo ? SOCCER_CLIPS[i % SOCCER_CLIPS.length] : null;
-                      return (
-                        <div 
-                          key={`ai-react-${i}`} 
-                          onClick={() => setSelectedSocial({ ...item, videoUrl })}
-                          className="p-4 bg-white/50 hover:bg-white border border-white/60 hover:border-primary/20 rounded-2xl transition-all cursor-pointer space-y-2.5 shadow-sm relative group"
-                        >
-                          <div className="flex justify-between items-start">
-                            <div className="flex items-center gap-2">
-                              <div className="w-8 h-8 rounded-full overflow-hidden border border-white/80 shadow-sm bg-white">
-                                <img 
-                                  src={getSocialAvatar(item.source, i)} 
-                                  alt={item.source}
-                                  className="w-full h-full object-cover" 
-                                />
-                              </div>
-                              <div>
-                                <div className="text-xs font-black text-on-surface flex items-center gap-0.5">
-                                  {item.source}
-                                  <CheckCircle2 size={12} fill="#1d9bf0" color="white" className="flex-shrink-0" />
-                                </div>
-                                <div className="text-[10px] text-on-surface-variant/80 font-bold">{item.time}</div>
-                              </div>
-                            </div>
-                            
-                            {videoUrl && (
-                              <span className="px-2 py-0.5 rounded bg-primary text-white text-[9px] font-black uppercase tracking-wider">
-                                VIDEO 🎥
-                              </span>
-                            )}
-                          </div>
-
-                          <div className="text-xs font-black text-on-surface leading-snug group-hover:text-primary transition-colors">
-                            {item.title}
-                          </div>
-                          
-                          <p className="text-xs text-on-surface-variant line-clamp-2 leading-relaxed">
-                            {item.summary}
-                          </p>
-
-                          {videoUrl && (
-                            <div className="rounded-xl overflow-hidden bg-black aspect-video max-h-[220px] w-full border border-white/30" onClick={e => e.stopPropagation()}>
-                              <video src={videoUrl} controls autoPlay muted loop playsInline className="w-full h-full object-cover" />
-                            </div>
-                          )}
-
-                          <div className="flex gap-4 text-[10px] text-on-surface-variant/80 font-black pt-2 border-t border-dashed border-white/40">
-                            <span className="flex items-center gap-1">👍 {item.upvotes?.toLocaleString()}</span>
-                            <span className="flex items-center gap-1">💬 {item.comments?.toLocaleString()}</span>
-                            <span className="ml-auto"><Share2 size={12} /></span>
-                          </div>
+            {/* Social Media Reactions section */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-black text-on-surface uppercase tracking-wider pl-1 flex items-center gap-1.5">
+                <span className="material-symbols-outlined text-secondary text-[18px]">forum</span>
+                Bản tin mạng xã hội nóng (Social Reactions)
+              </h4>
+              
+              {loadingSocial ? (
+                <div className="flex items-center gap-2 py-4 px-3 bg-white/40 border border-white/50 rounded-2xl text-xs font-bold text-on-surface-variant justify-center">
+                  <Loader2 size={14} className="animate-spin text-secondary" />
+                  <span>Đang cập nhật các bài đăng MXH mới nhất...</span>
+                </div>
+              ) : socialReactions && socialReactions.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {socialReactions.map((post, i) => (
+                    <div 
+                      key={`social-post-${i}`}
+                      onClick={() => setSelectedSocial(post)}
+                      className="p-3.5 bg-white/45 hover:bg-white border border-white/50 hover:border-primary/20 rounded-2xl transition-all cursor-pointer shadow-sm flex flex-col justify-between gap-3 group relative overflow-hidden"
+                    >
+                      <div className="space-y-2">
+                        <div className="flex justify-between items-center text-[10px] font-bold">
+                          <span className="text-primary font-black truncate max-w-[120px]">{post.source}</span>
+                          <span className="text-on-surface-variant/80 whitespace-nowrap">{post.time}</span>
                         </div>
-                      );
-                    })
-                  ) : (
-                    /* Fallback Static News */
-                    news && news.length > 0 && (
-                      news.map((item, i) => {
-                        const videoUrl = i % 2 === 0 ? SOCCER_CLIPS[i % SOCCER_CLIPS.length] : null;
-                        const resolvedSource = item.source.includes('Reddit') 
-                          ? 'Facebook - CĐV Việt Nam' 
-                          : item.source.includes('X ') 
-                            ? 'TikTok @vietnam_football' 
-                            : item.source;
-                        
-                        return (
-                          <div 
-                            key={`static-news-${i}`}
-                            onClick={() => setSelectedSocial({ ...item, videoUrl })}
-                            className="p-4 bg-white/50 hover:bg-white border border-white/60 hover:border-primary/20 rounded-2xl transition-all cursor-pointer space-y-2.5 shadow-sm relative group"
-                          >
-                            <div className="flex justify-between items-start">
-                              <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-full overflow-hidden border border-white/80 shadow-sm bg-white">
-                                  <img 
-                                    src={getSocialAvatar(resolvedSource, i)} 
-                                    alt={resolvedSource}
-                                    className="w-full h-full object-cover" 
-                                  />
-                                </div>
-                                <div>
-                                  <div className="text-xs font-black text-on-surface flex items-center gap-0.5">
-                                    {resolvedSource}
-                                    <CheckCircle2 size={12} fill="#1d9bf0" color="white" className="flex-shrink-0" />
-                                  </div>
-                                  <div className="text-[10px] text-on-surface-variant/80 font-bold">{item.time}</div>
-                                </div>
-                              </div>
-                              
-                              {videoUrl && (
-                                <span className="px-2 py-0.5 rounded bg-primary text-white text-[9px] font-black uppercase tracking-wider">
-                                  VIDEO 🎥
-                                </span>
-                              )}
-                            </div>
+                        <h5 className="text-[11px] font-black text-on-surface leading-snug line-clamp-1 group-hover:text-primary transition-colors">
+                          {post.title}
+                        </h5>
+                        <p className="text-[10px] text-on-surface-variant/90 line-clamp-2 leading-relaxed font-semibold">
+                          {post.summary}
+                        </p>
+                      </div>
 
-                            <div className="text-xs font-black text-on-surface leading-snug group-hover:text-primary transition-colors">
-                              {item.title}
-                            </div>
-                            
-                            <p className="text-xs text-on-surface-variant line-clamp-2 leading-relaxed">
-                              {item.summary}
+                      <div className="flex justify-between items-center text-[9px] font-black text-on-surface-variant/85 border-t border-white/30 pt-2.5">
+                        <div className="flex gap-2">
+                          <span>👍 {post.upvotes?.toLocaleString()}</span>
+                          <span>💬 {post.comments?.toLocaleString()}</span>
+                        </div>
+                        {post.hasVideo && (
+                          <span className="px-1.5 py-0.5 rounded bg-secondary/15 text-secondary flex items-center gap-0.5">
+                            <Play size={8} fill="currentColor" /> Clip
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-4 bg-white/40 border border-white/50 rounded-2xl text-xs text-on-surface-variant text-center">
+                  Chưa ghi nhận bình luận MXH nào cho trận này.
+                </div>
+              )}
+            </div>
+
+            {/* Real News related to match teams */}
+            <div className="flex flex-col gap-3">
+              {matchNews.length > 0 ? (
+                matchNews.map((article, i) => {
+                  const title = article.titleVi || article.title || '';
+                  const desc = article.descriptionVi || article.description || '';
+                  const image = article.image || '';
+                  const source = article.source || '';
+                  const url = article.url || article.link || '#';
+                  const pubDate = article.pubDate ? new Date(article.pubDate) : null;
+                  const timeAgo = pubDate ? (() => {
+                    const diff = currentTime - pubDate.getTime();
+                    const mins = Math.floor(diff / 60000);
+                    if (mins < 60) return `${mins} phút trước`;
+                    const hours = Math.floor(mins / 60);
+                    if (hours < 24) return `${hours} giờ trước`;
+                    const days = Math.floor(hours / 24);
+                    return `${days} ngày trước`;
+                  })() : '';
+
+                  return (
+                    <a
+                      key={`match-news-${i}`}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex gap-3 p-3 bg-white/50 hover:bg-white border border-white/60 hover:border-primary/20 rounded-2xl transition-all cursor-pointer shadow-sm group"
+                    >
+                      {/* Thumbnail */}
+                      {image && !image.includes('unsplash.com') && (
+                        <div className="w-24 h-20 flex-shrink-0 rounded-xl overflow-hidden bg-surface-variant/30">
+                          <img 
+                            src={image} 
+                            alt={title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            onError={(e) => { e.target.parentElement.style.display = 'none'; }}
+                          />
+                        </div>
+                      )}
+                      {/* Content */}
+                      <div className="flex-1 min-w-0 flex flex-col justify-between">
+                        <div>
+                          <h4 className="text-xs font-black text-on-surface leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+                            {title}
+                          </h4>
+                          {desc && (
+                            <p className="text-[11px] text-on-surface-variant line-clamp-2 leading-relaxed mt-1">
+                              {desc}
                             </p>
-
-                            {videoUrl && (
-                              <div className="rounded-xl overflow-hidden bg-black aspect-video max-h-[220px] w-full border border-white/30" onClick={e => e.stopPropagation()}>
-                                <video src={videoUrl} controls autoPlay muted loop playsInline className="w-full h-full object-cover" />
-                              </div>
-                            )}
-
-                            <div className="flex gap-4 text-[10px] text-on-surface-variant/80 font-black pt-2 border-t border-dashed border-white/40">
-                              <span className="flex items-center gap-1">👍 {item.upvotes?.toLocaleString()}</span>
-                              <span className="flex items-center gap-1">💬 {item.comments?.toLocaleString()}</span>
-                              <span className="ml-auto"><Share2 size={12} /></span>
-                            </div>
-                          </div>
-                        );
-                      })
-                    )
-                  )}
-                </>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 mt-1.5">
+                          <span className="text-[10px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{source}</span>
+                          {timeAgo && <span className="text-[10px] text-on-surface-variant/70">{timeAgo}</span>}
+                        </div>
+                      </div>
+                    </a>
+                  );
+                })
+              ) : (
+                <div className="text-center py-8 text-on-surface-variant/60">
+                  <Newspaper size={32} className="mx-auto mb-2 opacity-40" />
+                  <p className="text-xs font-bold">Chưa có tin tức liên quan đến trận đấu này</p>
+                  <p className="text-[10px] mt-1">Tin tức sẽ được cập nhật khi có bài viết mới về {match.home?.name} hoặc {match.away?.name}</p>
+                </div>
               )}
             </div>
 
@@ -1157,7 +1479,8 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                       <img 
                         src={`https://flagcdn.com/w40/${home.flag}.png`} 
                         alt={home.name} 
-                        className="w-5 h-3.5 object-cover rounded border border-black/10" 
+                        className="w-5 h-3.5 object-cover rounded border border-black/10"
+                        onError={(e) => { if (home.logo) { e.target.onerror = null; e.target.src = home.logo; e.target.className = 'w-5 h-5 object-contain rounded'; } else e.target.style.display = 'none'; }}
                       /> 
                       {home.name} ra quân
                     </h4>
@@ -1188,7 +1511,8 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                       <img 
                         src={`https://flagcdn.com/w40/${away.flag}.png`} 
                         alt={away.name} 
-                        className="w-5 h-3.5 object-cover rounded border border-black/10" 
+                        className="w-5 h-3.5 object-cover rounded border border-black/10"
+                        onError={(e) => { if (away.logo) { e.target.onerror = null; e.target.src = away.logo; e.target.className = 'w-5 h-5 object-contain rounded'; } else e.target.style.display = 'none'; }}
                       /> 
                       {away.name} ra quân
                     </h4>
@@ -1216,60 +1540,74 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                 {/* Tactical Pitch Board */}
                 <div className="space-y-3">
-                  <h4 className="text-xs font-black text-on-surface uppercase tracking-wider">
-                    Sa bàn chiến thuật
+                  <h4 className="text-xs font-black text-on-surface uppercase tracking-wider text-center">
+                    Sa bàn chiến thuật (Vertical Field)
                   </h4>
                   
-                  <div className="relative aspect-[3/4] sm:aspect-video w-full rounded-2xl overflow-hidden bg-gradient-to-b from-[#2e7d32] to-[#1b5e20] border-2 border-white/40 shadow-inner flex flex-col justify-between p-4">
+                  <div className="relative aspect-[2/3] w-full max-w-[400px] mx-auto rounded-3xl overflow-hidden bg-gradient-to-b from-[#1b5e20] via-[#2e7d32] to-[#1b5e20] border-3 border-white/45 shadow-[inset_0_4px_20px_rgba(0,0,0,0.45),0_10px_25px_rgba(0,0,0,0.15)] p-4">
                     {/* Pitch markings */}
-                    <div className="absolute inset-0 pointer-events-none flex flex-col justify-between">
-                      <div className="w-full h-px bg-white/20"></div>
-                      <div className="w-full h-px bg-white/20"></div>
-                    </div>
-                    <div className="absolute top-1/2 left-0 right-0 h-px bg-white/35 pointer-events-none -translate-y-1/2"></div>
-                    <div className="absolute top-1/2 left-1/2 w-20 h-20 border-2 border-white/35 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
+                    {/* Outer border margin */}
+                    <div className="absolute inset-2.5 border border-white/25 pointer-events-none"></div>
                     
-                    {/* Penalty areas */}
-                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-44 h-16 border-b-2 border-x-2 border-white/35 pointer-events-none"></div>
-                    <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-44 h-16 border-t-2 border-x-2 border-white/35 pointer-events-none"></div>
+                    {/* Half-way line */}
+                    <div className="absolute top-1/2 left-2.5 right-2.5 h-px bg-white/25 pointer-events-none -translate-y-1/2"></div>
+                    
+                    {/* Center circle */}
+                    <div className="absolute top-1/2 left-1/2 w-20 h-20 border border-white/25 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
+                    {/* Center spot */}
+                    <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-white/50 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
+                    
+                    {/* Penalty Area Top (Away Team) */}
+                    <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-[55%] h-[16%] border-b border-x border-white/25 pointer-events-none"></div>
+                    {/* Goal Area Top */}
+                    <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-[25%] h-[6%] border-b border-x border-white/25 pointer-events-none"></div>
+                    {/* Penalty spot top */}
+                    <div className="absolute top-[12%] left-1/2 -translate-x-1/2 w-1.2 h-1.2 bg-white/50 rounded-full pointer-events-none"></div>
+
+                    {/* Penalty Area Bottom (Home Team) */}
+                    <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-[55%] h-[16%] border-t border-x border-white/25 pointer-events-none"></div>
+                    {/* Goal Area Bottom */}
+                    <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-[25%] h-[6%] border-t border-x border-white/25 pointer-events-none"></div>
+                    {/* Penalty spot bottom */}
+                    <div className="absolute bottom-[12%] left-1/2 -translate-x-1/2 w-1.2 h-1.2 bg-white/50 rounded-full pointer-events-none"></div>
 
                     {/* Players dots mapping */}
                     <div className="absolute inset-0 z-10">
-                      {/* Home Team (Bottom half of screen) */}
+                      {/* Home Team (Bottom half of screen: y scaled to 52% - 92%) */}
                       {lineups.home.map((player) => (
                         <div 
                           key={`home-${player.number}`} 
-                          style={{ left: `${player.x}%`, top: `${player.y}%` }}
-                          className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1 group"
+                          style={{ left: `${player.x}%`, top: `${52 + (player.y / 2.3)}%` }}
+                          className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-0.5 group"
                           title={`${player.name} (#${player.number})`}
                         >
                           <span 
                             style={{ backgroundColor: home.color || 'var(--primary)', color: home.textColor || 'white' }}
-                            className="w-6 h-6 rounded-full text-[10px] font-black flex items-center justify-center border-1.5 border-white shadow-md cursor-pointer group-hover:scale-110 transition-transform"
+                            className="w-5 h-5 rounded-full text-[9px] font-black flex items-center justify-center border border-white shadow-md cursor-pointer group-hover:scale-110 transition-transform"
                           >
                             {player.number}
                           </span>
-                          <span className="px-1.5 py-0.5 bg-black/55 text-white font-bold text-[8px] rounded whitespace-nowrap shadow">
+                          <span className="px-1 py-0.2 bg-black/60 text-white font-bold text-[7px] rounded-md whitespace-nowrap shadow scale-90">
                             {player.name.split(' ').pop()}
                           </span>
                         </div>
                       ))}
 
-                      {/* Away Team (Top half of screen - y inverted) */}
+                      {/* Away Team (Top half of screen: y scaled to 8% - 48%) */}
                       {lineups.away.map((player) => (
                         <div 
                           key={`away-${player.number}`} 
-                          style={{ left: `${player.x}%`, top: `${100 - player.y}%` }}
-                          className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1 group"
+                          style={{ left: `${player.x}%`, top: `${48 - (player.y / 2.3)}%` }}
+                          className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-0.5 group"
                           title={`${player.name} (#${player.number})`}
                         >
                           <span 
                             style={{ backgroundColor: away.color || 'var(--secondary)', color: away.textColor || 'white' }}
-                            className="w-6 h-6 rounded-full text-[10px] font-black flex items-center justify-center border-1.5 border-white shadow-md cursor-pointer group-hover:scale-110 transition-transform"
+                            className="w-5 h-5 rounded-full text-[9px] font-black flex items-center justify-center border border-white shadow-md cursor-pointer group-hover:scale-110 transition-transform"
                           >
                             {player.number}
                           </span>
-                          <span className="px-1.5 py-0.5 bg-black/55 text-white font-bold text-[8px] rounded whitespace-nowrap shadow">
+                          <span className="px-1 py-0.2 bg-black/60 text-white font-bold text-[7px] rounded-md whitespace-nowrap shadow scale-90">
                             {player.name.split(' ').pop()}
                           </span>
                         </div>
@@ -1281,6 +1619,57 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
             ) : (
               <div className="text-xs text-on-surface-variant text-center py-6">
                 Đội hình ra sân của hai đội tuyển chưa được cập nhật chính thức.
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* H2H TAB */}
+        {activeTab === 'H2H' && (
+          <div className="space-y-6">
+            <h4 className="text-xs font-black text-on-surface flex items-center gap-2 border-b border-white/60 pb-2 uppercase tracking-wider">
+              <History size={14} className="text-primary" />
+              Lịch sử đối đầu trực tiếp
+            </h4>
+            {loadingH2h ? (
+              <div className="flex flex-col items-center justify-center gap-3 py-10 text-on-surface-variant">
+                <Loader2 size={24} className="animate-spin text-primary" />
+                <span className="text-xs font-bold">Đang tải lịch sử đối đầu...</span>
+              </div>
+            ) : h2hData && h2hData.length > 0 ? (
+              <div className="flex flex-col gap-3">
+                {h2hData.map((fixture) => {
+                  const dateStr = fixture.date 
+                    ? new Date(fixture.date).toLocaleDateString('vi-VN', { day: 'numeric', month: 'numeric', year: 'numeric' })
+                    : '?';
+                  return (
+                    <div 
+                      key={fixture.id} 
+                      className="flex items-center justify-between p-3.5 bg-white/45 border border-white/50 rounded-2xl hover:bg-white/55 transition-all shadow-sm"
+                    >
+                      {/* Date / League info */}
+                      <div className="w-[80px] flex flex-col text-[10px] text-on-surface-variant/80 font-bold leading-tight">
+                        <span className="text-primary">{dateStr}</span>
+                        <span>{fixture.state}</span>
+                      </div>
+
+                      {/* Scoreline and Team names */}
+                      <div className="flex-1 flex items-center justify-center px-4 gap-3 text-xs md:text-sm font-bold">
+                        <span className="flex-1 text-right truncate text-on-surface max-w-[120px] md:max-w-[160px]">{fixture.homeName}</span>
+                        <div className="flex items-center gap-1.5 px-3 py-1 bg-white/65 border border-white/80 rounded-xl font-black text-sm text-primary shadow-inner">
+                          <span>{fixture.homeScore}</span>
+                          <span className="opacity-45 font-normal">-</span>
+                          <span>{fixture.awayScore}</span>
+                        </div>
+                        <span className="flex-1 text-left truncate text-on-surface max-w-[120px] md:max-w-[160px]">{fixture.awayName}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-xs text-on-surface-variant text-center py-8">
+                Không tìm thấy dữ liệu đối đầu lịch sử giữa hai đội tuyển.
               </div>
             )}
           </div>

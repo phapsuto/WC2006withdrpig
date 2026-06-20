@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { predictMatch } from '../utils/aiPredictor';
 import { convertToUserTimezone } from '../services/worldcup26api';
 import { useLiveMatchClock } from '../services/useLiveMatchClock';
@@ -19,20 +19,43 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
   const [activeTab, setActiveTab] = useState('ALL'); // ALL, LIVE, UPCOMING, FINISHED
   const [selectedGroupFilter, setSelectedGroupFilter] = useState('ALL'); // ALL, A, B, C, ... L
   const { language, t } = useLanguage();
-  const [apiStatus, setApiStatus] = useState({ online: true, message: '' });
-
-  useEffect(() => {
-    // Check initial config mode
-    const currentConfig = window.localStorage.getItem('football_app_config');
-    if (currentConfig) {
-      try {
-        const parsed = JSON.parse(currentConfig);
+  const [apiStatus, setApiStatus] = useState(() => {
+    // Check if mode is explicitly DEMO in localStorage
+    try {
+      const saved = window.localStorage.getItem('football_app_config');
+      if (saved) {
+        const parsed = JSON.parse(saved);
         if (parsed.apiMode === 'DEMO') {
-          setApiStatus({ online: false, message: 'mô phỏng' });
+          return { online: false, message: 'mô phỏng' };
         }
-      } catch (e) {}
+      }
+    } catch { /* ignore */ }
+    return { online: true, message: '' };
+  });
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const matchListRef = React.useRef(null);
+  const hasScrolledToToday = React.useRef(false);
+
+  // Mark initial load complete once we have matches
+  useEffect(() => {
+    if (matches.length > 0 && isInitialLoad) {
+      setIsInitialLoad(false);
     }
-  }, []);
+  }, [matches, isInitialLoad]);
+
+  // Auto-scroll to today's date group when matches first load
+  useEffect(() => {
+    if (matches.length > 0 && !hasScrolledToToday.current && matchListRef.current) {
+      hasScrolledToToday.current = true;
+      // Find today's date header and scroll to it
+      setTimeout(() => {
+        const todayEl = matchListRef.current?.querySelector('[data-today="true"]');
+        if (todayEl) {
+          todayEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 300);
+    }
+  }, [matches]);
 
   useEffect(() => {
     const handleStatusChange = (e) => {
@@ -105,7 +128,9 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
       0,
       0,
       'UPCOMING',
-      0
+      0,
+      matches,
+      match.odds
     );
     const { homeWin, draw, awayWin } = prediction.probabilities;
 
@@ -266,19 +291,33 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
       </div>
 
       {/* Grouped matches list */}
-      <div className="flex flex-col divide-y divide-white/25 max-h-[600px] overflow-y-auto pr-1">
+      <div ref={matchListRef} className="flex flex-col divide-y divide-white/25 max-h-[600px] overflow-y-auto pr-1">
         {Object.keys(groupedMatches).length === 0 ? (
-          <div className="py-12 text-center text-xs text-on-surface-variant/80 flex flex-col items-center justify-center gap-2">
-            <span className="material-symbols-outlined text-[36px] text-outline">info</span>
-            <p className="font-bold">{t('noMatchesInCategory')}</p>
-          </div>
+          isInitialLoad ? (
+            <div className="py-12 text-center text-xs text-on-surface-variant/80 flex flex-col items-center justify-center gap-3">
+              <span className="material-symbols-outlined text-[36px] text-primary animate-spin" style={{animationDuration:'2s'}}>sports_soccer</span>
+              <p className="font-bold text-primary">Đang tải dữ liệu trận đấu...</p>
+              <p className="text-[10px] text-on-surface-variant/60">Kết nối Sportmonks API</p>
+            </div>
+          ) : (
+            <div className="py-12 text-center text-xs text-on-surface-variant/80 flex flex-col items-center justify-center gap-2">
+              <span className="material-symbols-outlined text-[36px] text-outline">info</span>
+              <p className="font-bold">{t('noMatchesInCategory')}</p>
+            </div>
+          )
         ) : (
-          Object.keys(groupedMatches).map((dateHeader) => (
-            <div key={dateHeader} className="flex flex-col">
+          Object.keys(groupedMatches).map((dateHeader) => {
+            // Check if this date group is today
+            const todayStr = new Date().toLocaleDateString(language === 'vi' ? 'vi-VN' : 'en-US', {
+              weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric'
+            });
+            const isToday = dateHeader === todayStr;
+            return (
+            <div key={dateHeader} className="flex flex-col" data-today={isToday ? 'true' : undefined}>
               {/* Date Header: livescores.com style */}
-              <div className="py-2.5 px-1 text-[11px] font-black text-on-surface-variant/80 flex items-center gap-1.5 uppercase tracking-wide">
-                <span className="material-symbols-outlined text-[15px] text-secondary">calendar_today</span>
-                <span>{dateHeader}</span>
+              <div className={`py-2.5 px-1 text-[11px] font-black flex items-center gap-1.5 uppercase tracking-wide ${isToday ? 'text-primary' : 'text-on-surface-variant/80'}`}>
+                <span className={`material-symbols-outlined text-[15px] ${isToday ? 'text-primary' : 'text-secondary'}`}>{isToday ? 'today' : 'calendar_today'}</span>
+                <span>{dateHeader}{isToday ? ' — HÔM NAY' : ''}</span>
               </div>
 
               <div className="flex flex-col gap-1.5 pb-3">
@@ -294,9 +333,11 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
                     match.homeScore,
                     match.awayScore,
                     match.status,
-                    match.minute
+                    match.minute,
+                    matches,
+                    match.odds
                   );
-                  const { homeWin, draw, awayWin } = prediction.probabilities;
+                  const { homeWin, awayWin } = prediction.probabilities;
 
                   const kickoffHour = match.localDateObj.toLocaleTimeString([], {
                     hour: '2-digit',
@@ -361,7 +402,15 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
                               src={`https://flagcdn.com/w40/${match.home.flag}.png`} 
                               alt={homeName} 
                               className="w-5 h-3.5 object-cover rounded shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
-                              onError={(e) => { e.target.style.display = 'none'; }}
+                              onError={(e) => { 
+                                if (match.home.logo) {
+                                  e.target.onerror = () => { e.target.style.display = 'none'; };
+                                  e.target.src = match.home.logo;
+                                  e.target.className = 'w-5 h-5 object-contain rounded';
+                                } else {
+                                  e.target.style.display = 'none';
+                                }
+                              }}
                             />
                             <span className="text-xs font-semibold truncate max-w-[80px] sm:max-w-[120px]">{homeName}</span>
                           </div>
@@ -375,7 +424,15 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
                               src={`https://flagcdn.com/w40/${match.away.flag}.png`} 
                               alt={awayName} 
                               className="w-5 h-3.5 object-cover rounded shadow-[0_1px_2px_rgba(0,0,0,0.05)]"
-                              onError={(e) => { e.target.style.display = 'none'; }}
+                              onError={(e) => { 
+                                if (match.away.logo) {
+                                  e.target.onerror = () => { e.target.style.display = 'none'; };
+                                  e.target.src = match.away.logo;
+                                  e.target.className = 'w-5 h-5 object-contain rounded';
+                                } else {
+                                  e.target.style.display = 'none';
+                                }
+                              }}
                             />
                             <span className="text-xs font-semibold truncate max-w-[80px] sm:max-w-[120px]">{awayName}</span>
                           </div>
@@ -399,7 +456,8 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
                 })}
               </div>
             </div>
-          ))
+          );
+          })
         )}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { fetchRssFeeds } from '../services/rss';
 import { 
   Newspaper, 
@@ -9,178 +9,265 @@ import {
   ArrowLeft, 
   Clock, 
   TrendingUp, 
-  ThumbsUp, 
-  MessageCircle, 
-  Share2, 
   Flame, 
   CheckCircle2,
-  Play
+  Play,
+  Calendar,
+  ChevronRight,
+  RefreshCw
 } from 'lucide-react';
 
-const SOCCER_CLIPS = [
-  '/videos/clip_1.mp4',
-  '/videos/clip_2.mp4',
-  '/videos/clip_3.mp4',
-  '/videos/clip_4.mp4'
+// ── PERSISTENT NEWS STORAGE ──────────────────────────────
+const NEWS_STORAGE_KEY = 'wc2026_news_data';
+const NEWS_STORAGE_TS_KEY = 'wc2026_news_timestamp';
+const NEWS_MAX_AGE_DAYS = 30;
+
+// WHITELIST: Article MUST contain at least one of these to be WC-related
+const WC_REQUIRED_KEYWORDS = [
+  'world cup', 'worldcup', 'wc 2026', 'wc2026', 'fifa', 
+  'world cup 2026', 'vòng chung kết', 'vòng bảng', 'bảng đấu',
+  'đội tuyển', 'đt ', 'tuyển quốc gia',
+  'bóng đá', 'bong da', 'football', 'soccer',
+  'trận đấu', 'bàn thắng', 'penalty', 'thẻ đỏ', 'thẻ vàng',
+  'huấn luyện viên', 'hlv', 'cầu thủ', 'tiền đạo', 'thủ môn',
+  'hậu vệ', 'tiền vệ', 'trung vệ',
+  'messi', 'ronaldo', 'mbappe', 'mbappé', 'haaland', 'vinicius',
+  'neymar', 'salah', 'kane', 'bellingham', 'saka',
+  'argentina', 'brazil', 'france', 'germany', 'england', 'spain', 'portugal',
+  'pháp', 'đức', 'anh', 'tây ban nha', 'bồ đào nha', 'brazil',
+  'mexico', 'mỹ', 'usa', 'hàn quốc', 'nhật bản', 'maroc', 'morocco',
+  'bỉ', 'hà lan', 'croatia', 'uruguay', 'colombia', 'ecuador',
+  'senegal', 'cameroon', 'nigeria', 'ghana', 'tunisia',
+  'group a', 'group b', 'group c', 'group d', 'group e', 'group f',
+  'group g', 'group h', 'group i', 'group j', 'group k', 'group l',
+  'bảng a', 'bảng b', 'bảng c', 'bảng d', 'bảng e', 'bảng f',
+  'nam phi', 'hàn quốc', 'thụy sĩ', 'thổ nhĩ kỳ', 'bờ biển ngà',
+  'tỉ số', 'tỷ số', 'xếp hạng', 'kết quả', 'lịch thi đấu',
+  'sân vận động', 'stadium', 'var ', 'trọng tài',
+  'dự đoán', 'nhận định', 'soi kèo', 'kèo',
+  'vô địch', 'champion', 'knockout', 'vòng 16', 'tứ kết', 'bán kết', 'chung kết',
 ];
 
-const injectClips = (newsList) => {
-  if (!newsList) return [];
-  return newsList.map((item, idx) => {
-    const hasVideo = idx % 3 === 0;
-    return {
-      ...item,
-      videoUrl: hasVideo ? SOCCER_CLIPS[idx % SOCCER_CLIPS.length] : null
-    };
+// BLACKLIST: Even if it passes whitelist, reject these
+const NEWS_BLACKLIST = [
+  'esport', 'pickleball', 'tennis', 'boxing', 'golf', 'nba ',
+  'formula 1', 'f1 grand prix', 'mma', 'ufc', 'muay thái',
+  'asiad', 'sea games', 'olympic 2028', 's-race', 'giải chạy',
+  'marathon', 'bơi lội', 'cầu lông', 'bóng rổ', 'bóng chuyền',
+  'karate', 'judo', 'taekwondo', 'wushu', 'đấu kiếm',
+];
+
+const filterFootballNews = (articles) => {
+  return articles.filter(article => {
+    const title = (article.titleVi || article.title || '').toLowerCase();
+    const desc = (article.descriptionVi || article.description || '').toLowerCase();
+    const combined = title + ' ' + desc;
+    // BLACKLIST check first
+    if (NEWS_BLACKLIST.some(kw => combined.includes(kw))) return false;
+    // Filter out fake "[LIVE]" articles
+    if (title.startsWith('[live]') || title.includes('[trực tiếp]')) return false;
+    const url = article.url || article.link || '';
+    if (url.includes('worldcup26.ir/live-match')) return false;
+    // WHITELIST: MUST contain at least one WC/football keyword
+    const hasWcKeyword = WC_REQUIRED_KEYWORDS.some(kw => combined.includes(kw));
+    if (!hasWcKeyword) return false;
+    return true;
   });
 };
 
-export default function NewsHub({ matches = [] }) {
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [firstLoadDone, setFirstLoadDone] = useState(false);
-  const [selectedArticle, setSelectedArticle] = useState(null);
-  const [activeTab, setActiveTab] = useState('fulltext'); // 'fulltext' | 'ai' | 'social'
+const cleanOldArticles = (articles) => {
+  const cutoff = Date.now() - (NEWS_MAX_AGE_DAYS * 24 * 60 * 60 * 1000);
+  return articles.filter(article => {
+    const pubDate = new Date(article.pubDate || article.publishedAt || 0).getTime();
+    // Keep articles without valid dates (assume recent)
+    return pubDate === 0 || pubDate > cutoff;
+  });
+};
 
-  const loadNews = async (isManual = false) => {
-    if (isManual || !firstLoadDone) {
-      setLoading(true);
+const persistNews = (articles) => {
+  try {
+    const cleaned = cleanOldArticles(articles);
+    localStorage.setItem(NEWS_STORAGE_KEY, JSON.stringify(cleaned));
+    localStorage.setItem(NEWS_STORAGE_TS_KEY, Date.now().toString());
+  } catch (e) {
+    console.warn('[News Storage] Failed to persist:', e.message);
+  }
+};
+
+const loadPersistedNews = () => {
+  try {
+    const raw = localStorage.getItem(NEWS_STORAGE_KEY);
+    if (raw) {
+      let articles = JSON.parse(raw);
+      // Apply filter on cached data too (catches stale fake/irrelevant articles)
+      articles = filterFootballNews(articles);
+      console.log(`[News Storage] Loaded ${articles.length} cached articles (filtered)`);
+      return articles;
     }
+  } catch (e) {
+    console.warn('[News Storage] Failed to load:', e.message);
+  }
+  return [];
+};
+
+export default function NewsHub({ matches = [] }) {
+  // Initialize from persistent storage for instant load
+  const [articles, setArticles] = useState(() => loadPersistedNews());
+  const [loading, setLoading] = useState(() => loadPersistedNews().length === 0);
+  const [firstLoadDone, setFirstLoadDone] = useState(() => loadPersistedNews().length > 0);
+  const [selectedArticle, setSelectedArticle] = useState(null);
+  const [activeTab, setActiveTab] = useState('fulltext');
+  const [imgErrors, setImgErrors] = useState({});
+
+  const loadNews = useCallback(async (isManual = false) => {
+    if (isManual || !firstLoadDone) setLoading(true);
     try {
       const response = await fetch('/data/news.json');
       if (response.ok) {
-        const news = await response.json();
-        setArticles(injectClips(news));
+        let news = await response.json();
+        // Client-side filter: remove non-football articles
+        news = filterFootballNews(news);
+        // Clean old articles (> 30 days)
+        news = cleanOldArticles(news);
+        setArticles(news);
+        // Persist to localStorage permanently
+        persistNews(news);
+        console.log(`[News] Loaded ${news.length} WC articles, persisted to storage`);
       } else {
-        const news = await fetchRssFeeds();
-        setArticles(injectClips(news));
+        const news = filterFootballNews(await fetchRssFeeds());
+        setArticles(news);
+        persistNews(news);
       }
       setFirstLoadDone(true);
     } catch (e) {
-      console.error('Không thể tải tin tức từ JSON, chuyển hướng RSS:', e);
+      console.error('News load failed, trying RSS fallback:', e);
       try {
-        const news = await fetchRssFeeds();
-        setArticles(injectClips(news));
+        const news = filterFootballNews(await fetchRssFeeds());
+        setArticles(news);
+        persistNews(news);
       } catch (err) {
-        console.error('Không thể tải tin tức dự phòng:', err);
+        console.error('RSS fallback also failed:', err);
+        // Keep showing cached articles from localStorage (already loaded in useState init)
       }
     } finally {
       setLoading(false);
     }
-  };
+  }, [firstLoadDone]);
+
+  // On mount: if we have cached data, still fetch fresh in background
+  useEffect(() => { loadNews(false); }, [loadNews]);
 
   useEffect(() => {
-    loadNews(false);
-  }, []);
-
-  useEffect(() => {
-    const hasLiveMatch = matches.some(m => m.status === 'LIVE');
-    const intervalMs = hasLiveMatch ? 5 * 60 * 1000 : 20 * 60 * 1000; // Faster update when live
-    
-    const interval = setInterval(() => {
-      loadNews(false);
-    }, intervalMs);
-    
+    const hasLive = matches.some(m => m.status === 'LIVE');
+    const interval = setInterval(() => loadNews(false), hasLive ? 5 * 60000 : 20 * 60000);
     return () => clearInterval(interval);
-  }, [matches, firstLoadDone]);
+  }, [matches, firstLoadDone, loadNews]);
 
   const handleCardClick = (article) => {
     setSelectedArticle(article);
     setActiveTab('fulltext');
-    // Scroll detail view to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Estimate reading time helper
   const getReadingTime = (text) => {
     if (!text) return 2;
-    const words = text.split(/\s+/).length;
-    const minutes = Math.ceil(words / 150); // average speed in Vietnamese reading
-    return minutes < 1 ? 1 : minutes;
+    return Math.max(1, Math.ceil(text.split(/\s+/).length / 150));
   };
 
+  const handleImgError = (id) => {
+    setImgErrors(prev => ({ ...prev, [id]: true }));
+  };
+
+  const getFallbackImg = () => 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&auto=format&fit=crop';
+
+  const getArticleImage = (article) => {
+    if (imgErrors[article.id]) return getFallbackImg();
+    return article.image || getFallbackImg();
+  };
+
+  const [currentTime] = useState(() => Date.now());
+
+  const formatTimeAgo = (pubDate) => {
+    if (!pubDate) return '';
+    const diff = currentTime - pubDate;
+    const mins = Math.floor(diff / 60000);
+    if (mins < 60) return `${mins} phút trước`;
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return `${hours} giờ trước`;
+    const days = Math.floor(hours / 24);
+    return `${days} ngày trước`;
+  };
+
+  // ==========================================
+  // ARTICLE DETAIL VIEW
+  // ==========================================
   if (selectedArticle) {
     const readingTime = getReadingTime(selectedArticle.contentVi || selectedArticle.content);
     return (
-      <div className="bento-glass p-5 md:p-8 space-y-6 animate-fade-in">
-        {/* Navigation / Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-white/20">
+      <div className="space-y-0">
+        {/* Hero Image */}
+        <div className="relative w-full h-[220px] md:h-[400px] -mx-4 -mt-4 mb-0 overflow-hidden" style={{ marginLeft: '-1rem', marginRight: '-1rem', marginTop: '-1rem', width: 'calc(100% + 2rem)' }}>
+          <img 
+            src={getArticleImage(selectedArticle)} 
+            alt={selectedArticle.titleVi || selectedArticle.title} 
+            className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+            onError={() => handleImgError(selectedArticle.id)}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+          
+          {/* Back Button Overlay */}
           <button 
             onClick={() => setSelectedArticle(null)}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/40 border border-white/60 text-xs font-black text-on-surface hover:bg-white/80 hover:border-primary/30 active:scale-95 transition-all w-fit shadow-sm"
+            className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-bold hover:bg-black/60 active:scale-95 transition-all"
           >
-            <ArrowLeft size={14} /> Quay lại tin tức
+            <ArrowLeft size={14} /> Quay lại
           </button>
-          
-          <div className="flex items-center gap-1.5 text-xs font-bold text-on-surface-variant/80">
-            <Clock size={13} />
-            <span>{readingTime} phút đọc</span>
+
+          {/* Title on Hero */}
+          <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-2.5 py-1 rounded-md bg-white/20 backdrop-blur-sm text-white text-[10px] font-black uppercase tracking-wider">
+                {selectedArticle.source}
+              </span>
+              {selectedArticle.isLive && (
+                <span className="px-2 py-0.5 rounded-full bg-red-500/90 text-white text-[9px] font-black uppercase flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                  TRỰC TIẾP
+                </span>
+              )}
+            </div>
+            <h1 className="text-xl md:text-3xl font-black text-white leading-tight drop-shadow-lg">
+              {selectedArticle.titleVi || selectedArticle.title}
+            </h1>
           </div>
         </div>
 
-        {/* Article Title */}
-        <h1 className="text-xl md:text-3xl font-black text-on-background leading-tight tracking-tight">
-          {selectedArticle.titleVi || selectedArticle.title}
-        </h1>
-        
-        {/* Meta details */}
-        <div className="flex flex-wrap items-center gap-2 text-xs text-on-surface-variant font-bold">
-          <span className="px-2.5 py-1 rounded-lg bg-primary text-white text-[10px] font-black uppercase tracking-wider shadow-sm">
-            {selectedArticle.source}
-          </span>
-          <span className="text-on-surface-variant/40">•</span>
-          <span className="bg-white/30 px-2 py-1 rounded-lg text-on-surface">{selectedArticle.pubDateStr}</span>
-          {selectedArticle.url && (selectedArticle.url.includes('en') || selectedArticle.url.includes('sport') || selectedArticle.url.includes('bbc')) && (
-            <>
-              <span className="text-on-surface-variant/40">•</span>
-              <span className="flex items-center gap-1 text-primary bg-primary/10 border border-primary/20 px-2 py-1 rounded-lg text-[10px] font-extrabold shadow-sm">
-                <Languages size={11} /> Đã dịch sang tiếng Việt
-              </span>
-            </>
+        {/* Meta Bar */}
+        <div className="flex flex-wrap items-center gap-3 py-4 px-1 border-b border-white/20 text-xs text-on-surface-variant font-bold">
+          <span className="flex items-center gap-1"><Calendar size={12} /> {selectedArticle.pubDateStr}</span>
+          <span className="flex items-center gap-1"><Clock size={12} /> {readingTime} phút đọc</span>
+          {(selectedArticle.url?.includes('en') || selectedArticle.url?.includes('bbc') || selectedArticle.url?.includes('espn')) && (
+            <span className="flex items-center gap-1 text-primary bg-primary/8 px-2 py-0.5 rounded-md">
+              <Languages size={11} /> Đã dịch Việt
+            </span>
           )}
         </div>
 
-        {/* Featured Video or Image */}
-        {selectedArticle.videoUrl ? (
-          <div className="w-full h-[220px] md:h-[420px] rounded-2xl overflow-hidden bg-black border border-white/30 shadow-md relative">
-            <video 
-              src={selectedArticle.videoUrl} 
-              controls 
-              autoPlay 
-              muted 
-              loop 
-              playsInline 
-              className="w-full h-full object-cover" 
-            />
-          </div>
-        ) : (
-          selectedArticle.image && (
-            <div className="w-full h-[220px] md:h-[420px] rounded-2xl overflow-hidden bg-black border border-white/30 shadow-md relative group">
-              <img 
-                src={selectedArticle.image} 
-                alt={selectedArticle.titleVi || selectedArticle.title} 
-                className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-700" 
-                referrerPolicy="no-referrer" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-            </div>
-          )
-        )}
-
-        {/* Segmented Detail Tabs Bar (Glassmorphic) */}
-        <div className="flex gap-1.5 p-1.5 bg-white/30 border border-white/40 rounded-2xl overflow-x-auto no-scrollbar w-fit shadow-inner">
+        {/* Tab Bar */}
+        <div className="flex gap-1 p-1 bg-white/20 border border-white/30 rounded-xl mt-4 mb-4">
           {[
-            { key: 'fulltext', label: '📖 Đọc toàn văn' },
-            { key: 'ai', label: '🐷 AI Tóm tắt & Lời bình' },
-            { key: 'social', label: '💬 Phản ứng MXH' }
+            { key: 'fulltext', label: '📖 Toàn văn' },
+            { key: 'ai', label: '🐷 AI Tóm tắt' },
+            { key: 'social', label: '💬 MXH' }
           ].map(tab => (
             <button 
               key={tab.key}
               onClick={() => setActiveTab(tab.key)}
-              className={`px-4 py-2.5 text-xs font-black rounded-xl transition-all border border-transparent whitespace-nowrap active:scale-98 ${
+              className={`flex-1 px-3 py-2.5 text-xs font-black rounded-lg transition-all whitespace-nowrap ${
                 activeTab === tab.key 
                   ? 'bg-primary text-white shadow-md' 
-                  : 'text-on-surface-variant hover:text-primary hover:bg-white/40'
+                  : 'text-on-surface-variant hover:bg-white/30'
               }`}
             >
               {tab.label}
@@ -188,73 +275,70 @@ export default function NewsHub({ matches = [] }) {
           ))}
         </div>
 
-        {/* Tab content area */}
-        <div className="text-sm text-on-surface leading-relaxed pt-2">
+        {/* Content */}
+        <div className="text-sm leading-relaxed">
           {activeTab === 'fulltext' && (
-            <div className="space-y-6">
+            <div className="space-y-5">
               {selectedArticle.titleVi && selectedArticle.titleVi !== selectedArticle.title && (
-                <div className="p-4 bg-white/50 border-l-4 border-accent-gold rounded-2xl text-xs space-y-1 shadow-sm">
-                  <span className="text-[10px] font-black uppercase text-accent-gold">Tiêu đề gốc tiếng Anh</span>
+                <div className="p-3.5 bg-white/30 border-l-3 border-accent-gold rounded-xl text-xs">
+                  <span className="text-[10px] font-black uppercase text-accent-gold block mb-1">Tiêu đề gốc</span>
                   <p className="italic text-on-surface font-semibold">"{selectedArticle.title}"</p>
                 </div>
               )}
 
-              <div className="space-y-4 text-justify font-medium text-base text-on-surface-variant/90 tracking-wide leading-relaxed">
+              <div className="space-y-4 text-on-surface-variant/90 font-medium leading-[1.8] text-[0.95rem]">
                 {(selectedArticle.contentVi || selectedArticle.content || "Nội dung đang được cập nhật...").split('\n\n').map((para, idx) => (
-                  <p key={idx} className="first-letter:font-bold first-letter:text-lg first-letter:text-primary">
+                  <p key={idx} className={idx === 0 ? 'first-letter:text-2xl first-letter:font-black first-letter:text-primary first-letter:float-left first-letter:mr-1' : ''}>
                     {para}
                   </p>
                 ))}
               </div>
 
-              {/* Citations Box */}
-              <div className="mt-8 p-4 bg-white/50 border border-white/60 rounded-2xl flex flex-wrap items-center justify-between gap-4 shadow-sm">
+              {/* Source Link */}
+              <div className="mt-6 p-4 bg-white/30 border border-white/40 rounded-xl flex items-center justify-between">
                 <div>
-                  <span className="text-[9px] font-black text-on-surface-variant/75 uppercase tracking-wide">Cung cấp bởi</span>
-                  <div className="font-extrabold text-primary uppercase text-sm">{selectedArticle.source}</div>
+                  <span className="text-[9px] font-black text-on-surface-variant/60 uppercase">Nguồn</span>
+                  <div className="font-black text-primary text-sm">{selectedArticle.source}</div>
                 </div>
                 <a 
                   href={selectedArticle.url} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="flex items-center gap-1.5 px-4 py-2.5 bg-secondary text-white text-xs font-black rounded-xl hover:brightness-105 active:scale-95 transition-all shadow-sm shadow-secondary/15"
+                  className="flex items-center gap-1.5 px-4 py-2.5 bg-primary text-white text-xs font-black rounded-xl hover:brightness-110 active:scale-95 transition-all shadow-sm"
                 >
-                  Bài viết gốc <ExternalLink size={12} />
+                  Xem gốc <ExternalLink size={12} />
                 </a>
               </div>
             </div>
           )}
 
           {activeTab === 'ai' && (
-            <div className="space-y-6">
-              <div className="p-5 bg-white/55 border border-white/60 rounded-2xl space-y-3 shadow-md">
+            <div className="space-y-5">
+              <div className="p-5 bg-white/40 border border-white/50 rounded-2xl space-y-3">
                 <h4 className="text-xs font-black text-primary flex items-center gap-1.5 uppercase tracking-wider">
                   <Sparkles size={15} className="text-secondary animate-pulse" />
-                  Tóm tắt nhanh từ AI Tiên Tri
+                  Tóm tắt nhanh AI
                 </h4>
-                
                 <div 
-                  className="text-xs text-on-surface-variant space-y-2 list-disc list-inside leading-relaxed font-bold border-t border-white/30 pt-3"
+                  className="text-sm text-on-surface-variant space-y-2 font-bold border-t border-white/30 pt-3 leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: selectedArticle.summary || '<ul><li>Đang cập nhật tóm tắt tự động...</li></ul>' }}
                 />
               </div>
 
-              {/* Prophet mascot bubble comments (Pink gradient bubble) */}
-              <div className="p-5 bg-gradient-to-br from-white/95 to-secondary-fixed/30 border border-secondary/15 rounded-2xl flex items-start gap-4 shadow-md relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-secondary/5 rounded-full -mr-6 -mt-6"></div>
+              <div className="p-5 bg-gradient-to-br from-white/90 to-pink-50/50 border border-secondary/15 rounded-2xl flex items-start gap-4 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-20 h-20 bg-secondary/5 rounded-full -mr-5 -mt-5" />
                 <img 
                   src="/drpig_mascot.png" 
-                  alt="Heo Hồng Mascot" 
-                  className="w-12 h-12 rounded-full border-2 border-secondary/40 flex-shrink-0 shadow-sm"
-                  onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?w=120&auto=format&fit=crop' }}
+                  alt="Heo Hồng" 
+                  className="w-11 h-11 rounded-full border-2 border-secondary/40 flex-shrink-0"
+                  onError={(e) => { e.target.src = getFallbackImg() }}
                 />
-                <div className="space-y-1.5 z-10">
-                  <span className="text-[10px] font-black text-secondary uppercase tracking-wider flex items-center gap-1">
-                    Nhận định Heo Hồng Tiên Tri 🐷
-                    <CheckCircle2 size={11} className="text-secondary" />
+                <div className="z-10">
+                  <span className="text-[10px] font-black text-secondary uppercase flex items-center gap-1 mb-1">
+                    Nhận định Heo Hồng 🐷 <CheckCircle2 size={11} />
                   </span>
-                  <p className="text-sm text-on-surface font-extrabold italic leading-relaxed">
-                    "{selectedArticle.drpigComment || '🐷 Heo Hồng 🐷: Trận này các fen cứ bình tĩnh, kèo nảy lửa thế này cứ đi nhẹ cửa EV dương là ngon ăn nhé! Chúc anh em hốt bạc!'}"
+                  <p className="text-sm text-on-surface font-bold italic leading-relaxed">
+                    "{selectedArticle.drpigComment || '🐷 Heo Hồng 🐷: Trận này cứ bình tĩnh, kèo nảy lửa thế này đi nhẹ cửa EV dương là ngon ăn!'}"
                   </p>
                 </div>
               </div>
@@ -262,44 +346,33 @@ export default function NewsHub({ matches = [] }) {
           )}
 
           {activeTab === 'social' && (
-            <div className="space-y-5">
-              <h4 className="text-xs font-black text-on-background flex items-center gap-1.5 uppercase tracking-wide">
-                <TrendingUp size={16} className="text-secondary" />
-                Thảo luận toàn cầu (Reddit & X/Twitter)
-              </h4>
-
-              {/* Reddit Comment Section */}
-              <div className="p-4 bg-white/50 border-l-4 border-[#ff4500] border-t border-r border-b border-white/50 rounded-2xl space-y-3 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex justify-between items-center flex-wrap gap-2 text-[10px] font-bold">
-                  <span className="text-[#ff4500] font-black flex items-center gap-1">
-                    r/soccer Reddit Chatter 💬
-                  </span>
+            <div className="space-y-4">
+              <div className="p-4 bg-white/40 border-l-4 border-[#ff4500] rounded-2xl space-y-3">
+                <div className="flex justify-between items-center text-[10px] font-bold">
+                  <span className="text-[#ff4500] font-black">r/soccer Reddit 💬</span>
                   <div className="flex gap-3 text-on-surface-variant/80">
-                    <span>▲ {selectedArticle.socialMentions?.reddit?.upvotes || 124} Upvotes</span>
-                    <span>💬 {selectedArticle.socialMentions?.reddit?.commentsCount || 45} Bình luận</span>
+                    <span>▲ {selectedArticle.socialMentions?.reddit?.upvotes || 124}</span>
+                    <span>💬 {selectedArticle.socialMentions?.reddit?.commentsCount || 45}</span>
                   </div>
                 </div>
-                <div className="p-3 bg-white/70 border border-white/60 rounded-xl">
-                  <span className="text-[8px] font-black text-on-surface-variant/75 uppercase tracking-wider">Bình luận nổi bật nhất</span>
-                  <p className="text-xs font-bold italic text-on-surface mt-1 leading-relaxed">
-                    "{selectedArticle.socialMentions?.reddit?.topComment || 'The tempo of this tournament has been absolutely insane, hoping for another classic here.'}"
+                <div className="p-3 bg-white/50 border border-white/60 rounded-xl">
+                  <p className="text-xs font-bold italic text-on-surface leading-relaxed">
+                    "{selectedArticle.socialMentions?.reddit?.topComment || 'Great analysis on the tactical setup.'}"
                   </p>
                 </div>
               </div>
 
-              {/* X/Twitter Post Section */}
-              <div className="p-4 bg-white/50 border-l-4 border-on-background border-t border-r border-b border-white/50 rounded-2xl space-y-3 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex justify-between items-center flex-wrap gap-2 text-[10px] font-bold">
-                  <span className="text-on-background font-black">X / Twitter Feed 🐦</span>
+              <div className="p-4 bg-white/40 border-l-4 border-black rounded-2xl space-y-3">
+                <div className="flex justify-between items-center text-[10px] font-bold">
+                  <span className="font-black">X / Twitter 🐦</span>
                   <div className="flex gap-3 text-on-surface-variant/80">
-                    <span>♥ {selectedArticle.socialMentions?.x?.likes || 512} Likes</span>
-                    <span>🔄 {selectedArticle.socialMentions?.x?.reposts || 89} Reposts</span>
+                    <span>♥ {selectedArticle.socialMentions?.x?.likes || 512}</span>
+                    <span>🔄 {selectedArticle.socialMentions?.x?.reposts || 89}</span>
                   </div>
                 </div>
-                <div className="p-3 bg-white/70 border border-white/60 rounded-xl">
-                  <span className="text-[8px] font-black text-on-surface-variant/75 uppercase tracking-wider">Bài viết thịnh hành</span>
-                  <p className="text-xs font-extrabold text-on-surface mt-1 leading-relaxed">
-                    "{selectedArticle.socialMentions?.x?.hotPost || 'Matchday approaches! Predictions on who steals the headlines this time? ⚽🔥'}"
+                <div className="p-3 bg-white/50 border border-white/60 rounded-xl">
+                  <p className="text-xs font-bold text-on-surface leading-relaxed">
+                    "{selectedArticle.socialMentions?.x?.hotPost || 'Matchday! Who steals the headlines? ⚽🔥'}"
                   </p>
                 </div>
               </div>
@@ -310,317 +383,228 @@ export default function NewsHub({ matches = [] }) {
     );
   }
 
-  // List View (Bento Grid layout)
+  // ==========================================
+  // NEWS LIST VIEW — Magazine Layout
+  // ==========================================
+  const liveArticles = articles.filter(a => a.isLive);
+  const normalArticles = articles.filter(a => !a.isLive);
+  const featuredArticle = normalArticles[0];
+  const secondaryArticles = normalArticles.slice(1, 4);
+  const remainingArticles = normalArticles.slice(4);
+
   return (
-    <div className="bento-glass p-5 md:p-6 flex flex-col gap-6">
-      
-      {/* Header section */}
-      <div className="flex justify-between items-center pb-2 border-b border-white/40">
-        <h3 className="font-black text-base flex items-center gap-2 text-primary">
-          <Newspaper size={18} className="text-primary" />
-          Tin Nóng World Cup 2026 Premium
-        </h3>
-        
+    <div className="space-y-5">
+      {/* Header */}
+      <div className="flex justify-between items-center">
+        <h2 className="font-black text-lg flex items-center gap-2 text-on-background">
+          <Newspaper size={20} className="text-primary" />
+          Tin Nóng WC 2026
+        </h2>
         <button 
           onClick={() => loadNews(true)} 
           disabled={loading}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/40 border border-white/60 text-xs font-bold text-on-surface hover:bg-white/80 active:scale-95 transition-all disabled:opacity-50"
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/50 border border-white/60 text-xs font-bold text-on-surface hover:bg-white/80 active:scale-95 transition-all disabled:opacity-50"
         >
           {loading ? (
-            <>
-              <Loader2 size={12} className="animate-spin text-primary" />
-              Đang làm mới...
-            </>
+            <><Loader2 size={13} className="animate-spin text-primary" /> Đang tải...</>
           ) : (
-            'Làm mới tin tức'
+            <><RefreshCw size={13} /> Làm mới</>
           )}
         </button>
       </div>
 
-      {/* Main Container */}
-      <div>
-        {loading ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-3 text-on-surface-variant">
-            <Loader2 size={36} className="animate-spin text-primary" />
-            <span className="text-xs font-black tracking-wide">Đang tổng hợp nguồn tin tức quốc tế...</span>
-          </div>
-        ) : articles.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16 gap-2 text-on-surface-variant">
-            <Newspaper size={44} className="opacity-30 mb-2" />
-            <p className="text-xs font-bold">Chưa có tin tức mới. Nhấn nút làm mới hoặc chạy trình cào tin tự động!</p>
-          </div>
-        ) : (
-          (() => {
-            const liveArticles = articles.filter(a => a.isLive);
-            const normalArticles = articles.filter(a => !a.isLive);
-            
-            return (
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                
-                {/* 🔴 LIVE ARTICLES - Highlighted Full Width (Span 12) */}
-                {liveArticles.map((article) => (
-                  <div 
-                    key={article.id} 
-                    onClick={() => handleCardClick(article)}
-                    className="col-span-12 p-5 bg-gradient-to-br from-secondary/15 to-primary/5 hover:from-secondary/20 hover:to-primary/10 border-2 border-secondary/20 hover:border-secondary/50 rounded-2xl shadow-md transition-all cursor-pointer flex flex-col md:flex-row gap-5 items-center justify-between group active:scale-[0.99] duration-300"
-                  >
-                    <div className="flex-1 space-y-3 w-full">
-                      <div className="flex items-center gap-2">
-                        <span className="px-2.5 py-0.5 rounded-full bg-danger/10 border border-danger/25 text-danger text-[9px] font-black uppercase tracking-wider flex items-center gap-1">
-                          <span className="w-1.5 h-1.5 rounded-full bg-danger animate-pulse"></span>
-                          TRỰC TIẾP TRẬN ĐẤU
-                        </span>
-                        <span className="text-[10px] text-on-surface-variant/80 font-bold">Cập nhật: {article.pubDateStr}</span>
-                      </div>
-                      
-                      <h2 className="text-base md:text-lg font-black text-on-background leading-snug group-hover:text-primary transition-colors">
-                        {article.titleVi || article.title}
-                      </h2>
-                      
-                      {article.liveInfo && (
-                        <div className="flex items-center gap-3 p-2.5 bg-white/65 border border-white/80 rounded-xl w-fit shadow-sm">
-                          <strong className="text-xs font-black text-secondary">{article.liveInfo.home}</strong>
-                          <span className="text-sm font-black bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent px-1">
-                            {article.liveInfo.score}
-                          </span>
-                          <strong className="text-xs font-black text-secondary">{article.liveInfo.away}</strong>
-                          <span className="text-[10px] text-on-surface-variant/80 border-l border-white/80 pl-2.5 ml-1 font-extrabold flex items-center gap-1">
-                            <Flame size={12} className="text-secondary animate-pulse" /> Phút {article.liveInfo.minute}'
-                          </span>
-                        </div>
-                      )}
-                      
-                      <p className="text-xs text-on-surface-variant line-clamp-2 leading-relaxed font-semibold">
-                        {(article.contentVi || article.content || '').substring(0, 180)}...
-                      </p>
-                    </div>
+      {loading ? (
+        <div className="flex flex-col items-center justify-center py-20 gap-3 text-on-surface-variant">
+          <Loader2 size={36} className="animate-spin text-primary" />
+          <span className="text-xs font-bold">Đang tổng hợp tin tức quốc tế...</span>
+        </div>
+      ) : articles.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-16 gap-2 text-on-surface-variant">
+          <Newspaper size={44} className="opacity-30 mb-2" />
+          <p className="text-xs font-bold">Chưa có tin tức mới</p>
+        </div>
+      ) : (
+        <div className="space-y-5">
+          {/* 🔴 LIVE MATCH BANNER */}
+          {liveArticles.map(article => (
+            <div 
+              key={article.id}
+              onClick={() => handleCardClick(article)}
+              className="relative p-5 bg-gradient-to-r from-red-500/10 to-primary/5 border-2 border-red-400/25 hover:border-red-400/50 rounded-2xl cursor-pointer transition-all active:scale-[0.99] group"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <span className="px-2 py-0.5 rounded-full bg-red-500 text-white text-[9px] font-black uppercase flex items-center gap-1 animate-pulse">
+                  <span className="w-1.5 h-1.5 rounded-full bg-white" /> TRỰC TIẾP
+                </span>
+                <span className="text-[10px] text-on-surface-variant font-bold">{article.pubDateStr}</span>
+              </div>
+              
+              <h3 className="text-base font-black text-on-background group-hover:text-primary transition-colors leading-snug mb-2">
+                {article.titleVi || article.title}
+              </h3>
 
-                    {article.image && (
-                      <div className="w-full md:w-[150px] h-[100px] rounded-xl overflow-hidden bg-black border border-white/30 flex-shrink-0 shadow-sm relative">
-                        <img 
-                          src={article.image} 
-                          alt="Live Match" 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                          referrerPolicy="no-referrer" 
-                        />
-                        {article.videoUrl && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/35 transition-colors">
-                            <div className="w-8 h-8 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-md">
-                              <Play size={12} fill="currentColor" className="ml-0.5" />
-                            </div>
-                          </div>
-                        )}
+              {article.liveInfo && (
+                <div className="flex items-center gap-3 p-2.5 bg-white/60 border border-white/70 rounded-xl w-fit">
+                  <strong className="text-sm font-black text-primary">{article.liveInfo.home}</strong>
+                  <span className="text-lg font-black bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                    {article.liveInfo.score}
+                  </span>
+                  <strong className="text-sm font-black text-secondary">{article.liveInfo.away}</strong>
+                  <span className="text-[10px] font-bold border-l border-white/50 pl-2.5 flex items-center gap-1">
+                    <Flame size={12} className="text-red-500" /> Phút {article.liveInfo.minute}'
+                  </span>
+                </div>
+              )}
+            </div>
+          ))}
+
+          {/* 🌟 FEATURED ARTICLE — Full-width Hero Card */}
+          {featuredArticle && (
+            <div 
+              onClick={() => handleCardClick(featuredArticle)}
+              className="relative rounded-2xl overflow-hidden cursor-pointer group active:scale-[0.995] transition-transform"
+            >
+              <div className="w-full h-[200px] sm:h-[280px] md:h-[320px] overflow-hidden bg-gray-100">
+                <img 
+                  src={getArticleImage(featuredArticle)} 
+                  alt={featuredArticle.titleVi || featuredArticle.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  referrerPolicy="no-referrer"
+                  onError={() => handleImgError(featuredArticle.id)}
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+              
+              <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="px-2 py-0.5 rounded bg-white/20 backdrop-blur-sm text-white text-[9px] font-black uppercase">
+                    {featuredArticle.source}
+                  </span>
+                  <span className="text-white/70 text-[10px] font-bold">
+                    {formatTimeAgo(featuredArticle.pubDate)}
+                  </span>
+                </div>
+                <h2 className="text-base md:text-xl font-black text-white leading-snug group-hover:text-blue-200 transition-colors">
+                  {featuredArticle.titleVi || featuredArticle.title}
+                </h2>
+                <p className="text-xs text-white/70 mt-2 line-clamp-2 font-semibold leading-relaxed hidden sm:block">
+                  {(featuredArticle.contentVi || featuredArticle.content || '').substring(0, 160)}...
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* 📰 SECONDARY STORIES — 3-column grid */}
+          {secondaryArticles.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {secondaryArticles.map(article => (
+                <div 
+                  key={article.id}
+                  onClick={() => handleCardClick(article)}
+                  className="bg-white/40 hover:bg-white/70 border border-white/50 hover:border-primary/20 rounded-2xl overflow-hidden cursor-pointer group transition-all active:scale-[0.98]"
+                >
+                  {/* Thumbnail */}
+                  <div className="w-full h-[140px] overflow-hidden bg-gray-100 relative">
+                    <img 
+                      src={getArticleImage(article)} 
+                      alt={article.titleVi || article.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      referrerPolicy="no-referrer"
+                      onError={() => handleImgError(article.id)}
+                    />
+                    {article.videoUrl && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/35 transition-colors">
+                        <div className="w-9 h-9 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-md">
+                          <Play size={14} fill="currentColor" className="ml-0.5" />
+                        </div>
                       </div>
                     )}
                   </div>
-                ))}
 
-                {/* CARD 1: FEATURED ARTICLE - Left Column (Span 8) */}
-                {normalArticles.slice(0, 1).map((article) => (
-                  <div 
-                    key={article.id} 
-                    onClick={() => handleCardClick(article)}
-                    className="col-span-12 lg:col-span-8 flex flex-col bg-white/40 hover:bg-white/80 border border-white/60 hover:border-primary/30 rounded-2xl overflow-hidden transition-all shadow-sm cursor-pointer group active:scale-[0.99] duration-300"
-                  >
-                    <div className="w-full h-[200px] sm:h-[260px] overflow-hidden bg-black relative">
-                      <img 
-                        src={article.image} 
-                        alt={article.titleVi || article.title} 
-                        className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" 
-                        referrerPolicy="no-referrer" 
-                      />
-                      {article.videoUrl && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/35 transition-colors">
-                          <div className="w-12 h-12 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform">
-                            <Play size={20} fill="currentColor" className="ml-1" />
-                          </div>
-                        </div>
-                      )}
-                      <span className="absolute top-3 left-3 px-2 py-1 rounded bg-secondary text-white text-[9px] font-black uppercase tracking-wider shadow-sm flex items-center gap-1">
-                        {article.videoUrl ? 'VIDEO 🎥' : 'TIN ĐẶC BIỆT'}
-                      </span>
+                  {/* Content */}
+                  <div className="p-4 space-y-2">
+                    <div className="flex items-center gap-2 text-[10px] font-bold text-on-surface-variant/80">
+                      <span className="text-primary font-black">{article.source}</span>
+                      <span>•</span>
+                      <span>{formatTimeAgo(article.pubDate)}</span>
                     </div>
-                    
-                    <div className="p-5 flex-1 flex flex-col justify-between gap-4">
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2 text-[10px] text-on-surface-variant font-bold">
-                          <span className="px-2 py-0.5 rounded bg-primary/10 text-primary uppercase font-black">{article.source}</span>
-                          <span>{article.pubDateStr}</span>
-                        </div>
-                        <h3 className="text-base md:text-lg font-black text-on-surface group-hover:text-primary transition-colors leading-snug">
-                          {article.titleVi || article.title}
-                        </h3>
-                        <p className="text-xs text-on-surface-variant line-clamp-3 leading-relaxed font-semibold">
-                          {(article.contentVi || article.content || '').substring(0, 240)}...
-                        </p>
-                      </div>
-                      
-                      <div className="flex items-center gap-4 text-[10px] text-on-surface-variant/80 font-black pt-3 border-t border-dashed border-white/60">
-                        <span className="flex items-center gap-1"><ThumbsUp size={11} /> {article.socialMentions?.x?.likes || 14}</span>
-                        <span className="flex items-center gap-1"><MessageCircle size={11} /> {article.socialMentions?.reddit?.commentsCount || 8}</span>
-                        <span className="ml-auto text-primary font-black uppercase tracking-wider">Chi tiết toàn văn ➔</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-
-                {/* CARD 2: PIG PROPHET CORNER - Right Column (Span 4) */}
-                <div className="col-span-12 lg:col-span-4 bg-gradient-to-br from-white/95 to-secondary-fixed/20 border border-secondary/15 rounded-2xl p-5 flex flex-col justify-between gap-6 shadow-sm">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2">
-                      <img 
-                        src="/drpig_mascot.png" 
-                        alt="Heo Hồng AI" 
-                        className="w-8 h-8 rounded-full border border-primary/20"
-                        onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1596492784531-6e6eb5ea9993?w=120&auto=format&fit=crop' }}
-                      />
-                      <span className="text-[10px] font-black text-secondary uppercase tracking-wider">Lời bàn Tiên tri Heo Hồng 🐷</span>
-                    </div>
-                    
-                    <h3 className="text-sm font-black text-on-surface leading-snug">
-                      Nhận định nóng từ Heo Con!
+                    <h3 className="text-sm font-black text-on-surface group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+                      {article.titleVi || article.title}
                     </h3>
-                    
-                    <p className="text-xs text-on-surface-variant leading-relaxed font-extrabold italic bg-white/40 p-3.5 rounded-xl border border-white/60">
-                      "{normalArticles[0]?.drpigComment || 'Chào các fen! Giải đấu WC 2026 đang diễn biến cực kỳ khó lường, cứ thong thả theo kèo EV dương của tôi mà đặt là ấm êm nhé! 🐷⚽'}"
+                    <p className="text-xs text-on-surface-variant line-clamp-2 leading-relaxed font-medium">
+                      {(article.contentVi || article.content || '').substring(0, 120)}...
                     </p>
                   </div>
-
-                  <div className="flex justify-between items-center pt-3 border-t border-white/50 text-[10px] font-bold text-on-surface-variant/75">
-                    <span>Mô hình: Gemini-2.5-Flash</span>
-                    <span className="px-2 py-0.5 rounded bg-tertiary text-white font-black">EV+ DỰ BÁO</span>
-                  </div>
                 </div>
+              ))}
+            </div>
+          )}
 
-                {/* CARD 3: SOCIAL HASHTAGS TRENDS (SPAN 4) */}
-                <div className="col-span-12 lg:col-span-4 bg-white/40 border border-white/50 rounded-2xl p-5 flex flex-col justify-between gap-5 shadow-sm">
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-1.5">
-                      <TrendingUp size={16} className="text-secondary" />
-                      <span className="text-[10px] font-black text-secondary uppercase tracking-wide">Xu hướng WC2026 💬</span>
-                    </div>
-                    
-                    <h4 className="text-xs text-on-surface-variant font-bold">Chủ đề fan thảo luận nóng nhất hôm nay:</h4>
-                    
-                    <div className="flex flex-col gap-2">
-                      <div className="flex justify-between items-center p-2.5 bg-white/50 border border-white/60 rounded-xl text-xs hover:bg-white/70 transition-colors">
-                        <span className="font-bold text-on-surface-variant">#WorldCup2026</span>
-                        <span className="text-primary font-black">12.4k post</span>
-                      </div>
-                      <div className="flex justify-between items-center p-2.5 bg-white/50 border border-white/60 rounded-xl text-xs hover:bg-white/70 transition-colors">
-                        <span className="font-bold text-on-surface-variant">#HeoHồngTiênTri</span>
-                        <span className="text-secondary font-black">8.9k post</span>
-                      </div>
-                      <div className="flex justify-between items-center p-2.5 bg-white/50 border border-white/60 rounded-xl text-xs hover:bg-white/70 transition-colors">
-                        <span className="font-bold text-on-surface-variant">#SanAztecaKèoNóng</span>
-                        <span className="text-tertiary font-black">Hot 🔥</span>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="text-[10px] text-on-surface-variant/75 font-semibold pt-2.5 border-t border-white/45 flex justify-between">
-                    <span>Quét thảo luận Reddit & X</span>
-                    <span>Tự động làm mới</span>
-                  </div>
-                </div>
-
-                {/* SECONDARY STORIES (SPAN 8) */}
-                {normalArticles.slice(1, 3).map((article) => (
+          {/* 📋 REMAINING STORIES — Compact list with thumbnails */}
+          {remainingArticles.length > 0 && (
+            <div className="space-y-3">
+              <h3 className="text-xs font-black text-on-surface-variant/60 uppercase tracking-wider flex items-center gap-1.5">
+                <TrendingUp size={14} /> Tin tức mới nhất
+              </h3>
+              
+              <div className="space-y-2">
+                {remainingArticles.map(article => (
                   <div 
-                    key={article.id} 
+                    key={article.id}
                     onClick={() => handleCardClick(article)}
-                    className="col-span-12 md:col-span-6 lg:col-span-4 flex flex-col bg-white/40 hover:bg-white/80 border border-white/50 hover:border-primary/20 rounded-2xl overflow-hidden transition-all shadow-sm cursor-pointer group active:scale-[0.99] duration-300"
+                    className="flex gap-3.5 p-3 bg-white/30 hover:bg-white/60 border border-white/40 hover:border-primary/15 rounded-xl cursor-pointer transition-all group active:scale-[0.99]"
                   >
-                    <div className="w-full h-[140px] overflow-hidden bg-black relative">
+                    {/* Thumbnail */}
+                    <div className="w-20 h-20 md:w-24 md:h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                       <img 
-                        src={article.image} 
-                        alt={article.titleVi || article.title} 
-                        className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500" 
-                        referrerPolicy="no-referrer" 
+                        src={getArticleImage(article)} 
+                        alt=""
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        referrerPolicy="no-referrer"
+                        onError={() => handleImgError(article.id)}
                       />
-                      {article.videoUrl && (
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/35 transition-colors">
-                          <div className="w-9 h-9 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-md transform group-hover:scale-110 transition-transform">
-                            <Play size={14} fill="currentColor" className="ml-0.5" />
-                          </div>
-                        </div>
-                      )}
-                      {article.videoUrl && (
-                        <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded bg-primary text-white text-[8px] font-black uppercase tracking-wider shadow-sm">
-                          VIDEO 🎥
-                        </span>
-                      )}
                     </div>
-                    <div className="p-4 flex-1 flex flex-col justify-between gap-4">
-                      <div className="space-y-1.5">
-                        <div className="flex items-center gap-2 text-[9px] text-on-surface-variant/80 font-bold">
-                          <span className="text-secondary font-black">{article.source}</span>
-                          <span>{article.pubDateStr}</span>
-                        </div>
-                        <h3 className="text-xs font-black text-on-surface group-hover:text-primary transition-colors line-clamp-2 leading-snug">
-                          {article.titleVi || article.title}
-                        </h3>
-                        <p className="text-[11px] text-on-surface-variant line-clamp-2 leading-relaxed font-semibold">
-                          {(article.contentVi || article.content || '').substring(0, 150)}...
-                        </p>
+
+                    {/* Text Content */}
+                    <div className="flex-1 min-w-0 flex flex-col justify-center gap-1">
+                      <div className="flex items-center gap-1.5 text-[9px] font-bold text-on-surface-variant/70">
+                        <span className="text-primary font-black uppercase">{article.source}</span>
+                        <span>•</span>
+                        <span>{formatTimeAgo(article.pubDate)}</span>
                       </div>
-                      
-                      <div className="flex gap-3 text-[10px] text-on-surface-variant/75 font-bold pt-2 border-t border-white/30">
-                        <span>👍 {article.socialMentions?.x?.likes || 5}</span>
-                        <span>💬 {article.socialMentions?.reddit?.commentsCount || 2}</span>
-                      </div>
+                      <h4 className="text-xs font-black text-on-surface group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+                        {article.titleVi || article.title}
+                      </h4>
                     </div>
+                    
+                    <ChevronRight size={16} className="text-on-surface-variant/30 flex-shrink-0 self-center" />
                   </div>
                 ))}
-
-                {/* SMALL LIST STORIES (SPAN 12 -> MOBILE FRIENDLY WITH THUMBNAIL ON RIGHT) */}
-                <div className="col-span-12 border-t border-dashed border-white/60 pt-6 mt-2">
-                  <h4 className="text-xs font-black text-on-surface-variant/70 uppercase tracking-wider mb-4">Các tin bài thể thao liên quan khác</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {normalArticles.slice(3, 15).map((article) => (
-                      <div 
-                        key={article.id} 
-                        onClick={() => handleCardClick(article)}
-                        className="p-3.5 bg-white/30 hover:bg-white/60 border border-white/50 hover:border-primary/20 rounded-2xl transition-all shadow-sm cursor-pointer flex gap-4 justify-between items-center group active:scale-[0.99] duration-300"
-                      >
-                        <div className="flex-1 min-w-0 space-y-1.5">
-                          <div className="flex items-center gap-1.5 text-[9px] text-on-surface-variant/80 font-bold">
-                            <span className="text-primary font-black uppercase">{article.source}</span>
-                            <span>•</span>
-                            <span>{article.pubDateStr.split(' ')[0]}</span>
-                          </div>
-                          <h3 className="text-xs font-extrabold text-on-surface group-hover:text-primary transition-colors line-clamp-2 leading-snug">
-                            {article.titleVi || article.title}
-                          </h3>
-                        </div>
-                        
-                        {article.image && (
-                          <div className="w-16 h-16 rounded-xl overflow-hidden bg-black border border-white/30 flex-shrink-0 shadow-sm relative">
-                            <img 
-                              src={article.image} 
-                              alt="Thumbnail" 
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                              referrerPolicy="no-referrer" 
-                            />
-                            {article.videoUrl && (
-                              <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition-colors">
-                                <div className="w-6 h-6 rounded-full bg-primary/95 text-white flex items-center justify-center shadow-sm">
-                                  <Play size={10} fill="currentColor" className="ml-0.5" />
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
               </div>
-            );
-          })()
-        )}
-      </div>
+            </div>
+          )}
+
+          {/* Heo Hồng Prophet Corner */}
+          <div className="p-5 bg-gradient-to-br from-white/80 to-pink-50/40 border border-secondary/15 rounded-2xl flex items-start gap-4 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-secondary/5 rounded-full -mr-8 -mt-8" />
+            <img 
+              src="/drpig_mascot.png" 
+              alt="Heo Hồng AI" 
+              className="w-10 h-10 rounded-full border-2 border-primary/20 flex-shrink-0"
+              onError={(e) => { e.target.src = getFallbackImg() }}
+            />
+            <div className="z-10 space-y-1">
+              <span className="text-[10px] font-black text-secondary uppercase tracking-wider flex items-center gap-1">
+                Lời bàn Heo Hồng 🐷 <CheckCircle2 size={11} />
+              </span>
+              <p className="text-sm text-on-surface font-bold italic leading-relaxed">
+                "{normalArticles[0]?.drpigComment || 'Chào các fen! World Cup 2026 đang nóng lắm, cứ thong thả theo dõi nhé! 🐷⚽'}"
+              </p>
+              <span className="text-[9px] text-on-surface-variant/60 font-semibold">Mô hình: Gemini-2.5-Flash</span>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

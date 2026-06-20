@@ -2,7 +2,7 @@
 > **MỤC ĐÍCH**: File này lưu trữ toàn bộ tiến trình phát triển, bugs đã fix, cấu trúc dự án, 
 > trạng thái đồng bộ Telegram và những việc cần làm tiếp theo của dự án World Cup 2026.
 > 
-> **CẬP NHẬT LẦN CUỐI**: 2026-06-17T10:27:00+10:00
+> **CẬP NHẬT LẦN CUỐI**: 2026-06-21T07:30:00+10:00
 
 ---
 
@@ -13,7 +13,7 @@
 | **Vite Compilation** | ✅ HOÀN THÀNH | Đã biên dịch thành công (`npm run build`) |
 | **Capacitor Core & CLI** | ✅ HOÀN THÀNH | Đã cài đặt và cấu hình thành công (`capacitor.config.json`) |
 | **Capacitor Platforms** | ✅ HOÀN THÀNH | Đã khởi tạo và đồng bộ thành công nền tảng iOS & Android |
-| **Giao diện Mobile/Tablet**| ✅ HOÀN THÀNH | Tích hợp responsive (Header, Bottom Tabs, Bento Cards, Split-view tablet) |
+| **Giao diện Mobile/Tablet**| ✅ HOÀN THÀNH | Tối ưu hóa UI Mobile (Notch, Safe areas, Bouncing Tab Indicator, Floating FAB BetSlip, Slide-up sheets) |
 | **Tiên tri Heo Hồng AI** | ✅ HOÀN THÀNH | Tích hợp OracleChat.jsx (Gemini + FPT DeepSeek fallback, Glassmorphism UI) |
 | **Đồng bộ Telegram** | ✅ HOÀN THÀNH | Sync 2 chiều với Bot `@drthanhto_bot` (Token: `7660859485:...`) |
 | **Cược vui & Dự toán AI**| ✅ HOÀN THÀNH | Sửa lỗi cược động Handicap & Over/Under, Dixon-Coles draw correction |
@@ -67,13 +67,22 @@ Hệ thống đồng bộ hai chiều giữa IDE Agent và Telegram đang hoạt
 
 ## 📋 VIỆC CẦN LÀM TIẾP THEO
 
+- [x] **Tích hợp đầy đủ dữ liệu thời gian thực và lịch sử từ Sportmonks API**:
+  - Đã chuyển hoàn toàn sang Sportmonks API, loại bỏ worldcup26.ir.
+  - Tích hợp BXH, Top Scorers & Assists, H2H, Lineups, Live stats.
+- [x] **Sửa lỗi hiển thị sa bàn chiến thuật (Tactical Board)**:
+  - Thiết kế lại sân đấu theo chiều dọc (Vertical aspect-[2/3] ratio), mở rộng diện tích hiển thị.
+  - Áp dụng công thức co giãn (scaling) tọa độ Y giúp phân tách hai đội về hai nửa sân riêng biệt, triệt tiêu hoàn toàn lỗi chồng lấp (overlapping) quân số.
+- [x] **Sửa lỗi tin tức & mạng xã hội (Social Media News)**:
+  - Sửa lỗi ReferenceError nghiêm trọng trong [MatchDetail.jsx](file:///Users/tonguyen/Library/CloudStorage/OneDrive-Personal/DrTo/WC2026/src/components/MatchDetail.jsx) khi hiển thị thông báo trống khi không tìm thấy tin tức (gây đơ toàn app).
+  - Tích hợp `getDynamicSocialReactions(match)` vào tab "Tin tức & MXH" để hiển thị bản tin các bài đăng nóng từ Facebook, TikTok, X (Twitter) của các BLV Việt Nam.
+  - Thay thế toàn bộ các API check trận trực tuyến từ `worldcup26.ir` sang API Sportmonks trong [vite.config.js](file:///Users/tonguyen/Library/CloudStorage/OneDrive-Personal/DrTo/WC2026/vite.config.js) và [scrape_news.py](file:///Users/tonguyen/Library/CloudStorage/OneDrive-Personal/DrTo/WC2026/scripts/scrape_news.py).
+  - Cải tiến Scheduler trong `vite.config.js` để lập tức kích hoạt cào tin tức khi phát hiện có trận đấu trực tiếp (LIVE), rút ngắn thời gian cập nhật liên tục thay vì phải chờ hết chu kỳ NORMAL.
 - [ ] **Kiểm thử giao diện iOS & Android**:
   - Dùng Xcode để mở dự án iOS (`npm run cap:open-ios`) và kiểm tra giao diện trên Simulator.
   - Dùng Android Studio để mở dự án Android (`npm run cap:open-android`) và chạy thử.
 - [ ] **Tối ưu hóa hiển thị Tablet**:
   - Đảm bảo dual-pane split view hoạt động mượt mà ở chiều ngang của các dòng iPad và Tablet phổ biến.
-- [x] **Bổ sung tính năng nhận định chi tiết**:
-  - Cải tiến Prompt trong `gemini.js` để Heo Hồng có thể đọc dữ liệu trận đấu và đưa ra phân tích chuyên sâu hơn (đã tích hợp context lịch thi đấu và BXH thời gian thực).
 - [ ] **Kiểm tra và hoàn thiện hệ thống Quà tặng Heo Hồng Labubu**:
   - Thiết kế màn hình nhận quà hoặc kết nối với hệ thống Backend khi người dùng thắng cược vui.
 

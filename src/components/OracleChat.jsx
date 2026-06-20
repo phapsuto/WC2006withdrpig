@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Send, Loader2, MessageSquare, RefreshCw, Sparkles, HelpCircle } from 'lucide-react';
+import { Send, Loader2, RefreshCw, Sparkles } from 'lucide-react';
 import { generalChatWithHeoHong } from '../services/gemini';
 
 const SUGGESTIONS = [
@@ -28,6 +28,10 @@ export default function OracleChat() {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   useEffect(() => {
     try {
       localStorage.setItem('wc2026_oracle_chat_history', JSON.stringify(messages));
@@ -36,10 +40,6 @@ export default function OracleChat() {
     }
     scrollToBottom();
   }, [messages]);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   const handleSend = async (textToSend) => {
     const text = (textToSend || input).trim();

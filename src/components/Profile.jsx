@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Wallet, Star, Trophy, History, RefreshCw, LogOut, Heart, ArrowRight } from 'lucide-react';
-import { TEAM_NAME_VI, ISO2_TO_FLAG } from '../services/worldcup26api';
 import { TEAMS } from '../services/simulator';
 
 export default function Profile({ user, onLogout, onResetBalance, onSelectMatch, matches, onToggleFavoriteTeam }) {
@@ -207,7 +206,9 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
                             ? 'bg-tertiary/10 text-tertiary border-tertiary/10' 
                             : isLost 
                               ? 'bg-secondary/10 text-secondary border-secondary/10' 
-                              : 'bg-primary/10 text-primary border-primary/10'
+                              : isPending 
+                                ? 'bg-primary/10 text-primary border-primary/10'
+                                : 'bg-on-surface-variant/10 text-on-surface-variant border-white/40'
                         }`}>
                           {isWon ? 'THẮNG' : isLost ? 'THUA' : 'ĐANG CHỜ'}
                         </span>

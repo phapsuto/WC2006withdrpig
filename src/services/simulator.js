@@ -932,7 +932,7 @@ const getVirtualNow = () => {
       const parsed = JSON.parse(savedConfig);
       offsetHours = parseFloat(parsed.virtualTimeOffset) || 0;
     }
-  } catch (e) {}
+  } catch { /* ignore */ }
   return new Date(Date.now() + offsetHours * 60 * 60 * 1000);
 };
 
@@ -1020,7 +1020,7 @@ const generateDeterministicMatchState = (originalMatch, currentMin, targetStatus
   const limitMin = Math.min(90, currentMin);
   
   for (let m = 1; m <= limitMin; m++) {
-    const timeFraction = m / 90;
+
     const eventRoll = rand();
     let eventAdded = false;
     
@@ -1279,13 +1279,7 @@ const PLAYER_POOLS = {
   COD: ["C. Bakambu", "Y. Betunga"]
 };
 
-const getRandomPlayer = (team) => {
-  const pool = PLAYER_POOLS[team.short];
-  if (pool && pool.length > 0) {
-    return pool[Math.floor(Math.random() * pool.length)];
-  }
-  return "Cầu thủ";
-};
+
 
 const adjustOdds = (odds, minute, homeScore, awayScore, eventAdded) => {
   const timeFactor = (90 - minute) / 90;

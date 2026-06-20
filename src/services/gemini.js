@@ -158,7 +158,7 @@ async function callGemini(prompt, useGrounding = false) {
 /**
  * Generate match analysis from Heo Hồng's perspective
  */
-export async function getHeoHongPrediction(match) {
+export async function getHeoHongPrediction(match, matches = []) {
   let cacheKey = `pred_${match.id}_${match.status}`;
   let ttl = 120000; // 2 minutes default
   if (match.status === 'FINISHED') {
@@ -184,7 +184,9 @@ export async function getHeoHongPrediction(match) {
     match.homeScore,
     match.awayScore,
     match.status,
-    match.minute
+    match.minute,
+    matches,
+    match.odds
   );
 
   const homeWin = smPred ? smPred.probabilities.homeWin : prediction.probabilities.homeWin;
@@ -473,7 +475,7 @@ Yêu cầu cực kỳ quan trọng:
 /**
  * AI Sports Analytics Intelligence (xG, Kelly, SHAP + Extended Tactics, Matchups, H2H, Injuries)
  */
-export async function getSportsAnalytics(match) {
+export async function getSportsAnalytics(match, matches = []) {
   let cacheKey = `analytics_${match.id}_${match.status}`;
   let ttl = 120000; // 2 minutes default
   if (match.status === 'FINISHED') {
@@ -499,7 +501,9 @@ export async function getSportsAnalytics(match) {
     match.homeScore,
     match.awayScore,
     match.status,
-    match.minute
+    match.minute,
+    matches,
+    match.odds
   );
 
   const homeWin = smPred ? smPred.probabilities.homeWin : prediction.probabilities.homeWin;

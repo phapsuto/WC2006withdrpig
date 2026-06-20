@@ -79,25 +79,6 @@ export default function AdminDashboard({ setActivePage }) {
     return () => clearInterval(interval);
   }, []);
 
-  const handleRunScraper = async () => {
-    setScraping(true);
-    setScraperLog('Bắt đầu kích hoạt script Python cào tin...\nĐang kết nối RSS feeds & RSSHub...');
-    try {
-      const response = await fetch('/api/run-scraper');
-      const data = await response.json();
-      if (data.success) {
-        setScraperLog(`✅ CÀO TIN THÀNH CÔNG!\n\n${data.stdout}`);
-        window.dispatchEvent(new Event('api-stats-updated'));
-      } else {
-        setScraperLog(`❌ CÀO TIN THẤT BẠI!\nError: ${data.error}\nStderr: ${data.stderr}`);
-      }
-    } catch (e) {
-      setScraperLog(`❌ LỖI KẾT NỐI API SCRAPER: ${e.message}\n(Hãy chắc chắn rằng máy chủ Vite đang chạy và hỗ trợ endpoint /api/run-scraper)`);
-    } finally {
-      setScraping(false);
-    }
-  };
-
   // Update stats on custom event
   useEffect(() => {
     const handleStatsUpdate = () => {

@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState } from 'react';
 import { TRANSLATIONS } from './languages';
 
@@ -33,7 +34,7 @@ export function LanguageProvider({ children }) {
         parsed.language = lang;
         localStorage.setItem('wc2026_user_profile', JSON.stringify(parsed));
       }
-    } catch (e) {}
+    } catch { /* ignore */ }
   };
 
   const t = (key, params = {}) => {

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Ticket, X, CheckCircle2, Loader2, History, Trash2 } from 'lucide-react';
-import { placeBet } from '../services/simulator';
 
-export default function BetSlip({ activeBet, onClearBet, matches = [], user, onPlaceBet, onClearBetHistory }) {
+export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onClearBetHistory }) {
   const [stake, setStake] = useState('10'); // Default stake: 10 xu
   const [isPlacing, setIsPlacing] = useState(false);
   const [betResult, setBetResult] = useState(null); // { success: true, betId: '...' }

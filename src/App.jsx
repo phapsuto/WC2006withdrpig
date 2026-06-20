@@ -9,7 +9,6 @@ import AdminDashboard from './components/AdminDashboard';
 import Profile from './components/Profile';
 import OracleChat from './components/OracleChat';
 import { subscribeToFootballData, getApiConfig } from './services/api';
-import { Trophy, ArrowRight, ArrowLeft } from 'lucide-react';
 import { useLanguage } from './utils/LanguageContext';
 import './App.css';
 
@@ -21,6 +20,7 @@ function App() {
   const [activeBet, setActiveBet] = useState(null);
   const [activePage, setActivePage] = useState('DASHBOARD'); // 'DASHBOARD', 'NEWS_HUB', 'STANDINGS', 'ORACLE', 'PROFILE', 'ADMIN_PORTAL'
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [showBetSlipModal, setShowBetSlipModal] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -46,8 +46,34 @@ function App() {
       setMatches(data);
       setActiveMatchId(prev => {
         if (!prev && data.length > 0) {
+          // Priority: LIVE > Today's match closest to now > Next upcoming > Most recent finished
           const liveMatch = data.find(m => m.status === 'LIVE');
-          return liveMatch ? liveMatch.id : data[0].id;
+          if (liveMatch) return liveMatch.id;
+          
+          const todayStr = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+          
+          // Find today's matches
+          const todayMatches = data.filter(m => (m.date || '').startsWith(todayStr));
+          if (todayMatches.length > 0) {
+            // Pick the first upcoming today, or the last finished today
+            const todayUpcoming = todayMatches.find(m => m.status === 'UPCOMING');
+            if (todayUpcoming) return todayUpcoming.id;
+            return todayMatches[todayMatches.length - 1].id;
+          }
+          
+          // Find next upcoming match (closest to now)
+          const upcoming = data
+            .filter(m => m.status === 'UPCOMING')
+            .sort((a, b) => new Date(a.date) - new Date(b.date));
+          if (upcoming.length > 0) return upcoming[0].id;
+          
+          // Fallback: most recent finished match
+          const finished = data
+            .filter(m => m.status === 'FINISHED')
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
+          if (finished.length > 0) return finished[0].id;
+          
+          return data[0].id;
         }
         return prev;
       });
@@ -130,7 +156,7 @@ function App() {
         won = awayScore > homeScore;
       } else if (bet.betKey.includes('ou-over')) {
         const lineParts = bet.betKey.split('_');
-        let line = 2.5;
+        let line;
         if (lineParts.length > 1) {
           line = parseFloat(lineParts[1]);
         } else {
@@ -140,7 +166,7 @@ function App() {
         won = (homeScore + awayScore) > line;
       } else if (bet.betKey.includes('ou-under')) {
         const lineParts = bet.betKey.split('_');
-        let line = 2.5;
+        let line;
         if (lineParts.length > 1) {
           line = parseFloat(lineParts[1]);
         } else {
@@ -150,7 +176,7 @@ function App() {
         won = (homeScore + awayScore) < line;
       } else if (bet.betKey.includes('handicap-home')) {
         const lineParts = bet.betKey.split('_');
-        let line = 0;
+        let line;
         if (lineParts.length > 1) {
           line = parseFloat(lineParts[1]);
         } else {
@@ -160,7 +186,7 @@ function App() {
         won = (homeScore + line) > awayScore;
       } else if (bet.betKey.includes('handicap-away')) {
         const lineParts = bet.betKey.split('_');
-        let line = 0;
+        let line;
         if (lineParts.length > 1) {
           line = parseFloat(lineParts[1]);
         } else {
@@ -352,13 +378,13 @@ function App() {
 
   if (isMobile) {
     return (
-      <div className="app-container min-h-screen font-body-md bg-background text-on-background relative overflow-x-hidden pb-24 pt-[76px] px-4">
+      <div className="app-container min-h-screen font-body-md bg-background text-on-background relative overflow-x-hidden mobile-content-container px-4">
         {/* Background Decorative Ambient Glows */}
         <div className="ambient-glow-1"></div>
         <div className="ambient-glow-2"></div>
 
         {/* Mobile Top Header */}
-        <header className="fixed top-0 left-0 right-0 w-full z-50 bg-white/70 backdrop-blur-3xl border-b border-white/40 shadow-[0px_10px_30px_rgba(0,0,0,0.04)] h-[60px] flex justify-between items-center px-4">
+        <header className="fixed top-0 left-0 right-0 w-full z-50 bg-white/70 backdrop-blur-3xl border-b border-white/40 shadow-[0px_10px_30px_rgba(0,0,0,0.04)] mobile-header-notch flex justify-between items-center px-4">
           <h1 
             className="font-display-lg text-[22px] font-black text-primary tracking-tighter cursor-pointer"
             onClick={() => { setActivePage('DASHBOARD'); setActiveMatchId(null); }}
@@ -388,164 +414,131 @@ function App() {
             <AdminDashboard setActivePage={setActivePage} />
           </div>
         ) : activePage === 'DASHBOARD' ? (
-          activeMatchId && activeMatch ? (
-            <div className="w-full">
-              {/* Contextual Back Button */}
-              <button 
-                onClick={() => setActiveMatchId(null)}
-                className="flex items-center gap-2 text-primary font-bold text-xs mb-4 hover:opacity-80 transition-opacity"
+          <div className="flex flex-col gap-4 max-w-md mx-auto w-full">
+            {/* Hero Mascot Card */}
+            <div className="bento-tile mobile-mascot-card flex flex-col items-center text-center p-6">
+              <div className="w-full h-40 rounded-xl overflow-hidden mb-4 relative mobile-mascot-image-container flex items-center justify-center border border-white/30">
+                <div className="mobile-mascot-glow"></div>
+                <img 
+                  alt="Heo Hồng Mascot" 
+                  className="w-[70%] h-[70%] object-contain drop-shadow-xl z-10" 
+                  src="/drpig_mascot.png" 
+                  onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500'; }}
+                />
+                <div className="absolute bottom-3 left-3 text-left z-10">
+                  <span className="inline-block px-2.5 py-0.5 bg-white/85 backdrop-blur-md rounded-full font-bold text-[10px] text-primary mb-1 shadow-sm border border-white/20">
+                    Cùng Heo Hồng 🐷
+                  </span>
+                  <h2 className="text-base font-black text-on-surface leading-tight">Mùa giải World Cup 2026</h2>
+                </div>
+              </div>
+              <p className="text-xs text-on-surface-variant max-w-[280px]">
+                Đồng hành cùng chú heo tiên tri siêu quậy Heo Hồng để nhận định soi kèo đỉnh cao!
+              </p>
+            </div>
+
+            {/* Live Match Bento Card */}
+            {(() => {
+              const liveMatch = matches.find(m => m.status === 'LIVE') || matches[0];
+              if (!liveMatch) return null;
+              const isLive = liveMatch.status === 'LIVE';
+              return (
+                <div 
+                  onClick={() => setActiveMatchId(liveMatch.id)}
+                  className={`bento-tile p-5 cursor-pointer hover:border-primary/20 transition-all active:scale-98 duration-200 ${isLive ? 'live-match-glow-border' : ''}`}
+                >
+                  <div className="flex justify-between items-center mb-3">
+                    <h3 className="font-bold text-xs text-on-surface flex items-center gap-1.5">
+                      {isLive ? (
+                        <>
+                          <span className="w-2 h-2 rounded-full bg-danger animate-pulse"></span>
+                          <span className="text-danger uppercase tracking-wider text-[10px] font-black">Trực tiếp</span>
+                        </>
+                      ) : (
+                        <span className="text-primary uppercase tracking-wider text-[10px] font-black">Nổi bật</span>
+                      )}
+                    </h3>
+                    <span className="text-[10px] font-bold text-secondary">
+                      {isLive ? `Phút ${liveMatch.minute}'` : 'Lịch thi đấu'}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center bg-white/45 rounded-2xl p-4 border border-white/60 shadow-inner">
+                    <div className="flex flex-col items-center gap-1.5 w-1/3">
+                      <img 
+                        src={`https://flagcdn.com/w40/${liveMatch.home.flag}.png`} 
+                        alt={liveMatch.home.name} 
+                        className="w-10 h-7 object-cover rounded shadow-sm border border-black/5" 
+                      />
+                      <span className="font-bold text-[11px] text-on-surface truncate w-full text-center">{liveMatch.home.name}</span>
+                    </div>
+                    <div className="text-center w-1/3">
+                      {isLive || liveMatch.status === 'FINISHED' ? (
+                        <div className="text-xl font-black text-primary tracking-tighter">{liveMatch.homeScore} - {liveMatch.awayScore}</div>
+                      ) : (
+                        <div className="text-xs font-black text-on-surface-variant/80">VS</div>
+                      )}
+                    </div>
+                    <div className="flex flex-col items-center gap-1.5 w-1/3">
+                      <img 
+                        src={`https://flagcdn.com/w40/${liveMatch.away.flag}.png`} 
+                        alt={liveMatch.away.name} 
+                        className="w-10 h-7 object-cover rounded shadow-sm border border-black/5" 
+                      />
+                      <span className="font-bold text-[11px] text-on-surface truncate w-full text-center">{liveMatch.away.name}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* 2-Column Bento Row */}
+            <div className="grid grid-cols-2 gap-4">
+              {/* Oracle banner */}
+              <div 
+                onClick={() => setActivePage('ORACLE')}
+                className="bento-tile p-4 bg-gradient-to-br from-white/70 to-tertiary-fixed/20 flex flex-col justify-between aspect-square cursor-pointer hover:brightness-102 duration-200"
               >
-                <ArrowLeft size={14} /> Trở về danh sách
-              </button>
-              <MatchDetail 
-                match={activeMatch} 
-                onAddBet={handleAddBet}
-                activeBetId={activeBet ? activeBet.key : null}
-                onClose={() => setActiveMatchId(null)}
+                <div>
+                  <span className="material-symbols-outlined text-3xl text-tertiary mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>psychology</span>
+                  <h3 className="text-[9px] font-bold text-on-surface-variant uppercase tracking-wider">Tiên tri</h3>
+                  <p className="font-black text-xs text-primary leading-tight">Heo Hồng AI</p>
+                </div>
+                <button className="w-full py-1 bg-white/85 rounded-xl text-primary font-bold text-[10px] shadow-sm border border-white/50">
+                  Hỏi ngay
+                </button>
+              </div>
+              {/* Quick Bet */}
+              <div 
+                onClick={() => {
+                  const liveMatch = matches.find(m => m.status === 'LIVE') || matches[0];
+                  if (liveMatch) {
+                    setActiveMatchId(liveMatch.id);
+                  }
+                }}
+                className="bento-tile p-4 flex flex-col justify-between aspect-square cursor-pointer hover:brightness-102 duration-200"
+              >
+                <div>
+                  <span className="material-symbols-outlined text-3xl text-secondary mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>payments</span>
+                  <h3 className="text-[9px] font-bold text-on-surface-variant uppercase tracking-wider">Cược vui</h3>
+                  <p className="font-black text-xs text-secondary leading-tight">Đặt cược</p>
+                </div>
+                <button className="w-full py-1 bg-primary text-white rounded-xl font-bold text-[10px] shadow-sm border border-primary/25">
+                  Chọn kèo
+                </button>
+              </div>
+            </div>
+
+            {/* Matches List */}
+            <div className="mt-2">
+              <MatchList 
+                matches={matches} 
+                onSelectMatch={setActiveMatchId} 
+                activeMatchId={null}
                 user={user}
                 onToggleBookmark={handleToggleBookmark}
               />
-              
-              {/* Quick Bet Slip inside MatchDetail on mobile if activeBet exists */}
-              {activeBet && activeBet.match.id === activeMatchId && (
-                <div className="mt-6">
-                  <BetSlip 
-                    activeBet={activeBet} 
-                    onClearBet={() => setActiveBet(null)} 
-                    matches={matches}
-                    user={user}
-                    onPlaceBet={handlePlaceBet}
-                    onClearBetHistory={handleClearBetHistory}
-                  />
-                </div>
-              )}
             </div>
-          ) : (
-            <div className="flex flex-col gap-4 max-w-md mx-auto w-full">
-              {/* Hero Mascot Card */}
-              <div className="bento-tile flex flex-col items-center text-center p-6">
-                <div className="w-full h-40 rounded-xl overflow-hidden mb-4 relative bg-primary-fixed/20 flex items-center justify-center border border-white/30">
-                  <img 
-                    alt="Heo Hồng Mascot" 
-                    className="w-[70%] h-[70%] object-contain drop-shadow-xl" 
-                    src="/drpig_mascot.png" 
-                    onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500'; }}
-                  />
-                  <div className="absolute bottom-3 left-3 text-left">
-                    <span className="inline-block px-2.5 py-0.5 bg-white/85 backdrop-blur-md rounded-full font-bold text-[10px] text-primary mb-1 shadow-sm border border-white/20">
-                      Cùng Heo Hồng 🐷
-                    </span>
-                    <h2 className="text-base font-black text-on-surface leading-tight">Mùa giải World Cup 2026</h2>
-                  </div>
-                </div>
-                <p className="text-xs text-on-surface-variant max-w-[280px]">
-                  Đồng hành cùng chú heo tiên tri siêu quậy Heo Hồng để nhận định soi kèo đỉnh cao!
-                </p>
-              </div>
-
-              {/* Live Match Bento Card */}
-              {(() => {
-                const liveMatch = matches.find(m => m.status === 'LIVE') || matches[0];
-                if (!liveMatch) return null;
-                const isLive = liveMatch.status === 'LIVE';
-                return (
-                  <div 
-                    onClick={() => setActiveMatchId(liveMatch.id)}
-                    className="bento-tile p-5 cursor-pointer hover:border-primary/20 transition-all active:scale-98 duration-200"
-                  >
-                    <div className="flex justify-between items-center mb-3">
-                      <h3 className="font-bold text-xs text-on-surface flex items-center gap-1.5">
-                        {isLive ? (
-                          <>
-                            <span className="w-2 h-2 rounded-full bg-danger animate-pulse"></span>
-                            <span className="text-danger uppercase tracking-wider text-[10px] font-black">Trực tiếp</span>
-                          </>
-                        ) : (
-                          <span className="text-primary uppercase tracking-wider text-[10px] font-black">Nổi bật</span>
-                        )}
-                      </h3>
-                      <span className="text-[10px] font-bold text-secondary">
-                        {isLive ? `Phút ${liveMatch.minute}'` : 'Lịch thi đấu'}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center bg-white/45 rounded-2xl p-4 border border-white/60 shadow-inner">
-                      <div className="flex flex-col items-center gap-1.5 w-1/3">
-                        <img 
-                          src={`https://flagcdn.com/w40/${liveMatch.home.flag}.png`} 
-                          alt={liveMatch.home.name} 
-                          className="w-10 h-7 object-cover rounded shadow-sm border border-black/5" 
-                        />
-                        <span className="font-bold text-[11px] text-on-surface truncate w-full text-center">{liveMatch.home.name}</span>
-                      </div>
-                      <div className="text-center w-1/3">
-                        {isLive || liveMatch.status === 'FINISHED' ? (
-                          <div className="text-xl font-black text-primary tracking-tighter">{liveMatch.homeScore} - {liveMatch.awayScore}</div>
-                        ) : (
-                          <div className="text-xs font-black text-on-surface-variant/80">VS</div>
-                        )}
-                      </div>
-                      <div className="flex flex-col items-center gap-1.5 w-1/3">
-                        <img 
-                          src={`https://flagcdn.com/w40/${liveMatch.away.flag}.png`} 
-                          alt={liveMatch.away.name} 
-                          className="w-10 h-7 object-cover rounded shadow-sm border border-black/5" 
-                        />
-                        <span className="font-bold text-[11px] text-on-surface truncate w-full text-center">{liveMatch.away.name}</span>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })()}
-
-              {/* 2-Column Bento Row */}
-              <div className="grid grid-cols-2 gap-4">
-                {/* Oracle banner */}
-                <div 
-                  onClick={() => setActivePage('ORACLE')}
-                  className="bento-tile p-4 bg-gradient-to-br from-white/70 to-tertiary-fixed/20 flex flex-col justify-between aspect-square cursor-pointer hover:brightness-102 duration-200"
-                >
-                  <div>
-                    <span className="material-symbols-outlined text-3xl text-tertiary mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>psychology</span>
-                    <h3 className="text-[9px] font-bold text-on-surface-variant uppercase tracking-wider">Tiên tri</h3>
-                    <p className="font-black text-xs text-primary leading-tight">Heo Hồng AI</p>
-                  </div>
-                  <button className="w-full py-1 bg-white/85 rounded-xl text-primary font-bold text-[10px] shadow-sm border border-white/50">
-                    Hỏi ngay
-                  </button>
-                </div>
-                {/* Quick Bet */}
-                <div 
-                  onClick={() => {
-                    const liveMatch = matches.find(m => m.status === 'LIVE') || matches[0];
-                    if (liveMatch) {
-                      setActiveMatchId(liveMatch.id);
-                    }
-                  }}
-                  className="bento-tile p-4 flex flex-col justify-between aspect-square cursor-pointer hover:brightness-102 duration-200"
-                >
-                  <div>
-                    <span className="material-symbols-outlined text-3xl text-secondary mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>payments</span>
-                    <h3 className="text-[9px] font-bold text-on-surface-variant uppercase tracking-wider">Cược vui</h3>
-                    <p className="font-black text-xs text-secondary leading-tight">Đặt cược</p>
-                  </div>
-                  <button className="w-full py-1 bg-primary text-white rounded-xl font-bold text-[10px] shadow-sm border border-primary/25">
-                    Chọn kèo
-                  </button>
-                </div>
-              </div>
-
-              {/* Matches List */}
-              <div className="mt-2">
-                <MatchList 
-                  matches={matches} 
-                  onSelectMatch={setActiveMatchId} 
-                  activeMatchId={null}
-                  user={user}
-                  onToggleBookmark={handleToggleBookmark}
-                />
-              </div>
-            </div>
-          )
+          </div>
         ) : activePage === 'NEWS_HUB' ? (
           <div className="w-full">
             <NewsHub matches={matches} />
@@ -571,6 +564,58 @@ function App() {
           </div>
         )}
 
+        {/* Mobile Slide-Up Match Detail Bottom Sheet */}
+        {activeMatchId && activeMatch && (
+          <div className="mobile-match-detail-sheet">
+            <div className="mobile-sheet-drag-handle"></div>
+            <MatchDetail 
+              match={activeMatch} 
+              onAddBet={(matchItem, label, value, key) => {
+                handleAddBet(matchItem, label, value, key);
+                setShowBetSlipModal(true);
+              }}
+              activeBetId={activeBet ? activeBet.key : null}
+              onClose={() => setActiveMatchId(null)}
+              user={user}
+              onToggleBookmark={handleToggleBookmark}
+              matches={matches}
+            />
+          </div>
+        )}
+
+        {/* Mobile Floating Bet Slip FAB */}
+        {activeBet && !showBetSlipModal && (
+          <button 
+            onClick={() => setShowBetSlipModal(true)}
+            className="mobile-betslip-fab"
+          >
+            <span className="material-symbols-outlined text-[18px]">shopping_cart</span>
+            <span>Vé cược vui ({activeBet.label} x{activeBet.value.toFixed(2)})</span>
+          </button>
+        )}
+
+        {/* Mobile Bet Slip Slide-Up Modal Sheet */}
+        {showBetSlipModal && activeBet && (
+          <div className="modal-overlay" style={{ zIndex: 10000 }} onClick={() => setShowBetSlipModal(false)}>
+            <div className="modal-content bento-glass animate-scale-up" onClick={e => e.stopPropagation()}>
+              <div className="mobile-sheet-drag-handle"></div>
+              <BetSlip 
+                activeBet={activeBet} 
+                onClearBet={() => { setActiveBet(null); setShowBetSlipModal(false); }} 
+                matches={matches}
+                user={user}
+                onPlaceBet={(slip, stake) => {
+                  return handlePlaceBet(slip, stake).then(res => {
+                    setTimeout(() => setShowBetSlipModal(false), 800);
+                    return res;
+                  });
+                }}
+                onClearBetHistory={handleClearBetHistory}
+              />
+            </div>
+          </div>
+        )}
+
         {/* Mobile Bottom Tab Bar */}
         <nav className="fixed bottom-0 left-0 right-0 w-full z-50 bg-white/85 backdrop-blur-3xl border-t border-white/40 pb-safe shadow-[0px_-8px_30px_rgba(0,0,0,0.03)] pb-2 pt-2">
           <ul className="flex justify-around items-center h-14 px-2">
@@ -583,6 +628,7 @@ function App() {
               >
                 <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: activePage === 'DASHBOARD' ? "'FILL' 1" : "'FILL' 0" }}>sports_soccer</span>
                 <span className="text-[9px] font-bold tracking-tight">Trận đấu</span>
+                {activePage === 'DASHBOARD' && <span className="mobile-tab-indicator"></span>}
               </button>
             </li>
             <li className="flex-1">
@@ -594,6 +640,7 @@ function App() {
               >
                 <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: activePage === 'NEWS_HUB' ? "'FILL' 1" : "'FILL' 0" }}>article</span>
                 <span className="text-[9px] font-bold tracking-tight">Tin tức</span>
+                {activePage === 'NEWS_HUB' && <span className="mobile-tab-indicator"></span>}
               </button>
             </li>
             <li className="flex-1">
@@ -605,6 +652,7 @@ function App() {
               >
                 <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: activePage === 'STANDINGS' ? "'FILL' 1" : "'FILL' 0" }}>format_list_numbered</span>
                 <span className="text-[9px] font-bold tracking-tight">Xếp hạng</span>
+                {activePage === 'STANDINGS' && <span className="mobile-tab-indicator"></span>}
               </button>
             </li>
             <li className="flex-1">
@@ -616,6 +664,7 @@ function App() {
               >
                 <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: activePage === 'ORACLE' ? "'FILL' 1" : "'FILL' 0" }}>auto_awesome</span>
                 <span className="text-[9px] font-bold tracking-tight">Tiên tri</span>
+                {activePage === 'ORACLE' && <span className="mobile-tab-indicator"></span>}
               </button>
             </li>
             <li className="flex-1">
@@ -627,6 +676,7 @@ function App() {
               >
                 <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: activePage === 'PROFILE' ? "'FILL' 1" : "'FILL' 0" }}>account_circle</span>
                 <span className="text-[9px] font-bold tracking-tight">Cá nhân</span>
+                {activePage === 'PROFILE' && <span className="mobile-tab-indicator"></span>}
               </button>
             </li>
           </ul>
@@ -817,6 +867,7 @@ function App() {
                         onClose={() => setActiveMatchId(null)}
                         user={user}
                         onToggleBookmark={handleToggleBookmark}
+                        matches={matches}
                       />
                     </div>
                   </div>
@@ -829,6 +880,7 @@ function App() {
                       onClose={() => setActiveMatchId(null)}
                       user={user}
                       onToggleBookmark={handleToggleBookmark}
+                      matches={matches}
                     />
                   </div>
                 </div>

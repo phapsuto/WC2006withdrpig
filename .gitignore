@@ -35,4 +35,6 @@ scripts/.env
 scripts/.conversation_id
 scripts/.telegram_sync.json
 logs_eslint.txt
-
+diff_app.txt
+__pycache__/
+*.pyc

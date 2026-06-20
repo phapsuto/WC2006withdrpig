@@ -1,15 +1,29 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { exec } from 'child_process'
+import { execFile } from 'child_process'
+
+function runPythonScraper(args, callback) {
+  execFile('python3', ['scripts/scrape_news.py', ...args], callback);
+}
 import fs from 'fs'
 import path from 'path'
 import https from 'https'
 
 const CONFIG_PATH = path.resolve('public/data/scheduler_config.json');
+const MATCHES_LIST_PATH = path.resolve('public/data/matches_list.json');
+const MEDIA_DIR = path.resolve('public/data/match_media');
 
 function checkLiveMatch() {
   return new Promise((resolve) => {
-    https.get('https://worldcup26.ir/get/games', { timeout: 5000 }, (res) => {
+    const token = '1fcudBrrac5U8DpQYl97jUeowGVDj74AGgniiz637ySI2v7ZFn0C8XpkJXoV';
+    const url = `https://api.sportmonks.com/v3/football/livescores/inplay?filters=fixtureLeagues:732&api_token=${token}`;
+    const options = {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+      },
+      timeout: 5000
+    };
+    https.get(url, options, (res) => {
       if (res.statusCode !== 200) {
         resolve(false);
         return;
@@ -19,14 +33,9 @@ function checkLiveMatch() {
       res.on('end', () => {
         try {
           const data = JSON.parse(body);
-          const games = data.games || [];
-          const hasLive = games.some(g => {
-            const finished = String(g.finished).toUpperCase();
-            const elapsed = String(g.time_elapsed).toLowerCase();
-            return finished === 'FALSE' && !['notstarted', 'finished', 'null', ''].includes(elapsed);
-          });
-          resolve(hasLive);
-        } catch (e) {
+          const list = data.data && Array.isArray(data.data) ? data.data : [];
+          resolve(list.length > 0);
+        } catch {
           resolve(false);
         }
       });
@@ -51,7 +60,8 @@ function readConfig() {
     lastRunTime: 0,
     nextRunTime: 0,
     currentMode: "NORMAL",
-    logs: []
+    logs: [],
+    matchStates: {}
   };
 }
 
@@ -65,6 +75,20 @@ function writeConfig(config) {
   } catch (e) {
     console.error('Error writing scheduler config:', e);
   }
+}
+
+function cleanUpOldMatchMedia(matchId) {
+  const mediaPath = path.join(MEDIA_DIR, `media_${matchId}.json`);
+  if (fs.existsSync(mediaPath)) {
+    try {
+      fs.unlinkSync(mediaPath);
+      console.log(`[Scheduler] Cleaned up stale media file for match ${matchId}`);
+      return true;
+    } catch (e) {
+      console.error(`[Scheduler] Failed to delete media file for match ${matchId}:`, e);
+    }
+  }
+  return false;
 }
 
 let schedulerInterval = null;
@@ -81,47 +105,147 @@ function initScheduler() {
     const config = readConfig();
     if (!config.autoEnabled) return;
     
-    const now = Date.now();
-    
-    if (config.nextRunTime > 0 && now < config.nextRunTime) {
-      return;
-    }
-    
-    isScrapingRunning = true;
-    
     try {
-      const isLive = await checkLiveMatch();
-      const mode = isLive ? 'live' : 'normal';
-      const intervalMin = isLive ? config.liveIntervalMin : config.normalIntervalMin;
-      
-      const logMsg = `[Auto] Chạy cào tin ở chế độ ${mode.toUpperCase()} (Trận live: ${isLive ? 'Có' : 'Không'})`;
-      
-      exec(`python3 scripts/scrape_news.py --mode ${mode}`, (err, stdout, stderr) => {
-        isScrapingRunning = false;
+      if (fs.existsSync(MATCHES_LIST_PATH)) {
+        const matches = JSON.parse(fs.readFileSync(MATCHES_LIST_PATH, 'utf-8'));
+        const now = Date.now();
+        let configChanged = false;
         
-        const freshConfig = readConfig();
-        const runTime = Date.now();
+        if (!config.matchStates) {
+          config.matchStates = {};
+        }
+
+        let matchToCrawl = null;
+        let crawlIntervalMin = 180;
         
-        freshConfig.lastRunTime = runTime;
-        freshConfig.nextRunTime = runTime + (intervalMin * 60 * 1000);
-        freshConfig.currentMode = mode.toUpperCase();
-        
-        let statusStr = 'Thành công';
-        if (err) {
-          statusStr = `Thất bại: ${err.message}`;
+        for (const match of matches) {
+          if (!match.id) continue;
+          
+          const matchState = config.matchStates[match.id] || { lastRunTime: 0, nextRunTime: 0 };
+          
+          const startTime = new Date(match.date).getTime();
+          
+          // Cleanup after 7 days
+          if (now > startTime + 7 * 24 * 3600 * 1000) {
+            const cleaned = cleanUpOldMatchMedia(match.id);
+            if (cleaned) {
+              delete config.matchStates[match.id];
+              configChanged = true;
+            }
+            continue;
+          }
+          
+          // Determine interval (LIVE: 1m, 8h pre/post: 10m, otherwise: 180m)
+          let intervalMin = 180;
+          if (match.status === 'LIVE') {
+            intervalMin = 1;
+          } else {
+            const startWindow = startTime - 8 * 3600 * 1000;
+            const endWindow = startTime + 10 * 3600 * 1000;
+            if (now >= startWindow && now <= endWindow) {
+              intervalMin = 10;
+            }
+          }
+          
+          if (matchState.currentIntervalMin !== intervalMin) {
+            matchState.currentIntervalMin = intervalMin;
+            if (now >= matchState.lastRunTime + intervalMin * 60 * 1000) {
+              matchState.nextRunTime = now;
+            } else {
+              matchState.nextRunTime = matchState.lastRunTime + intervalMin * 60 * 1000;
+            }
+            config.matchStates[match.id] = matchState;
+            configChanged = true;
+          }
+
+          if (now >= matchState.nextRunTime && !matchToCrawl) {
+            matchToCrawl = match;
+            crawlIntervalMin = intervalMin;
+          }
         }
         
-        const timestampStr = new Date(runTime).toLocaleString('vi-VN');
-        const logEntry = `[${timestampStr}] ${logMsg} -> ${statusStr}`;
+        if (matchToCrawl) {
+          isScrapingRunning = true;
+          const matchId = matchToCrawl.id;
+          const homeName = matchToCrawl.home?.name || 'Home';
+          const awayName = matchToCrawl.away?.name || 'Away';
+          const status = matchToCrawl.status || 'UPCOMING';
+          
+          const logMsg = `[Match Scraper] Cào tin ${homeName} vs ${awayName} (ID: ${matchId}, Chế độ: ${status}, Chu kỳ: ${crawlIntervalMin}m)`;
+          console.log(`⏰ ${logMsg}`);
+          
+          runPythonScraper(['--mode', 'match', '--match_id', matchId, '--home', homeName, '--away', awayName, '--status', status], (err) => {
+            isScrapingRunning = false;
+            
+            const freshConfig = readConfig();
+            if (!freshConfig.matchStates) freshConfig.matchStates = {};
+            
+            const runTime = Date.now();
+            const matchState = freshConfig.matchStates[matchId] || { lastRunTime: 0, nextRunTime: 0 };
+            
+            matchState.lastRunTime = runTime;
+            matchState.nextRunTime = runTime + (crawlIntervalMin * 60 * 1000);
+            matchState.currentIntervalMin = crawlIntervalMin;
+            
+            freshConfig.matchStates[matchId] = matchState;
+            
+            let statusStr = 'Thành công';
+            if (err) {
+              statusStr = `Thất bại: ${err.message}`;
+            }
+            
+            const timestampStr = new Date(runTime).toLocaleString('vi-VN');
+            const logEntry = `[${timestampStr}] ${logMsg} -> ${statusStr}`;
+            
+            freshConfig.logs = [logEntry, ...(freshConfig.logs || [])].slice(0, 30);
+            writeConfig(freshConfig);
+          });
+        } else if (configChanged) {
+          writeConfig(config);
+        }
+      } else {
+        // Fallback to global scheduler
+        const isLive = await checkLiveMatch();
+        const mode = isLive ? 'live' : 'normal';
+        const modeChangedToLive = isLive && (config.currentMode === 'NORMAL');
         
-        freshConfig.logs = [logEntry, ...(freshConfig.logs || [])].slice(0, 30);
-        writeConfig(freshConfig);
-      });
+        const now = Date.now();
+        
+        if (!modeChangedToLive && config.nextRunTime > 0 && now < config.nextRunTime) {
+          return;
+        }
+        
+        isScrapingRunning = true;
+        const intervalMin = isLive ? config.liveIntervalMin : config.normalIntervalMin;
+        const logMsg = `[Global Auto] Chạy cào tin ở chế độ ${mode.toUpperCase()} (Trận live: ${isLive ? 'Có' : 'Không'})`;
+        
+        runPythonScraper(['--mode', mode], (err) => {
+          isScrapingRunning = false;
+          
+          const freshConfig = readConfig();
+          const runTime = Date.now();
+          
+          freshConfig.lastRunTime = runTime;
+          freshConfig.nextRunTime = runTime + (intervalMin * 60 * 1000);
+          freshConfig.currentMode = mode.toUpperCase();
+          
+          let statusStr = 'Thành công';
+          if (err) {
+            statusStr = `Thất bại: ${err.message}`;
+          }
+          
+          const timestampStr = new Date(runTime).toLocaleString('vi-VN');
+          const logEntry = `[${timestampStr}] ${logMsg} -> ${statusStr}`;
+          
+          freshConfig.logs = [logEntry, ...(freshConfig.logs || [])].slice(0, 30);
+          writeConfig(freshConfig);
+        });
+      }
     } catch (err) {
       isScrapingRunning = false;
       console.error('⏰ Scheduler unexpected error:', err);
     }
-  }, 30000); // check every 30 seconds
+  }, 30000);
 }
 
 export default defineConfig({
@@ -130,7 +254,6 @@ export default defineConfig({
     {
       name: 'run-scraper-api',
       configureServer(server) {
-        // Start scheduler when server starts
         initScheduler();
         
         server.middlewares.use((req, res, next) => {
@@ -154,7 +277,6 @@ export default defineConfig({
             if (liveIntervalMin !== null) config.liveIntervalMin = parseInt(liveIntervalMin) || 10;
             if (normalIntervalMin !== null) config.normalIntervalMin = parseInt(normalIntervalMin) || 180;
             
-            // Recalculate next run
             const intervalMin = config.currentMode === 'LIVE' ? config.liveIntervalMin : config.normalIntervalMin;
             config.nextRunTime = Date.now() + (intervalMin * 60 * 1000);
             
@@ -164,11 +286,43 @@ export default defineConfig({
             writeConfig(config);
             res.end(JSON.stringify({ success: true, config }));
           }
+          else if (pathname === '/api/sync-matches' && req.method === 'POST') {
+            let body = '';
+            req.on('data', chunk => {
+              body += chunk.toString();
+            });
+            req.on('end', () => {
+              try {
+                const matches = JSON.parse(body);
+                const matchesListPath = path.resolve('public/data/matches_list.json');
+                const dir = path.dirname(matchesListPath);
+                if (!fs.existsSync(dir)) {
+                  fs.mkdirSync(dir, { recursive: true });
+                }
+                fs.writeFileSync(matchesListPath, JSON.stringify(matches, null, 2), 'utf-8');
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify({ success: true, count: matches.length }));
+              } catch (e) {
+                res.statusCode = 400;
+                res.setHeader('Content-Type', 'application/json');
+                res.end(JSON.stringify({ success: false, error: e.message }));
+              }
+            });
+          }
           else if (pathname === '/api/run-scraper') {
             res.setHeader('Content-Type', 'application/json');
             const mode = urlObj.searchParams.get('mode') || 'normal';
+            const args = ['--mode', mode];
             
-            exec(`python3 scripts/scrape_news.py --mode ${mode}`, (err, stdout, stderr) => {
+            if (mode === 'match') {
+              const matchId = urlObj.searchParams.get('match_id') || '';
+              const home = urlObj.searchParams.get('home') || '';
+              const away = urlObj.searchParams.get('away') || '';
+              const status = urlObj.searchParams.get('status') || '';
+              args.push('--match_id', matchId, '--home', home, '--away', away, '--status', status);
+            }
+            
+            runPythonScraper(args, (err, stdout, stderr) => {
               const config = readConfig();
               const runTime = Date.now();
               const timestampStr = new Date(runTime).toLocaleString('vi-VN');
