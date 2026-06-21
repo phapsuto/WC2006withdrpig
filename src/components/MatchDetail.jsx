@@ -640,6 +640,36 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
           </div>
         </div>
 
+        {/* Goalscorers List */}
+        {timeline && timeline.some(e => e.type === 'GOAL') && (
+          <div className="w-full max-w-2xl mt-5 grid grid-cols-2 gap-6 text-[11px] border-t border-white/20 pt-3.5">
+            {/* Home Goalscorers */}
+            <div className="text-right space-y-1 pr-3 border-r border-white/10">
+              {timeline
+                .filter(e => e.type === 'GOAL' && e.team === 'home')
+                .map((event, idx) => (
+                  <div key={idx} className="flex justify-end items-center gap-1.5 text-on-surface-variant/90">
+                    <span className="font-medium">{event.detail}</span>
+                    <span className="font-extrabold text-primary">{event.minute}'</span>
+                    <span className="text-[10px]">⚽</span>
+                  </div>
+                ))}
+            </div>
+            {/* Away Goalscorers */}
+            <div className="text-left space-y-1 pl-3">
+              {timeline
+                .filter(e => e.type === 'GOAL' && e.team === 'away')
+                .map((event, idx) => (
+                  <div key={idx} className="flex justify-start items-center gap-1.5 text-on-surface-variant/90">
+                    <span className="text-[10px]">⚽</span>
+                    <span className="font-extrabold text-secondary">{event.minute}'</span>
+                    <span className="font-medium">{event.detail}</span>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+
         {/* AI win probability bar chart */}
         <div className="w-full max-w-lg mt-8 p-4 bg-white/40 border border-white/50 rounded-2xl">
           <div className="flex justify-between items-center text-[10px] font-bold text-on-surface-variant/85 mb-1.5">
