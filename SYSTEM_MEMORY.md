@@ -2,7 +2,7 @@
 > **MỤC ĐÍCH**: File này lưu trữ toàn bộ tiến trình phát triển, bugs đã fix, cấu trúc dự án, 
 > trạng thái đồng bộ Telegram và những việc cần làm tiếp theo của dự án World Cup 2026.
 > 
-> **CẬP NHẬT LẦN CUỐI**: 2026-06-21T07:30:00+10:00
+> **CẬP NHẬT LẦN CUỐI**: 2026-06-21T09:30:00+10:00
 
 ---
 
@@ -67,6 +67,9 @@ Hệ thống đồng bộ hai chiều giữa IDE Agent và Telegram đang hoạt
 
 ## 📋 VIỆC CẦN LÀM TIẾP THEO
 
+- [x] **Cập nhật hướng dẫn chi tiết & Đẩy lên GitHub**:
+  - Biên soạn lại tệp `README.md` cực kỳ chi tiết, trình bày đẹp mắt bằng tiếng Việt (bao gồm sơ đồ Mermaid, cài đặt dự án, tích hợp Telegram bot, scraper và thuật toán Dixon-Coles Poisson).
+  - Staging, commit và push thành công mã nguồn lên kho lưu trữ từ xa GitHub.
 - [x] **Tích hợp đầy đủ dữ liệu thời gian thực và lịch sử từ Sportmonks API**:
   - Đã chuyển hoàn toàn sang Sportmonks API, loại bỏ worldcup26.ir.
   - Tích hợp BXH, Top Scorers & Assists, H2H, Lineups, Live stats.
