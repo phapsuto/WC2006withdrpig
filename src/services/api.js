@@ -231,132 +231,190 @@ const mapSportmonksLineup = (smLineup, teamId) => {
   return mapped;
 };
 
+const parseSportmonksXG = (fixture, homeId) => {
+  let homeXG = null;
+  let awayXG = null;
+
+  // 1. Check xg_fixture / xgFixture / x_g_fixture relation
+  const xgData = fixture.xg_fixture || fixture.xgFixture || fixture.x_g_fixture || fixture.xg;
+  if (xgData) {
+    if (Array.isArray(xgData)) {
+      xgData.forEach(item => {
+        const isHome = item.participant_id === homeId || item.team_id === homeId;
+        const val = parseFloat(item.xg ?? item.value ?? item.expected_goals ?? 0);
+        if (isHome) homeXG = val;
+        else awayXG = val;
+      });
+    } else if (typeof xgData === 'object') {
+      homeXG = parseFloat(xgData.home ?? xgData.home_xg ?? xgData.homeXG ?? null);
+      awayXG = parseFloat(xgData.away ?? xgData.away_xg ?? xgData.awayXG ?? null);
+    }
+  }
+
+  // 2. Check statistics as fallback
+  if ((homeXG === null || awayXG === null) && fixture.statistics && Array.isArray(fixture.statistics)) {
+    fixture.statistics.forEach(stat => {
+      const devName = stat.type?.developer_name || '';
+      const isHome = stat.participant_id === homeId;
+      const val = parseFloat(stat.data?.value ?? stat.value ?? 0);
+      if (devName.includes('EXPECTED_GOALS') || devName === 'XG' || stat.type_id === 120) {
+        if (isHome) homeXG = val;
+        else awayXG = val;
+      }
+    });
+  }
+
+  if (homeXG !== null && awayXG !== null) {
+    return { home: homeXG, away: awayXG };
+  }
+  return null;
+};
+
 const parseSportmonksStats = (smStats, homeId) => {
   if (!smStats || !Array.isArray(smStats)) return null;
   const statsObj = {
     possession: { home: 50, away: 50 },
-    xg: { home: 0.0, away: 0.0 },
-    shots: { home: 0, away: 0 },
+    xg: null,
+    shotsTotal: { home: 0, away: 0 },
     shotsOnTarget: { home: 0, away: 0 },
+    shotsOffTarget: { home: 0, away: 0 },
+    shotsBlocked: { home: 0, away: 0 },
+    corners: { home: 0, away: 0 },
+    offsides: { home: 0, away: 0 },
+    fouls: { home: 0, away: 0 },
+    throwIns: { home: 0, away: 0 },
+    yellowCards: { home: 0, away: 0 },
+    redCards: { home: 0, away: 0 },
+    crosses: { home: 0, away: 0 },
+    counterAttacks: { home: 0, away: 0 },
+    saves: { home: 0, away: 0 },
+    goalKicks: { home: 0, away: 0 },
+    // Keep existing keys for backward compatibility
+    shots: { home: 0, away: 0 },
     attacks: { home: 0, away: 0 },
     dangerousAttacks: { home: 0, away: 0 },
     passes: { home: 0, away: 0 },
     accuratePasses: { home: 0, away: 0 },
-    fouls: { home: 0, away: 0 },
-    corners: { home: 0, away: 0 },
-    offsides: { home: 0, away: 0 },
-    saves: { home: 0, away: 0 },
     tackles: { home: 0, away: 0 },
-    clearances: { home: 0, away: 0 },
-    yellowCards: { home: 0, away: 0 },
-    redCards: { home: 0, away: 0 }
+    clearances: { home: 0, away: 0 }
   };
+
   smStats.forEach(stat => {
-    // Sportmonks v3: value is in stat.data.value, type name in stat.type.developer_name
     const rawVal = stat.data?.value ?? stat.value ?? 0;
     const val = parseInt(rawVal) || 0;
     const isHome = stat.participant_id === homeId;
     const target = isHome ? 'home' : 'away';
     const devName = stat.type?.developer_name || '';
-    
-    switch (devName) {
-      case 'BALL_POSSESSION':
-        statsObj.possession[target] = val;
-        statsObj.possession[isHome ? 'away' : 'home'] = 100 - val;
-        break;
-      case 'SHOTS_TOTAL':
-        statsObj.shots[target] = val;
-        break;
-      case 'SHOTS_ON_TARGET':
-        statsObj.shotsOnTarget[target] = val;
-        break;
-      case 'FOULS':
-        statsObj.fouls[target] = val;
-        break;
-      case 'CORNERS':
-        statsObj.corners[target] = val;
-        break;
-      case 'DANGEROUS_ATTACKS':
-        statsObj.dangerousAttacks[target] = val;
-        break;
-      case 'ATTACKS':
-        statsObj.attacks[target] = val;
-        break;
-      case 'PASSES':
-        statsObj.passes[target] = val;
-        break;
-      case 'SUCCESSFUL_PASSES':
-        statsObj.accuratePasses[target] = val;
-        break;
-      case 'OFFSIDES':
-        statsObj.offsides[target] = val;
-        break;
-      case 'SAVES':
-        statsObj.saves[target] = val;
-        break;
-      case 'TACKLES':
-        statsObj.tackles[target] = val;
-        break;
-      case 'YELLOWCARDS':
-        statsObj.yellowCards[target] = val;
-        break;
-      case 'REDCARDS':
-        statsObj.redCards[target] = val;
-        break;
-      default:
-        // Fallback: try numeric type_id for backwards compatibility
-        switch (stat.type_id) {
-          case 45: statsObj.possession[target] = val; break;
-          case 42: statsObj.shots[target] = val; break;
-          case 86: statsObj.shotsOnTarget[target] = val; break;
-          case 56: statsObj.fouls[target] = val; break;
-          case 34: statsObj.corners[target] = val; break;
-          case 40: statsObj.dangerousAttacks[target] = val; break;
-          case 41: statsObj.attacks[target] = val; break;
-          case 38: statsObj.passes[target] = val; break;
-          case 44: statsObj.offsides[target] = val; break;
-          case 48: statsObj.saves[target] = val; break;
-          case 49: statsObj.tackles[target] = val; break;
-        }
+    const typeId = stat.type_id;
+
+    // Map by developer name or type_id
+    if (devName === 'BALL_POSSESSION' || typeId === 45) {
+      statsObj.possession[target] = val;
+      statsObj.possession[isHome ? 'away' : 'home'] = 100 - val;
+    } else if (devName === 'SHOTS_TOTAL' || typeId === 83) {
+      statsObj.shotsTotal[target] = val;
+      statsObj.shots[target] = val;
+    } else if (devName === 'SHOTS_ON_TARGET' || typeId === 86) {
+      statsObj.shotsOnTarget[target] = val;
+    } else if (devName === 'SHOTS_OFF_TARGET' || typeId === 87) {
+      statsObj.shotsOffTarget[target] = val;
+    } else if (devName === 'SHOTS_BLOCKED' || devName === 'BLOCKED_SHOTS' || typeId === 84) {
+      statsObj.shotsBlocked[target] = val;
+    } else if (devName === 'CORNERS' || typeId === 34) {
+      statsObj.corners[target] = val;
+    } else if (devName === 'OFFSIDES' || typeId === 63) {
+      statsObj.offsides[target] = val;
+    } else if (devName === 'FOULS' || typeId === 56) {
+      statsObj.fouls[target] = val;
+    } else if (devName === 'THROWINS' || devName === 'THROW_INS' || typeId === 77) {
+      statsObj.throwIns[target] = val;
+    } else if (devName === 'YELLOW_CARDS' || devName === 'YELLOWCARDS' || typeId === 57) {
+      statsObj.yellowCards[target] = val;
+    } else if (devName === 'RED_CARDS' || devName === 'REDCARDS' || typeId === 58) {
+      statsObj.redCards[target] = val;
+    } else if (devName === 'CROSSES' || typeId === 91) {
+      statsObj.crosses[target] = val;
+    } else if (devName === 'COUNTER_ATTACKS' || devName === 'COUNTER_ATTACK' || typeId === 119 || typeId === 94) {
+      statsObj.counterAttacks[target] = val;
+    } else if (devName === 'GOALKEEPER_SAVES' || devName === 'SAVES' || typeId === 51 || typeId === 48) {
+      statsObj.saves[target] = val;
+    } else if (devName === 'GOAL_KICKS' || devName === 'GOALKICKS' || typeId === 64) {
+      statsObj.goalKicks[target] = val;
+    } else if (devName === 'EXPECTED_GOALS' || devName === 'XG' || typeId === 120) {
+      if (!statsObj.xg) statsObj.xg = { home: 0, away: 0 };
+      statsObj.xg[target] = parseFloat(rawVal);
+    } else {
+      switch (devName) {
+        case 'ATTACKS': statsObj.attacks[target] = val; break;
+        case 'DANGEROUS_ATTACKS': statsObj.dangerousAttacks[target] = val; break;
+        case 'PASSES': statsObj.passes[target] = val; break;
+        case 'SUCCESSFUL_PASSES': statsObj.accuratePasses[target] = val; break;
+        case 'TACKLES': statsObj.tackles[target] = val; break;
+        case 'CLEARANCES': statsObj.clearances[target] = val; break;
+      }
     }
   });
+
   return statsObj;
 };
 
 const parseSportmonksEvents = (smEvents, homeId) => {
   if (!smEvents || !Array.isArray(smEvents)) return [];
   const mapped = [];
-  const sortedEvents = [...smEvents].sort((a, b) => a.minute - b.minute);
-  sortedEvents.forEach(evt => {
+  smEvents.forEach(evt => {
     const typeId = evt.type_id;
+    const isHome = evt.participant_id === homeId;
+    const team = isHome ? 'home' : 'away';
+    const minute = evt.minute || 0;
+    const extraMinute = evt.extra_minute ? `+${evt.extra_minute}` : '';
+    const minuteDisplay = `${minute}'${extraMinute}`;
+
     let type = null;
-    let detail = evt.player_name || 'Cầu thủ';
-    if (typeId === 14) {
+    let detail = '';
+    const playerName = evt.player_name || evt.player?.name || 'Cầu thủ';
+    const relatedPlayerName = evt.related_player_name || evt.related_player?.name || '';
+
+    if (typeId === 14) { // Goal
       type = 'GOAL';
-    } else if (typeId === 15) {
+      detail = playerName;
+      if (relatedPlayerName) {
+        detail += ` (Kiến tạo: ${relatedPlayerName})`;
+      }
+    } else if (typeId === 15) { // Own Goal
       type = 'GOAL';
-      detail += ' (o.g.)';
-    } else if (typeId === 16) {
+      detail = `${playerName} (o.g.)`;
+    } else if (typeId === 16) { // Penalty Goal
       type = 'GOAL';
-      detail += ' (pen)';
-    } else if (typeId === 19) {
+      detail = `${playerName} (pen)`;
+    } else if (typeId === 19) { // Yellow Card
       type = 'YELLOW';
-    } else if (typeId === 20) {
+      detail = playerName;
+    } else if (typeId === 20 || typeId === 21 || typeId === 22) { // Red Cards
       type = 'RED';
-    } else if (typeId === 21) {
-      type = 'RED';
+      detail = playerName;
+    } else if (typeId === 18) { // Substitution
+      type = 'SUBSTITUTION';
+      const playerOut = playerName;
+      const playerIn = relatedPlayerName || 'Cầu thủ';
+      detail = `🔄 ${playerIn} thế chỗ ${playerOut}`;
     }
+
     if (type) {
-      const isHome = evt.participant_id === homeId;
       mapped.push({
-        minute: evt.minute || 0,
+        minute,
+        minuteDisplay,
         type,
-        team: isHome ? 'home' : 'away',
-        detail
+        team,
+        detail,
+        player: playerName,
+        assist: relatedPlayerName || null,
+        playerIn: type === 'SUBSTITUTION' ? relatedPlayerName : null,
+        playerOut: type === 'SUBSTITUTION' ? playerName : null
       });
     }
   });
-  return mapped;
+
+  return mapped.sort((a, b) => a.minute - b.minute);
 };
 
 function findStadiumIdByVenueName(venueName) {
@@ -843,10 +901,18 @@ const mapSportmonksFixtureToApp = (fixture) => {
   const timeline = parseSportmonksEvents(fixture.events, homeParticipant?.id);
   const stats = parseSportmonksStats(fixture.statistics, homeParticipant?.id);
   if (stats) {
-    stats.yellowCards.home = timeline.filter(e => e.team === 'home' && e.type === 'YELLOW').length;
-    stats.yellowCards.away = timeline.filter(e => e.team === 'away' && e.type === 'YELLOW').length;
-    stats.redCards.home = timeline.filter(e => e.team === 'home' && e.type === 'RED').length;
-    stats.redCards.away = timeline.filter(e => e.team === 'away' && e.type === 'RED').length;
+    const xgData = parseSportmonksXG(fixture, homeParticipant?.id);
+    if (xgData) {
+      stats.xg = xgData;
+    }
+    if (stats.yellowCards.home === 0 && stats.yellowCards.away === 0) {
+      stats.yellowCards.home = timeline.filter(e => e.team === 'home' && e.type === 'YELLOW').length;
+      stats.yellowCards.away = timeline.filter(e => e.team === 'away' && e.type === 'YELLOW').length;
+    }
+    if (stats.redCards.home === 0 && stats.redCards.away === 0) {
+      stats.redCards.home = timeline.filter(e => e.team === 'home' && e.type === 'RED').length;
+      stats.redCards.away = timeline.filter(e => e.team === 'away' && e.type === 'RED').length;
+    }
   }
   let mappedLineups = null;
   if (fixture.lineups && Array.isArray(fixture.lineups)) {
@@ -1169,7 +1235,7 @@ export const fetchSportmonksFixtureDetail = async (fixtureApiId) => {
   
   try {
     const url = getSportmonksUrl(
-      `/v3/football/fixtures/${fixtureApiId}?include=participants;scores;events;periods;statistics.type;lineups;venue;group;predictions;odds;state`,
+      `/v3/football/fixtures/${fixtureApiId}?include=participants;scores;events;periods;statistics.type;lineups;venue;group;predictions;odds;state;xGFixture`,
       token
     );
     const controller = new AbortController();
@@ -1204,7 +1270,7 @@ export const fetchSportmonksH2H = async (team1Id, team2Id) => {
   
   try {
     const url = getSportmonksUrl(
-      `/v3/football/fixtures/head-to-head/${team1Id}/${team2Id}?include=participants;scores;state&per_page=10`,
+      `/v3/football/fixtures/head-to-head/${team1Id}/${team2Id}?include=participants;scores;state;league&per_page=20`,
       token
     );
     const controller = new AbortController();
@@ -1216,18 +1282,61 @@ export const fetchSportmonksH2H = async (team1Id, team2Id) => {
     const resJson = await response.json();
     const fixtures = resJson.data || [];
     
-    const mapped = fixtures.map(f => {
+    // Sort fixtures by date descending
+    const sortedFixtures = [...fixtures].sort((a, b) => new Date(b.starting_at) - new Date(a.starting_at));
+
+    let overall = { homeWins: 0, draws: 0, awayWins: 0 };
+    let last5 = { homeWins: 0, draws: 0, awayWins: 0 };
+
+    const matches = sortedFixtures.map((f, index) => {
       const home = f.participants?.find(p => p.meta?.location === 'home') || f.participants?.[0];
       const away = f.participants?.find(p => p.meta?.location === 'away') || f.participants?.[1];
       const currentScores = (f.scores || []).filter(s => s.description?.toUpperCase() === 'CURRENT');
+      
       let hScore = 0, aScore = 0;
       for (const sc of currentScores) {
-        if (sc.score?.participant === 'home') hScore = sc.score?.goals ?? 0;
-        else if (sc.score?.participant === 'away') aScore = sc.score?.goals ?? 0;
+        if (sc.participant_id === home?.id || sc.score?.participant === 'home') {
+          hScore = sc.score?.goals ?? 0;
+        } else if (sc.participant_id === away?.id || sc.score?.participant === 'away') {
+          aScore = sc.score?.goals ?? 0;
+        }
       }
+
+      // Check result relative to team1Id (home team of current match)
+      const isHomeTeam1 = home?.id === team1Id;
+      const isAwayTeam1 = away?.id === team1Id;
+
+      let result = 'draw'; // 'win', 'loss', 'draw'
+      if (hScore > aScore) {
+        if (isHomeTeam1) result = 'win';
+        else if (isAwayTeam1) result = 'loss';
+        else result = 'win';
+      } else if (aScore > hScore) {
+        if (isHomeTeam1) result = 'loss';
+        else if (isAwayTeam1) result = 'win';
+        else result = 'loss';
+      }
+
+      // Increment overall counts
+      if (result === 'win') overall.homeWins++;
+      else if (result === 'loss') overall.awayWins++;
+      else overall.draws++;
+
+      // Increment last 5 counts
+      if (index < 5) {
+        if (result === 'win') last5.homeWins++;
+        else if (result === 'loss') last5.awayWins++;
+        else last5.draws++;
+      }
+
+      const year = f.starting_at ? new Date(f.starting_at).getFullYear() : 2026;
+      const competition = f.league?.name || 'World Cup';
+
       return {
         id: f.id,
         date: f.starting_at,
+        year,
+        competition,
         homeName: home?.name || '?',
         awayName: away?.name || '?',
         homeScore: hScore,
@@ -1235,10 +1344,11 @@ export const fetchSportmonksH2H = async (team1Id, team2Id) => {
         state: f.state?.developer_name || 'FT'
       };
     });
-    
-    h2hCache[cacheKey] = { data: mapped, timestamp: Date.now() };
-    console.log(`[Sportmonks] H2H loaded: ${mapped.length} matches`);
-    return mapped;
+
+    const resultData = { overall, last5, matches };
+    h2hCache[cacheKey] = { data: resultData, timestamp: Date.now() };
+    console.log(`[Sportmonks] H2H loaded: ${matches.length} matches, Overall: H:${overall.homeWins} D:${overall.draws} A:${overall.awayWins}`);
+    return resultData;
   } catch (e) {
     console.error('[Sportmonks] H2H fetch error:', e);
     return cached?.data || null;

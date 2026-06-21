@@ -10808,32 +10808,32 @@
     },
     "homeScore": 0,
     "awayScore": 0,
-    "status": "UPCOMING",
-    "minute": 0,
-    "second": 0,
+    "status": "LIVE",
+    "minute": 16,
+    "second": 27,
     "date": "2026-06-21 00:00:00",
     "group": "E",
     "stadiumId": "6",
     "stats": {
       "possession": {
-        "home": 50,
-        "away": 50
+        "home": 80,
+        "away": 20
       },
       "xg": {
         "home": 0,
         "away": 0
       },
       "shots": {
-        "home": 0,
-        "away": 0
+        "home": 4,
+        "away": 1
       },
       "shotsOnTarget": {
-        "home": 0,
+        "home": 3,
         "away": 0
       },
       "attacks": {
-        "home": 0,
-        "away": 0
+        "home": 1,
+        "away": 1
       },
       "dangerousAttacks": {
         "home": 0,
@@ -10852,20 +10852,20 @@
         "away": 0
       },
       "corners": {
-        "home": 0,
+        "home": 1,
         "away": 0
       },
       "offsides": {
-        "home": 0,
-        "away": 0
+        "home": 7,
+        "away": 2
       },
       "saves": {
         "home": 0,
         "away": 0
       },
       "tackles": {
-        "home": 0,
-        "away": 0
+        "home": 3,
+        "away": 1
       },
       "clearances": {
         "home": 0,
@@ -10881,171 +10881,12 @@
       }
     },
     "timeline": [],
-    "lineups": {
-      "home": [
-        {
-          "number": 1,
-          "name": "Hernán Galíndez",
-          "role": "GK",
-          "x": 50,
-          "y": 88
-        },
-        {
-          "number": 21,
-          "name": "Alan Franco",
-          "role": "DF",
-          "x": 12,
-          "y": 72
-        },
-        {
-          "number": 6,
-          "name": "Willian Pacho",
-          "role": "DF",
-          "x": 50,
-          "y": 72
-        },
-        {
-          "number": 3,
-          "name": "Piero Hincapié",
-          "role": "DF",
-          "x": 88,
-          "y": 72
-        },
-        {
-          "number": 5,
-          "name": "Jordy Alcívar",
-          "role": "MF",
-          "x": 50,
-          "y": 50
-        },
-        {
-          "number": 9,
-          "name": "John Yeboah",
-          "role": "MF",
-          "x": 12,
-          "y": 28
-        },
-        {
-          "number": 23,
-          "name": "Moisés Caicedo",
-          "role": "MF",
-          "x": 37,
-          "y": 28
-        },
-        {
-          "number": 15,
-          "name": "Pedro Vite",
-          "role": "MF",
-          "x": 63,
-          "y": 28
-        },
-        {
-          "number": 7,
-          "name": "Pervis Estupiñán",
-          "role": "MF",
-          "x": 88,
-          "y": 28
-        },
-        {
-          "number": 19,
-          "name": "Gonzalo Plata",
-          "role": "FW",
-          "x": 12,
-          "y": 18
-        },
-        {
-          "number": 13,
-          "name": "Enner Valencia",
-          "role": "FW",
-          "x": 88,
-          "y": 18
-        }
-      ],
-      "away": [
-        {
-          "number": 1,
-          "name": "Eloy Room",
-          "role": "GK",
-          "x": 50,
-          "y": 88
-        },
-        {
-          "number": 24,
-          "name": "Deveron Fonville",
-          "role": "DF",
-          "x": 12,
-          "y": 72
-        },
-        {
-          "number": 5,
-          "name": "Sherel Floranus",
-          "role": "DF",
-          "x": 31,
-          "y": 72
-        },
-        {
-          "number": 18,
-          "name": "Armando Obispo",
-          "role": "DF",
-          "x": 50,
-          "y": 72
-        },
-        {
-          "number": 3,
-          "name": "Juriën Gaari",
-          "role": "DF",
-          "x": 69,
-          "y": 72
-        },
-        {
-          "number": 20,
-          "name": "Joshua Brenet",
-          "role": "DF",
-          "x": 88,
-          "y": 72
-        },
-        {
-          "number": 7,
-          "name": "Juninho Bacuna",
-          "role": "MF",
-          "x": 12,
-          "y": 50
-        },
-        {
-          "number": 10,
-          "name": "Leandro Bacuna",
-          "role": "MF",
-          "x": 37,
-          "y": 50
-        },
-        {
-          "number": 8,
-          "name": "Livano Comenencia",
-          "role": "MF",
-          "x": 63,
-          "y": 50
-        },
-        {
-          "number": 21,
-          "name": "Tahith Chong",
-          "role": "MF",
-          "x": 88,
-          "y": 50
-        },
-        {
-          "number": 9,
-          "name": "Jürgen Locadia",
-          "role": "FW",
-          "x": 50,
-          "y": 28
-        }
-      ]
-    },
+    "lineups": null,
     "odds": {
       "h2h": {
-        "home": 1.14,
-        "draw": 9,
-        "away": 15
+        "home": 1.85,
+        "draw": 3.4,
+        "away": 4.2
       },
       "handicap": {
         "line": "-0.5",
@@ -13662,9 +13503,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 4.75,
-        "draw": 3.8,
-        "away": 1.66
+        "home": 5,
+        "draw": 3.9,
+        "away": 1.61
       },
       "handicap": {
         "line": "-0.5",

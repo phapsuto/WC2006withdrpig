@@ -371,77 +371,142 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
     
     // Deterministic seed random based on match ID to satisfy purity constraints
     const seedRandom = (offset) => {
-      const s = parseInt(match.id) || 0;
+      const s = parseInt(match.id.replace('sm-', '').replace('wc26-', '')) || 0;
       const x = Math.sin(s + offset) * 10000;
       return x - Math.floor(x);
     };
-    
-    const possessionHome = stats.possession?.home ?? 50;
-    const possessionAway = stats.possession?.away ?? (100 - possessionHome);
-    
-    const shotsHome = stats.shots?.home ?? (homeScore * 2 + 5);
-    const shotsAway = stats.shots?.away ?? (awayScore * 2 + 5);
-    
-    const sotHome = stats.shotsOnTarget?.home ?? Math.max(homeScore, Math.round(shotsHome * 0.4));
-    const sotAway = stats.shotsOnTarget?.away ?? Math.max(awayScore, Math.round(shotsAway * 0.4));
-    
-    const xgHome = stats.xg?.home ?? parseFloat((homeScore * 0.35 + shotsHome * 0.06 + seedRandom(1) * 0.3).toFixed(2));
-    const xgAway = stats.xg?.away ?? parseFloat((awayScore * 0.35 + shotsAway * 0.06 + seedRandom(2) * 0.3).toFixed(2));
-    
-    const attacksHome = stats.attacks?.home ?? Math.round(possessionHome * 1.6 + seedRandom(3) * 10);
-    const attacksAway = stats.attacks?.away ?? Math.round(possessionAway * 1.6 + seedRandom(4) * 10);
-    
-    const dangHome = stats.dangerousAttacks?.home ?? Math.round(attacksHome * 0.45 + seedRandom(5) * 5);
-    const dangAway = stats.dangerousAttacks?.away ?? Math.round(attacksAway * 0.45 + seedRandom(6) * 5);
-    
-    const passesHome = stats.passes?.home ?? Math.round(possessionHome * 8.5 + seedRandom(7) * 40);
-    const passesAway = stats.passes?.away ?? Math.round(possessionAway * 8.5 + seedRandom(8) * 40);
-    
-    const accPassHome = stats.accuratePasses?.home ?? Math.round(passesHome * (0.75 + (possessionHome / 500)));
-    const accPassAway = stats.accuratePasses?.away ?? Math.round(passesAway * (0.75 + (possessionAway / 500)));
-    
-    const foulsHome = stats.fouls?.home ?? (8 + Math.floor(seedRandom(9) * 7));
-    const foulsAway = stats.fouls?.away ?? (8 + Math.floor(seedRandom(10) * 7));
-    
-    const cornersHome = stats.corners?.home ?? Math.round(shotsHome * 0.35 + seedRandom(11) * 2);
-    const cornersAway = stats.corners?.away ?? Math.round(shotsAway * 0.35 + seedRandom(12) * 2);
-    
-    const offHome = stats.offsides?.home ?? Math.floor(seedRandom(13) * 3);
-    const offAway = stats.offsides?.away ?? Math.floor(seedRandom(14) * 3);
-    
-    const savesHome = stats.saves?.home ?? Math.max(0, sotAway - awayScore);
-    const savesAway = stats.saves?.away ?? Math.max(0, sotHome - homeScore);
-    
-    const tacklesHome = stats.tackles?.home ?? (10 + Math.floor(seedRandom(15) * 10));
-    const tacklesAway = stats.tackles?.away ?? (10 + Math.floor(seedRandom(16) * 10));
-    
-    const clearancesHome = stats.clearances?.home ?? (12 + Math.floor(seedRandom(17) * 12));
-    const clearancesAway = stats.clearances?.away ?? (12 + Math.floor(seedRandom(18) * 12));
-    
-    const ycHome = stats.yellowCards?.home ?? 0;
-    const ycAway = stats.yellowCards?.away ?? 0;
-    
-    const rcHome = stats.redCards?.home ?? 0;
-    const rcAway = stats.redCards?.away ?? 0;
-    
-    return {
-      possession: { home: possessionHome, away: possessionAway, label: "Kiểm soát bóng (%)" },
-      xg: { home: xgHome, away: xgAway, label: "Bàn thắng kỳ vọng (xG)" },
-      shots: { home: shotsHome, away: shotsAway, label: "Tổng số cú sút" },
-      shotsOnTarget: { home: sotHome, away: sotAway, label: "Sút trúng đích" },
-      attacks: { home: attacksHome, away: attacksAway, label: "Số đợt tấn công" },
-      dangerousAttacks: { home: dangHome, away: dangAway, label: "Tấn công nguy hiểm" },
-      passes: { home: passesHome, away: passesAway, label: "Tổng số đường chuyền" },
-      accuratePasses: { home: accPassHome, away: accPassAway, label: "Chuyền bóng chính xác", isAccuracy: true, totalHome: passesHome, totalAway: passesAway },
-      saves: { home: savesHome, away: savesAway, label: "Cứu thua của thủ môn" },
-      tackles: { home: tacklesHome, away: tacklesAway, label: "Tắc bóng thành công" },
-      clearances: { home: clearancesHome, away: clearancesAway, label: "Giải vây bóng" },
-      offsides: { home: offHome, away: offAway, label: "Việt vị" },
-      corners: { home: cornersHome, away: cornersAway, label: "Phạt góc" },
-      fouls: { home: foulsHome, away: foulsAway, label: "Phạm lỗi" },
-      yellowCards: { home: ycHome, away: ycAway, label: "Thẻ vàng" },
-      redCards: { home: rcHome, away: rcAway, label: "Thẻ đỏ" }
-    };
+
+    const hasRealStats = stats.source === 'sportmonks' || match.source === 'sportmonks';
+
+    // xG
+    const xgHome = stats.xg?.home ?? (hasRealStats ? null : parseFloat((homeScore * 0.35 + (stats.shots?.home || 5) * 0.06 + seedRandom(1) * 0.3).toFixed(2)));
+    const xgAway = stats.xg?.away ?? (hasRealStats ? null : parseFloat((awayScore * 0.35 + (stats.shots?.away || 5) * 0.06 + seedRandom(2) * 0.3).toFixed(2)));
+
+    const detailedList = [];
+
+    // 1. Expected Goals (xG) - Hide if null (e.g. no add-on)
+    if (xgHome !== null && xgAway !== null) {
+      detailedList.push({
+        key: 'xg',
+        label: 'Expected Goals (xG)',
+        home: xgHome,
+        away: xgAway,
+      });
+    }
+
+    // 2. Shots on target
+    detailedList.push({
+      key: 'shotsOnTarget',
+      label: 'Shots on target',
+      home: stats.shotsOnTarget?.home ?? Math.max(homeScore, Math.round((stats.shots?.home || 5) * 0.4)),
+      away: stats.shotsOnTarget?.away ?? Math.max(awayScore, Math.round((stats.shots?.away || 5) * 0.4)),
+    });
+
+    // 3. Shots off target
+    detailedList.push({
+      key: 'shotsOffTarget',
+      label: 'Shots off target',
+      home: stats.shotsOffTarget?.home ?? Math.max(0, Math.round((stats.shots?.home || 8) * 0.45)),
+      away: stats.shotsOffTarget?.away ?? Math.max(0, Math.round((stats.shots?.away || 8) * 0.45)),
+    });
+
+    // 4. Blocked shots
+    detailedList.push({
+      key: 'shotsBlocked',
+      label: 'Blocked shots',
+      home: stats.shotsBlocked?.home ?? Math.max(0, Math.round((stats.shots?.home || 8) * 0.15)),
+      away: stats.shotsBlocked?.away ?? Math.max(0, Math.round((stats.shots?.away || 8) * 0.15)),
+    });
+
+    // 5. Possession (%)
+    detailedList.push({
+      key: 'possession',
+      label: 'Possession (%)',
+      home: stats.possession?.home ?? 50,
+      away: stats.possession?.away ?? 50,
+    });
+
+    // 6. Corner kicks
+    detailedList.push({
+      key: 'corners',
+      label: 'Corner kicks',
+      home: stats.corners?.home ?? Math.round((stats.shots?.home || 10) * 0.35 + seedRandom(11) * 2),
+      away: stats.corners?.away ?? Math.round((stats.shots?.away || 10) * 0.35 + seedRandom(12) * 2),
+    });
+
+    // 7. Offsides
+    detailedList.push({
+      key: 'offsides',
+      label: 'Offsides',
+      home: stats.offsides?.home ?? Math.floor(seedRandom(13) * 3),
+      away: stats.offsides?.away ?? Math.floor(seedRandom(14) * 3),
+    });
+
+    // 8. Fouls
+    detailedList.push({
+      key: 'fouls',
+      label: 'Fouls',
+      home: stats.fouls?.home ?? (8 + Math.floor(seedRandom(9) * 7)),
+      away: stats.fouls?.away ?? (8 + Math.floor(seedRandom(10) * 7)),
+    });
+
+    // 9. Throw-ins
+    detailedList.push({
+      key: 'throwIns',
+      label: 'Throw-ins',
+      home: stats.throwIns?.home ?? (15 + Math.floor(seedRandom(19) * 10)),
+      away: stats.throwIns?.away ?? (15 + Math.floor(seedRandom(20) * 10)),
+    });
+
+    // 10. Yellow cards
+    detailedList.push({
+      key: 'yellowCards',
+      label: 'Yellow cards',
+      home: stats.yellowCards?.home ?? 0,
+      away: stats.yellowCards?.away ?? 0,
+    });
+
+    // 11. Red cards
+    detailedList.push({
+      key: 'redCards',
+      label: 'Red cards',
+      home: stats.redCards?.home ?? 0,
+      away: stats.redCards?.away ?? 0,
+    });
+
+    // 12. Crosses
+    detailedList.push({
+      key: 'crosses',
+      label: 'Crosses',
+      home: stats.crosses?.home ?? (10 + Math.floor(seedRandom(21) * 12)),
+      away: stats.crosses?.away ?? (10 + Math.floor(seedRandom(22) * 12)),
+    });
+
+    // 13. Counter attacks
+    detailedList.push({
+      key: 'counterAttacks',
+      label: 'Counter attacks',
+      home: stats.counterAttacks?.home ?? Math.floor(seedRandom(23) * 5),
+      away: stats.counterAttacks?.away ?? Math.floor(seedRandom(24) * 5),
+    });
+
+    // 14. Goalkeeper saves
+    detailedList.push({
+      key: 'saves',
+      label: 'Goalkeeper saves',
+      home: stats.saves?.home ?? Math.max(0, (stats.shotsOnTarget?.away || 0) - awayScore),
+      away: stats.saves?.away ?? Math.max(0, (stats.shotsOnTarget?.home || 0) - homeScore),
+    });
+
+    // 15. Goal kicks
+    detailedList.push({
+      key: 'goalKicks',
+      label: 'Goal kicks',
+      home: stats.goalKicks?.home ?? (5 + Math.floor(seedRandom(25) * 6)),
+      away: stats.goalKicks?.away ?? (5 + Math.floor(seedRandom(26) * 6)),
+    });
+
+    return detailedList;
   };
 
   const matchDateLocal = convertToUserTimezone(date, stadiumId);
@@ -1223,34 +1288,26 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
           <div className="space-y-4">
             {stats ? (() => {
               const detailedStats = getDetailedStats();
-              return Object.keys(detailedStats).map((key) => {
-                const stat = detailedStats[key];
+              return detailedStats.map((stat) => {
                 const valHome = stat.home;
                 const valAway = stat.away;
                 const total = valHome + valAway === 0 ? 1 : valHome + valAway;
                 const pctHome = (valHome / total) * 100;
                 
-                let displayHome = key === 'xg' ? Number(valHome).toFixed(2) : valHome;
-                let displayAway = key === 'xg' ? Number(valAway).toFixed(2) : valAway;
-                
-                if (stat.isAccuracy) {
-                  const pctH = Math.round((valHome / stat.totalHome) * 100) || 0;
-                  const pctA = Math.round((valAway / stat.totalAway) * 100) || 0;
-                  displayHome = `${pctH}% (${valHome}/${stat.totalHome})`;
-                  displayAway = `${pctA}% (${valAway}/${stat.totalAway})`;
-                }
+                let displayHome = stat.key === 'xg' ? Number(valHome).toFixed(2) : valHome;
+                let displayAway = stat.key === 'xg' ? Number(valAway).toFixed(2) : valAway;
                 
                 return (
-                  <div key={key} className="space-y-1">
+                  <div key={stat.key} className="space-y-1">
                     <div className="flex justify-between items-center text-xs font-bold">
                       <span className="text-on-surface">{displayHome}</span>
                       <span className="text-on-surface-variant/80 font-semibold">{stat.label}</span>
                       <span className="text-on-surface">{displayAway}</span>
                     </div>
                     
-                    <div className="h-2 w-full bg-white/60 border border-white/20 rounded-full overflow-hidden flex">
-                      <div style={{ width: `${pctHome}%` }} className="h-full bg-primary rounded-l-full"></div>
-                      <div style={{ width: `${100 - pctHome}%` }} className="h-full bg-secondary rounded-r-full"></div>
+                    <div className="h-2 w-full bg-white/40 border border-white/25 rounded-full overflow-hidden flex">
+                      <div style={{ width: `${pctHome}%`, backgroundColor: '#f97316' }} className="h-full rounded-l-full"></div>
+                      <div style={{ width: `${100 - pctHome}%`, backgroundColor: '#94a3b8' }} className="h-full rounded-r-full"></div>
                     </div>
                   </div>
                 );
@@ -1270,19 +1327,37 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
               timeline.map((event, i) => (
                 <div key={i} className={`flex items-start gap-3 relative ${event.type === 'GOAL' ? 'text-primary' : 'text-on-surface'}`}>
                   {/* Event indicator dot */}
-                  <span className={`absolute -left-[22px] w-2.5 h-2.5 rounded-full border-2 ${
-                    event.type === 'GOAL' 
-                      ? 'bg-secondary border-secondary shadow-sm' 
-                      : event.type === 'RED' 
-                        ? 'bg-danger border-danger' 
-                        : 'bg-accent-gold border-accent-gold'
-                  }`}></span>
+                  <span 
+                    style={{
+                      backgroundColor: event.type === 'GOAL' 
+                        ? 'var(--secondary)' 
+                        : event.type === 'RED' 
+                          ? 'var(--danger)' 
+                          : event.type === 'YELLOW' 
+                            ? 'var(--accent-gold)' 
+                            : '#10b981',
+                      borderColor: event.type === 'GOAL' 
+                        ? 'var(--secondary)' 
+                        : event.type === 'RED' 
+                          ? 'var(--danger)' 
+                          : event.type === 'YELLOW' 
+                            ? 'var(--accent-gold)' 
+                            : '#10b981'
+                    }}
+                    className="absolute -left-[22px] w-2.5 h-2.5 rounded-full border-2 shadow-sm"
+                  ></span>
                   
                   <span className="text-xs font-black text-secondary/90 w-8">{event.minute}'</span>
                   <div className="flex-1 p-3 bg-white/50 border border-white/60 rounded-xl flex items-center justify-between text-xs shadow-sm">
                     <div>
                       <strong className="mr-2">
-                        {event.type === 'GOAL' ? '⚽ Ghi bàn!' : event.type === 'RED' ? '🟥 Thẻ đỏ' : '🟨 Thẻ vàng'}
+                        {event.type === 'GOAL' 
+                          ? '⚽ Ghi bàn!' 
+                          : event.type === 'RED' 
+                            ? '🟥 Thẻ đỏ' 
+                            : event.type === 'YELLOW' 
+                              ? '🟨 Thẻ vàng' 
+                              : '🔄 Thay người'}
                       </strong>
                       <span className="text-on-surface-variant">{event.detail}</span>
                     </div>
@@ -1636,36 +1711,73 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 <Loader2 size={24} className="animate-spin text-primary" />
                 <span className="text-xs font-bold">Đang tải lịch sử đối đầu...</span>
               </div>
-            ) : h2hData && h2hData.length > 0 ? (
-              <div className="flex flex-col gap-3">
-                {h2hData.map((fixture) => {
-                  const dateStr = fixture.date 
-                    ? new Date(fixture.date).toLocaleDateString('vi-VN', { day: 'numeric', month: 'numeric', year: 'numeric' })
-                    : '?';
-                  return (
-                    <div 
-                      key={fixture.id} 
-                      className="flex items-center justify-between p-3.5 bg-white/45 border border-white/50 rounded-2xl hover:bg-white/55 transition-all shadow-sm"
-                    >
-                      {/* Date / League info */}
-                      <div className="w-[80px] flex flex-col text-[10px] text-on-surface-variant/80 font-bold leading-tight">
-                        <span className="text-primary">{dateStr}</span>
-                        <span>{fixture.state}</span>
-                      </div>
-
-                      {/* Scoreline and Team names */}
-                      <div className="flex-1 flex items-center justify-center px-4 gap-3 text-xs md:text-sm font-bold">
-                        <span className="flex-1 text-right truncate text-on-surface max-w-[120px] md:max-w-[160px]">{fixture.homeName}</span>
-                        <div className="flex items-center gap-1.5 px-3 py-1 bg-white/65 border border-white/80 rounded-xl font-black text-sm text-primary shadow-inner">
-                          <span>{fixture.homeScore}</span>
-                          <span className="opacity-45 font-normal">-</span>
-                          <span>{fixture.awayScore}</span>
-                        </div>
-                        <span className="flex-1 text-left truncate text-on-surface max-w-[120px] md:max-w-[160px]">{fixture.awayName}</span>
-                      </div>
+            ) : h2hData && h2hData.overall ? (
+              <div className="space-y-5">
+                {/* Overall & Last 5 Stats Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Overall card */}
+                  <div className="p-4 bg-white/40 border border-white/50 rounded-2xl flex flex-col justify-center items-center text-center">
+                    <span className="text-[10px] font-black text-on-surface-variant/80 uppercase tracking-wider mb-2">Thành tích lịch sử</span>
+                    <div className="text-lg font-black text-primary">
+                      {h2hData.overall.homeWins} <span className="text-xs font-bold text-on-surface-variant">Thắng</span>
+                      <span className="mx-2 text-on-surface-variant/45">/</span>
+                      {h2hData.overall.draws} <span className="text-xs font-bold text-on-surface-variant">Hòa</span>
+                      <span className="mx-2 text-on-surface-variant/45">/</span>
+                      {h2hData.overall.awayWins} <span className="text-xs font-bold text-on-surface-variant">Thua</span>
                     </div>
-                  );
-                })}
+                    <span className="text-[9px] text-on-surface-variant/65 mt-1 font-semibold">Tính cho {home.name} vs {away.name}</span>
+                  </div>
+
+                  {/* Last 5 meetings card */}
+                  <div className="p-4 bg-white/40 border border-white/50 rounded-2xl flex flex-col justify-center items-center text-center">
+                    <span className="text-[10px] font-black text-on-surface-variant/80 uppercase tracking-wider mb-2">5 trận đối đầu gần nhất</span>
+                    <div className="text-lg font-black text-secondary">
+                      {h2hData.last5.homeWins} <span className="text-xs font-bold text-on-surface-variant">Thắng</span>
+                      <span className="mx-2 text-on-surface-variant/45">/</span>
+                      {h2hData.last5.draws} <span className="text-xs font-bold text-on-surface-variant">Hòa</span>
+                      <span className="mx-2 text-on-surface-variant/45">/</span>
+                      {h2hData.last5.awayWins} <span className="text-xs font-bold text-on-surface-variant">Thua</span>
+                    </div>
+                    <span className="text-[9px] text-on-surface-variant/65 mt-1 font-semibold">Tỷ lệ thắng của {home.name}: {Math.round((h2hData.last5.homeWins / 5) * 100)}%</span>
+                  </div>
+                </div>
+
+                {/* Match list */}
+                <div className="flex flex-col gap-2.5">
+                  <span className="text-[10px] font-black text-on-surface-variant/80 uppercase tracking-wider pl-1">Danh sách các trận đối đầu</span>
+                  {h2hData.matches.length > 0 ? (
+                    h2hData.matches.map((fixture) => {
+                      const dateStr = fixture.date 
+                        ? new Date(fixture.date).toLocaleDateString('vi-VN', { day: 'numeric', month: 'numeric', year: 'numeric' })
+                        : '?';
+                      return (
+                        <div 
+                          key={fixture.id} 
+                          className="flex items-center justify-between p-3.5 bg-white/45 border border-white/50 rounded-2xl hover:bg-white/55 transition-all shadow-sm"
+                        >
+                          {/* Date / Competition info */}
+                          <div className="w-[120px] flex flex-col text-[10px] text-on-surface-variant/80 font-bold leading-tight">
+                            <span className="text-primary truncate max-w-[110px]">{fixture.competition}</span>
+                            <span className="text-[9px] text-on-surface-variant/60">{dateStr} ({fixture.year})</span>
+                          </div>
+
+                          {/* Scoreline and Team names */}
+                          <div className="flex-1 flex items-center justify-center px-4 gap-3 text-xs md:text-sm font-bold">
+                            <span className="flex-1 text-right truncate text-on-surface max-w-[120px] md:max-w-[160px]">{fixture.homeName}</span>
+                            <div className="flex items-center gap-1.5 px-3 py-1 bg-white/65 border border-white/80 rounded-xl font-black text-sm text-primary shadow-inner">
+                              <span>{fixture.homeScore}</span>
+                              <span className="opacity-45 font-normal">-</span>
+                              <span>{fixture.awayScore}</span>
+                            </div>
+                            <span className="flex-1 text-left truncate text-on-surface max-w-[120px] md:max-w-[160px]">{fixture.awayName}</span>
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="text-xs text-on-surface-variant text-center py-6">Không có dữ liệu chi tiết</div>
+                  )}
+                </div>
               </div>
             ) : (
               <div className="text-xs text-on-surface-variant text-center py-8">
