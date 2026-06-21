@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { Wallet, Star, Trophy, History, RefreshCw, LogOut, Heart, ArrowRight } from 'lucide-react';
 import { TEAMS } from '../services/simulator';
+import { useLanguage } from '../utils/LanguageContext';
 
 export default function Profile({ user, onLogout, onResetBalance, onSelectMatch, matches, onToggleFavoriteTeam }) {
   const [activeSubTab, setActiveSubTab] = useState('WALLET'); // WALLET, BOOKMARKS, FAVORITES, HISTORY
+  const { t } = useLanguage();
 
   if (!user) {
     return (
       <div className="bento-glass p-8 text-center flex flex-col items-center justify-center gap-4 max-w-md mx-auto">
         <Trophy size={48} className="text-primary animate-bounce" />
-        <h3 className="text-lg font-black text-on-background">Hồ sơ Cá nhân & Ví ảo</h3>
+        <h3 className="text-lg font-black text-on-background">{t('profileWalletTitle')}</h3>
         <p className="text-xs text-on-surface-variant leading-relaxed">
-          Đăng nhập bằng tài khoản Google để kích hoạt tính năng lưu trận đấu yêu thích, chọn đội tuyển cưng, và chơi cược vui mô phỏng!
+          {t('profileWalletDesc')}
         </p>
       </div>
     );
@@ -24,7 +26,7 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
   const winRate = totalBets > 0 ? ((wonBets / (wonBets + lostBets || 1)) * 100).toFixed(1) : '0.0';
 
   const formatXu = (value) => {
-    return `${Math.round(value || 0).toLocaleString('vi-VN')} xu Heo Vàng 🐷`;
+    return `${Math.round(value || 0).toLocaleString('vi-VN')} ${t('coinMascot')}`;
   };
 
   // Filter bookmarked matches
@@ -50,17 +52,17 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
           onClick={onLogout}
           className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-secondary/10 border border-secondary/15 text-secondary text-xs font-bold hover:bg-secondary/20 active:scale-95 transition-all"
         >
-          <LogOut size={12} /> Đăng xuất
+          <LogOut size={12} /> {t('logoutBtn')}
         </button>
       </div>
 
       {/* Sub Tabs Segmented Control */}
       <div className="flex gap-1.5 p-1.5 bg-white/40 border border-white/50 rounded-2xl overflow-x-auto no-scrollbar">
         {[
-          { key: 'WALLET', icon: <Wallet size={12} />, label: 'Ví cược vui' },
-          { key: 'BOOKMARKS', icon: <Star size={12} />, label: 'Theo dõi' },
-          { key: 'FAVORITES', icon: <Heart size={12} />, label: 'Đội cưng' },
-          { key: 'HISTORY', icon: <History size={12} />, label: 'Lịch sử cược' }
+          { key: 'WALLET', icon: <Wallet size={12} />, label: t('subTabWallet') },
+          { key: 'BOOKMARKS', icon: <Star size={12} />, label: t('subTabWatchlist') },
+          { key: 'FAVORITES', icon: <Heart size={12} />, label: t('subTabFavorites') },
+          { key: 'HISTORY', icon: <History size={12} />, label: t('subTabHistory') }
         ].map(tab => (
           <button 
             key={tab.key}
@@ -84,7 +86,7 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
           <div className="space-y-4">
             <div className="p-5 bg-gradient-to-br from-primary/10 to-secondary/5 border border-white/65 rounded-2xl text-center space-y-2">
               <span className="text-[10px] font-black text-on-surface-variant/85 uppercase tracking-widest">
-                Số dư cược vui khả dụng
+                {t('availableBalance')}
               </span>
               <h2 className="text-2xl md:text-3xl font-black text-secondary leading-none">
                 {formatXu(user.balance)}
@@ -93,22 +95,22 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
                 onClick={onResetBalance}
                 className="inline-flex items-center gap-1 px-4 py-2 bg-secondary text-white text-[11px] font-black rounded-xl hover:brightness-105 active:scale-95 transition-all shadow-md shadow-secondary/15"
               >
-                <RefreshCw size={12} /> Nhận lại 10.000 xu Heo Vàng 🐷
+                <RefreshCw size={12} /> {t('claimFreeCoins')}
               </button>
             </div>
 
             {/* Stats grid */}
             <div className="grid grid-cols-3 gap-3">
               <div className="bg-white/45 border border-white/50 p-3 rounded-xl text-center">
-                <div className="text-[10px] text-on-surface-variant/80 font-bold">Tổng vé cược</div>
+                <div className="text-[10px] text-on-surface-variant/80 font-bold">{t('totalBetsLabel')}</div>
                 <div className="text-base font-black text-on-surface mt-1">{totalBets}</div>
               </div>
               <div className="bg-white/45 border border-white/50 p-3 rounded-xl text-center">
-                <div className="text-[10px] text-on-surface-variant/80 font-bold">Tỉ lệ thắng</div>
+                <div className="text-[10px] text-on-surface-variant/80 font-bold">{t('winRateLabel')}</div>
                 <div className="text-base font-black text-tertiary mt-1">{winRate}%</div>
               </div>
               <div className="bg-white/45 border border-white/50 p-3 rounded-xl text-center">
-                <div className="text-[10px] text-on-surface-variant/80 font-bold">Vé Thắng/Thua</div>
+                <div className="text-[10px] text-on-surface-variant/80 font-bold">{t('wonLostLabel')}</div>
                 <div className="text-base font-black text-on-surface mt-1">{wonBets}/{lostBets}</div>
               </div>
             </div>
@@ -118,11 +120,11 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
         {/* BOOKMARKS TAB */}
         {activeSubTab === 'BOOKMARKS' && (
           <div className="space-y-3">
-            <h4 className="text-xs font-black text-on-surface border-b border-white/40 pb-2">Trận đấu đang theo dõi ({bookmarkedMatches.length})</h4>
+            <h4 className="text-xs font-black text-on-surface border-b border-white/40 pb-2">{t('bookmarkedMatchesCount', { count: bookmarkedMatches.length })}</h4>
             {bookmarkedMatches.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-8 gap-2 text-on-surface-variant">
                 <Star size={24} className="opacity-45" />
-                <span className="text-center max-w-[280px]">Chưa theo dõi trận nào. Nhấn biểu tượng sao ở bảng danh sách để theo dõi.</span>
+                <span className="text-center max-w-[280px]">{t('noBookmarksDesc')}</span>
               </div>
             ) : (
               <div className="flex flex-col gap-2">
@@ -141,7 +143,7 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
                     </div>
                     <div className="flex items-center gap-2">
                       <span className={`text-[10px] font-bold ${match.status === 'LIVE' ? 'text-danger' : 'text-on-surface-variant/75'}`}>
-                        {match.status === 'LIVE' ? `LIVE ${match.minute}'` : match.status === 'FINISHED' ? 'FT' : 'Chưa đá'}
+                        {match.status === 'LIVE' ? `LIVE ${match.minute}'` : match.status === 'FINISHED' ? 'FT' : t('tabUpcoming')}
                       </span>
                       <ArrowRight size={12} className="text-on-surface-variant/70" />
                     </div>
@@ -155,7 +157,7 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
         {/* FAVORITES TAB */}
         {activeSubTab === 'FAVORITES' && (
           <div className="space-y-3">
-            <h4 className="text-xs font-black text-on-surface border-b border-white/40 pb-2">Đội tuyển yêu thích</h4>
+            <h4 className="text-xs font-black text-on-surface border-b border-white/40 pb-2">{t('favoriteTeamsTitle')}</h4>
             <div className="flex flex-wrap gap-2 max-h-[200px] overflow-y-auto no-scrollbar p-2 bg-white/40 border border-white/50 rounded-2xl shadow-inner">
               {allTeamsList.map(team => {
                 const isFav = user.favoriteTeams && user.favoriteTeams.includes(team.name);
@@ -182,10 +184,10 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
         {/* HISTORY TAB */}
         {activeSubTab === 'HISTORY' && (
           <div className="space-y-3">
-            <h4 className="text-xs font-black text-on-surface border-b border-white/40 pb-2">Lịch sử cược vui ({totalBets})</h4>
+            <h4 className="text-xs font-black text-on-surface border-b border-white/40 pb-2">{t('mockBetHistoryCount', { count: totalBets })}</h4>
             {totalBets === 0 ? (
               <div className="flex flex-col items-center justify-center py-8 gap-2 text-on-surface-variant">
-                <span>Chưa có vé cược nào được đặt.</span>
+                <span>{t('noMockBetsPlaced')}</span>
               </div>
             ) : (
               <div className="flex flex-col gap-2 max-h-[300px] overflow-y-auto no-scrollbar">
@@ -210,17 +212,21 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
                                 ? 'bg-primary/10 text-primary border-primary/10'
                                 : 'bg-on-surface-variant/10 text-on-surface-variant border-white/40'
                         }`}>
-                          {isWon ? 'THẮNG' : isLost ? 'THUA' : 'ĐANG CHỜ'}
+                          {isWon ? t('statusWon') : isLost ? t('statusLost') : t('statusPending')}
                         </span>
                       </div>
                       <div className="flex justify-between items-center text-on-surface-variant/80 font-bold">
-                        <span>Lựa chọn: <strong className="text-primary">{bet.optionLabel}</strong> (@{bet.odds.toFixed(2)})</span>
-                        <span>Cược: {formatXu(bet.stake)}</span>
+                        <span>{t('betHistoryPicked')} <strong className="text-primary">{bet.optionLabel}</strong> (@{bet.odds.toFixed(2)})</span>
+                        <span>{t('stakeLabel')}: {formatXu(bet.stake)}</span>
                       </div>
                       <div className="flex justify-between items-center pt-2 border-t border-dashed border-white/40 text-[9px] text-on-surface-variant/70">
-                        <span>Mã vé: {bet.id}</span>
+                        <span>{t('ticketIdLabel')} {bet.id}</span>
                         <span className={`font-black text-xs ${isWon ? 'text-tertiary' : 'text-on-surface'}`}>
-                          {isWon ? `Nhận về: +${formatXu(bet.payout)}` : isLost ? 'Thanh toán: 0' : `Dự kiến nhận: ${formatXu(bet.payout)}`}
+                          {isWon 
+                            ? `${t('betHistoryReturned')} +${formatXu(bet.payout)}` 
+                            : isLost 
+                              ? `${t('betHistoryReturned')} 0 ${t('coinMascot')}` 
+                              : `${t('betHistoryEstPayout')} ${formatXu(bet.payout)}`}
                         </span>
                       </div>
                     </div>

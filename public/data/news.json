@@ -1,36 +1,657 @@
 [
   {
-    "id": "483eabf996a9bc7",
+    "id": "6d39189bd0605cc",
     "source": "Trực tiếp WC2026",
-    "url": "https://api.sportmonks.com/live-match-tunisia-japan",
-    "title": "[LIVE] Tunisia vs Japan (95')",
-    "titleVi": "[LIVE NÓNG] Trực tiếp Tunisia 0-4 Japan (Phút 95')",
-    "pubDate": 1782021920248,
-    "pubDateStr": "21/06/2026 16:05",
+    "url": "https://api.sportmonks.com/live-match-uruguay-cape verde islands",
+    "title": "[LIVE] Uruguay vs Cape Verde Islands (53')",
+    "titleVi": "[LIVE NÓNG] Trực tiếp Uruguay 2-1 Cape Verde Islands (Phút 53')",
+    "pubDate": 1782083948548,
+    "pubDateStr": "22/06/2026 09:19",
     "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
-    "content": "Trận đấu giữa Tunisia và Japan đang diễn ra vô cùng kịch tính ở phút thứ 95'. Tỷ số hiện tại là 0-4. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
-    "contentVi": "Trận đấu giữa Tunisia và Japan đang diễn ra vô cùng kịch tính ở phút thứ 95'. Tỷ số hiện tại là 0-4. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
-    "summary": "<ul><li>Trận đấu giữa Tunisia và Japan đang diễn ra vô cùng căng thẳng.</li><li>Tỷ số hiện tại là 0-4 ở phút thứ 95'.</li><li>Người hâm mộ đang nín thở dõi theo từng pha bóng tấn công của cả hai bên.</li></ul>",
-    "drpigComment": "🐷 Heo Hồng 🐷: Phút 95' rồi các fen ơi, tỷ số đang 0-4! Trận đấu này đi bóng nhanh quá, đi cửa rung góc hoặc rung tài lúc này là hết sảy nhé! 🐷⚽",
+    "content": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "contentVi": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "summary": "<ul><li>Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng căng thẳng.</li><li>Tỷ số hiện tại là 2-1 ở phút thứ 53'.</li><li>Người hâm mộ đang nín thở dõi theo từng pha bóng tấn công của cả hai bên.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Phút 53' rồi các fen ơi, tỷ số đang 2-1! Trận đấu này đi bóng nhanh quá, đi cửa rung góc hoặc rung tài lúc này là hết sảy nhé! 🐷⚽",
     "socialMentions": {
       "reddit": {
-        "upvotes": 1269,
-        "commentsCount": 104,
-        "topComment": "WhoScored stats showed France struggling with high presses recently. Senegal might sneak a point."
+        "upvotes": 566,
+        "commentsCount": 61,
+        "topComment": "Mbappe's presence completely changes the tactical balance. Senegal will need to defend deeper."
       },
       "x": {
-        "likes": 4019,
-        "reposts": 249,
-        "hotPost": "Heo Hong forecast says France is a value bet (+20% EV). Let's see if the pig is right! 🐷 #HeoHongTips"
+        "likes": 5116,
+        "reposts": 946,
+        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
       }
     },
     "isLive": true,
     "liveInfo": {
-      "home": "Tunisia",
-      "away": "Japan",
-      "score": "0-4",
-      "minute": "95'"
+      "home": "Uruguay",
+      "away": "Cape Verde Islands",
+      "score": "2-1",
+      "minute": "53'"
     }
+  },
+  {
+    "id": "c860d3c98d6580f",
+    "source": "Trực tiếp WC2026",
+    "url": "https://api.sportmonks.com/live-match-uruguay-cape verde islands",
+    "title": "Uruguay vs Cape Verde Islands (51')",
+    "titleVi": "Trực tiếp Uruguay 2-1 Cape Verde Islands (Phút 51')",
+    "pubDate": 1782083823632,
+    "pubDateStr": "22/06/2026 09:17",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 51'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "contentVi": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 51'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "summary": "<ul><li>Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng căng thẳng.</li><li>Tỷ số hiện tại là 2-1 ở phút thứ 51'.</li><li>Người hâm mộ đang nín thở dõi theo từng pha bóng tấn công của cả hai bên.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Phút 51' rồi các fen ơi, tỷ số đang 2-1! Trận đấu này đi bóng nhanh quá, đi cửa rung góc hoặc rung tài lúc này là hết sảy nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 566,
+        "commentsCount": 61,
+        "topComment": "Mbappe's presence completely changes the tactical balance. Senegal will need to defend deeper."
+      },
+      "x": {
+        "likes": 5116,
+        "reposts": 946,
+        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
+      }
+    },
+    "isLive": false,
+    "liveInfo": {
+      "home": "Uruguay",
+      "away": "Cape Verde Islands",
+      "score": "2-1",
+      "minute": "51'"
+    }
+  },
+  {
+    "id": "fb68f3963c3d55d",
+    "source": "Trực tiếp WC2026",
+    "url": "https://api.sportmonks.com/live-match-uruguay-cape verde islands",
+    "title": "Uruguay vs Cape Verde Islands (50')",
+    "titleVi": "Trực tiếp Uruguay 2-1 Cape Verde Islands (Phút 50')",
+    "pubDate": 1782083813619,
+    "pubDateStr": "22/06/2026 09:16",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 50'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "contentVi": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 50'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "summary": "<ul><li>Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng căng thẳng.</li><li>Tỷ số hiện tại là 2-1 ở phút thứ 50'.</li><li>Người hâm mộ đang nín thở dõi theo từng pha bóng tấn công của cả hai bên.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Phút 50' rồi các fen ơi, tỷ số đang 2-1! Trận đấu này đi bóng nhanh quá, đi cửa rung góc hoặc rung tài lúc này là hết sảy nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 566,
+        "commentsCount": 61,
+        "topComment": "Mbappe's presence completely changes the tactical balance. Senegal will need to defend deeper."
+      },
+      "x": {
+        "likes": 5116,
+        "reposts": 946,
+        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
+      }
+    },
+    "isLive": false,
+    "liveInfo": {
+      "home": "Uruguay",
+      "away": "Cape Verde Islands",
+      "score": "2-1",
+      "minute": "50'"
+    }
+  },
+  {
+    "id": "6d39189bd0605cc",
+    "source": "Trực tiếp WC2026",
+    "url": "https://api.sportmonks.com/live-match-uruguay-cape verde islands",
+    "title": "Uruguay vs Cape Verde Islands (53')",
+    "titleVi": "Trực tiếp Uruguay 2-1 Cape Verde Islands (Phút 53')",
+    "pubDate": 1782083194706,
+    "pubDateStr": "22/06/2026 09:06",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "contentVi": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "summary": "<ul><li>Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng căng thẳng.</li><li>Tỷ số hiện tại là 2-1 ở phút thứ 53'.</li><li>Người hâm mộ đang nín thở dõi theo từng pha bóng tấn công của cả hai bên.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Phút 53' rồi các fen ơi, tỷ số đang 2-1! Trận đấu này đi bóng nhanh quá, đi cửa rung góc hoặc rung tài lúc này là hết sảy nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 566,
+        "commentsCount": 61,
+        "topComment": "Mbappe's presence completely changes the tactical balance. Senegal will need to defend deeper."
+      },
+      "x": {
+        "likes": 5116,
+        "reposts": 946,
+        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
+      }
+    },
+    "isLive": false,
+    "liveInfo": {
+      "home": "Uruguay",
+      "away": "Cape Verde Islands",
+      "score": "2-1",
+      "minute": "53'"
+    }
+  },
+  {
+    "id": "6d39189bd0605cc",
+    "source": "Trực tiếp WC2026",
+    "url": "https://api.sportmonks.com/live-match-uruguay-cape verde islands",
+    "title": "Uruguay vs Cape Verde Islands (53')",
+    "titleVi": "Trực tiếp Uruguay 2-1 Cape Verde Islands (Phút 53')",
+    "pubDate": 1782083185322,
+    "pubDateStr": "22/06/2026 09:06",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "contentVi": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "summary": "<ul><li>Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng căng thẳng.</li><li>Tỷ số hiện tại là 2-1 ở phút thứ 53'.</li><li>Người hâm mộ đang nín thở dõi theo từng pha bóng tấn công của cả hai bên.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Phút 53' rồi các fen ơi, tỷ số đang 2-1! Trận đấu này đi bóng nhanh quá, đi cửa rung góc hoặc rung tài lúc này là hết sảy nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 566,
+        "commentsCount": 61,
+        "topComment": "Mbappe's presence completely changes the tactical balance. Senegal will need to defend deeper."
+      },
+      "x": {
+        "likes": 5116,
+        "reposts": 946,
+        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
+      }
+    },
+    "isLive": false,
+    "liveInfo": {
+      "home": "Uruguay",
+      "away": "Cape Verde Islands",
+      "score": "2-1",
+      "minute": "53'"
+    }
+  },
+  {
+    "id": "6d39189bd0605cc",
+    "source": "Trực tiếp WC2026",
+    "url": "https://api.sportmonks.com/live-match-uruguay-cape verde islands",
+    "title": "Uruguay vs Cape Verde Islands (53')",
+    "titleVi": "Trực tiếp Uruguay 2-1 Cape Verde Islands (Phút 53')",
+    "pubDate": 1782083178471,
+    "pubDateStr": "22/06/2026 09:06",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "contentVi": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "summary": "<ul><li>Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng căng thẳng.</li><li>Tỷ số hiện tại là 2-1 ở phút thứ 53'.</li><li>Người hâm mộ đang nín thở dõi theo từng pha bóng tấn công của cả hai bên.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Phút 53' rồi các fen ơi, tỷ số đang 2-1! Trận đấu này đi bóng nhanh quá, đi cửa rung góc hoặc rung tài lúc này là hết sảy nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 566,
+        "commentsCount": 61,
+        "topComment": "Mbappe's presence completely changes the tactical balance. Senegal will need to defend deeper."
+      },
+      "x": {
+        "likes": 5116,
+        "reposts": 946,
+        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
+      }
+    },
+    "isLive": false,
+    "liveInfo": {
+      "home": "Uruguay",
+      "away": "Cape Verde Islands",
+      "score": "2-1",
+      "minute": "53'"
+    }
+  },
+  {
+    "id": "6d39189bd0605cc",
+    "source": "Trực tiếp WC2026",
+    "url": "https://api.sportmonks.com/live-match-uruguay-cape verde islands",
+    "title": "Uruguay vs Cape Verde Islands (53')",
+    "titleVi": "Trực tiếp Uruguay 2-1 Cape Verde Islands (Phút 53')",
+    "pubDate": 1782082571235,
+    "pubDateStr": "22/06/2026 08:56",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "contentVi": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "summary": "<ul><li>Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng căng thẳng.</li><li>Tỷ số hiện tại là 2-1 ở phút thứ 53'.</li><li>Người hâm mộ đang nín thở dõi theo từng pha bóng tấn công của cả hai bên.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Phút 53' rồi các fen ơi, tỷ số đang 2-1! Trận đấu này đi bóng nhanh quá, đi cửa rung góc hoặc rung tài lúc này là hết sảy nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 566,
+        "commentsCount": 61,
+        "topComment": "Mbappe's presence completely changes the tactical balance. Senegal will need to defend deeper."
+      },
+      "x": {
+        "likes": 5116,
+        "reposts": 946,
+        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
+      }
+    },
+    "isLive": false,
+    "liveInfo": {
+      "home": "Uruguay",
+      "away": "Cape Verde Islands",
+      "score": "2-1",
+      "minute": "53'"
+    }
+  },
+  {
+    "id": "6d39189bd0605cc",
+    "source": "Trực tiếp WC2026",
+    "url": "https://api.sportmonks.com/live-match-uruguay-cape verde islands",
+    "title": "Uruguay vs Cape Verde Islands (53')",
+    "titleVi": "Trực tiếp Uruguay 2-1 Cape Verde Islands (Phút 53')",
+    "pubDate": 1782082554863,
+    "pubDateStr": "22/06/2026 08:55",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "contentVi": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "summary": "<ul><li>Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng căng thẳng.</li><li>Tỷ số hiện tại là 2-1 ở phút thứ 53'.</li><li>Người hâm mộ đang nín thở dõi theo từng pha bóng tấn công của cả hai bên.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Phút 53' rồi các fen ơi, tỷ số đang 2-1! Trận đấu này đi bóng nhanh quá, đi cửa rung góc hoặc rung tài lúc này là hết sảy nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 566,
+        "commentsCount": 61,
+        "topComment": "Mbappe's presence completely changes the tactical balance. Senegal will need to defend deeper."
+      },
+      "x": {
+        "likes": 5116,
+        "reposts": 946,
+        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
+      }
+    },
+    "isLive": false,
+    "liveInfo": {
+      "home": "Uruguay",
+      "away": "Cape Verde Islands",
+      "score": "2-1",
+      "minute": "53'"
+    }
+  },
+  {
+    "id": "6d39189bd0605cc",
+    "source": "Trực tiếp WC2026",
+    "url": "https://api.sportmonks.com/live-match-uruguay-cape verde islands",
+    "title": "Uruguay vs Cape Verde Islands (53')",
+    "titleVi": "Trực tiếp Uruguay 2-1 Cape Verde Islands (Phút 53')",
+    "pubDate": 1782082549263,
+    "pubDateStr": "22/06/2026 08:55",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "contentVi": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 53'. Tỷ số hiện tại là 2-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "summary": "<ul><li>Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng căng thẳng.</li><li>Tỷ số hiện tại là 2-1 ở phút thứ 53'.</li><li>Người hâm mộ đang nín thở dõi theo từng pha bóng tấn công của cả hai bên.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Phút 53' rồi các fen ơi, tỷ số đang 2-1! Trận đấu này đi bóng nhanh quá, đi cửa rung góc hoặc rung tài lúc này là hết sảy nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 566,
+        "commentsCount": 61,
+        "topComment": "Mbappe's presence completely changes the tactical balance. Senegal will need to defend deeper."
+      },
+      "x": {
+        "likes": 5116,
+        "reposts": 946,
+        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
+      }
+    },
+    "isLive": false,
+    "liveInfo": {
+      "home": "Uruguay",
+      "away": "Cape Verde Islands",
+      "score": "2-1",
+      "minute": "53'"
+    }
+  },
+  {
+    "id": "391523f89c27fc5",
+    "source": "Trực tiếp WC2026",
+    "url": "https://api.sportmonks.com/live-match-uruguay-cape verde islands",
+    "title": "Uruguay vs Cape Verde Islands (44')",
+    "titleVi": "Trực tiếp Uruguay 1-1 Cape Verde Islands (Phút 44')",
+    "pubDate": 1782081940630,
+    "pubDateStr": "22/06/2026 08:45",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 44'. Tỷ số hiện tại là 1-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "contentVi": "Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng kịch tính ở phút thứ 44'. Tỷ số hiện tại là 1-1. Cả hai đội đều đang thể hiện quyết tâm cực kỳ lớn trong khuôn khổ ngày hội bóng đá lớn nhất hành tinh World Cup 2026. Diễn biến liên tục được cập nhật theo thời gian thực.",
+    "summary": "<ul><li>Trận đấu giữa Uruguay và Cape Verde Islands đang diễn ra vô cùng căng thẳng.</li><li>Tỷ số hiện tại là 1-1 ở phút thứ 44'.</li><li>Người hâm mộ đang nín thở dõi theo từng pha bóng tấn công của cả hai bên.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Phút 44' rồi các fen ơi, tỷ số đang 1-1! Trận đấu này đi bóng nhanh quá, đi cửa rung góc hoặc rung tài lúc này là hết sảy nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 566,
+        "commentsCount": 61,
+        "topComment": "Mbappe's presence completely changes the tactical balance. Senegal will need to defend deeper."
+      },
+      "x": {
+        "likes": 5116,
+        "reposts": 946,
+        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
+      }
+    },
+    "isLive": false,
+    "liveInfo": {
+      "home": "Uruguay",
+      "away": "Cape Verde Islands",
+      "score": "1-1",
+      "minute": "44'"
+    }
+  },
+  {
+    "id": "182300c2a705f6c",
+    "source": "Tuổi Trẻ Thể Thao",
+    "url": "https://tuoitre.vn/truc-tuyen-bi-iran-2h-ngay-22-6-doi-cong-ruc-lua-100260621131142888.htm",
+    "title": "Iran xuất sắc cầm hòa dàn sao tuyển Bỉ tại World Cup 2026",
+    "titleVi": "ĐỊA CHẤN! Iran 'cầm chân' dàn sao Bỉ, 'Quỷ đỏ' chật vật ở World Cup 2026!",
+    "pubDate": 1782082111755,
+    "pubDateStr": "22/06/2026 08:48",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Sáng 22-6, tại lượt trận thứ 2 bảng G World Cup 2026, Iran thi đấu quả cảm và đem về trận hòa 0-0 trước tuyển Bỉ hùng mạnh.\n\nDe Bruyne (áo đỏ) cùng dàn sao tuyển Bỉ bất lực trước Iran - Ảnh: AP\n\nRơi vào thế phải thắng, Lukaku buộc phải đá chính cho tuyển Bỉ. Nhưng nhìn chung thì màn trình diễn của anh trong hiệp 1 khá mờ nhạt. Thậm chí chỉ mất có 3 phút, ngôi sao này đã nhận… thẻ vàng sau pha lao vào đạp trúng thủ thành Beiranvand của Iran.\n\nCác pha lên bóng của Bỉ chủ yếu tập trung nhiều ở 2 cánh. Phút thứ 9, Trossard đi bóng bên cánh trái rồi chuyền vào thuận lợi. De Bruyne dứt điểm bị truy cản, rồi cú sút bồi của De Cuyper cũng không thắng được thủ thành Beiranvand.\n\nGây sức ép nhưng bế tắc, Bỉ còn suýt phải nhận bàn thua trước. Phút 14, Iran lên bóng khiến hàng thủ của Bỉ lúng túng. Hossein Kanni chớp thời cơ sút ngay nhưng bị thủ thành Courtois cản phá.\n\nĐến phút 25, Taremi thoát xuống sau tình huống đá phạt và thậm chí đưa bóng vào lưới. Tuy nhiên, anh không được công nhận bàn thắng vì lỗi việt vị. Tỉ số hiệp 1 trận đấu là 0-0.\n\nThẻ đỏ của Nathan Ngoy đặt tuyển Bỉ vào thế khó - Ảnh: AP\n\nĐầu hiệp 2, tuyển Bỉ đẩy cao tốc độ, ép sân liên tục. Iran cũng không quá lùi sâu mà sẵn sàng phản đòn, tạo ra thế trận ăn miếng trả miếng.\n\nĐại diện châu Á có cơ hội nguy hiểm ở phút 53, khi Taremi dứt điểm một chạm rất căng nhưng Courtois vẫn bay người cứu thua rất nhanh. Sang phút 59, đến lượt người gác đền của Iran là Beiranvand tỏa sáng.\n\nDe Bruyne thoát xuống, căng vào trong gây rối loạn. Một hậu vệ Iran cản phá, nhưng De Cuyper có mặt ở vị trí cách khung thành chỉ 5 mét. Thế nhưng, Beiranvand phả xạ nhanh để cứu nguy.\n\nThủ thành sinh năm 1992 tiếp tục là điểm sáng trong những phút tiếp theo, khi liên tiếp hóa giải những cú sút của dàn sao tuyển Bỉ. Các cầu thủ bên trên cũng chơi đầy quyết tâm, và thậm chí sẵn sàng lao lên khi có cơ hội.\n\nĐể rồi, đội bóng mạnh hơn lại lúng túng, mắc lỗi. Phút 66, Nathan Ngoy không chịu sức ép lại chuyền về sai. Anh buộc phải ngăn cản pha lao xuống của Taremi để tránh bàn thua, và phải nhận thẻ đỏ.\n\nVới chỉ 10 người, Bỉ càng ngày càng bế tắc. Tỉ số 0-0 được giữ đến hết trận, và mỗi đội vẫn chỉ mới có 2 điểm sau hai trận.\n\nĐội hình ra sân - Đồ họa: HUY ĐĂNG\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác",
+    "contentVi": "Sáng 22-6, tại lượt trận thứ 2 bảng G World Cup 2026, Iran thi đấu quả cảm và đem về trận hòa 0-0 trước tuyển Bỉ hùng mạnh.\n\nDe Bruyne (áo đỏ) cùng dàn sao tuyển Bỉ bất lực trước Iran - Ảnh: AP\n\nRơi vào thế phải thắng, Lukaku buộc phải đá chính cho tuyển Bỉ. Nhưng nhìn chung thì màn trình diễn của anh trong hiệp 1 khá mờ nhạt. Thậm chí chỉ mất có 3 phút, ngôi sao này đã nhận… thẻ vàng sau pha lao vào đạp trúng thủ thành Beiranvand của Iran.\n\nCác pha lên bóng của Bỉ chủ yếu tập trung nhiều ở 2 cánh. Phút thứ 9, Trossard đi bóng bên cánh trái rồi chuyền vào thuận lợi. De Bruyne dứt điểm bị truy cản, rồi cú sút bồi của De Cuyper cũng không thắng được thủ thành Beiranvand.\n\nGây sức ép nhưng bế tắc, Bỉ còn suýt phải nhận bàn thua trước. Phút 14, Iran lên bóng khiến hàng thủ của Bỉ lúng túng. Hossein Kanni chớp thời cơ sút ngay nhưng bị thủ thành Courtois cản phá.\n\nĐến phút 25, Taremi thoát xuống sau tình huống đá phạt và thậm chí đưa bóng vào lưới. Tuy nhiên, anh không được công nhận bàn thắng vì lỗi việt vị. Tỉ số hiệp 1 trận đấu là 0-0.\n\nThẻ đỏ của Nathan Ngoy đặt tuyển Bỉ vào thế khó - Ảnh: AP\n\nĐầu hiệp 2, tuyển Bỉ đẩy cao tốc độ, ép sân liên tục. Iran cũng không quá lùi sâu mà sẵn sàng phản đòn, tạo ra thế trận ăn miếng trả miếng.\n\nĐại diện châu Á có cơ hội nguy hiểm ở phút 53, khi Taremi dứt điểm một chạm rất căng nhưng Courtois vẫn bay người cứu thua rất nhanh. Sang phút 59, đến lượt người gác đền của Iran là Beiranvand tỏa sáng.\n\nDe Bruyne thoát xuống, căng vào trong gây rối loạn. Một hậu vệ Iran cản phá, nhưng De Cuyper có mặt ở vị trí cách khung thành chỉ 5 mét. Thế nhưng, Beiranvand phả xạ nhanh để cứu nguy.\n\nThủ thành sinh năm 1992 tiếp tục là điểm sáng trong những phút tiếp theo, khi liên tiếp hóa giải những cú sút của dàn sao tuyển Bỉ. Các cầu thủ bên trên cũng chơi đầy quyết tâm, và thậm chí sẵn sàng lao lên khi có cơ hội.\n\nĐể rồi, đội bóng mạnh hơn lại lúng túng, mắc lỗi. Phút 66, Nathan Ngoy không chịu sức ép lại chuyền về sai. Anh buộc phải ngăn cản pha lao xuống của Taremi để tránh bàn thua, và phải nhận thẻ đỏ.\n\nVới chỉ 10 người, Bỉ càng ngày càng bế tắc. Tỉ số 0-0 được giữ đến hết trận, và mỗi đội vẫn chỉ mới có 2 điểm sau hai trận.\n\nĐội hình ra sân - Đồ họa: HUY ĐĂNG",
+    "summary": "<ul><li>Iran thi đấu quả cảm, cầm hòa 0-0 trước tuyển Bỉ hùng mạnh tại lượt trận thứ 2 bảng G World Cup 2026, khiến \"Quỷ đỏ\" gặp khó khăn.</li><li>Tuyển Bỉ với dàn sao như De Bruyne, Lukaku thi đấu bế tắc, Lukaku nhận thẻ vàng sớm, và Nathan Ngoy bị thẻ đỏ ở phút 66, làm suy yếu đội hình.</li><li>Thủ thành Beiranvand của Iran tỏa sáng với nhiều pha cứu thua xuất thần, trong khi Taremi của Iran bị từ chối một bàn thắng vì lỗi việt vị.</li></ul>",
+    "drpigComment": "Ối giời ơi các fen ơi, Heo Hồng 🐷 đã bảo rồi mà! Đừng thấy Bỉ có sao mà vội vàng đặt cửa trên nha. Iran đá lì lợm thế kia thì 'Quỷ đỏ' có mà mọc thêm cánh cũng khó mà thắng nổi. Kèo hòa 0-0 này chắc làm khối fen 'bay màu' nhưng cũng có fen 'hốt bạc' đó nha! World Cup này còn nhiều bất ngờ lắm, cứ theo Heo Hồng 🐷 mà né kèo khó nha!",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 643,
+        "commentsCount": 158,
+        "topComment": "The ELO model on this app is actually spot on. Argentina at 2080 is very accurate."
+      },
+      "x": {
+        "likes": 3393,
+        "reposts": 873,
+        "hotPost": "Lịch sử vẫy gọi các chiến binh Sao Vàng! Quyết chiến Colombia! 🇻🇳🔥 #VietnamWorldCup"
+      }
+    },
+    "isLive": false
+  },
+  {
+    "id": "1f5bba0a0f45159",
+    "source": "Tuổi Trẻ Thể Thao",
+    "url": "https://tuoitre.vn/hlv-grachen-mbappe-muon-ghi-hat-trick-nhu-messi-100260621212109189.htm",
+    "title": "HLV Grachen: Mbappe muốn ghi hat-trick như Messi",
+    "titleVi": "SỐC! HLV Graechen 'phán': Mbappe khao khát hat-trick, quyết 'soán ngôi' Messi ở World Cup 2026!",
+    "pubDate": 1782067352804,
+    "pubDateStr": "22/06/2026 04:42",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Thầy của Công Phượng, ông Guillaume Graechen tự tin dự đoán tiền đạo Kylian Mbappe sẽ ghi hat-trick để bắt kịp Lionel Messi ở FIFA World Cup 2026.\n\nMbappe (trái) hoàn toàn có thể theo đuổi kỷ lục ghi bàn World Cup - Ảnh: AP\n\nHLV người Pháp Guillaume Graechen đang làm công tác huấn luyện ở Học viện bóng đá Nutifood tại Việt Nam. Thời gian World Cup 2026 diễn ra trùng vòng loại U17 quốc gia.\n\nLà rể Việt nhưng mang dòng máu Pháp, thầy Giôm (biệt danh ông Graechen thời huấn luyện Công Phượng) luôn có một ưu tiên nhất định để theo dõi hành trình của đội tuyển Pháp.\n\nSau chiến thắng 3-1 trong trận ra quân trước Senegal ở bảng I, tuyển Pháp xếp thứ nhì.\n\nTheo ông Giôm đánh giá: \"Thực tế thì Pháp đã gặp một khối đội hình Senegal mạnh mẽ trong hiệp 1 trận mở màn. Họ thông minh khi tìm được cách ngăn cầu thủ Pháp thể hiện tốc độ và kỹ thuật. Bằng chứng là cả đội Pháp đều chơi thiếu quyết liệt ở 45 phút đầu tiên.\n\nĐọc được bài này, hiệp 2, HLV Didier Deschamps đã linh động bố trí đội hình lùi lại để dụ Senegal đưa đội hình lên cao. Họ giăng bẫy thành công và tận dụng được khoảng không phía sau hàng thủ của đối phương. Từ đó nhiều cơ hội và bàn thắng đến với Pháp.\n\nVới cách chơi linh động và đọc trận đấu tốt thế này, tôi tin Pháp sẽ có chiến thắng 3-0 trước Iraq ở loạt trận thứ 2. Đây là cơ hội cho Mbappe. Cậu ấy muốn ghi hat-trick như Messi.\n\nMbappe đang là chân sút vĩ đại nhất của tuyển Pháp với 58 bàn. Tinh thần tấn công của anh ấy rất tích cực và truyền cảm hứng cho các đồng đội. Mbappe cần một cú hích như Messi.\n\nTôi không có thời gian xem Messi của Argentina và Ronaldo của Bồ Đào Nha. Đây là kỳ World Cup cuối cùng của cả hai, cho nên tôi nghĩ chúng ta cứ tận hưởng những gì họ thể hiện\".\n\nĐội tuyển Pháp sẽ gặp Iraq vào lúc 4h sáng ngày 23-6 theo giờ Việt Nam. Ông Graechen sẽ tranh thủ theo dõi trận đấu trước khi quay lại công tác huấn luyện. Mục tiêu chính của ông thầy sinh năm 1977 là giúp Học viện bóng đá Nutifood giành quyền vào vòng chung kết U17.\n\nHLV Graechen vừa được VFF vinh danh hồi tháng 5 vì những đóng góp cho bóng đá Việt Nam - Ảnh: HVBĐNTF\n\nBên cạnh cú đúp bàn thắng và hàng loạt kỷ lục được thiết lập trong chiến thắng 3-1 trước Senegal (rạng sáng 17-6), Kylian Mbappe còn khiến người hâm mộ vô cùng tò mò bởi một màn ăn mừng \"độc nhất vô nhị\".\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác\n\nHiện chưa có bình luận nào, hãy là người đầu tiên bình luận",
+    "contentVi": "Thầy của Công Phượng, ông Guillaume Graechen tự tin dự đoán tiền đạo Kylian Mbappe sẽ ghi hat-trick để bắt kịp Lionel Messi ở FIFA World Cup 2026.\n\nMbappe (trái) hoàn toàn có thể theo đuổi kỷ lục ghi bàn World Cup - Ảnh: AP\n\nHLV người Pháp Guillaume Graechen đang làm công tác huấn luyện ở Học viện bóng đá Nutifood tại Việt Nam. Thời gian World Cup 2026 diễn ra trùng vòng loại U17 quốc gia.\n\nLà rể Việt nhưng mang dòng máu Pháp, thầy Giôm (biệt danh ông Graechen thời huấn luyện Công Phượng) luôn có một ưu tiên nhất định để theo dõi hành trình của đội tuyển Pháp.\n\nSau chiến thắng 3-1 trong trận ra quân trước Senegal ở bảng I, tuyển Pháp xếp thứ nhì.\n\nTheo ông Giôm đánh giá: \"Thực tế thì Pháp đã gặp một khối đội hình Senegal mạnh mẽ trong hiệp 1 trận mở màn. Họ thông minh khi tìm được cách ngăn cầu thủ Pháp thể hiện tốc độ và kỹ thuật. Bằng chứng là cả đội Pháp đều chơi thiếu quyết liệt ở 45 phút đầu tiên.\n\nĐọc được bài này, hiệp 2, HLV Didier Deschamps đã linh động bố trí đội hình lùi lại để dụ Senegal đưa đội hình lên cao. Họ giăng bẫy thành công và tận dụng được khoảng không phía sau hàng thủ của đối phương. Từ đó nhiều cơ hội và bàn thắng đến với Pháp.\n\nVới cách chơi linh động và đọc trận đấu tốt thế này, tôi tin Pháp sẽ có chiến thắng 3-0 trước Iraq ở loạt trận thứ 2. Đây là cơ hội cho Mbappe. Cậu ấy muốn ghi hat-trick như Messi.\n\nMbappe đang là chân sút vĩ đại nhất của tuyển Pháp với 58 bàn. Tinh thần tấn công của anh ấy rất tích cực và truyền cảm hứng cho các đồng đội. Mbappe cần một cú hích như Messi.\n\nTôi không có thời gian xem Messi của Argentina và Ronaldo của Bồ Đào Nha. Đây là kỳ World Cup cuối cùng của cả hai, cho nên tôi nghĩ chúng ta cứ tận hưởng những gì họ thể hiện\".\n\nĐội tuyển Pháp sẽ gặp Iraq vào lúc 4h sáng ngày 23-6 theo giờ Việt Nam. Ông Graechen sẽ tranh thủ theo dõi trận đấu trước khi quay lại công tác huấn luyện. Mục tiêu chính của ông thầy sinh năm 1977 là giúp Học viện bóng đá Nutifood giành quyền vào vòng chung kết U17.\n\nHLV Graechen vừa được VFF vinh danh hồi tháng 5 vì những đóng góp cho bóng đá Việt Nam - Ảnh: HVBĐNTF\n\nBên cạnh cú đúp bàn thắng và hàng loạt kỷ lục được thiết lập trong chiến thắng 3-1 trước Senegal (rạng sáng 17-6), Kylian Mbappe còn khiến người hâm mộ vô cùng tò mò bởi một màn ăn mừng \"độc nhất vô nhị\".",
+    "summary": "<ul><li>HLV Guillaume Graechen dự đoán Kylian Mbappe sẽ lập hat-trick vào lưới Iraq, với khao khát bắt kịp kỷ lục của Lionel Messi tại World Cup 2026.</li><li>Thầy Giôm phân tích chiến thuật linh hoạt của tuyển Pháp dưới thời HLV Deschamps, tin rằng họ sẽ thắng Iraq 3-0 ở loạt trận thứ hai.</li><li>Dù bận rộn với công tác huấn luyện tại Học viện Nutifood, HLV Graechen vẫn ưu tiên theo dõi tuyển Pháp và kêu gọi người hâm mộ tận hưởng kỳ World Cup cuối cùng của Messi và Ronaldo.</li></ul>",
+    "drpigComment": "Heo Hồng 🐷 thấy kèo Pháp thắng 3-0 và Mbappe lập hat-trick nghe có vẻ thơm đấy các fen! Nhưng mà Messi với Ronaldo kỳ cuối rồi, Heo Hồng 🐷 nghĩ cứ tận hưởng đi, kèo cọt tính sau cũng được, miễn là có bóng đá đẹp là vui rồi! 😜",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 1282,
+        "commentsCount": 57,
+        "topComment": "Is anyone else expecting an absolute goal-fest in Group L? England vs Croatia is going to be spicy."
+      },
+      "x": {
+        "likes": 4032,
+        "reposts": 262,
+        "hotPost": "MetLife Stadium is absolutely rocking. The atmosphere for WC2026 opening week is insane! #MetLife"
+      }
+    },
+    "isLive": false
+  },
+  {
+    "id": "31a472ebcfd50a1",
+    "source": "Tuổi Trẻ Thể Thao",
+    "url": "https://tuoitre.vn/tong-lien-doan-lao-dong-viet-nam-trao-tang-bang-khen-cho-bao-tuoi-tre-100260621195111177.htm",
+    "title": "Tổng liên đoàn Lao động Việt Nam trao tặng bằng khen cho Báo Tuổi Trẻ",
+    "titleVi": "Báo Tuổi Trẻ và VFF 'ẵm' bằng khen danh giá, giải bóng đá công nhân 'lên tầm'!",
+    "pubDate": 1782067334818,
+    "pubDateStr": "22/06/2026 04:42",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Chiều 21-6, Tổng liên đoàn Lao động Việt Nam đã khen thưởng Báo Tuổi Trẻ có thành tích xuất sắc trong các hoạt động Tháng Công nhân và Tháng hành động về an toàn, vệ sinh lao động năm 2026.\n\nÔng Nguyễn Anh Tuấn - Chủ tịch Tổng liên đoàn Lao động Việt Nam (giữa) trao bằng khen cho các tập thể có thành tích xuất sắc, trong đó có Báo Tuổi Trẻ, VFF - Ảnh: Lê Nhật Nam\n\nTại Trường đại học Tôn Đức Thắng, Tổng liên đoàn Lao động Việt Nam đã tổ chức Hội nghị Ban Chấp hành lần thứ 2 khóa XIV; Hội nghị tổng kết Tháng Công nhân - Tháng hành động về an toàn, vệ sinh lao động 2026.\n\nHội nghị có sự góp mặt của các lãnh đạo cấp cao thuộc Tổng liên đoàn Lao động Việt Nam, trong đó có Chủ tịch Nguyễn Anh Tuấn cùng 4 Phó chủ tịch bao gồm: ông Ngọ Duy Hiểu, bà Thái Thu Xương, ông Nguyễn Xuân Hùng, ông Lê Văn Nghĩa.\n\nChuỗi hoạt động trong Tháng Công nhân và Tháng hành động về an toàn, vệ sinh lao động năm 2026 của Tổng liên đoàn Lao động Việt Nam đã khép lại với nhiều kết quả thiết thực, tạo được hiệu ứng lan tỏa mạnh mẽ trong cộng đồng người lao động cả nước.\n\nÔng Võ Hùng Thuật (đứng thứ 6 từ phải qua) được vinh danh ở hạng mục cá nhân - Ảnh: TUẤN LONG\n\nSự thành công của các vòng loại Giải bóng đá công nhân, viên chức Việt Nam 2026 đã mang về vinh dự lớn dành cho Báo Tuổi Trẻ và Liên đoàn Bóng đá Việt Nam (VFF).\n\nTheo đó, cả hai đơn vị đã được Tổng liên đoàn Lao động Việt Nam trao tặng bằng khen tập thể xuất sắc ngay tại lễ tổng kết Tháng Công nhân. Đây là sự ghi nhận, đánh giá xứng đáng của Tổng liên đoàn Lao động Việt Nam với Báo Tuổi Trẻ, VFF trong sự phối hợp với Tổng liên đoàn để tổ chức thành công giải bóng đá quy mô, danh giá nhất cả nước dành cho giới công nhân, người lao động.\n\nNgoài ra, nhà báo Võ Hùng Thuật (Giám đốc Trung tâm Dịch vụ truyền thông Báo Tuổi Trẻ, Phó trưởng ban tổ chức giải) cũng xuất sắc được vinh danh ở hạng mục cá nhân.\n\nPhần thưởng cao quý này là sự ghi nhận xứng đáng cho những nỗ lực của ông trong việc điều hành và tổ chức thành công cả hai vòng loại khu vực phía Bắc và phía Nam của Giải bóng đá công nhân, viên chức Việt Nam 2026.\n\nNăm 2026, Tổng liên đoàn Lao động Việt Nam và báo Tuổi Trẻ phối hợp Liên đoàn Bóng đá Việt Nam tiếp tục tổ chức Giải bóng đá công nhân, viên chức Việt Nam.\n\nBước sang mùa giải thứ 4, giải đấu quy tụ 48 đội bóng đến từ khắp mọi miền Tổ quốc, tiếp tục khẳng định vị thế là sân chơi thường niên, uy tín dành cho công nhân, viên chức, người lao động trên cả nước.\n\nQua đó góp phần thúc đẩy phong trào rèn luyện thể dục thể thao, nâng cao đời sống văn hóa, tinh thần cho người lao động nói riêng và toàn xã hội nói chung.\n\nTổng giải thưởng của giải đấu lên tới 900 triệu đồng, trong đó nhà vô địch toàn quốc được thưởng 200 triệu đồng.\n\nĐặc biệt đây là mùa giải thứ 4 liên tiếp Giải bóng đá công nhân, viên chức Việt Nam vinh dự nhận được sự đồng hành của nhà tài trợ kim cương - Tập đoàn Trường Hải (THACO).",
+    "contentVi": "Chiều 21-6, Tổng liên đoàn Lao động Việt Nam đã khen thưởng Báo Tuổi Trẻ có thành tích xuất sắc trong các hoạt động Tháng Công nhân và Tháng hành động về an toàn, vệ sinh lao động năm 2026.\n\nÔng Nguyễn Anh Tuấn - Chủ tịch Tổng liên đoàn Lao động Việt Nam (giữa) trao bằng khen cho các tập thể có thành tích xuất sắc, trong đó có Báo Tuổi Trẻ, VFF - Ảnh: Lê Nhật Nam\n\nTại Trường đại học Tôn Đức Thắng, Tổng liên đoàn Lao động Việt Nam đã tổ chức Hội nghị Ban Chấp hành lần thứ 2 khóa XIV; Hội nghị tổng kết Tháng Công nhân - Tháng hành động về an toàn, vệ sinh lao động 2026.\n\nHội nghị có sự góp mặt của các lãnh đạo cấp cao thuộc Tổng liên đoàn Lao động Việt Nam, trong đó có Chủ tịch Nguyễn Anh Tuấn cùng 4 Phó chủ tịch bao gồm: ông Ngọ Duy Hiểu, bà Thái Thu Xương, ông Nguyễn Xuân Hùng, ông Lê Văn Nghĩa.\n\nChuỗi hoạt động trong Tháng Công nhân và Tháng hành động về an toàn, vệ sinh lao động năm 2026 của Tổng liên đoàn Lao động Việt Nam đã khép lại với nhiều kết quả thiết thực, tạo được hiệu ứng lan tỏa mạnh mẽ trong cộng đồng người lao động cả nước.\n\nÔng Võ Hùng Thuật (đứng thứ 6 từ phải qua) được vinh danh ở hạng mục cá nhân - Ảnh: TUẤN LONG\n\nSự thành công của các vòng loại Giải bóng đá công nhân, viên chức Việt Nam 2026 đã mang về vinh dự lớn dành cho Báo Tuổi Trẻ và Liên đoàn Bóng đá Việt Nam (VFF).\n\nTheo đó, cả hai đơn vị đã được Tổng liên đoàn Lao động Việt Nam trao tặng bằng khen tập thể xuất sắc ngay tại lễ tổng kết Tháng Công nhân. Đây là sự ghi nhận, đánh giá xứng đáng của Tổng liên đoàn Lao động Việt Nam với Báo Tuổi Trẻ, VFF trong sự phối hợp với Tổng liên đoàn để tổ chức thành công giải bóng đá quy mô, danh giá nhất cả nước dành cho giới công nhân, người lao động.\n\nNgoài ra, nhà báo Võ Hùng Thuật (Giám đốc Trung tâm Dịch vụ truyền thông Báo Tuổi Trẻ, Phó trưởng ban tổ chức giải) cũng xuất sắc được vinh danh ở hạng mục cá nhân.\n\nPhần thưởng cao quý này là sự ghi nhận xứng đáng cho những nỗ lực của ông trong việc điều hành và tổ chức thành công cả hai vòng loại khu vực phía Bắc và phía Nam của Giải bóng đá công nhân, viên chức Việt Nam 2026.\n\nNăm 2026, Tổng liên đoàn Lao động Việt Nam và báo Tuổi Trẻ phối hợp Liên đoàn Bóng đá Việt Nam tiếp tục tổ chức Giải bóng đá công nhân, viên chức Việt Nam.\n\nBước sang mùa giải thứ 4, giải đấu quy tụ 48 đội bóng đến từ khắp mọi miền Tổ quốc, tiếp tục khẳng định vị thế là sân chơi thường niên, uy tín dành cho công nhân, viên chức, người lao động trên cả nước.\n\nQua đó góp phần thúc đẩy phong trào rèn luyện thể dục thể thao, nâng cao đời sống văn hóa, tinh thần cho người lao động nói riêng và toàn xã hội nói chung.\n\nTổng giải thưởng của giải đấu lên tới 900 triệu đồng, trong đó nhà vô địch toàn quốc được thưởng 200 triệu đồng.\n\nĐặc biệt đây là mùa giải thứ 4 liên tiếp Giải bóng đá công nhân, viên chức Việt Nam vinh dự nhận được sự đồng hành của nhà tài trợ kim cương - Tập đoàn Trường Hải (THACO).",
+    "summary": "<ul><li>Tổng liên đoàn Lao động Việt Nam (TLĐLĐVN) đã vinh danh Báo Tuổi Trẻ và Liên đoàn Bóng đá Việt Nam (VFF) bằng bằng khen tập thể xuất sắc.</li><li>Sự ghi nhận này dành cho thành tích tổ chức thành công Giải bóng đá công nhân, viên chức Việt Nam 2026, một sân chơi quy mô và uy tín.</li><li>Giải đấu mùa thứ 4 quy tụ 48 đội, có tổng giải thưởng 900 triệu đồng và tiếp tục nhận được sự đồng hành của nhà tài trợ kim cương THACO.</li></ul>",
+    "drpigComment": "Heo Hồng 🐷 chào các fen! Nghe tin Báo Tuổi Trẻ với VFF 'ẵm' bằng khen danh giá nhờ tổ chức giải bóng đá công nhân mà Heo Hồng 🐷 cũng thấy 'thơm' lây. Giải đấu 900 triệu đồng, nhà vô địch 200 triệu, nghe mà Heo Hồng 🐷 chỉ muốn bỏ nghề tiên tri đi đăng ký làm công nhân để được đá bóng thôi! Đúng là 'công sức bỏ ra, bằng khen về tay', chúc mừng các nhà tổ chức nha các fen!",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 356,
+        "commentsCount": 91,
+        "topComment": "I hope Heo Hong's tip holds true. Placed a small fun bet on the Draw!"
+      },
+      "x": {
+        "likes": 2506,
+        "reposts": 86,
+        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
+      }
+    },
+    "isLive": false
+  },
+  {
+    "id": "51cb16ac5ec24af",
+    "source": "Tuổi Trẻ Thể Thao",
+    "url": "https://tuoitre.vn/dien-kinh-viet-nam-gianh-cu-dup-vang-giai-chau-a-sau-2-lan-vuot-qua-trung-quoc-100260621210836359.htm",
+    "title": "Điền kinh Việt Nam giành cú đúp vàng giải châu Á sau 2 lần vượt qua Trung Quốc",
+    "titleVi": "Điền kinh Việt Nam giành cú đúp vàng giải châu Á sau 2 lần vượt qua Trung Quốc",
+    "pubDate": 1782060005519,
+    "pubDateStr": "22/06/2026 02:40",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Tại Giải điền kinh tiếp sức vô địch châu Á 2026, tuyển điền kinh Việt Nam xuất sắc giành chiến thắng ở 2 nội dung quan trọng.\n\nĐội điền kinh tiếp sức nữ Việt Nam giành huy chương vàng nội dung 4x400m nữ - Ảnh: THỂ THAO VIỆT NAM\n\nHôm 21-6, bộ tứ Quách Thị Lan, Nguyễn Thị Hằng, Hoàng Thị Minh Hạnh và Nguyễn Thị Ngọc xuất sắc giành huy chương vàng nội dung tiếp sức 4x400m nữ. Đây vốn là thế mạnh của điền kinh Việt Nam và đã không ít lần thể hiện đẳng cấp ở sân chơi châu Á.\n\nỞ chung kết, các VĐV Việt Nam thi đấu ấn tượng, cán đích ở vị trí đầu tiên với thành tích 3 phút 31,16 giây. Họ vượt qua đối thủ rất mạnh là chủ nhà Trung Quốc (3 phút 32,68 giây) và Sri Lanka (3 phút 33,17 giây).\n\nBốn cô gái Quách Thị Lan, Nguyễn Thị Hằng, Hoàng Thị Minh Hạnh và Nguyễn Thị Ngọc đều là những VĐV chủ lực của tổ 4x400m nữ.\n\nTrong cùng ngày, đến lượt tổ 4x400m nam cũng gây tiếng vang. Bốn VĐV Lê Ngọc Phúc, Trần Đình Sơn, Vũ Ngọc Khánh và Tạ Ngọc Tưởng tiếp tục vượt qua đối thủ Trung Quốc để giành tấm huy chương vàng.\n\nĐội điền kinh 4x400m nam trên bục nhận huy chương - Ảnh: THỂ THAO VIỆT NAM\n\nThành tích của họ là 3 phút 02,60 giây. Trong khi đó, thành tích của đội Trung Quốc là 3 phút 03,23 giây. Đội về ba là Sri Lanka có thành tích 3 phút 03,33 giây.\n\nTrước đó một ngày, ở nội dung tiếp sức hỗn hợp 4x400m nam, nữ, đội về thứ năm với thời gian 3 phút 18,58 giây.\n\nGiải điền kinh tiếp sức vô địch châu Á 2026 được tổ chức tại Chiết Giang (Trung Quốc) từ ngày 20 đến 21-6, quy tụ các đội tuyển hàng đầu châu lục. Giải đấu gồm nhiều nội dung như 4x100m nam, nữ; 4x400m nam, nữ; 4x400m hỗn hợp và là một trong những sân chơi quan trọng để các đội tuyển chuẩn bị cho ASIAD 2026 cũng như các giải vô địch thế giới.\n\nTối 16-4, VĐV Lê Thị Cẩm Tú đã nối tiếp phong độ ấn tượng của tuyển Việt Nam tại Giải điền kinh Singapore mở rộng khi giành HCV nội dung chạy 200m nữ.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác\n\nHiện chưa có bình luận nào, hãy là người đầu tiên bình luận\n\nTuổi Trẻ Online sẽ gởi đến bạn những tin tức nổi bật nhất\n\nTài khoản được sử dụng đến ngày  | Bạn đang có 0 trong tài khoản",
+    "contentVi": "Tại Giải điền kinh tiếp sức vô địch châu Á 2026, tuyển điền kinh Việt Nam xuất sắc giành chiến thắng ở 2 nội dung quan trọng.\n\nĐội điền kinh tiếp sức nữ Việt Nam giành huy chương vàng nội dung 4x400m nữ - Ảnh: THỂ THAO VIỆT NAM\n\nHôm 21-6, bộ tứ Quách Thị Lan, Nguyễn Thị Hằng, Hoàng Thị Minh Hạnh và Nguyễn Thị Ngọc xuất sắc giành huy chương vàng nội dung tiếp sức 4x400m nữ. Đây vốn là thế mạnh của điền kinh Việt Nam và đã không ít lần thể hiện đẳng cấp ở sân chơi châu Á.\n\nỞ chung kết, các VĐV Việt Nam thi đấu ấn tượng, cán đích ở vị trí đầu tiên với thành tích 3 phút 31,16 giây. Họ vượt qua đối thủ rất mạnh là chủ nhà Trung Quốc (3 phút 32,68 giây) và Sri Lanka (3 phút 33,17 giây).\n\nBốn cô gái Quách Thị Lan, Nguyễn Thị Hằng, Hoàng Thị Minh Hạnh và Nguyễn Thị Ngọc đều là những VĐV chủ lực của tổ 4x400m nữ.\n\nTrong cùng ngày, đến lượt tổ 4x400m nam cũng gây tiếng vang. Bốn VĐV Lê Ngọc Phúc, Trần Đình Sơn, Vũ Ngọc Khánh và Tạ Ngọc Tưởng tiếp tục vượt qua đối thủ Trung Quốc để giành tấm huy chương vàng.\n\nĐội điền kinh 4x400m nam trên bục nhận huy chương - Ảnh: THỂ THAO VIỆT NAM\n\nThành tích của họ là 3 phút 02,60 giây. Trong khi đó, thành tích của đội Trung Quốc là 3 phút 03,23 giây. Đội về ba là Sri Lanka có thành tích 3 phút 03,33 giây.\n\nTrước đó một ngày, ở nội dung tiếp sức hỗn hợp 4x400m nam, nữ, đội về thứ năm với thời gian 3 phút 18,58 giây.\n\nGiải điền kinh tiếp sức vô địch châu Á 2026 được tổ chức tại Chiết Giang (Trung Quốc) từ ngày 20 đến 21-6, quy tụ các đội tuyển hàng đầu châu lục. Giải đấu gồm nhiều nội dung như 4x100m nam, nữ; 4x400m nam, nữ; 4x400m hỗn hợp và là một trong những sân chơi quan trọng để các đội tuyển chuẩn bị cho ASIAD 2026 cũng như các giải vô địch thế giới.\n\nTối 16-4, VĐV Lê Thị Cẩm Tú đã nối tiếp phong độ ấn tượng của tuyển Việt Nam tại Giải điền kinh Singapore mở rộng khi giành HCV nội dung chạy 200m nữ.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác\n\nHiện chưa có bình luận nào, hãy là người đầu tiên bình luận\n\nTuổi Trẻ Online sẽ gởi đến bạn những tin tức nổi bật nhất\n\nTài khoản được sử dụng đến ngày  | Bạn đang có 0 trong tài khoản",
+    "summary": "<ul><li>Tóm tắt bài báo về: Điền kinh Việt Nam giành cú đúp vàng giải châu Á sau 2 lần vượt qua Trung Quốc</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 1767,
+        "commentsCount": 222,
+        "topComment": "Vietnam playing at the World Cup is a dream come true for Southeast Asian football! Fully supporting them."
+      },
+      "x": {
+        "likes": 2717,
+        "reposts": 947,
+        "hotPost": "Heo Hong forecast says France is a value bet (+20% EV). Let's see if the pig is right! 🐷 #HeoHongTips"
+      }
+    },
+    "isLive": false
+  },
+  {
+    "id": "c9b568b1cd39aa2",
+    "source": "Tuổi Trẻ Thể Thao",
+    "url": "https://tuoitre.vn/futsal-viet-nam-tranh-tai-mua-world-cup-100260621213351009.htm",
+    "title": "Futsal Việt Nam tranh tài mùa World Cup",
+    "titleVi": "Futsal Việt Nam tranh tài mùa World Cup",
+    "pubDate": 1782059987095,
+    "pubDateStr": "22/06/2026 02:39",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Lượt về Giải futsal HDBank VĐQG 2026 đã khởi tranh trong không khí của mùa World Cup 2026.\n\nÔng Vũ Hải Quang, Phó tổng giám đốc VOV cùng ông Trần Anh Tú - Phó chủ tịch VFF - bắt tay và tặng hoa cho hai đội trước trận khai mạc lượt về - Ảnh: BTC\n\nTối 21-6, lượt về Giải futsal HDBank VĐQG 2026 đã khai mạc tại nhà thi đấu futsal phường Chánh Hưng (TP.HCM).\n\nSự kiện diễn ra đúng dịp kỷ niệm 101 năm Ngày Báo chí cách mạng Việt Nam (21-6-1925 - 21-6-2026), đồng thời là dịp để Đài Tiếng nói Việt Nam (VOV) nhìn lại chặng đường 10 năm đồng hành cùng futsal Việt Nam.\n\nPhát biểu tại lễ khai mạc lượt về, ông Vũ Hải Quang - Phó tổng giám đốc VOV, Phó trưởng ban chỉ đạo giải - chia sẻ: \"Chúng tôi tự hào khi không chỉ góp phần tổ chức thành công các giải đấu quốc gia, mà còn đồng hành cùng sự phát triển của một môn thể thao giàu khát vọng, từng bước đưa hình ảnh futsal Việt Nam đến gần hơn với công chúng\".\n\nSahako (áo vàng) gặp Trẻ TP.HCM trong trận khai mạc lượt về - Ảnh: BTC\n\nVề phần mình, ông Trần Anh Tú - Phó chủ tịch Liên đoàn Bóng đá Việt Nam (VFF) - cho biết điểm đáng chú ý của mùa giải năm nay là sự gắn kết chặt chẽ với hệ thống thi đấu quốc tế, sau khi Liên đoàn Bóng đá châu Á (AFC) quyết định tái khởi động giải đấu dành cho cấp CLB.\n\nÔng Tú nói: \"Theo quy định, đội vô địch sẽ đại diện Việt Nam tham dự Giải futsal các CLB châu Á 2027, trong khi đội á quân giành quyền góp mặt tại Giải vô địch các CLB futsal Đông Nam Á 2027, với điều kiện đáp ứng đầy đủ các tiêu chí cấp phép của AFC/AFF\".\n\nKhép lại lượt đi, giải đang chứng kiến cuộc đua vô địch hấp dẫn và khó lường. Thái Sơn Bắc tạo dấu ấn mạnh mẽ khi dẫn đầu bảng xếp hạng với chuỗi 7 trận bất bại (6 thắng và 1 hòa).\n\nCòn đương kim vô địch Thái Sơn Nam TP.HCM gặp nhiều áp lực trong hành trình bảo vệ ngôi vương khi đứng ở vị trí thứ 3 với 15 điểm, sau cả Sahako (16 điểm).\n\nLượt về diễn ra từ ngày 21-6 đến 25-7 tại hai thành phố lớn là Hà Nội (nhà thi đấu Cầu Giấy) và TP.HCM (nhà thi đấu futsal phường Chánh Hưng) theo thể thức sân nhà - sân khách.\n\n8 đội tham dự gồm Hà Nội, Luxury Hạ Long, Sahako, Trẻ TP.HCM, Sài Gòn Titans, Thái Sơn Bắc, Thái Sơn Nam TP.HCM và Tân Hiệp Hưng TP.HCM.\n\nNgoài các cầu thủ nội, mỗi CLB được đăng ký 1 ngoại binh và 1 cầu thủ gốc Việt. Các đội bóng thi đấu theo thể thức vòng tròn hai lượt để tính điểm, xếp hạng chung cuộc. Đội vô địch nhận cúp, HCV cùng 500 triệu đồng tiền thưởng.\n\nVới đội hình phân nửa là đội tuyển futsal Việt Nam, đội Chánh Hưng Thái Sơn Nam đã có trận thắng đậm 22-0 trong ngày ra quân Đại hội TDTT TP.HCM lần I-2026.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác",
+    "contentVi": "Lượt về Giải futsal HDBank VĐQG 2026 đã khởi tranh trong không khí của mùa World Cup 2026.\n\nÔng Vũ Hải Quang, Phó tổng giám đốc VOV cùng ông Trần Anh Tú - Phó chủ tịch VFF - bắt tay và tặng hoa cho hai đội trước trận khai mạc lượt về - Ảnh: BTC\n\nTối 21-6, lượt về Giải futsal HDBank VĐQG 2026 đã khai mạc tại nhà thi đấu futsal phường Chánh Hưng (TP.HCM).\n\nSự kiện diễn ra đúng dịp kỷ niệm 101 năm Ngày Báo chí cách mạng Việt Nam (21-6-1925 - 21-6-2026), đồng thời là dịp để Đài Tiếng nói Việt Nam (VOV) nhìn lại chặng đường 10 năm đồng hành cùng futsal Việt Nam.\n\nPhát biểu tại lễ khai mạc lượt về, ông Vũ Hải Quang - Phó tổng giám đốc VOV, Phó trưởng ban chỉ đạo giải - chia sẻ: \"Chúng tôi tự hào khi không chỉ góp phần tổ chức thành công các giải đấu quốc gia, mà còn đồng hành cùng sự phát triển của một môn thể thao giàu khát vọng, từng bước đưa hình ảnh futsal Việt Nam đến gần hơn với công chúng\".\n\nSahako (áo vàng) gặp Trẻ TP.HCM trong trận khai mạc lượt về - Ảnh: BTC\n\nVề phần mình, ông Trần Anh Tú - Phó chủ tịch Liên đoàn Bóng đá Việt Nam (VFF) - cho biết điểm đáng chú ý của mùa giải năm nay là sự gắn kết chặt chẽ với hệ thống thi đấu quốc tế, sau khi Liên đoàn Bóng đá châu Á (AFC) quyết định tái khởi động giải đấu dành cho cấp CLB.\n\nÔng Tú nói: \"Theo quy định, đội vô địch sẽ đại diện Việt Nam tham dự Giải futsal các CLB châu Á 2027, trong khi đội á quân giành quyền góp mặt tại Giải vô địch các CLB futsal Đông Nam Á 2027, với điều kiện đáp ứng đầy đủ các tiêu chí cấp phép của AFC/AFF\".\n\nKhép lại lượt đi, giải đang chứng kiến cuộc đua vô địch hấp dẫn và khó lường. Thái Sơn Bắc tạo dấu ấn mạnh mẽ khi dẫn đầu bảng xếp hạng với chuỗi 7 trận bất bại (6 thắng và 1 hòa).\n\nCòn đương kim vô địch Thái Sơn Nam TP.HCM gặp nhiều áp lực trong hành trình bảo vệ ngôi vương khi đứng ở vị trí thứ 3 với 15 điểm, sau cả Sahako (16 điểm).\n\nLượt về diễn ra từ ngày 21-6 đến 25-7 tại hai thành phố lớn là Hà Nội (nhà thi đấu Cầu Giấy) và TP.HCM (nhà thi đấu futsal phường Chánh Hưng) theo thể thức sân nhà - sân khách.\n\n8 đội tham dự gồm Hà Nội, Luxury Hạ Long, Sahako, Trẻ TP.HCM, Sài Gòn Titans, Thái Sơn Bắc, Thái Sơn Nam TP.HCM và Tân Hiệp Hưng TP.HCM.\n\nNgoài các cầu thủ nội, mỗi CLB được đăng ký 1 ngoại binh và 1 cầu thủ gốc Việt. Các đội bóng thi đấu theo thể thức vòng tròn hai lượt để tính điểm, xếp hạng chung cuộc. Đội vô địch nhận cúp, HCV cùng 500 triệu đồng tiền thưởng.\n\nVới đội hình phân nửa là đội tuyển futsal Việt Nam, đội Chánh Hưng Thái Sơn Nam đã có trận thắng đậm 22-0 trong ngày ra quân Đại hội TDTT TP.HCM lần I-2026.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác",
+    "summary": "<ul><li>Tóm tắt bài báo về: Futsal Việt Nam tranh tài mùa World Cup</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 1552,
+        "commentsCount": 27,
+        "topComment": "Underestimating Senegal is a huge mistake. They have Champions League experience throughout their squad."
+      },
+      "x": {
+        "likes": 4902,
+        "reposts": 882,
+        "hotPost": "MetLife Stadium is absolutely rocking. The atmosphere for WC2026 opening week is insane! #MetLife"
+      }
+    },
+    "isLive": false
+  },
+  {
+    "id": "f71082127e7d2c4",
+    "source": "Tuổi Trẻ Thể Thao",
+    "url": "https://tuoitre.vn/minh-quan-vinh-hien-go-lai-the-dien-cho-pickleball-viet-nam-100260621204349861.htm",
+    "title": "Minh Quân - Vinh Hiển gỡ lại thể diện cho pickleball Việt Nam",
+    "titleVi": "Minh Quân - Vinh Hiển gỡ lại thể diện cho pickleball Việt Nam",
+    "pubDate": 1782059968227,
+    "pubDateStr": "22/06/2026 02:39",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Bộ đôi Minh Quân - Vinh Hiển giành huy chương vàng duy nhất cho các đại diện pickleball Việt Nam ở PPA Asia Tour - Bắc Kinh mở rộng 2026 diễn ra vào tối 21-6.\n\nMinh Quân - Vinh Hiển lần thứ 2 vô địch đôi nam PPA Asia Tour\n\nMinh Quân và Trương Vinh Hiển đã lên ngôi vô địch nội dung đôi nam chuyên nghiệp ở PPA Asia Tour - Bắc Kinh mở rộng 2026 sau chiến thắng 2-0 trong trận chung kết.\n\nĐối thủ của họ không phải ai xa lạ mà là bộ đôi Kenta Miyoshi và Robert Stirling, những người thường xuyên săn giải ở Việt Nam trong những năm gần đây.\n\nTrận chung kết là câu chuyện giữa đôi hạt giống số 2 từ Việt Nam và đôi hạt giống số 3 từ Úc và Nhật Bản kết hợp. Đôi số 3 đã hạ đôi số 1 là Eunggwon Kim và Kit Wong ở bán kết.\n\nTuy nhiên so về trình độ thì Stirling và Miyoshi không thể đọ với Minh Quân và Vinh Hiển. Cho nên trận đấu không kéo dài sang game 3 mà kết thúc bằng tỉ số 2-0 cho đôi từ Việt Nam.\n\nĐây là lần thứ 2 Minh Quân và Vinh Hiển vô địch nội dung đôi nam. Họ đã từng cùng nhau lên ngôi ở Hàng Châu 2025. Đó cũng là cột mốc lịch sử của pickleball Việt Nam.\n\nChiếc huy chương vàng lần này giúp các vận động viên Việt Nam không trắng tay ra về. Trước đó, Lý Hoàng Nam đã bỏ nội dung đơn nam mà anh nhiều khả năng tranh chấp với Vinh Hiển. Sau đó Vinh Hiển cũng thua bán kết và chỉ giành huy chương đồng.\n\nÍt ngày trước khi còn ở Việt Nam, cựu tay vợt tennis Minh Quân còn phải ra về bằng xe cấp cứu do bị căng cơ. Ấy vậy mà khi sang Bắc Kinh, anh vẫn thi đấu đầy nỗ lực. Minh Quân năm nay 42 tuổi, trong khi Vinh Hiển mới 22 tuổi. Họ hay được gọi là cặp \"cha con pickleball\".\n\nThực tế thì ở các giải cấp \"mở rộng\" không có nhiều tay vợt cứng cựa từ Mỹ được tham dự. Hơn nữa, điểm thưởng và tiền thưởng của giải \"mở rộng\" dừng ở mức 2.000 USD cho nội dung đơn và 5.500 USD cho đôi, cùng với đó là 500 điểm thưởng trên bảng xếp hạng.\n\nCựu tay vợt tennis Đỗ Minh Quân được xe cấp cứu chở về khách sạn sau khi thi đấu quá tải ở một giải pickleball tại Thanh Hóa.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác\n\nHiện chưa có bình luận nào, hãy là người đầu tiên bình luận\n\nTuổi Trẻ Online sẽ gởi đến bạn những tin tức nổi bật nhất\n\nTài khoản được sử dụng đến ngày  | Bạn đang có 0 trong tài khoản",
+    "contentVi": "Bộ đôi Minh Quân - Vinh Hiển giành huy chương vàng duy nhất cho các đại diện pickleball Việt Nam ở PPA Asia Tour - Bắc Kinh mở rộng 2026 diễn ra vào tối 21-6.\n\nMinh Quân - Vinh Hiển lần thứ 2 vô địch đôi nam PPA Asia Tour\n\nMinh Quân và Trương Vinh Hiển đã lên ngôi vô địch nội dung đôi nam chuyên nghiệp ở PPA Asia Tour - Bắc Kinh mở rộng 2026 sau chiến thắng 2-0 trong trận chung kết.\n\nĐối thủ của họ không phải ai xa lạ mà là bộ đôi Kenta Miyoshi và Robert Stirling, những người thường xuyên săn giải ở Việt Nam trong những năm gần đây.\n\nTrận chung kết là câu chuyện giữa đôi hạt giống số 2 từ Việt Nam và đôi hạt giống số 3 từ Úc và Nhật Bản kết hợp. Đôi số 3 đã hạ đôi số 1 là Eunggwon Kim và Kit Wong ở bán kết.\n\nTuy nhiên so về trình độ thì Stirling và Miyoshi không thể đọ với Minh Quân và Vinh Hiển. Cho nên trận đấu không kéo dài sang game 3 mà kết thúc bằng tỉ số 2-0 cho đôi từ Việt Nam.\n\nĐây là lần thứ 2 Minh Quân và Vinh Hiển vô địch nội dung đôi nam. Họ đã từng cùng nhau lên ngôi ở Hàng Châu 2025. Đó cũng là cột mốc lịch sử của pickleball Việt Nam.\n\nChiếc huy chương vàng lần này giúp các vận động viên Việt Nam không trắng tay ra về. Trước đó, Lý Hoàng Nam đã bỏ nội dung đơn nam mà anh nhiều khả năng tranh chấp với Vinh Hiển. Sau đó Vinh Hiển cũng thua bán kết và chỉ giành huy chương đồng.\n\nÍt ngày trước khi còn ở Việt Nam, cựu tay vợt tennis Minh Quân còn phải ra về bằng xe cấp cứu do bị căng cơ. Ấy vậy mà khi sang Bắc Kinh, anh vẫn thi đấu đầy nỗ lực. Minh Quân năm nay 42 tuổi, trong khi Vinh Hiển mới 22 tuổi. Họ hay được gọi là cặp \"cha con pickleball\".\n\nThực tế thì ở các giải cấp \"mở rộng\" không có nhiều tay vợt cứng cựa từ Mỹ được tham dự. Hơn nữa, điểm thưởng và tiền thưởng của giải \"mở rộng\" dừng ở mức 2.000 USD cho nội dung đơn và 5.500 USD cho đôi, cùng với đó là 500 điểm thưởng trên bảng xếp hạng.\n\nCựu tay vợt tennis Đỗ Minh Quân được xe cấp cứu chở về khách sạn sau khi thi đấu quá tải ở một giải pickleball tại Thanh Hóa.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác\n\nHiện chưa có bình luận nào, hãy là người đầu tiên bình luận\n\nTuổi Trẻ Online sẽ gởi đến bạn những tin tức nổi bật nhất\n\nTài khoản được sử dụng đến ngày  | Bạn đang có 0 trong tài khoản",
+    "summary": "<ul><li>Tóm tắt bài báo về: Minh Quân - Vinh Hiển gỡ lại thể diện cho pickleball Việt Nam</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 1000,
+        "commentsCount": 175,
+        "topComment": "Underestimating Senegal is a huge mistake. They have Champions League experience throughout their squad."
+      },
+      "x": {
+        "likes": 3150,
+        "reposts": 730,
+        "hotPost": "MetLife Stadium is absolutely rocking. The atmosphere for WC2026 opening week is insane! #MetLife"
+      }
+    },
+    "isLive": false
+  },
+  {
+    "id": "7a05a344fd74e4e",
+    "source": "Tuổi Trẻ Thể Thao",
+    "url": "https://tuoitre.vn/ban-linh-phuc-huynh-2-lan-danh-bai-quang-duong-100260621201451393.htm",
+    "title": "Bản lĩnh Phúc Huỳnh, 2 lần đánh bại Quang Dương",
+    "titleVi": "Bản lĩnh Phúc Huỳnh, 2 lần đánh bại Quang Dương",
+    "pubDate": 1782052612889,
+    "pubDateStr": "22/06/2026 00:36",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Tay vợt đánh đơn số 1 Việt Nam Phúc Huỳnh một lần nữa đánh bại Quang Dương, khiến tay vợt từng đứng top 4 PPA Tour phải tâm phục khẩu phục.\n\nPhúc Huỳnh đã \"bỏ túi\" được Quang Dương sau thời gian dài có nhiều tiến bộ - Ảnh: DJOY\n\nChiều 21-6, Phúc Huỳnh tái ngộ Quang Dương ở trận chung kết đơn nam pickelball ở giải D-Joy chặng 2 năm 2026 tại TP.HCM. Đó là cơ hội cho Quang Dương đòi \"món nợ\" đầu tháng 6.\n\nTrận tái đấu này có ý nghĩa đặc biệt lớn với Quang Dương. Tay vợt sinh năm 2006 cần chứng minh lại bản lĩnh, đẳng cấp từ Mỹ hoặc chấp nhận không thể là số 1 đánh đơn ở Việt Nam.\n\nNgược lại với Phúc Huỳnh, sau khi lên ngôi ở giải pickleball châu Á hồi đầu tháng 6, anh hiển nhiên được công nhận là \"số 1 đánh đơn pickleball\" khi hạ cả Dương và Lý Hoàng Nam.\n\nVì vậy danh hiệu vô địch lần này sẽ càng có ý nghĩa hơn nếu Phúc Huỳnh lên ngôi. Tay vợt pickleball sinh năm 2000 sẽ khẳng định bản lĩnh khi vượt trình của Quang Dương.\n\nTrên bảng chấm trình thế giới - DUPR - Phúc Huỳnh mới có 5.778 điểm và đứng thứ 21 ở châu Á, còn Quang Dương tích lũy được 6.35 điểm trình, hiện đứng thứ 2.\n\nDẫu vậy, điểm trình chỉ là con số tham khảo khi trận chung kết đã diễn ra một chiều. Phúc Huỳnh thắng ngoạn mục 2-0 với tỉ số 11-7 và 11-2. Trận đấu cống hiến của hai tay vợt.\n\nGame 1, Quang Dương dẫn đến 7-1 trước khi bước ngoặt diễn ra. Anh đánh ra ngoài ở điểm 7-2 và phải hội ý để cắt mạch hưng phấn. Ngoài ra Phúc Huỳnh còn \"ăn\" 1 điểm nhờ \"check var\" thành công ở điểm 5-7 và hai tình huống \"call out\" khi cầm giao bóng.\n\nGame 2 là của Phúc Huỳnh khi anh dẫn đến 6-0 và buộc đối thủ phải hội ý. Những cú trả bóng trái bằng hai tay của Phúc quá dẻo và lực khi Quang Dương muốn ép vào nhưng bất thành. Tâm lý của hai đối thủ dần trái ngược nhau, Phúc thì tỉnh táo, còn Dương vội vàng.\n\nQuang Dương chỉ gỡ được 2 điểm, còn Phúc Huỳnh thắng luôn 11-2 sau pha thuận tay trúng lưới và rơi vào giữa vạch biên. Đối thủ \"check var\" nhưng bóng lại trong sân ở điểm quyết định. Chiến thắng thuyết phục cho Phúc Huỳnh là điều không bất ngờ.\n\nĐây là lần thứ 2 Phúc Huỳnh hạ Quang Dương trong 3 tuần. Tay vợt Việt Nam đã tiến bộ rõ rệt và đang trên đường chinh phục những giải đấu quốc tế khác để chứng minh tên tuổi.\n\nPhúc Huỳnh lên ngôi vô địch đánh đơn ở Giải pickleball Michelob Ultra châu Á 2026 sau khi vượt qua hai đối thủ sừng sỏ là Quang Dương và Lý Hoàng Nam.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác\n\nHiện chưa có bình luận nào, hãy là người đầu tiên bình luận",
+    "contentVi": "Tay vợt đánh đơn số 1 Việt Nam Phúc Huỳnh một lần nữa đánh bại Quang Dương, khiến tay vợt từng đứng top 4 PPA Tour phải tâm phục khẩu phục.\n\nPhúc Huỳnh đã \"bỏ túi\" được Quang Dương sau thời gian dài có nhiều tiến bộ - Ảnh: DJOY\n\nChiều 21-6, Phúc Huỳnh tái ngộ Quang Dương ở trận chung kết đơn nam pickelball ở giải D-Joy chặng 2 năm 2026 tại TP.HCM. Đó là cơ hội cho Quang Dương đòi \"món nợ\" đầu tháng 6.\n\nTrận tái đấu này có ý nghĩa đặc biệt lớn với Quang Dương. Tay vợt sinh năm 2006 cần chứng minh lại bản lĩnh, đẳng cấp từ Mỹ hoặc chấp nhận không thể là số 1 đánh đơn ở Việt Nam.\n\nNgược lại với Phúc Huỳnh, sau khi lên ngôi ở giải pickleball châu Á hồi đầu tháng 6, anh hiển nhiên được công nhận là \"số 1 đánh đơn pickleball\" khi hạ cả Dương và Lý Hoàng Nam.\n\nVì vậy danh hiệu vô địch lần này sẽ càng có ý nghĩa hơn nếu Phúc Huỳnh lên ngôi. Tay vợt pickleball sinh năm 2000 sẽ khẳng định bản lĩnh khi vượt trình của Quang Dương.\n\nTrên bảng chấm trình thế giới - DUPR - Phúc Huỳnh mới có 5.778 điểm và đứng thứ 21 ở châu Á, còn Quang Dương tích lũy được 6.35 điểm trình, hiện đứng thứ 2.\n\nDẫu vậy, điểm trình chỉ là con số tham khảo khi trận chung kết đã diễn ra một chiều. Phúc Huỳnh thắng ngoạn mục 2-0 với tỉ số 11-7 và 11-2. Trận đấu cống hiến của hai tay vợt.\n\nGame 1, Quang Dương dẫn đến 7-1 trước khi bước ngoặt diễn ra. Anh đánh ra ngoài ở điểm 7-2 và phải hội ý để cắt mạch hưng phấn. Ngoài ra Phúc Huỳnh còn \"ăn\" 1 điểm nhờ \"check var\" thành công ở điểm 5-7 và hai tình huống \"call out\" khi cầm giao bóng.\n\nGame 2 là của Phúc Huỳnh khi anh dẫn đến 6-0 và buộc đối thủ phải hội ý. Những cú trả bóng trái bằng hai tay của Phúc quá dẻo và lực khi Quang Dương muốn ép vào nhưng bất thành. Tâm lý của hai đối thủ dần trái ngược nhau, Phúc thì tỉnh táo, còn Dương vội vàng.\n\nQuang Dương chỉ gỡ được 2 điểm, còn Phúc Huỳnh thắng luôn 11-2 sau pha thuận tay trúng lưới và rơi vào giữa vạch biên. Đối thủ \"check var\" nhưng bóng lại trong sân ở điểm quyết định. Chiến thắng thuyết phục cho Phúc Huỳnh là điều không bất ngờ.\n\nĐây là lần thứ 2 Phúc Huỳnh hạ Quang Dương trong 3 tuần. Tay vợt Việt Nam đã tiến bộ rõ rệt và đang trên đường chinh phục những giải đấu quốc tế khác để chứng minh tên tuổi.\n\nPhúc Huỳnh lên ngôi vô địch đánh đơn ở Giải pickleball Michelob Ultra châu Á 2026 sau khi vượt qua hai đối thủ sừng sỏ là Quang Dương và Lý Hoàng Nam.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác\n\nHiện chưa có bình luận nào, hãy là người đầu tiên bình luận",
+    "summary": "<ul><li>Tóm tắt bài báo về: Bản lĩnh Phúc Huỳnh, 2 lần đánh bại Quang Dương</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 160,
+        "commentsCount": 155,
+        "topComment": "Underestimating Senegal is a huge mistake. They have Champions League experience throughout their squad."
+      },
+      "x": {
+        "likes": 3510,
+        "reposts": 390,
+        "hotPost": "MetLife Stadium is absolutely rocking. The atmosphere for WC2026 opening week is insane! #MetLife"
+      }
+    },
+    "isLive": false
+  },
+  {
+    "id": "7087f1f78d138f5",
+    "source": "Tuổi Trẻ Thể Thao",
+    "url": "https://tuoitre.vn/bong-chuyen-viet-nam-nhan-tin-vui-bat-ngo-trong-cuoc-dua-quoc-te-100260621194747594.htm",
+    "title": "Bóng chuyền Việt Nam nhận tin vui bất ngờ trong cuộc đua quốc tế",
+    "titleVi": "CHẤN ĐỘNG! Bóng chuyền nữ Việt Nam bất ngờ 'vượt mặt' các đối thủ lớn, thăng hạng thần tốc trên BXH thế giới!",
+    "pubDate": 1782052595040,
+    "pubDateStr": "22/06/2026 00:36",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Dù không thể lên ngôi vô địch ở AVC Cup 2026, tuyển bóng chuyền nữ Việt Nam vẫn có sự thăng tiến bất ngờ trên bảng xếp hạng thế giới.\n\nTuyển bóng chuyền nữ Việt Nam (áo đỏ) thăng tiến - Ảnh: NAM TRẦN\n\nHàng loạt bất ngờ xuất hiện trong tuần lễ thi đấu thứ 3 của Giải vô địch bóng chuyền châu Âu (CEV), giải đấu tương đồng đẳng cấp với AVC Cup ở châu Âu.\n\nCụ thể, tuyển Tây Ban Nha bất ngờ bại trận trước Phần Lan với tỉ số 0-3 ở lượt trận thứ 5 của giải. Ngoài ra, Hy Lạp cũng thua 2-3 trước Latvia.\n\nCần biết rằng cả Tây Ban Nha lẫn Hy Lạp đều là các đối thủ cạnh tranh chính của Việt Nam trên con đường giành vé tham dự quốc tế.\n\nTrước khi thua sốc các trận đấu này, cả Tây Ban Nha và Hy Lạp đều đứng trên Việt Nam trong bảng xếp hạng thế giới. Nhưng rồi trận thua Latvia khiến Hy Lạp bị trừ 7,49 điểm, còn Tây Ban Nha mất đến 8,53 điểm.\n\nKết quả này khiến cả hai đội châu Âu tụt xuống dưới Việt Nam trên bảng xếp hạng của Liên đoàn Bóng chuyền thế giới (FIVB). Hiện Việt Nam vươn lên hạng 28 với 142,26 điểm, còn Hy Lạp tụt xuống hạng 30 do chỉ còn 137,19 điểm, còn Tây Ban Nha xuống hạng 32 với 134,61 điểm.\n\nĐây là thông tin rất tích cực với tuyển bóng chuyền Việt Nam, bởi cuộc đua tích điểm quốc tế đang đến hồi căng thẳng.\n\nBóng chuyền nữ Việt Nam có đến 2 mục tiêu lớn trong chiến dịch tích điểm ở năm 2026 - đó là dự siêu giải đấu VNL và World Cup bóng chuyền (tiền thân là Giải vô địch bóng chuyền thế giới, đổi tên từ năm 2027).\n\nĐể dự VNL - giải đấu quy tụ 18 đội mạnh nhất thế giới, tuyển Việt Nam tối thiểu phải vào top 18. Với World Cup, mục tiêu tương đối dễ dàng hơn - vào top 30 thế giới.\n\nỞ thời điểm hiện tại, Việt Nam chịu nhiều bất lợi trong cuộc đua đến VNL, nhưng vé dự World Cup lại hoàn toàn nằm trong tầm tay. Dù vậy, thất bại ở AVC Cup vừa qua là lời cảnh tỉnh với thầy trò ông Nguyễn Tuấn Kiệt.\n\nTrong cuộc đua này tuyển Việt Nam còn cần đến những yếu tố khách quan, đó là phong độ của các đội cạnh tranh. Vì vậy, những cú sẩy chân như của Tây Ban Nha và Hy Lạp mới đây mang đến tin vui lớn cho bóng chuyền nữ Việt Nam.\n\nLàng bóng chuyền thế giới cùng lúc đón nhận 2 cú sốc ở lượt trận thứ 7 siêu giải đấu FIVB Nations League (VNL) diễn ra khuya 20-6, khi Thái Lan và Nhật Bản thu về những kết quả trái ngược.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác\n\nHiện chưa có bình luận nào, hãy là người đầu tiên bình luận",
+    "contentVi": "Dù không thể lên ngôi vô địch ở AVC Cup 2026, tuyển bóng chuyền nữ Việt Nam vẫn có sự thăng tiến bất ngờ trên bảng xếp hạng thế giới.\n\nTuyển bóng chuyền nữ Việt Nam (áo đỏ) thăng tiến - Ảnh: NAM TRẦN\n\nHàng loạt bất ngờ xuất hiện trong tuần lễ thi đấu thứ 3 của Giải vô địch bóng chuyền châu Âu (CEV), giải đấu tương đồng đẳng cấp với AVC Cup ở châu Âu.\n\nCụ thể, tuyển Tây Ban Nha bất ngờ bại trận trước Phần Lan với tỉ số 0-3 ở lượt trận thứ 5 của giải. Ngoài ra, Hy Lạp cũng thua 2-3 trước Latvia.\n\nCần biết rằng cả Tây Ban Nha lẫn Hy Lạp đều là các đối thủ cạnh tranh chính của Việt Nam trên con đường giành vé tham dự quốc tế.\n\nTrước khi thua sốc các trận đấu này, cả Tây Ban Nha và Hy Lạp đều đứng trên Việt Nam trong bảng xếp hạng thế giới. Nhưng rồi trận thua Latvia khiến Hy Lạp bị trừ 7,49 điểm, còn Tây Ban Nha mất đến 8,53 điểm.\n\nKết quả này khiến cả hai đội châu Âu tụt xuống dưới Việt Nam trên bảng xếp hạng của Liên đoàn Bóng chuyền thế giới (FIVB). Hiện Việt Nam vươn lên hạng 28 với 142,26 điểm, còn Hy Lạp tụt xuống hạng 30 do chỉ còn 137,19 điểm, còn Tây Ban Nha xuống hạng 32 với 134,61 điểm.\n\nĐây là thông tin rất tích cực với tuyển bóng chuyền Việt Nam, bởi cuộc đua tích điểm quốc tế đang đến hồi căng thẳng.\n\nBóng chuyền nữ Việt Nam có đến 2 mục tiêu lớn trong chiến dịch tích điểm ở năm 2026 - đó là dự siêu giải đấu VNL và World Cup bóng chuyền (tiền thân là Giải vô địch bóng chuyền thế giới, đổi tên từ năm 2027).\n\nĐể dự VNL - giải đấu quy tụ 18 đội mạnh nhất thế giới, tuyển Việt Nam tối thiểu phải vào top 18. Với World Cup, mục tiêu tương đối dễ dàng hơn - vào top 30 thế giới.\n\nỞ thời điểm hiện tại, Việt Nam chịu nhiều bất lợi trong cuộc đua đến VNL, nhưng vé dự World Cup lại hoàn toàn nằm trong tầm tay. Dù vậy, thất bại ở AVC Cup vừa qua là lời cảnh tỉnh với thầy trò ông Nguyễn Tuấn Kiệt.\n\nTrong cuộc đua này tuyển Việt Nam còn cần đến những yếu tố khách quan, đó là phong độ của các đội cạnh tranh. Vì vậy, những cú sẩy chân như của Tây Ban Nha và Hy Lạp mới đây mang đến tin vui lớn cho bóng chuyền nữ Việt Nam.\n\nLàng bóng chuyền thế giới cùng lúc đón nhận 2 cú sốc ở lượt trận thứ 7 siêu giải đấu FIVB Nations League (VNL) diễn ra khuya 20-6, khi Thái Lan và Nhật Bản thu về những kết quả trái ngược.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác\n\nHiện chưa có bình luận nào, hãy là người đầu tiên bình luận",
+    "summary": "<ul><li>Đội tuyển bóng chuyền nữ Việt Nam bất ngờ thăng tiến trên bảng xếp hạng thế giới, dù không vô địch AVC Cup 2026.</li><li>Sự thăng hạng này đến từ việc các đối thủ cạnh tranh trực tiếp là Tây Ban Nha và Hy Lạp bất ngờ thua trận, mất điểm và tụt xuống dưới Việt Nam.</li><li>Việt Nam hiện xếp hạng 28 thế giới, mở ra cơ hội lớn hơn để tham dự các giải đấu quốc tế quan trọng như World Cup và VNL.</li></ul>",
+    "drpigComment": "Ối giời ơi các fen ơi, Heo Hồng 🐷 đã bảo rồi, 'người tính không bằng trời tính' mà! Tây Ban Nha với Hy Lạp cứ tưởng ngon ăn, ai dè 'sẩy chân' cái là Việt Nam mình 'bay' lên liền. Thế này thì World Cup với VNL không còn là giấc mơ xa vời nữa đâu nha! Cứ đà này, Heo Hồng 🐷 dự là sắp có kèo thơm cho đội nhà rồi đó, chuẩn bị ăn mừng thôi!",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 362,
+        "commentsCount": 217,
+        "topComment": "Is anyone else expecting an absolute goal-fest in Group L? England vs Croatia is going to be spicy."
+      },
+      "x": {
+        "likes": 4912,
+        "reposts": 792,
+        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
+      }
+    },
+    "isLive": false
+  },
+  {
+    "id": "9ef32bfa4d0e9a9",
+    "source": "Daily Mail Football",
+    "url": "https://www.dailymail.com/sport/football/article-15917241/iran-belgium-world-cup-draw-los-angeles.html?ns_mchannel=rss&ns_campaign=1490&ito=1490",
+    "title": "Iran defy World Cup chaos to draw with toothless Belgium after Nathan Ngoy red card... with 'oppressed' team dreaming of knockout stages",
+    "titleVi": "[Dịch] Iran defy World Cup chaos to draw with toothless Belgium after Nathan Ngoy red card... with 'oppressed' team dreaming of knockout stages",
+    "pubDate": 1782045856000,
+    "pubDateStr": "21/06/2026 22:44",
+    "image": "https://i.dailymail.com/1s/2026/06/21/22/109502783-0-image-a-7_1782075973653.jpg",
+    "content": "By DANIEL MATTHEWS IN LOS ANGELES\n\nPublished:  07:07 AEST, 22 June 2026   |  Updated:  08:47 AEST, 22 June 2026\n\nIt turns out that arriving two days early isn’t the cure to all your concerns. Iran’s World Cup campaign has been engulfed in chaos around visas and travel restrictions and chief among their complaints of 'oppression'? The US’ refusal to allow them to jet in from Tijuana more than 24 hours before a game.\n\nWell, Belgium were afforded that luxury here and they still can’t score – or win at the World Cup. Make that 1,305 days since they tasted victory or anyone but an opposition player scored for Rudi Garcia's team.\n\nThat barren run dates back to their opening game in Qatar, where Belgium crashed out in the group stages. Four years on, they are in danger of meeting the same fate after this draw, which saw Romelu Lukaku make his first start for club or country in a year. Belgium have now won just two of their last nine games at major tournaments.\n\nIt means that despite all the turmoil and hostility, Iran are unbeaten in Group G and on the cusp of history. Never before have they reached the World Cup knockout rounds. Their final group game is against Egypt in Seattle on Friday.\n\nBelgium are two draws from two, too. Perhaps fortunately, given Iran had a goal disallowed and Nathan Ngoy saw red in the second half. But in the end, neither side found a winner.\n\nAfterwards, Alireza Jahanbakhsh said Iran's treatment has brought the team closer together and that this performance 'showed how united we are.' He said: 'We don't ask for much. We just ask for the same procedure for all the other 47 teams.'\n\nBelgium were held to a 0-0 draw with Iran in their World Cup clash at SoFi Stadium on Sunday\n\nMehdi Taremi thought he had scored the winner in the first half only for it to be ruled out\n\nIran goalkeeper Alireza Beiranvand made a number of important saves in Los Angeles\n\nTeammate Saman Ghoddos added: 'If we play like we did today, we have a great chance to go through.'\n\nIran thought they had the lead midway through the first half when a clever freekick was slipped into Mehdi Taremi. He beat Thibaut Courtois, sparking wild celebrations around SoFi.\n\nBefore long, however, VAR had intervened – he was offside. It was mightily close. It was also a second let-off for Belgium who, a few minutes earlier, needed Courtois to get down sharply to deny Hossein Kanaani’s shot.\n\nAt the other end, Alireza Beiranvand stood firm, too, as Belgium banged at the door. The Iran goalkeeper was on the wrong end of a nasty early collision with Lukaku that left him needing lengthy treatment. But he recovered and made a number of important saves.",
+    "contentVi": "[Bản dịch tự động] By DANIEL MATTHEWS IN LOS ANGELES\n\nPublished:  07:07 AEST, 22 June 2026   |  Updated:  08:47 AEST, 22 June 2026\n\nIt turns out that arriving two days early isn’t the cure to all your concerns. Iran’s World Cup campaign has been engulfed in chaos around visas and travel restrictions and chief among their complaints of 'oppression'? The US’ refusal to allow them to jet in from Tijuana more than 24 hours before a game.\n\nWell, Belgium were afforded that luxury here and they still can’t score – or win at the World Cup. Make that 1,305 days since they tasted victory or anyone but an opposition player scored for Rudi Garcia's team.\n\nThat barren run dates back to their opening game in Qatar, where Belgium crashed out in the group stages. Four years on, they are in danger of meeting the same fate after this draw, which saw Romelu Lukaku make his first start for club or country in a year. Belgium have now won just two of their last nine games at major tournaments.\n\nIt means that despite all the turmoil and hostility, Iran are unbeaten in Group G and on the cusp of history. Never before have they reached the World Cup knockout rounds. Their final group game is against Egypt in Seattle on Frida...",
+    "summary": "<ul><li>Tóm tắt bài báo về: Iran defy World Cup chaos to draw with toothless Belgium after Nathan Ngoy red card... with 'oppressed' team dreaming of knockout stages</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 1405,
+        "commentsCount": 100,
+        "topComment": "WhoScored stats showed France struggling with high presses recently. Senegal might sneak a point."
+      },
+      "x": {
+        "likes": 1155,
+        "reposts": 135,
+        "hotPost": "Lịch sử vẫy gọi các chiến binh Sao Vàng! Quyết chiến Colombia! 🇻🇳🔥 #VietnamWorldCup"
+      }
+    },
+    "isLive": false
+  },
+  {
+    "id": "ff9814468205ee5",
+    "source": "The Guardian",
+    "url": "https://www.theguardian.com/football/live/2026/jun/21/uruguay-v-cape-verde-world-cup-2026-live",
+    "title": "Uruguay v Cape Verde: World Cup 2026 – live",
+    "titleVi": "TRỰC TIẾP: Uruguay vs Cape Verde – Vòng loại World Cup 2026 ĐANG CÓ BIẾN!",
+    "pubDate": 1782045855000,
+    "pubDateStr": "21/06/2026 22:44",
+    "image": "https://i.guim.co.uk/img/media/58f412d3696c8da378eed8c938ce5cf4f7ad8736/556_284_5706_4564/master/5706.jpg?width=140&quality=85&auto=format&fit=max&s=add04162645a6172bdf0b29a6aa90a99",
+    "content": "The goal stands, play has resumed, Arcanjo is out, and because he took a while to leave the field, Cape Verde aren’t allowed to immediately replace him.\n\nThis new Law about leaving the field quickly needs to get the bugs ironed out. It’s first-half stoppage time. He’s not time-wasting.",
+    "contentVi": "Bàn thắng được công nhận, trận đấu đã tiếp tục. Arcanjo đã rời sân, và vì anh ấy mất khá nhiều thời gian để rời khỏi sân, Cape Verde không được phép thay người ngay lập tức. Luật mới về việc rời sân nhanh chóng này cần phải được xem xét lại và khắc phục những điểm bất cập. Đây là thời gian bù giờ của hiệp một. Anh ấy không hề có ý định câu giờ.",
+    "summary": "<ul><li>Bàn thắng được công nhận và trận đấu tiếp tục sau một tình huống gây tranh cãi.</li><li>Cầu thủ Arcanjo của Cape Verde rời sân chậm, khiến đội bóng không được thay người ngay lập tức theo luật mới.</li><li>Bài viết chỉ trích luật mới này cần được xem xét lại, đặc biệt khi đây là thời gian bù giờ hiệp một và cầu thủ không cố tình câu giờ.</li></ul>",
+    "drpigComment": "Heo Hồng 🐷 thấy cái luật mới về việc rời sân này hơi 'củ chuối' nha các fen! Đang bù giờ mà bắt người ta chạy nhanh như VĐV điền kinh thì chịu rồi. Chắc phải có 'pha' này để FIFA xem xét lại chứ không là cầu thủ cứ phải 'bay' ra sân mới kịp!",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 673,
+        "commentsCount": 128,
+        "topComment": "Colombia is a very tough draw, but HLV Kim Sang-sik has brought a solid defensive structure."
+      },
+      "x": {
+        "likes": 4623,
+        "reposts": 253,
+        "hotPost": "Lịch sử vẫy gọi các chiến binh Sao Vàng! Quyết chiến Colombia! 🇻🇳🔥 #VietnamWorldCup"
+      }
+    },
+    "isLive": false
+  },
+  {
+    "id": "86097b929190db1",
+    "source": "Daily Mail Football",
+    "url": "https://www.dailymail.com/sport/football/article-15914997/uruguay-cape-verde-world-cup-miami.html?ns_mchannel=rss&ns_campaign=1490&ito=1490",
+    "title": "Uruguay vs Cape Verde LIVE: Bedlam in Miami as Kevin Pina scores minnows' first EVER World Cup goal",
+    "titleVi": "[Dịch] Uruguay vs Cape Verde LIVE: Bedlam in Miami as Kevin Pina scores minnows' first EVER World Cup goal",
+    "pubDate": 1782045570000,
+    "pubDateStr": "21/06/2026 22:39",
+    "image": "https://i.dailymail.com/1s/2026/06/21/23/109503651-0-image-a-19_1782080806343.jpg",
+    "content": "By JAKE FENNER, US SPORTS WRITER\n\nUpdated:  08:46 AEST, 22 June 2026\n\nFollow Daily Mail Sport's live coverage for the latest updates as Uruguay take on Cape Verde in Group H at the Miami Stadium.\n\nA whipped ball in finds the head of Bentancur, but the ball deflects off the post and back toward the middle.\n\nA racing Araujo sprints in front of it and nods it in to even the score.\n\nThere is a check of the VAR, but all the players have lined up at the center circle...\n\nA whipped in ball could have found the head of a Cape Verde player at the back post were it not for the heroic effort of the 40-year-old.\n\nThe ensuing corner is a waste that goes into the side netting.\n\nThere's plenty of time, but Uruguay are looking to respond as soon as possible. But again, nothing has seriously required an effort from Vozinha.\n\nPina's stunner of a goal has Bielsa's men looking for inspiration. Uruguay has been growing into the game pretty well so far, but ultimately there's been no shots that have seriously concerned Vozinha.\n\nWhat can the former Leeds manager conjure up for the final 20 minutes?\n\nOH MY GOODNESS! THE FIRST WORLD CUP GOAL IN THE HISTORY OF THE ISLAND NATION!\n\nThe Uruguay wall is entirely to blame for this. An absolutely shambolic effort. The ONLY job that Vinas and Araujo had was to throw their bodies in front of a shot and instead, the two seemed to jump sideways and let Pina's shot go directly between the two of them.\n\nPina's shot then dipped low and snuck past Muslera, who dove too late. The Krasnodar midfielder wheels off to his teammates as they run onto the field to join in the celebration.\n\nIt's a rather helpless challenge from Bentancur on Arcanjo, setting up a free kick for Cape Verde...",
+    "contentVi": "[Bản dịch tự động] By JAKE FENNER, US SPORTS WRITER\n\nUpdated:  08:46 AEST, 22 June 2026\n\nFollow Daily Mail Sport's live coverage for the latest updates as Uruguay take on Cape Verde in Group H at the Miami Stadium.\n\nA whipped ball in finds the head of Bentancur, but the ball deflects off the post and back toward the middle.\n\nA racing Araujo sprints in front of it and nods it in to even the score.\n\nThere is a check of the VAR, but all the players have lined up at the center circle...\n\nA whipped in ball could have found the head of a Cape Verde player at the back post were it not for the heroic effort of the 40-year-old.\n\nThe ensuing corner is a waste that goes into the side netting.\n\nThere's plenty of time, but Uruguay are looking to respond as soon as possible. But again, nothing has seriously required an effort from Vozinha.\n\nPina's stunner of a goal has Bielsa's men looking for inspiration. Uruguay has been growing into the game pretty well so far, but ultimately there's been no shots that have seriously concerned Vozinha.\n\nWhat can the former Leeds manager conjure up for the final 20 minutes?\n\nOH MY GOODNESS! THE FIRST WORLD CUP GOAL IN THE HISTORY OF THE ISLAND NATION!\n\nThe Uruguay wall is entire...",
+    "summary": "<ul><li>Tóm tắt bài báo về: Uruguay vs Cape Verde LIVE: Bedlam in Miami as Kevin Pina scores minnows' first EVER World Cup goal</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 1080,
+        "commentsCount": 135,
+        "topComment": "Underestimating Senegal is a huge mistake. They have Champions League experience throughout their squad."
+      },
+      "x": {
+        "likes": 1430,
+        "reposts": 910,
+        "hotPost": "Deschamps confirms Mbappe is at 100%. Senegal, watch out! 🇫🇷⚽ #WorldCup2026"
+      }
+    },
+    "isLive": false
+  },
+  {
+    "id": "18ba75271e9934a",
+    "source": "Tuổi Trẻ Thể Thao",
+    "url": "https://tuoitre.vn/fan-ronaldo-gay-roi-fifa-ra-tuyen-bo-danh-thep-100260621173945831.htm",
+    "title": "Fan Ronaldo gây rối, FIFA ra tuyên bố đanh thép",
+    "titleVi": "Fan Ronaldo gây rối, FIFA ra tuyên bố đanh thép",
+    "pubDate": 1782045204695,
+    "pubDateStr": "21/06/2026 22:33",
+    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+    "content": "Sau những ồn ào mà một bộ phận fan Ronaldo gây ra khi công kích mạng xã hội nhiều ngôi sao Bồ Đào Nha, FIFA mới đây đã có động thái quyết liệt.\n\nNhiều tranh cãi trên mạng xã hội xoay quanh Ronaldo - Ảnh: REUTERS\n\n\"FIFA tăng cường cuộc chiến chống lại sự lăng mạ trong bóng đá\", đó là tiêu đề trong email do FIFA gửi đến giới truyền thông mới đây, không lâu sau những cuộc tranh cãi ồn ào liên quan đến Ronaldo trên mạng xã hội.\n\nBa ngày qua, làng bóng đá bị chia rẽ ít nhiều vì cái tên Ronaldo. Siêu sao Bồ Đào Nha không liên đới trực tiếp, nhưng một bộ phận khá đông đảo fan của CR7 lại tác động dữ dội đến nhiều cầu thủ khác.\n\nNạn nhân là Bruno Fernandes, Joao Neves và cả... bạn gái của anh. Hàng chục ngàn bình luận tiêu cực nhắm vào các tài khoản mạng xã hội cá nhân của họ, được cho là xuất phát từ fan Ronaldo.\n\nVới Bruno Fernandes, bài đăng mới nhất của anh trên Instagram bị hàng chục ngàn lượt bình luận chỉ trích, với nội dung chê bai ngôi sao Man United thi đấu kém cỏi, hoặc kêu gọi anh phải chuyền bóng nhiều hơn cho Ronaldo.\n\nBruno Fernandes còn bị chỉ trích nhiều vì một khoảnh khắc \"trách móc\" Ronaldo trong trận Bồ Đào Nha hòa CHDC Congo.\n\nĐó là tình huống mà Bruno đã có cơ hội dứt điểm thuận lợi, nhưng rồi người đàn anh lại ập đến dứt điểm ở tư thế khó, dẫn đến việc bóng đi ra ngoài. Trong một khoảnh khắc, Bruno tỏ ra không hài lòng với Ronaldo, và fan Ronaldo cũng không ngần ngại bày tỏ sự \"không hài lòng\" với Bruno sau đó.\n\nCòn Neves lại bị chỉ trích oan vì một phát biểu bị các trang mạng xã hội cắt cúp không rõ ràng. Trong phát biểu này, Neves nói rằng \"Ronaldo không khác biệt gì so với những cầu thủ khác, đều đang nỗ lực hết mình vì tuyển quốc gia\".\n\nNhưng trên mạng xã hội, câu phát biểu lại chỉ còn \"Ronaldo không khác gì so với những cầu thủ khác\". Đông đảo fan CR7 vì vậy hiểu lầm Neves xem thường đàn anh, và tràn vào mạng xã hội cá nhân của anh chỉ trích dữ dội. Thậm chí cả bạn gái của Neves cũng bị vạ lây.\n\nBruno khó chịu với Ronaldo trong trận hòa Congo - Ảnh: THE SUN\n\nKhi mọi chuyện dần trở nên hỗn loạn, FIFA mới đây đã phát đi thông điệp \"chống lại sự lăng mạ, phân biệt đối xử trong bóng đá\".\n\nTrong email gửi giới truyền thông, FIFA thông báo: \"FIFA World Cup 2026 dự kiến sẽ ghi nhận số lượng bài đăng và bình luận lăng mạ tăng gấp 5 lần so với giải đấu năm 2022.\n\nFIFA đang đẩy mạnh cuộc chiến chống phân biệt đối xử tại các địa điểm đăng cai World Cup 2026, để kỷ niệm Ngày quốc tế chống ngôn luận thù hận.\n\nCác hoạt động quy mô lớn tại sân vận động đang diễn ra trong các trận đấu ở Atlanta, Guadalajara, Los Angeles và Vancouver để kêu gọi mọi người cùng nhau chấm dứt sự thù hận và bảo vệ bóng đá.",
+    "contentVi": "Sau những ồn ào mà một bộ phận fan Ronaldo gây ra khi công kích mạng xã hội nhiều ngôi sao Bồ Đào Nha, FIFA mới đây đã có động thái quyết liệt.\n\nNhiều tranh cãi trên mạng xã hội xoay quanh Ronaldo - Ảnh: REUTERS\n\n\"FIFA tăng cường cuộc chiến chống lại sự lăng mạ trong bóng đá\", đó là tiêu đề trong email do FIFA gửi đến giới truyền thông mới đây, không lâu sau những cuộc tranh cãi ồn ào liên quan đến Ronaldo trên mạng xã hội.\n\nBa ngày qua, làng bóng đá bị chia rẽ ít nhiều vì cái tên Ronaldo. Siêu sao Bồ Đào Nha không liên đới trực tiếp, nhưng một bộ phận khá đông đảo fan của CR7 lại tác động dữ dội đến nhiều cầu thủ khác.\n\nNạn nhân là Bruno Fernandes, Joao Neves và cả... bạn gái của anh. Hàng chục ngàn bình luận tiêu cực nhắm vào các tài khoản mạng xã hội cá nhân của họ, được cho là xuất phát từ fan Ronaldo.\n\nVới Bruno Fernandes, bài đăng mới nhất của anh trên Instagram bị hàng chục ngàn lượt bình luận chỉ trích, với nội dung chê bai ngôi sao Man United thi đấu kém cỏi, hoặc kêu gọi anh phải chuyền bóng nhiều hơn cho Ronaldo.\n\nBruno Fernandes còn bị chỉ trích nhiều vì một khoảnh khắc \"trách móc\" Ronaldo trong trận Bồ Đào Nha hòa CHDC Congo.\n\nĐó là tình huống mà Bruno đã có cơ hội dứt điểm thuận lợi, nhưng rồi người đàn anh lại ập đến dứt điểm ở tư thế khó, dẫn đến việc bóng đi ra ngoài. Trong một khoảnh khắc, Bruno tỏ ra không hài lòng với Ronaldo, và fan Ronaldo cũng không ngần ngại bày tỏ sự \"không hài lòng\" với Bruno sau đó.\n\nCòn Neves lại bị chỉ trích oan vì một phát biểu bị các trang mạng xã hội cắt cúp không rõ ràng. Trong phát biểu này, Neves nói rằng \"Ronaldo không khác biệt gì so với những cầu thủ khác, đều đang nỗ lực hết mình vì tuyển quốc gia\".\n\nNhưng trên mạng xã hội, câu phát biểu lại chỉ còn \"Ronaldo không khác gì so với những cầu thủ khác\". Đông đảo fan CR7 vì vậy hiểu lầm Neves xem thường đàn anh, và tràn vào mạng xã hội cá nhân của anh chỉ trích dữ dội. Thậm chí cả bạn gái của Neves cũng bị vạ lây.\n\nBruno khó chịu với Ronaldo trong trận hòa Congo - Ảnh: THE SUN\n\nKhi mọi chuyện dần trở nên hỗn loạn, FIFA mới đây đã phát đi thông điệp \"chống lại sự lăng mạ, phân biệt đối xử trong bóng đá\".\n\nTrong email gửi giới truyền thông, FIFA thông báo: \"FIFA World Cup 2026 dự kiến sẽ ghi nhận số lượng bài đăng và bình luận lăng mạ tăng gấp 5 lần so với giải đấu năm 2022.\n\nFIFA đang đẩy mạnh cuộc chiến chống phân biệt đối xử tại các địa điểm đăng cai World Cup 2026, để kỷ niệm Ngày quốc tế chống ngôn luận thù hận.\n\nCác hoạt động quy mô lớn tại sân vận động đang diễn ra trong các trận đấu ở Atlanta, Guadalajara, Los Angeles và Vancouver để kêu gọi mọi người cùng nhau chấm dứt sự thù hận và bảo vệ bóng đá.",
+    "summary": "<ul><li>Tóm tắt bài báo về: Fan Ronaldo gây rối, FIFA ra tuyên bố đanh thép</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
+    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
+    "socialMentions": {
+      "reddit": {
+        "upvotes": 1326,
+        "commentsCount": 181,
+        "topComment": "Mbappe's presence completely changes the tactical balance. Senegal will need to defend deeper."
+      },
+      "x": {
+        "likes": 5276,
+        "reposts": 256,
+        "hotPost": "Deschamps confirms Mbappe is at 100%. Senegal, watch out! 🇫🇷⚽ #WorldCup2026"
+      }
+    },
+    "isLive": false
   },
   {
     "id": "1670167b2607107",
@@ -163,222 +784,6 @@
         "likes": 542,
         "reposts": 972,
         "hotPost": "Deschamps confirms Mbappe is at 100%. Senegal, watch out! 🇫🇷⚽ #WorldCup2026"
-      }
-    },
-    "isLive": false
-  },
-  {
-    "id": "67b0463b667b2aa",
-    "source": "Tuổi Trẻ Thể Thao",
-    "url": "https://tuoitre.vn/du-doan-ti-so-world-cup-salah-ghi-ban-giup-ai-cap-thang-de-new-zealand-100260620175828681.htm",
-    "title": "Dự đoán tỉ số World Cup: Salah ghi bàn giúp Ai Cập thắng dễ New Zealand",
-    "titleVi": "Salah 'nổ súng', Ai Cập 'làm gỏi' New Zealand: Kèo thơm World Cup đã rõ!",
-    "pubDate": 1782026650909,
-    "pubDateStr": "21/06/2026 17:24",
-    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
-    "content": "Dù đang xếp dưới New Zealand trong cuộc đua ở bảng G, World Cup 2026, Ai Cập được dự đoán sẽ dễ dàng đánh bại đại diện đến từ châu Đại Dương ở lượt trận thứ 2 của bảng. Trận đấu diễn ra lúc 8h ngày 22-6.\n\nSalah hứa hẹn sẽ tỏa sáng giúp Ai Cập bứt phá - Ảnh: REUTERS\n\nAi Cập gây ấn tượng ở lượt trận đầu tiên của bảng G khi cầm hòa Bỉ với tỉ số 1-1, trong khi Iran và New Zealand cũng níu chân nhau với tỉ số 2-2.\n\nKết quả này khiến Ai Cập tuy tạm đứng dưới Iran và New Zealand, nhưng thật ra lại là đội sở hữu lợi thế lớn trong cuộc đua. Sau khi đã hòa đội mạnh nhất bảng, Salah cùng các đồng đội hoàn toàn có thể thắng cả 2 trận còn lại.\n\nDù không quá mạnh, Ai Cập vẫn được đánh giá vượt trội New Zealand về chất lượng đội hình. Đội bóng Bắc Phi sở hữu 2 ngôi sao đẳng cấp hàng đầu thế giới là Salah và Marmoush, cùng dàn cầu thủ giàu kinh nghiệm ở tuyến dưới.\n\nTrận hòa Iran cho thấy New Zealand không thể bị xem thường. Dù vậy, đại diện châu Đại Dương vẫn bị đánh giá thấp ở kinh nghiệm thi đấu quốc tế, cũng như không sở hữu các ngôi sao có thể xoay chuyển cục diện.\n\nCác nhà cái ra kèo Ai Cập chấp 0,75 trái cả trận và chấp 0,25 trái trong hiệp 1. Tỉ lệ tài xỉu là 2,25 trái cả trận và 1 trái trong hiệp 1.\n\nĐây là mức chấp khá lý tưởng với Ai Cập, đội bóng đang rất thoải mái về tâm lý sau khi đã hòa được Bỉ.\n\nTổng hợp dự đoán của các chuyên trang - Đồ họa: HUY ĐĂNG\n\nTrong chuỗi 4 trận đấu giao hữu trước World Cup 2026, Ai Cập ghi tổng cộng 7 bàn và chỉ tịt ngòi ở 1 trận - hòa Tây Ban Nha. Còn lại, họ nghiền nát Saudi Arabia 4 bàn không gỡ, thắng Nga 1-0 và thua Brazil 1-2.\n\nĐiều đó cho thấy hàng công với 2 siêu sao Salah - Marmoush của Ai Cập rất biết cách tỏa sáng khi gặp những đối thủ vừa tầm. Ở trận hòa Bỉ, Salah có 1 kiến tạo để Ashour ghi bàn, cho thấy anh vẫn giữ được đẳng cấp trong những trận cầu lớn.\n\nĐội hình dự kiến của 2 đội - Đồ họa: HUY ĐĂNG\n\nCác chuyên trang dự đoán và siêu máy tính đều nghiêng về Ai Cập. Opta nhận định Ai Cập có hơn 51% khả năng thắng trận, còn con số tương ứng của New Zealand chỉ là 22%.\n\nCác chuyên gia hầu hết đều nhận định Ai Cập thắng cách biệt ít, do cảm giác tự tin mà Salah tạo ra cũng không thực sự quá lớn.\n\nDù vậy, New Zealand cho thấy họ thường có xu hướng thua đậm mỗi khi phải nhận thất bại. Trong 5 trận giao hữu trước giải, đại diện châu Đại Dương thua đến 4, và có 3 trong số đó là cách biệt 2 bàn trở lên.",
-    "contentVi": "Dù đang xếp dưới New Zealand trong cuộc đua ở bảng G, World Cup 2026, Ai Cập được dự đoán sẽ dễ dàng đánh bại đại diện đến từ châu Đại Dương ở lượt trận thứ 2 của bảng. Trận đấu diễn ra lúc 8h ngày 22-6.\n\nSalah hứa hẹn sẽ tỏa sáng giúp Ai Cập bứt phá - Ảnh: REUTERS\n\nAi Cập gây ấn tượng ở lượt trận đầu tiên của bảng G khi cầm hòa Bỉ với tỉ số 1-1, trong khi Iran và New Zealand cũng níu chân nhau với tỉ số 2-2.\n\nKết quả này khiến Ai Cập tuy tạm đứng dưới Iran và New Zealand, nhưng thật ra lại là đội sở hữu lợi thế lớn trong cuộc đua. Sau khi đã hòa đội mạnh nhất bảng, Salah cùng các đồng đội hoàn toàn có thể thắng cả 2 trận còn lại.\n\nDù không quá mạnh, Ai Cập vẫn được đánh giá vượt trội New Zealand về chất lượng đội hình. Đội bóng Bắc Phi sở hữu 2 ngôi sao đẳng cấp hàng đầu thế giới là Salah và Marmoush, cùng dàn cầu thủ giàu kinh nghiệm ở tuyến dưới.\n\nTrận hòa Iran cho thấy New Zealand không thể bị xem thường. Dù vậy, đại diện châu Đại Dương vẫn bị đánh giá thấp ở kinh nghiệm thi đấu quốc tế, cũng như không sở hữu các ngôi sao có thể xoay chuyển cục diện.\n\nCác nhà cái ra kèo Ai Cập chấp 0,75 trái cả trận và chấp 0,25 trái trong hiệp 1. Tỉ lệ tài xỉu là 2,25 trái cả trận và 1 trái trong hiệp 1.\n\nĐây là mức chấp khá lý tưởng với Ai Cập, đội bóng đang rất thoải mái về tâm lý sau khi đã hòa được Bỉ.\n\nTổng hợp dự đoán của các chuyên trang - Đồ họa: HUY ĐĂNG\n\nTrong chuỗi 4 trận đấu giao hữu trước World Cup 2026, Ai Cập ghi tổng cộng 7 bàn và chỉ tịt ngòi ở 1 trận - hòa Tây Ban Nha. Còn lại, họ nghiền nát Saudi Arabia 4 bàn không gỡ, thắng Nga 1-0 và thua Brazil 1-2.\n\nĐiều đó cho thấy hàng công với 2 siêu sao Salah - Marmoush của Ai Cập rất biết cách tỏa sáng khi gặp những đối thủ vừa tầm. Ở trận hòa Bỉ, Salah có 1 kiến tạo để Ashour ghi bàn, cho thấy anh vẫn giữ được đẳng cấp trong những trận cầu lớn.\n\nĐội hình dự kiến của 2 đội - Đồ họa: HUY ĐĂNG\n\nCác chuyên trang dự đoán và siêu máy tính đều nghiêng về Ai Cập. Opta nhận định Ai Cập có hơn 51% khả năng thắng trận, còn con số tương ứng của New Zealand chỉ là 22%.\n\nCác chuyên gia hầu hết đều nhận định Ai Cập thắng cách biệt ít, do cảm giác tự tin mà Salah tạo ra cũng không thực sự quá lớn.\n\nDù vậy, New Zealand cho thấy họ thường có xu hướng thua đậm mỗi khi phải nhận thất bại. Trong 5 trận giao hữu trước giải, đại diện châu Đại Dương thua đến 4, và có 3 trong số đó là cách biệt 2 bàn trở lên.",
-    "summary": "<ul><li>Ai Cập, dù xếp dưới New Zealand ở bảng G, được đánh giá vượt trội nhờ dàn sao Salah, Marmoush và lợi thế tâm lý sau trận hòa Bỉ.</li><li>Các nhà cái đưa ra kèo Ai Cập chấp 0.75 trái cả trận, trong khi các chuyên trang và siêu máy tính đều dự đoán Ai Cập thắng với khả năng trên 51%.</li><li>New Zealand có xu hướng thua đậm khi thất bại (3/5 trận giao hữu thua cách biệt 2 bàn trở lên), củng cố nhận định Ai Cập sẽ thắng cách biệt.</li></ul>",
-    "drpigComment": "Các fen ơi, Heo Hồng 🐷 ngửi thấy mùi kèo thơm từ Ai Cập rồi! Salah mà đã 'nổ súng' thì New Zealand khó mà thoát khỏi cảnh 'làm gỏi' đâu, cứ theo Heo Hồng 🐷 mà đặt cửa là có lộc!",
-    "socialMentions": {
-      "reddit": {
-        "upvotes": 1288,
-        "commentsCount": 123,
-        "topComment": "Underestimating Senegal is a huge mistake. They have Champions League experience throughout their squad."
-      },
-      "x": {
-        "likes": 1638,
-        "reposts": 868,
-        "hotPost": "MetLife Stadium is absolutely rocking. The atmosphere for WC2026 opening week is insane! #MetLife"
-      }
-    },
-    "isLive": false
-  },
-  {
-    "id": "44fb618cd0e91a0",
-    "source": "Tuổi Trẻ Thể Thao",
-    "url": "https://tuoitre.vn/tuyen-viet-nam-hoi-quan-chuan-bi-chinh-phuc-asean-cup-100260621081946815.htm",
-    "title": "Tuyển Việt Nam hội quân chuẩn bị chinh phục ASEAN Cup",
-    "titleVi": "Tuyển Việt Nam hội quân chuẩn bị chinh phục ASEAN Cup",
-    "pubDate": 1782026637629,
-    "pubDateStr": "21/06/2026 17:23",
-    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
-    "content": "Đội tuyển Việt Nam sẽ tập trung đầy đủ tại Hà Nội trong ngày 22-6 để hướng đến hành trình bảo vệ ngôi vương ASEAN Cup 2026.\n\nĐội tuyển Việt Nam sẽ hội quân ngày 22-6 để bảo vệ ngôi vương ASEAN Cup - Ảnh: MINH ĐỖ\n\nTrong 10 ngày tại Hà Nội, tuyển Việt Nam sẽ tập luyện với khối lượng và cường độ vừa phải để giải phóng sức ì sau quãng nghỉ. Đây cũng là giai đoạn miền Bắc dự kiến bước vào đợt nắng nóng cao điểm, các cầu thủ sẽ phải đối mặt với thời tiết khắc nghiệt.\n\nNhư nhiều giải trước đó, việc đi tập huấn nước ngoài giúp đội tuyển có không gian riêng tư và sự tập trung cần thiết để chuẩn bị tốt nhất về chuyên môn. Với quan hệ của HLV Kim Sang Sik cùng sự hợp tác của Liên đoàn Bóng đá Việt Nam (VFF) với Liên đoàn Bóng đá Hàn Quốc, tuyển Việt Nam được tạo điều kiện thuận lợi để tập huấn ở thành phố Incheon từ ngày 2 đến 14-7.\n\nĐây là lúc ban huấn luyện đẩy cao cường độ tập luyện, tăng cường thể lực cho các học trò. Nhằm làm mới đội hình, thử nghiệm nhân sự, tuyển Việt Nam sẽ thi đấu ba trận giao hữu với các đội địa phương.\n\nVFF đang cùng HLV Kim sắp xếp và tìm đối thủ phù hợp làm \"quân xanh\". Đây là cơ hội để những tân binh như Patrik Lê Giang, Khoa Ngô hay Nguyễn Tài Lộc ghi điểm. Đồng thời giúp HLV Kim Sang Sik tìm ra bộ khung tối ưu cho đội tuyển.\n\nSau hai tuần tập huấn ở Hàn Quốc, tuyển Việt Nam trở lại Hà Nội ngày 15-7. Đoàn quân HLV Kim Sang Sik sẽ thi đấu giao hữu quốc tế với Myanmar, trong dịp FIFA Days, diễn ra ngày 18-7 tại Thái Nguyên. Đây được coi là \"màn tổng duyệt\" cho quá trình chuẩn bị, đồng thời là dịp để HLV Kim Sang Sik cho người hâm mộ thấy diện mạo mới của tuyển Việt Nam hướng đến mục tiêu bảo vệ ngôi vương Đông Nam Á.\n\nPatrik Lê Giang được HLV Kim Sang Sik gọi lên tuyển Việt Nam - Ảnh: TTO\n\nChắc chắn tuyển Việt Nam năm nay sẽ trình làng đội hình mới, lối chơi mới dựa trên những con người mới tại ASEAN Cup 2026. Sự tiến bộ của các đội tuyển đối thủ trong khu vực giữa xu thế nhập tịch khiến tuyển Việt Nam không thể nằm ngoài cuộc chơi.\n\nTrong tay HLV Kim Sang Sik hiện có ba cầu thủ Brazil nhập tịch, tất cả đều thuộc hàng công, gồm tiền đạo cắm Nguyễn Xuân Son và các tiền đạo cánh - hộ công là Đỗ Hoàng Hên và Nguyễn Tài Lộc.\n\nNhưng không vì thế mà các chân sút nội mất đi cơ hội thi đấu. Với sự hiện diện của Phạm Gia Hưng, Nguyễn Trần Việt Cường, đặc biệt là chân sút trẻ đang nổi là Nguyễn Đình Bắc, hàng công tuyển Việt Nam hứa hẹn sẽ rất cạnh tranh.\n\nỞ hàng tiền vệ, cầu thủ Việt kiều trẻ Khoa Ngô xứng đáng có cơ hội ra sân cho tuyển Việt Nam sau những đóng góp vừa qua cho CLB Công An TP.HCM tại V-League và Cúp quốc gia. Dù thể hình hạn chế (chỉ cao 1,65m), Khoa Ngô được bù đắp bởi kỹ thuật, tốc độ và khả năng gây đột biến ở cánh khiến hàng thủ các đội đối phương bị khuất phục. Với tuổi đời mới 19, tiềm năng của cầu thủ này là rất lớn cho bóng đá Việt Nam.\n\nHàng thủ tuyển Việt Nam là tập hợp những cầu thủ tốt với Duy Mạnh, Thành Chung, Văn Hậu cùng Tuấn Tài, Nhật Minh, Quang Kiệt, hệ thống phòng ngự tuyển Việt Nam có sự kết hợp giữa sức trẻ và kinh nghiệm, đủ chắc chắn để tạo nên bức tường thép trước khung thành.\n\nCòn vị trí thủ môn, Patrik Lê Giang cuối cùng cũng góp mặt ở tuyển Việt Nam sau hơn ba năm chờ đợi quốc tịch. Anh hứa hẹn là đối thủ cạnh tranh xứng tầm với Đặng Văn Lâm cho vị trí số 1 khung gỗ.\n\nASEAN Cup 2026 diễn ra từ ngày 24-7 đến 26-8. Tuyển Việt Nam ở bảng A, sẽ đá trận ra quân với Timor Leste (dự kiến trên sân trung lập) ngày 24-7. Sau đó đội lần lượt gặp Singapore (sân Mỹ Đình), Indonesia (sân khách) và Campuchia (sân Mỹ Đình). Tuyển Việt Nam hiện là đương kim vô địch của giải đấu.",
-    "contentVi": "Đội tuyển Việt Nam sẽ tập trung đầy đủ tại Hà Nội trong ngày 22-6 để hướng đến hành trình bảo vệ ngôi vương ASEAN Cup 2026.\n\nĐội tuyển Việt Nam sẽ hội quân ngày 22-6 để bảo vệ ngôi vương ASEAN Cup - Ảnh: MINH ĐỖ\n\nTrong 10 ngày tại Hà Nội, tuyển Việt Nam sẽ tập luyện với khối lượng và cường độ vừa phải để giải phóng sức ì sau quãng nghỉ. Đây cũng là giai đoạn miền Bắc dự kiến bước vào đợt nắng nóng cao điểm, các cầu thủ sẽ phải đối mặt với thời tiết khắc nghiệt.\n\nNhư nhiều giải trước đó, việc đi tập huấn nước ngoài giúp đội tuyển có không gian riêng tư và sự tập trung cần thiết để chuẩn bị tốt nhất về chuyên môn. Với quan hệ của HLV Kim Sang Sik cùng sự hợp tác của Liên đoàn Bóng đá Việt Nam (VFF) với Liên đoàn Bóng đá Hàn Quốc, tuyển Việt Nam được tạo điều kiện thuận lợi để tập huấn ở thành phố Incheon từ ngày 2 đến 14-7.\n\nĐây là lúc ban huấn luyện đẩy cao cường độ tập luyện, tăng cường thể lực cho các học trò. Nhằm làm mới đội hình, thử nghiệm nhân sự, tuyển Việt Nam sẽ thi đấu ba trận giao hữu với các đội địa phương.\n\nVFF đang cùng HLV Kim sắp xếp và tìm đối thủ phù hợp làm \"quân xanh\". Đây là cơ hội để những tân binh như Patrik Lê Giang, Khoa Ngô hay Nguyễn Tài Lộc ghi điểm. Đồng thời giúp HLV Kim Sang Sik tìm ra bộ khung tối ưu cho đội tuyển.\n\nSau hai tuần tập huấn ở Hàn Quốc, tuyển Việt Nam trở lại Hà Nội ngày 15-7. Đoàn quân HLV Kim Sang Sik sẽ thi đấu giao hữu quốc tế với Myanmar, trong dịp FIFA Days, diễn ra ngày 18-7 tại Thái Nguyên. Đây được coi là \"màn tổng duyệt\" cho quá trình chuẩn bị, đồng thời là dịp để HLV Kim Sang Sik cho người hâm mộ thấy diện mạo mới của tuyển Việt Nam hướng đến mục tiêu bảo vệ ngôi vương Đông Nam Á.\n\nPatrik Lê Giang được HLV Kim Sang Sik gọi lên tuyển Việt Nam - Ảnh: TTO\n\nChắc chắn tuyển Việt Nam năm nay sẽ trình làng đội hình mới, lối chơi mới dựa trên những con người mới tại ASEAN Cup 2026. Sự tiến bộ của các đội tuyển đối thủ trong khu vực giữa xu thế nhập tịch khiến tuyển Việt Nam không thể nằm ngoài cuộc chơi.\n\nTrong tay HLV Kim Sang Sik hiện có ba cầu thủ Brazil nhập tịch, tất cả đều thuộc hàng công, gồm tiền đạo cắm Nguyễn Xuân Son và các tiền đạo cánh - hộ công là Đỗ Hoàng Hên và Nguyễn Tài Lộc.\n\nNhưng không vì thế mà các chân sút nội mất đi cơ hội thi đấu. Với sự hiện diện của Phạm Gia Hưng, Nguyễn Trần Việt Cường, đặc biệt là chân sút trẻ đang nổi là Nguyễn Đình Bắc, hàng công tuyển Việt Nam hứa hẹn sẽ rất cạnh tranh.\n\nỞ hàng tiền vệ, cầu thủ Việt kiều trẻ Khoa Ngô xứng đáng có cơ hội ra sân cho tuyển Việt Nam sau những đóng góp vừa qua cho CLB Công An TP.HCM tại V-League và Cúp quốc gia. Dù thể hình hạn chế (chỉ cao 1,65m), Khoa Ngô được bù đắp bởi kỹ thuật, tốc độ và khả năng gây đột biến ở cánh khiến hàng thủ các đội đối phương bị khuất phục. Với tuổi đời mới 19, tiềm năng của cầu thủ này là rất lớn cho bóng đá Việt Nam.\n\nHàng thủ tuyển Việt Nam là tập hợp những cầu thủ tốt với Duy Mạnh, Thành Chung, Văn Hậu cùng Tuấn Tài, Nhật Minh, Quang Kiệt, hệ thống phòng ngự tuyển Việt Nam có sự kết hợp giữa sức trẻ và kinh nghiệm, đủ chắc chắn để tạo nên bức tường thép trước khung thành.\n\nCòn vị trí thủ môn, Patrik Lê Giang cuối cùng cũng góp mặt ở tuyển Việt Nam sau hơn ba năm chờ đợi quốc tịch. Anh hứa hẹn là đối thủ cạnh tranh xứng tầm với Đặng Văn Lâm cho vị trí số 1 khung gỗ.\n\nASEAN Cup 2026 diễn ra từ ngày 24-7 đến 26-8. Tuyển Việt Nam ở bảng A, sẽ đá trận ra quân với Timor Leste (dự kiến trên sân trung lập) ngày 24-7. Sau đó đội lần lượt gặp Singapore (sân Mỹ Đình), Indonesia (sân khách) và Campuchia (sân Mỹ Đình). Tuyển Việt Nam hiện là đương kim vô địch của giải đấu.",
-    "summary": "<ul><li>Tóm tắt bài báo về: Tuyển Việt Nam hội quân chuẩn bị chinh phục ASEAN Cup</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
-    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
-    "socialMentions": {
-      "reddit": {
-        "upvotes": 546,
-        "commentsCount": 141,
-        "topComment": "Is anyone else expecting an absolute goal-fest in Group L? England vs Croatia is going to be spicy."
-      },
-      "x": {
-        "likes": 896,
-        "reposts": 876,
-        "hotPost": "Deschamps confirms Mbappe is at 100%. Senegal, watch out! 🇫🇷⚽ #WorldCup2026"
-      }
-    },
-    "isLive": false
-  },
-  {
-    "id": "7ce9c1bb86d2cf9",
-    "source": "Tuổi Trẻ Thể Thao",
-    "url": "https://tuoitre.vn/world-cup-2026-ong-fuente-thoi-khong-nghi-nhieu-100260621083648074.htm",
-    "title": "World Cup 2026: Ông Fuente thôi không \"nghĩ nhiều\"",
-    "titleVi": "World Cup 2026: Ông Fuente thôi không \"nghĩ nhiều\"",
-    "pubDate": 1782026620401,
-    "pubDateStr": "21/06/2026 17:23",
-    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
-    "content": "Tuyển Tây Ban Nha buộc phải đánh bại Saudi Arabia ở lượt trận thứ hai bảng H World Cup 2026 lúc 23h ngày 21-6 để có ưu thế trong việc giành vé đi tiếp.\n\nÔng Fuente phải giúp Tây Ban Nha giành chiến thắng trước Saudi Arabia - Ảnh: AFP\n\nTrận hòa không bàn thắng trước đối thủ dưới cơ Cape Verde ở ngày ra quân như một gáo nước lạnh giội vào tham vọng của Tây Ban Nha tại World Cup 2026.\n\nDù kiểm soát bóng áp đảo, tung ra tới 27 cú dứt điểm và đạt tỉ lệ bàn thắng kỳ vọng (xG) lên tới 2.29, đoàn quân của HLV Luis de la Fuente vẫn bất lực trong việc tìm đường vào khung thành đối phương. Sự bế tắc ấy không chỉ phơi bày điểm yếu ở khâu dứt điểm mà còn dấy lên những hoài nghi về cách tiếp cận trận đấu của vị chiến lược gia này.\n\nNhiều ý kiến cho rằng ông De la Fuente đã quá thận trọng khi cất cả hai ngôi sao chạy cánh đột biến nhất là Lamine Yamal và Nico Williams trên băng ghế dự bị và chỉ tung họ vào sân ở những phút cuối.\n\nTrong giới cầm quân Tây Ban Nha, Pep Guardiola vốn nổi tiếng với hội chứng \"nghĩ nhiều\" (overthinking) - tự phức tạp hóa chiến thuật. Người ta không ngờ một De la Fuente vốn thực tế lại rơi vào vết xe đổ tương tự khi cố \"tính toán đường dài\" và bảo vệ thể trạng cho các trụ cột ngay trận ra quân. Nhưng World Cup là một giải đấu khắc nghiệt, nơi không có chỗ cho sự do dự. Chỉ khi Yamal xuất hiện trong 30 phút cuối, hàng công Tây Ban Nha mới thực sự có sinh khí.\n\nĐối đầu với Saudi Arabia, ông De la Fuente bắt buộc phải thôi không \"nghĩ nhiều\". Tây Ban Nha cần những bàn thắng sớm để giải tỏa áp lực tâm lý và công thức tốt nhất là đưa Lamine Yamal cùng Nico Williams trở lại đội hình xuất phát ngay từ đầu. Dù Yamal chưa có thể trạng tốt nhất để chơi trọn vẹn 90 phút, sự đột biến của tài năng trẻ này vẫn là chìa khóa để xuyên phá hàng thủ đối phương.\n\nTuyển Tây Ban Nha tại World Cup 2026 - Ảnh: AFP\n\nPhía bên kia chiến tuyến, Saudi Arabia đang có tinh thần rất cao sau trận hòa quả cảm 1-1 trước Uruguay. Dưới sự dẫn dắt của HLV Georgios Donis, đại diện Tây Á đã trình diễn lối chơi phòng ngự kỷ luật và đặc biệt nguy hiểm trong các tình huống cố định.\n\nThủ thành Mohammed Al-Owais chắc chắn sẽ là điểm tựa vững chắc cho đại diện châu Á, trong khi Salem Al-Dawsari là ngòi nổ phản công mà hàng thủ Tây Ban Nha không thể lơ là. Tuy nhiên với sức mạnh vượt trội và bài học ở ngày ra quân, Tây Ban Nha khó lòng tiếp tục để vuột 3 điểm.\n\nTrận còn lại bảng H là cuộc đối đầu giữa Uruguay với Cape Verde lúc 5h ngày 22-6. Sau trận hòa hú vía trước Saudi Arabia, tuyển Uruguay đang chịu áp lực lớn. Lối chơi pressing tầm cao rực lửa của Uruguay sẽ đụng độ với khối bê tông kiên cố mang tên Cape Verde - đội bóng vừa khiến Tây Ban Nha nản lòng.\n\nCape Verde đã chứng minh họ không đến World Cup để dạo chơi. Sự kỷ luật, thể lực dồi dào và lối đá không ngại va chạm của đại diện châu Phi là thử thách cực đại cho những ngôi sao tấn công bên phía Uruguay.\n\nCục diện bảng G đang ở cân bằng khi cả bốn đội bóng đều giành được 1 điểm sau những kết quả hòa kịch tính ở ngày ra quân.\n\nBỉ sẽ gặp Iran lúc 2h ngày 22-6. Trận hòa 1-1 trước Ai Cập đã chỉ ra nhiều vấn đề trong khâu chuyển trạng thái của \"quỷ đỏ\". Đối đầu với một Iran chơi đầy quả cảm (vừa hòa New Zealand 2-2), đại diện châu Âu buộc phải giành chiến thắng để lấy lại thể diện. Iran với lối đá phòng ngự phản công sắc bén và tinh thần chiến đấu không bỏ cuộc luôn sẵn sàng trừng phạt bất kỳ sai lầm nào từ hàng thủ chậm chạp của đối phương.\n\nNew Zealand và Ai Cập là trận đấu trễ nhất ngày 22-6 khi đá lúc 8h. Cả hai đội đều sở hữu lối chơi giàu tốc độ. Đại diện châu Phi với sự tổ chức tốt sẽ phải dè chừng lối đá bóng bổng cùng tinh thần cống hiến của New Zealand. Đội nào chắt chiu cơ hội tốt hơn sẽ chiếm lợi thế lớn trong cuộc đua giành vé vào vòng 32 đội.",
-    "contentVi": "Tuyển Tây Ban Nha buộc phải đánh bại Saudi Arabia ở lượt trận thứ hai bảng H World Cup 2026 lúc 23h ngày 21-6 để có ưu thế trong việc giành vé đi tiếp.\n\nÔng Fuente phải giúp Tây Ban Nha giành chiến thắng trước Saudi Arabia - Ảnh: AFP\n\nTrận hòa không bàn thắng trước đối thủ dưới cơ Cape Verde ở ngày ra quân như một gáo nước lạnh giội vào tham vọng của Tây Ban Nha tại World Cup 2026.\n\nDù kiểm soát bóng áp đảo, tung ra tới 27 cú dứt điểm và đạt tỉ lệ bàn thắng kỳ vọng (xG) lên tới 2.29, đoàn quân của HLV Luis de la Fuente vẫn bất lực trong việc tìm đường vào khung thành đối phương. Sự bế tắc ấy không chỉ phơi bày điểm yếu ở khâu dứt điểm mà còn dấy lên những hoài nghi về cách tiếp cận trận đấu của vị chiến lược gia này.\n\nNhiều ý kiến cho rằng ông De la Fuente đã quá thận trọng khi cất cả hai ngôi sao chạy cánh đột biến nhất là Lamine Yamal và Nico Williams trên băng ghế dự bị và chỉ tung họ vào sân ở những phút cuối.\n\nTrong giới cầm quân Tây Ban Nha, Pep Guardiola vốn nổi tiếng với hội chứng \"nghĩ nhiều\" (overthinking) - tự phức tạp hóa chiến thuật. Người ta không ngờ một De la Fuente vốn thực tế lại rơi vào vết xe đổ tương tự khi cố \"tính toán đường dài\" và bảo vệ thể trạng cho các trụ cột ngay trận ra quân. Nhưng World Cup là một giải đấu khắc nghiệt, nơi không có chỗ cho sự do dự. Chỉ khi Yamal xuất hiện trong 30 phút cuối, hàng công Tây Ban Nha mới thực sự có sinh khí.\n\nĐối đầu với Saudi Arabia, ông De la Fuente bắt buộc phải thôi không \"nghĩ nhiều\". Tây Ban Nha cần những bàn thắng sớm để giải tỏa áp lực tâm lý và công thức tốt nhất là đưa Lamine Yamal cùng Nico Williams trở lại đội hình xuất phát ngay từ đầu. Dù Yamal chưa có thể trạng tốt nhất để chơi trọn vẹn 90 phút, sự đột biến của tài năng trẻ này vẫn là chìa khóa để xuyên phá hàng thủ đối phương.\n\nTuyển Tây Ban Nha tại World Cup 2026 - Ảnh: AFP\n\nPhía bên kia chiến tuyến, Saudi Arabia đang có tinh thần rất cao sau trận hòa quả cảm 1-1 trước Uruguay. Dưới sự dẫn dắt của HLV Georgios Donis, đại diện Tây Á đã trình diễn lối chơi phòng ngự kỷ luật và đặc biệt nguy hiểm trong các tình huống cố định.\n\nThủ thành Mohammed Al-Owais chắc chắn sẽ là điểm tựa vững chắc cho đại diện châu Á, trong khi Salem Al-Dawsari là ngòi nổ phản công mà hàng thủ Tây Ban Nha không thể lơ là. Tuy nhiên với sức mạnh vượt trội và bài học ở ngày ra quân, Tây Ban Nha khó lòng tiếp tục để vuột 3 điểm.\n\nTrận còn lại bảng H là cuộc đối đầu giữa Uruguay với Cape Verde lúc 5h ngày 22-6. Sau trận hòa hú vía trước Saudi Arabia, tuyển Uruguay đang chịu áp lực lớn. Lối chơi pressing tầm cao rực lửa của Uruguay sẽ đụng độ với khối bê tông kiên cố mang tên Cape Verde - đội bóng vừa khiến Tây Ban Nha nản lòng.\n\nCape Verde đã chứng minh họ không đến World Cup để dạo chơi. Sự kỷ luật, thể lực dồi dào và lối đá không ngại va chạm của đại diện châu Phi là thử thách cực đại cho những ngôi sao tấn công bên phía Uruguay.\n\nCục diện bảng G đang ở cân bằng khi cả bốn đội bóng đều giành được 1 điểm sau những kết quả hòa kịch tính ở ngày ra quân.\n\nBỉ sẽ gặp Iran lúc 2h ngày 22-6. Trận hòa 1-1 trước Ai Cập đã chỉ ra nhiều vấn đề trong khâu chuyển trạng thái của \"quỷ đỏ\". Đối đầu với một Iran chơi đầy quả cảm (vừa hòa New Zealand 2-2), đại diện châu Âu buộc phải giành chiến thắng để lấy lại thể diện. Iran với lối đá phòng ngự phản công sắc bén và tinh thần chiến đấu không bỏ cuộc luôn sẵn sàng trừng phạt bất kỳ sai lầm nào từ hàng thủ chậm chạp của đối phương.\n\nNew Zealand và Ai Cập là trận đấu trễ nhất ngày 22-6 khi đá lúc 8h. Cả hai đội đều sở hữu lối chơi giàu tốc độ. Đại diện châu Phi với sự tổ chức tốt sẽ phải dè chừng lối đá bóng bổng cùng tinh thần cống hiến của New Zealand. Đội nào chắt chiu cơ hội tốt hơn sẽ chiếm lợi thế lớn trong cuộc đua giành vé vào vòng 32 đội.",
-    "summary": "<ul><li>Tóm tắt bài báo về: World Cup 2026: Ông Fuente thôi không \"nghĩ nhiều\"</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
-    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
-    "socialMentions": {
-      "reddit": {
-        "upvotes": 917,
-        "commentsCount": 152,
-        "topComment": "WhoScored stats showed France struggling with high presses recently. Senegal might sneak a point."
-      },
-      "x": {
-        "likes": 3067,
-        "reposts": 897,
-        "hotPost": "Unbelievable recovery by Mbappe. Real Madrid fans and France fans breathing a sigh of relief."
-      }
-    },
-    "isLive": false
-  },
-  {
-    "id": "a3f20ac37559b94",
-    "source": "Tuổi Trẻ Thể Thao",
-    "url": "https://tuoitre.vn/le-cong-vinh-tay-ban-nha-se-thang-dam-bi-chi-thang-cach-biet-100260621082534087.htm",
-    "title": "Lê Công Vinh: Tây Ban Nha sẽ thắng đậm, Bỉ chỉ thắng cách biệt",
-    "titleVi": "Lê Công Vinh: Tây Ban Nha sẽ thắng đậm, Bỉ chỉ thắng cách biệt",
-    "pubDate": 1782026602834,
-    "pubDateStr": "21/06/2026 17:23",
-    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
-    "content": "Đây là nhận định của cựu tiền đạo đội tuyển Việt Nam Lê Công Vinh với Tuổi Trẻ trước trận đấu. Dưới đây là phân tích của Công Vinh.\n\nTây Ban Nha được dự đoán sẽ thắng Saudi Arabia - Ảnh: AFP\n\nTây Ban Nha và Saudi Arabia đều khởi đầu với kết quả hòa. Với Saudi Arabia là thành công khi có điểm đầu tiên trước đối thủ mạnh Uruguay 1-1. Nhưng với Tây Ban Nha thì trận hòa Cabo Verde 0-0 không khác gì một trận thua.\n\nVì Tây Ban Nha được đánh giá cao hơn và là ứng cử viên hàng đầu cho chức vô địch. Họ tấn công áp đảo nhưng để chuyển hóa thành bàn thắng thì gần như không thể. Vì thế trận đấu hôm nay rất quan trọng đối với cả hai đội.\n\nTây Ban Nha không thể thắng được đối thủ yếu Cabo Verde không có nghĩa sẽ không thắng được Saudi Arabia. Trong bóng đá không có tính bắc cầu mà nó liên quan đến vấn đề hai đội có tương tự lối chơi hay không để quyết định thắng thua. Giống như bóng đá Việt Nam có thể thắng các đội Tây Á nhưng gặp các đội Đông Á như Nhật Bản, Hàn Quốc thì thường thua vì lối đá có phần tương đồng nhưng ở đẳng cấp thấp hơn.\n\nSaudi Arabia có lối đá ban bật nhỏ, cầm bóng và kiểm soát bóng. Trong khi Tây Ban Nha lại là bậc thầy về kiểm soát bóng nên để giải quyết Saudi Arabia không phải là quá khó. Nếu đội bóng xứ bò tót ghi bàn thắng sớm trong hiệp 1 thì chắc chắn tỉ số sẽ rất cao.\n\nBởi một khi đã tìm được cảm hứng chơi bóng, Tây Ban Nha thắng cách biệt 2-3 bàn là bình thường. Huống chi đoàn quân của HLV Luis de la Fuente rất quyết thắng sau khi bị chỉ trích không biết ghi bàn ở trận đầu tiên.\n\nCựu tiền đạo đội tuyển Việt Nam Lê Công Vinh\n\nKhá trùng hợp khi cả Bỉ và Iran cũng hòa ở trận ra quân. Iran hòa trong thế rượt đuổi 2-2 trước New Zealand. Còn Bỉ cũng hòa Ai Cập 1-1 sau khi bị dẫn trước. Nhưng trận đối đầu giữa Bỉ và Iran sẽ khó tái lập tỉ số hòa như lượt đầu tiên.\n\nThế hệ vàng của Bỉ bắt đầu đi xuống. Ngôi sao Kevin Bruyne cũng đã 35 tuổi, Romelu Lukaku cũng 33 tuổi và bao lâu nay vẫn thi đấu không mấy nổi bật.\n\nBỉ đang đứng ở giai đoạn chuyển giao giữa thế hệ trẻ và thế hệ vàng, tất nhiên khả năng vận hành lối chơi không được trơn tru và không được đánh giá cao như thế hệ vàng của Eden Hazard bốn năm trước. Nhưng xét tổng thể, Bỉ vẫn được đánh giá cao hơn Iran.\n\nNhưng cũng phải nói rằng Iran có một tinh thần thi đấu rất tốt, giống như một chiến binh thật sự. Họ ra sân với khát khao, muốn chứng minh một điều gì đó cho thế giới thấy rằng mình không bao giờ bị khuất phục.\n\nTuy nhiên với lịch trình di chuyển từ Mexico sang Mỹ ở ngày thi đấu và sau trận lại trở về ngay khiến Iran bị ảnh hưởng không ít. Họ bị đánh giá thấp hơn Bỉ, lại bất lợi về thể lực thì rất khó để làm nên chuyện trước Bỉ trong trận đấu gần như quyết định vé đi tiếp của hai đội.\n\nBỉ phải đá áp đặt trước một Iran chơi phòng ngự phản công. Và tôi nghĩ dù đang trong giai đoạn khó khăn của chuyển giao thế hệ, Bỉ sẽ thắng Iran với tỉ số sát nút.\n\nBóng đá châu Á sau lượt trận đầu tiên khá thành công đã bắt đầu cho thấy sự hụt hơi khi Hàn Quốc thất bại 0-1 trước Mexico, Qatar thua đậm Canada 0-6 hay Úc thua Mỹ 0-2. Và giờ sẽ là Saudi Arabia và Iran.",
-    "contentVi": "Đây là nhận định của cựu tiền đạo đội tuyển Việt Nam Lê Công Vinh với Tuổi Trẻ trước trận đấu. Dưới đây là phân tích của Công Vinh.\n\nTây Ban Nha được dự đoán sẽ thắng Saudi Arabia - Ảnh: AFP\n\nTây Ban Nha và Saudi Arabia đều khởi đầu với kết quả hòa. Với Saudi Arabia là thành công khi có điểm đầu tiên trước đối thủ mạnh Uruguay 1-1. Nhưng với Tây Ban Nha thì trận hòa Cabo Verde 0-0 không khác gì một trận thua.\n\nVì Tây Ban Nha được đánh giá cao hơn và là ứng cử viên hàng đầu cho chức vô địch. Họ tấn công áp đảo nhưng để chuyển hóa thành bàn thắng thì gần như không thể. Vì thế trận đấu hôm nay rất quan trọng đối với cả hai đội.\n\nTây Ban Nha không thể thắng được đối thủ yếu Cabo Verde không có nghĩa sẽ không thắng được Saudi Arabia. Trong bóng đá không có tính bắc cầu mà nó liên quan đến vấn đề hai đội có tương tự lối chơi hay không để quyết định thắng thua. Giống như bóng đá Việt Nam có thể thắng các đội Tây Á nhưng gặp các đội Đông Á như Nhật Bản, Hàn Quốc thì thường thua vì lối đá có phần tương đồng nhưng ở đẳng cấp thấp hơn.\n\nSaudi Arabia có lối đá ban bật nhỏ, cầm bóng và kiểm soát bóng. Trong khi Tây Ban Nha lại là bậc thầy về kiểm soát bóng nên để giải quyết Saudi Arabia không phải là quá khó. Nếu đội bóng xứ bò tót ghi bàn thắng sớm trong hiệp 1 thì chắc chắn tỉ số sẽ rất cao.\n\nBởi một khi đã tìm được cảm hứng chơi bóng, Tây Ban Nha thắng cách biệt 2-3 bàn là bình thường. Huống chi đoàn quân của HLV Luis de la Fuente rất quyết thắng sau khi bị chỉ trích không biết ghi bàn ở trận đầu tiên.\n\nCựu tiền đạo đội tuyển Việt Nam Lê Công Vinh\n\nKhá trùng hợp khi cả Bỉ và Iran cũng hòa ở trận ra quân. Iran hòa trong thế rượt đuổi 2-2 trước New Zealand. Còn Bỉ cũng hòa Ai Cập 1-1 sau khi bị dẫn trước. Nhưng trận đối đầu giữa Bỉ và Iran sẽ khó tái lập tỉ số hòa như lượt đầu tiên.\n\nThế hệ vàng của Bỉ bắt đầu đi xuống. Ngôi sao Kevin Bruyne cũng đã 35 tuổi, Romelu Lukaku cũng 33 tuổi và bao lâu nay vẫn thi đấu không mấy nổi bật.\n\nBỉ đang đứng ở giai đoạn chuyển giao giữa thế hệ trẻ và thế hệ vàng, tất nhiên khả năng vận hành lối chơi không được trơn tru và không được đánh giá cao như thế hệ vàng của Eden Hazard bốn năm trước. Nhưng xét tổng thể, Bỉ vẫn được đánh giá cao hơn Iran.\n\nNhưng cũng phải nói rằng Iran có một tinh thần thi đấu rất tốt, giống như một chiến binh thật sự. Họ ra sân với khát khao, muốn chứng minh một điều gì đó cho thế giới thấy rằng mình không bao giờ bị khuất phục.\n\nTuy nhiên với lịch trình di chuyển từ Mexico sang Mỹ ở ngày thi đấu và sau trận lại trở về ngay khiến Iran bị ảnh hưởng không ít. Họ bị đánh giá thấp hơn Bỉ, lại bất lợi về thể lực thì rất khó để làm nên chuyện trước Bỉ trong trận đấu gần như quyết định vé đi tiếp của hai đội.\n\nBỉ phải đá áp đặt trước một Iran chơi phòng ngự phản công. Và tôi nghĩ dù đang trong giai đoạn khó khăn của chuyển giao thế hệ, Bỉ sẽ thắng Iran với tỉ số sát nút.\n\nBóng đá châu Á sau lượt trận đầu tiên khá thành công đã bắt đầu cho thấy sự hụt hơi khi Hàn Quốc thất bại 0-1 trước Mexico, Qatar thua đậm Canada 0-6 hay Úc thua Mỹ 0-2. Và giờ sẽ là Saudi Arabia và Iran.",
-    "summary": "<ul><li>Tóm tắt bài báo về: Lê Công Vinh: Tây Ban Nha sẽ thắng đậm, Bỉ chỉ thắng cách biệt</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
-    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
-    "socialMentions": {
-      "reddit": {
-        "upvotes": 1449,
-        "commentsCount": 64,
-        "topComment": "Colombia is a very tough draw, but HLV Kim Sang-sik has brought a solid defensive structure."
-      },
-      "x": {
-        "likes": 4799,
-        "reposts": 1029,
-        "hotPost": "Heo Hong forecast says France is a value bet (+20% EV). Let's see if the pig is right! 🐷 #HeoHongTips"
-      }
-    },
-    "isLive": false
-  },
-  {
-    "id": "5e2437b70befbfe",
-    "source": "Tuổi Trẻ Thể Thao",
-    "url": "https://tuoitre.vn/them-1-doi-bong-bi-loai-som-o-world-cup-2026-100260621124343207.htm",
-    "title": "Thêm 1 đội bóng bị loại sớm ở World Cup 2026",
-    "titleVi": "SỐC! Thêm một đại diện châu Phi chính thức 'bay màu' khỏi World Cup 2026 ngay từ vòng bảng!",
-    "pubDate": 1782026584072,
-    "pubDateStr": "21/06/2026 17:23",
-    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
-    "content": "Tunisia là cái tên mới nhất phải nói lời chia tay World Cup 2026 sau loạt trận thứ 2 bảng F diễn ra trưa 21-6.\n\nTuyển Tunisia (áo trắng) là đội thứ ba bị loại khỏi World Cup 2026 - Ảnh: AP\n\nỞ lượt trận thứ 2 bảng F, tuyển Tunisia tiếp tục gây thất vọng khi để thua Nhật Bản 0-4. Trước đó, đại diện bóng đá châu Phi hứng chịu thất bại nặng nề 1-5 trước Thụy Điển.\n\nKhông giành điểm nào sau hai trận, bị thủng lưới 9 bàn, Tunisia đứng cuối bảng F và phải sớm nói lời chia tay World Cup 2026.\n\nSau 2 lượt trận, Nhật Bản và Hà Lan (4 điểm) cùng chia nhau 2 vị trí dẫn đầu bảng F, đứng thứ 3 là Thụy Điển với 3 điểm.\n\nVới số điểm hiện tại, Tunisia hết cơ hội cán đích trong nhóm 2 đội dẫn đầu. Đại diện châu Phi nhiều nhất chỉ có ba điểm (nếu thắng Hà Lan lượt cuối).\n\nNhưng ngay cả như vậy, Tunisia vẫn xếp cuối bảng vì kém Thụy Điển đối đầu (trường hợp Thụy Điển thua Nhật Bản ở lượt cuối).\n\nTunisia là cái tên thứ ba rời World Cup 2026 sau vòng bảng. Hai đội bóng trước đó là Haiti (bảng C) và Thổ Nhĩ Kỳ (bảng D). Kết thúc vòng bảng sẽ có 16 đội bị loại.\n\nWorld Cup 2026 có sự tham dự của 48 đội, chia làm 12 bảng. Kết thúc vòng bảng, 24 đội nhất nhì mỗi bảng và 8 đội đứng thứ ba có thành tích tốt nhất sẽ giành vé vào vòng loại trực tiếp.\n\nTuyển Tây Ban Nha buộc phải đánh bại Saudi Arabia ở lượt trận thứ hai bảng H World Cup 2026 lúc 23h ngày 21-6 để có ưu thế trong việc giành vé đi tiếp.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác\n\nHiện chưa có bình luận nào, hãy là người đầu tiên bình luận\n\nTuổi Trẻ Online sẽ gởi đến bạn những tin tức nổi bật nhất\n\nTài khoản được sử dụng đến ngày  | Bạn đang có 0 trong tài khoản\n\n1 sao = 1000đ. Mua thêm sao để tham gia hoạt động tương tác trên Tuổi Trẻ như: Đổi quà lưu niệm, Tặng sao cho tác giả, Shopping",
-    "contentVi": "Tunisia là cái tên mới nhất phải nói lời chia tay World Cup 2026 sau loạt trận thứ 2 bảng F diễn ra trưa 21-6.\n\nTuyển Tunisia (áo trắng) là đội thứ ba bị loại khỏi World Cup 2026 - Ảnh: AP\n\nỞ lượt trận thứ 2 bảng F, tuyển Tunisia tiếp tục gây thất vọng khi để thua Nhật Bản 0-4. Trước đó, đại diện bóng đá châu Phi hứng chịu thất bại nặng nề 1-5 trước Thụy Điển.\n\nKhông giành điểm nào sau hai trận, bị thủng lưới 9 bàn, Tunisia đứng cuối bảng F và phải sớm nói lời chia tay World Cup 2026.\n\nSau 2 lượt trận, Nhật Bản và Hà Lan (4 điểm) cùng chia nhau 2 vị trí dẫn đầu bảng F, đứng thứ 3 là Thụy Điển với 3 điểm.\n\nVới số điểm hiện tại, Tunisia hết cơ hội cán đích trong nhóm 2 đội dẫn đầu. Đại diện châu Phi nhiều nhất chỉ có ba điểm (nếu thắng Hà Lan lượt cuối).\n\nNhưng ngay cả như vậy, Tunisia vẫn xếp cuối bảng vì kém Thụy Điển đối đầu (trường hợp Thụy Điển thua Nhật Bản ở lượt cuối).\n\nTunisia là cái tên thứ ba rời World Cup 2026 sau vòng bảng. Hai đội bóng trước đó là Haiti (bảng C) và Thổ Nhĩ Kỳ (bảng D). Kết thúc vòng bảng sẽ có 16 đội bị loại.\n\nWorld Cup 2026 có sự tham dự của 48 đội, chia làm 12 bảng. Kết thúc vòng bảng, 24 đội nhất nhì mỗi bảng và 8 đội đứng thứ ba có thành tích tốt nhất sẽ giành vé vào vòng loại trực tiếp.\n\nTuyển Tây Ban Nha buộc phải đánh bại Saudi Arabia ở lượt trận thứ hai bảng H World Cup 2026 lúc 23h ngày 21-6 để có ưu thế trong việc giành vé đi tiếp.",
-    "summary": "<ul><li>Tunisia chính thức bị loại khỏi World Cup 2026 sau hai trận thua đậm trước Nhật Bản (0-4) và Thụy Điển (1-5), đứng cuối bảng F.</li><li>Đây là đội bóng thứ ba phải nói lời chia tay giải đấu, sau Haiti (bảng C) và Thổ Nhĩ Kỳ (bảng D).</li><li>World Cup 2026 sẽ có 48 đội tham dự, chia 12 bảng, với 24 đội nhất nhì và 8 đội đứng thứ ba có thành tích tốt nhất giành vé vào vòng loại trực tiếp.</li></ul>",
-    "drpigComment": "Ối giời ơi các fen ơi, Tunisia 'bay màu' sớm thế này thì Heo Hồng 🐷 cũng hết hồn! Thôi thì về sớm còn kịp ăn cỗ nhà, chứ ở lại mà cứ 'thủng lưới' 9 bàn sau 2 trận thì Heo Hồng 🐷 cũng thấy tội nghiệp quá. Các fen nhớ giữ sức khỏe nha, đừng để 'thủng lưới' như Tunisia là được!",
-    "socialMentions": {
-      "reddit": {
-        "upvotes": 255,
-        "commentsCount": 170,
-        "topComment": "Vietnam playing at the World Cup is a dream come true for Southeast Asian football! Fully supporting them."
-      },
-      "x": {
-        "likes": 4205,
-        "reposts": 885,
-        "hotPost": "Heo Hong forecast says France is a value bet (+20% EV). Let's see if the pig is right! 🐷 #HeoHongTips"
-      }
-    },
-    "isLive": false
-  },
-  {
-    "id": "0c10a6407dfa278",
-    "source": "Tuổi Trẻ Thể Thao",
-    "url": "https://tuoitre.vn/trong-tai-roi-dong-ho-cau-thu-nhat-len-deo-trong-tran-dau-o-world-cup-2026-100260621100220371.htm",
-    "title": "Trọng tài rơi đồng hồ, cầu thủ nhặt lên đeo trong trận đấu ở World Cup 2026",
-    "titleVi": "Sốc nặng! Cầu thủ Paraguay 'cuỗm' đồng hồ trọng tài đeo thử ngay trên sân World Cup 2026!",
-    "pubDate": 1782019061700,
-    "pubDateStr": "21/06/2026 15:17",
-    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
-    "content": "Tình huống hài hước diễn ra ở trận đấu giữa Thổ Nhĩ Kỳ và Paraguay sáng 20-6, thuộc lượt hai bảng D, World Cup 2026.\n\nCầu thủ Matias Galarza của Paraguay (bìa phải) nhặt đồng hồ trọng tài lên đeo - Ảnh chụp màn hình\n\nTheo đó, phút 45+1, trọng tài Ivan Barton tạm dừng trận đấu sau pha phạm lỗi của cầu thủ Thổ Nhĩ Kỳ. Mải can ngăn cầu thủ 2 đội lao vào nhau cãi cự, trọng tài Barton đã làm rơi một đồng hồ (ông đeo 2 đồng hồ ở 2 tay) mà không hề hay biết.\n\nGiữa lúc không khí trên sân đang căng thẳng, cầu thủ Matias Galarza của tuyển Paraguay lạnh lùng bước đến nhặt chiếc đồng hồ đeo lên tay mình, vừa đeo vừa ngắm nghía mà không quan tâm các đồng đội đang đấu tranh bảo vệ quyền lợi.\n\nKhi trọng tài cho trận đấu trở lại, Galarza đã trả lại chiếc đồng hồ, không phải nhận thêm thẻ phạt (anh đã bị thẻ vàng trước đó).\n\nTình huống hài hước này được ghi lại trực tiếp trên sóng truyền hình và lan tỏa rộng rãi trên mạng xã hội Thổ Nhĩ Kỳ. Một CĐV bình luận dí dỏm: \"Anh ta đã hiểu sai ý nghĩa của việc đánh cắp thời gian\".\n\nTrọng tài FIFA Nguyễn Mạnh Hải bình luận với Tuổi Trẻ Online: \"Cầu thủ Paraguay không vi phạm gì, nhưng việc cậu ấy làm trên sân lúc đó khá hài hước\".\n\nCựu trọng tài FIFA Patrick Ittrich người Đức, hiện làm bình luận viên cho đài truyền hình Magenta TV, cảm thấy vô cùng khó hiểu.\n\n\"Tôi không hiểu chuyện gì đang xảy ra với một cầu thủ như vậy? Không biết sao anh ta lại làm thế\" Ittrich nói.\n\nMatias Galarza là người ghi bàn duy nhất (vào phút thứ 2), giúp tuyển Paraguay thắng 1-0 Thổ Nhĩ Kỳ và tiễn đối thủ này về nước sớm ở World Cup 2026. Đây cũng là chiến thắng đầu tiên của Paraguay ở kỳ World Cup năm nay.\n\nThắng đậm Thụy Điển 5-1 tại World Cup 2026, tuyển Hà Lan không chỉ vươn lên dẫn đầu bảng F mà còn xô ngã kỷ lục bất bại kéo dài suốt 60 năm của Brazil thời Pele ở đấu trường World Cup.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác\n\nHiện chưa có bình luận nào, hãy là người đầu tiên bình luận\n\nTuổi Trẻ Online sẽ gởi đến bạn những tin tức nổi bật nhất\n\nTài khoản được sử dụng đến ngày  | Bạn đang có 0 trong tài khoản",
-    "contentVi": "Tình huống hài hước diễn ra ở trận đấu giữa Thổ Nhĩ Kỳ và Paraguay sáng 20-6, thuộc lượt hai bảng D, World Cup 2026.\n\nCầu thủ Matias Galarza của Paraguay (bìa phải) nhặt đồng hồ trọng tài lên đeo - Ảnh chụp màn hình\n\nTheo đó, phút 45+1, trọng tài Ivan Barton tạm dừng trận đấu sau pha phạm lỗi của cầu thủ Thổ Nhĩ Kỳ. Mải can ngăn cầu thủ 2 đội lao vào nhau cãi cự, trọng tài Barton đã làm rơi một đồng hồ (ông đeo 2 đồng hồ ở 2 tay) mà không hề hay biết.\n\nGiữa lúc không khí trên sân đang căng thẳng, cầu thủ Matias Galarza của tuyển Paraguay lạnh lùng bước đến nhặt chiếc đồng hồ đeo lên tay mình, vừa đeo vừa ngắm nghía mà không quan tâm các đồng đội đang đấu tranh bảo vệ quyền lợi.\n\nKhi trọng tài cho trận đấu trở lại, Galarza đã trả lại chiếc đồng hồ, không phải nhận thêm thẻ phạt (anh đã bị thẻ vàng trước đó).\n\nTình huống hài hước này được ghi lại trực tiếp trên sóng truyền hình và lan tỏa rộng rãi trên mạng xã hội Thổ Nhĩ Kỳ. Một CĐV bình luận dí dỏm: \"Anh ta đã hiểu sai ý nghĩa của việc đánh cắp thời gian\".\n\nTrọng tài FIFA Nguyễn Mạnh Hải bình luận với Tuổi Trẻ Online: \"Cầu thủ Paraguay không vi phạm gì, nhưng việc cậu ấy làm trên sân lúc đó khá hài hước\".\n\nCựu trọng tài FIFA Patrick Ittrich người Đức, hiện làm bình luận viên cho đài truyền hình Magenta TV, cảm thấy vô cùng khó hiểu.\n\n\"Tôi không hiểu chuyện gì đang xảy ra với một cầu thủ như vậy? Không biết sao anh ta lại làm thế\" Ittrich nói.\n\nMatias Galarza là người ghi bàn duy nhất (vào phút thứ 2), giúp tuyển Paraguay thắng 1-0 Thổ Nhĩ Kỳ và tiễn đối thủ này về nước sớm ở World Cup 2026. Đây cũng là chiến thắng đầu tiên của Paraguay ở kỳ World Cup năm nay.",
-    "summary": "<ul><li>Cầu thủ Matias Galarza (Paraguay) gây sốc khi nhặt và đeo thử chiếc đồng hồ bị rơi của trọng tài Ivan Barton ngay trên sân World Cup 2026.</li><li>Tình huống hài hước này lan truyền chóng mặt, nhận được nhiều phản ứng từ cộng đồng mạng và các chuyên gia trọng tài.</li><li>Galarza đã trả lại đồng hồ mà không bị phạt thêm, đồng thời ghi bàn thắng duy nhất giúp Paraguay đánh bại Thổ Nhĩ Kỳ 1-0 và giành chiến thắng đầu tiên tại giải.</li></ul>",
-    "drpigComment": "Heo Hồng 🐷 chào các fen! Vụ này đúng là cười ra nước mắt! Anh Galarza này không chỉ 'đánh cắp thời gian' của trọng tài mà còn 'đánh cắp' luôn chiến thắng cho Paraguay bằng bàn thắng vàng. Đúng là cao thủ không bằng tranh thủ, Heo Hồng 🐷 mà có kèo 'cầu thủ đeo đồng hồ trọng tài ghi bàn' là Heo Hồng 🐷 tất tay rồi!",
-    "socialMentions": {
-      "reddit": {
-        "upvotes": 746,
-        "commentsCount": 201,
-        "topComment": "Is anyone else expecting an absolute goal-fest in Group L? England vs Croatia is going to be spicy."
-      },
-      "x": {
-        "likes": 4096,
-        "reposts": 476,
-        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
-      }
-    },
-    "isLive": false
-  },
-  {
-    "id": "79dc6e01ff762fd",
-    "source": "Tuổi Trẻ Thể Thao",
-    "url": "https://tuoitre.vn/messi-khong-con-non-khan-o-tuoi-39-vi-sao-100260620223917067.htm",
-    "title": "Messi không còn nôn khan ở tuổi 39, vì sao?",
-    "titleVi": "Messi không còn nôn khan ở tuổi 39, vì sao?",
-    "pubDate": 1782019045564,
-    "pubDateStr": "21/06/2026 15:17",
-    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
-    "content": "Hình ảnh Lionel Messi cúi gập người, nôn khan ngay trên sân từng là một trong những bí ẩn kỳ lạ nhất của bóng đá thế giới đầu thập niên 2010.\n\nMessi từng nôn khan nhiều lần khi ở tuổi ngoài đôi mươi - Ảnh: THE GUARDIAN\n\nBan đầu, hiện tượng nôn khan của Messi thường chỉ xuất hiện khi anh chơi bóng ở nơi có độ cao quá lớn (như ở Bolivia).\n\nNhưng nhiều năm sau đó, siêu sao Argentina thi thoảng vẫn nôn khan trong những trận đấu có cường độ cao, tạo nên nỗi lo cực lớn cho người hâm mộ.\n\nNhưng hơn 10 năm sau, khi đã sắp bước sang tuổi 39 (Messi sẽ đón sinh nhật 39 vào ngày 24-6), hiện tượng này gần như biến mất.\n\nCâu trả lời nằm ở yếu tố dinh dưỡng, khả năng kiểm soát vận động và mức độ am hiểu với cơ thể.\n\nMessi từng trải qua nhiều lần nôn khan trong màu áo Barcelona lẫn tuyển Argentina. Đáng chú ý nhất là giai đoạn 2011-2014, khi anh đang ở đỉnh cao về thể lực và phong độ.\n\nKhi đó, đã có nhiều đồn đoán về bệnh dạ dày của Messi, chứng lo âu, rối loạn hô hấp... thậm chí là cả căn bệnh bẩm sinh từng khiến anh phải tiêm hormone tăng trưởng.\n\nTuy nhiên, chính Messi sau này thừa nhận một phần nguyên nhân đến từ chế độ ăn uống rất tệ của anh thời trẻ. Anh từng nói mình ăn nhiều chocolate, bánh ngọt, nước ngọt có ga và các món chế biến sẵn.\n\nBước ngoặt đến khoảng năm 2014-2015, khi Messi làm việc với chuyên gia dinh dưỡng người Ý Giuliano Poser.\n\nPoser không đưa Messi một công thức bí ẩn nào cả, mà chỉ đơn giản kéo anh trở lại với những thực phẩm căn bản: nước, dầu ô liu, ngũ cốc nguyên hạt, trái cây, rau củ tươi, hạt dinh dưỡng và lượng đạm được kiểm soát.\n\nỞ chiều ngược lại, ông khuyên Messi tránh xa đường, bột mì tinh chế, nước ngọt và thực phẩm quá nhiều chất béo.\n\nCâu nói nổi tiếng của Poser là: “Đường là thứ tệ nhất cho cơ bắp”. Điều Poser muốn nhấn mạnh là đường tinh luyện, nước ngọt và thực phẩm siêu chế biến không phải nguồn năng lượng lý tưởng.\n\nMessi và chuyên gia dinh dưỡng Poser - Ảnh: INSTAGRAM\n\nChúng có thể làm đường huyết dao động, gây cảm giác nặng bụng, khó tiêu, đầy hơi hoặc buồn nôn nếu dùng không đúng thời điểm trước trận.",
-    "contentVi": "Hình ảnh Lionel Messi cúi gập người, nôn khan ngay trên sân từng là một trong những bí ẩn kỳ lạ nhất của bóng đá thế giới đầu thập niên 2010.\n\nMessi từng nôn khan nhiều lần khi ở tuổi ngoài đôi mươi - Ảnh: THE GUARDIAN\n\nBan đầu, hiện tượng nôn khan của Messi thường chỉ xuất hiện khi anh chơi bóng ở nơi có độ cao quá lớn (như ở Bolivia).\n\nNhưng nhiều năm sau đó, siêu sao Argentina thi thoảng vẫn nôn khan trong những trận đấu có cường độ cao, tạo nên nỗi lo cực lớn cho người hâm mộ.\n\nNhưng hơn 10 năm sau, khi đã sắp bước sang tuổi 39 (Messi sẽ đón sinh nhật 39 vào ngày 24-6), hiện tượng này gần như biến mất.\n\nCâu trả lời nằm ở yếu tố dinh dưỡng, khả năng kiểm soát vận động và mức độ am hiểu với cơ thể.\n\nMessi từng trải qua nhiều lần nôn khan trong màu áo Barcelona lẫn tuyển Argentina. Đáng chú ý nhất là giai đoạn 2011-2014, khi anh đang ở đỉnh cao về thể lực và phong độ.\n\nKhi đó, đã có nhiều đồn đoán về bệnh dạ dày của Messi, chứng lo âu, rối loạn hô hấp... thậm chí là cả căn bệnh bẩm sinh từng khiến anh phải tiêm hormone tăng trưởng.\n\nTuy nhiên, chính Messi sau này thừa nhận một phần nguyên nhân đến từ chế độ ăn uống rất tệ của anh thời trẻ. Anh từng nói mình ăn nhiều chocolate, bánh ngọt, nước ngọt có ga và các món chế biến sẵn.\n\nBước ngoặt đến khoảng năm 2014-2015, khi Messi làm việc với chuyên gia dinh dưỡng người Ý Giuliano Poser.\n\nPoser không đưa Messi một công thức bí ẩn nào cả, mà chỉ đơn giản kéo anh trở lại với những thực phẩm căn bản: nước, dầu ô liu, ngũ cốc nguyên hạt, trái cây, rau củ tươi, hạt dinh dưỡng và lượng đạm được kiểm soát.\n\nỞ chiều ngược lại, ông khuyên Messi tránh xa đường, bột mì tinh chế, nước ngọt và thực phẩm quá nhiều chất béo.\n\nCâu nói nổi tiếng của Poser là: “Đường là thứ tệ nhất cho cơ bắp”. Điều Poser muốn nhấn mạnh là đường tinh luyện, nước ngọt và thực phẩm siêu chế biến không phải nguồn năng lượng lý tưởng.\n\nMessi và chuyên gia dinh dưỡng Poser - Ảnh: INSTAGRAM\n\nChúng có thể làm đường huyết dao động, gây cảm giác nặng bụng, khó tiêu, đầy hơi hoặc buồn nôn nếu dùng không đúng thời điểm trước trận.",
-    "summary": "<ul><li>Tóm tắt bài báo về: Messi không còn nôn khan ở tuổi 39, vì sao?</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
-    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
-    "socialMentions": {
-      "reddit": {
-        "upvotes": 1790,
-        "commentsCount": 85,
-        "topComment": "Mbappe's presence completely changes the tactical balance. Senegal will need to defend deeper."
-      },
-      "x": {
-        "likes": 2740,
-        "reposts": 920,
-        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
-      }
-    },
-    "isLive": false
-  },
-  {
-    "id": "49ce72502b33b37",
-    "source": "Tuổi Trẻ Thể Thao",
-    "url": "https://tuoitre.vn/xep-hang-world-cup-2026-duc-di-tiep-voi-ngoi-nhat-bang-e-100260621105737078.htm",
-    "title": "Xếp hạng World Cup 2026: Đức đi tiếp với ngôi nhất bảng E",
-    "titleVi": "Đức CHÍNH THỨC ĐẶT CHỖ ở vòng 32 đội World Cup 2026: 'Cỗ xe tăng' hiên ngang nhất bảng E!",
-    "pubDate": 1782019026040,
-    "pubDateStr": "21/06/2026 15:17",
-    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
-    "content": "Tuyển Đức đã chính thức giành vé đi tiếp vào vòng 32 đội World Cup 2026 với ngôi nhất bảng E.\n\nXếp hạng World Cup 2026: Đức đi tiếp với ngôi nhất bảng E - Đồ họa: AN BÌNH\n\nSáng 21-6, Ecuador bất ngờ bị Curacao cầm hòa 0-0 ở lượt trận thứ 2 bảng E World Cup 2026. Đội bóng vùng Caribe đã thi đấu vô cùng kiên cường, đặc biệt là thủ thành Eloy Room đã chơi xuất sắc giúp đội nhà giành 1 điểm lịch sử.\n\nTrước đó, tuyển Đức có chiến thắng ngược dòng đầy kịch tính trước Bờ Biển Ngà với tỉ số 2-1. \"Cỗ xe tăng\" để đối thủ vượt lên dẫn trước ở phút 30 và chỉ 3 điểm nhờ sự tỏa sáng của cầu thủ vào sân từ ghế dự bị là Deniz Undav.\n\nSau hai lượt trận, tuyển Đức giành ngôi nhất bảng với 6 điểm trọn vẹn, hơn đội nhì bảng là Bờ Biển Ngà 3 điểm. Như vậy, đội bóng của HLV Julian Nagelsmann cũng chính thức đi tiếp vào vòng 32 đội với vị trí dẫn đầu bảng E, bởi vòng bảng sẽ ưu tiên xét thành tích đối đầu trực tiếp khi các đồng đội bằng điểm.\n\nEcuador và Curacao chia nhau hai vị trí còn lại.\n\nỞ lượt cuối, tuyển Đức sẽ gặp Ecuador và Bờ Biển Ngà đối đầu Curacao. Cơ hội đi tiếp vẫn còn nguyên đối với 3 đội còn lại và nếu ai giành được kết quả thuận lợi sẽ cùng Đức tiến vào vòng trong.\n\nĐến hiện tại, chỉ mới xác định được 3 đội bóng đi tiếp vào vòng 32 đội World Cup 2026 là: Mexico (bảng A), Mỹ (bảng D) và Đức (bảng E).\n\nWorld Cup 2026 diễn ra từ ngày 12-6 đến 20-7 tại Bắc Mỹ, có sự tham dự của 48 đội, chia làm 12 bảng đấu. Kết thúc vòng bảng, 2 đội nhất nhì mỗi bảng và 8 đội đứng thứ ba có thành tích tốt nhất vào vòng 32 đội.\n\nTình huống hài hước diễn ra ở trận đấu giữa Thổ Nhĩ Kỳ và Paraguay sáng 20-6, thuộc lượt hai bảng D World Cup 2026.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác\n\nHiện chưa có bình luận nào, hãy là người đầu tiên bình luận\n\nTuổi Trẻ Online sẽ gởi đến bạn những tin tức nổi bật nhất\n\nTài khoản được sử dụng đến ngày  | Bạn đang có 0 trong tài khoản\n\n1 sao = 1000đ. Mua thêm sao để tham gia hoạt động tương tác trên Tuổi Trẻ như: Đổi quà lưu niệm, Tặng sao cho tác giả, Shopping",
-    "contentVi": "Tuyển Đức đã chính thức giành vé đi tiếp vào vòng 32 đội World Cup 2026 với ngôi nhất bảng E.\n\nXếp hạng World Cup 2026: Đức đi tiếp với ngôi nhất bảng E - Đồ họa: AN BÌNH\n\nSáng 21-6, Ecuador bất ngờ bị Curacao cầm hòa 0-0 ở lượt trận thứ 2 bảng E World Cup 2026. Đội bóng vùng Caribe đã thi đấu vô cùng kiên cường, đặc biệt là thủ thành Eloy Room đã chơi xuất sắc giúp đội nhà giành 1 điểm lịch sử.\n\nTrước đó, tuyển Đức có chiến thắng ngược dòng đầy kịch tính trước Bờ Biển Ngà với tỉ số 2-1. \"Cỗ xe tăng\" để đối thủ vượt lên dẫn trước ở phút 30 và chỉ 3 điểm nhờ sự tỏa sáng của cầu thủ vào sân từ ghế dự bị là Deniz Undav.\n\nSau hai lượt trận, tuyển Đức giành ngôi nhất bảng với 6 điểm trọn vẹn, hơn đội nhì bảng là Bờ Biển Ngà 3 điểm. Như vậy, đội bóng của HLV Julian Nagelsmann cũng chính thức đi tiếp vào vòng 32 đội với vị trí dẫn đầu bảng E, bởi vòng bảng sẽ ưu tiên xét thành tích đối đầu trực tiếp khi các đồng đội bằng điểm.\n\nEcuador và Curacao chia nhau hai vị trí còn lại.\n\nỞ lượt cuối, tuyển Đức sẽ gặp Ecuador và Bờ Biển Ngà đối đầu Curacao. Cơ hội đi tiếp vẫn còn nguyên đối với 3 đội còn lại và nếu ai giành được kết quả thuận lợi sẽ cùng Đức tiến vào vòng trong.\n\nĐến hiện tại, chỉ mới xác định được 3 đội bóng đi tiếp vào vòng 32 đội World Cup 2026 là: Mexico (bảng A), Mỹ (bảng D) và Đức (bảng E).\n\nWorld Cup 2026 diễn ra từ ngày 12-6 đến 20-7 tại Bắc Mỹ, có sự tham dự của 48 đội, chia làm 12 bảng đấu. Kết thúc vòng bảng, 2 đội nhất nhì mỗi bảng và 8 đội đứng thứ ba có thành tích tốt nhất vào vòng 32 đội.\n\nTình huống hài hước diễn ra ở trận đấu giữa Thổ Nhĩ Kỳ và Paraguay sáng 20-6, thuộc lượt hai bảng D World Cup 2026.\n\nĐã có lỗi xảy ra, mời bạn quay lại bài viết và thực hiện lại thao tác\n\nHiện chưa có bình luận nào, hãy là người đầu tiên bình luận\n\nTuổi Trẻ Online sẽ gởi đến bạn những tin tức nổi bật nhất\n\nTài khoản được sử dụng đến ngày  | Bạn đang có 0 trong tài khoản\n\n1 sao = 1000đ. Mua thêm sao để tham gia hoạt động tương tác trên Tuổi Trẻ như: Đổi quà lưu niệm, Tặng sao cho tác giả, Shopping",
-    "summary": "<ul><li>Tuyển Đức đã chính thức giành vé vào vòng 32 đội World Cup 2026 với ngôi nhất bảng E sau hai lượt trận.</li><li>Chiến thắng kịch tính 2-1 trước Bờ Biển Ngà và trận hòa 0-0 bất ngờ giữa Ecuador và Curacao đã giúp Đức sớm vượt qua vòng bảng.</li><li>Hiện tại, chỉ có Mexico, Mỹ và Đức là 3 đội đầu tiên xác định được suất đi tiếp vào vòng 32 đội World Cup 2026.</li></ul>",
-    "drpigComment": "Heo Hồng 🐷 chào các fen! Ai bảo 'Cỗ xe tăng' hết xăng nào? Mới hai trận mà đã hiên ngang nhất bảng, đặt vé máy bay đi vòng 32 đội rồi! Đúng là đẳng cấp nhà vô địch World Cup có khác. Mà nhìn Ecuador bị Curacao cầm hòa 0-0 thì Heo Hồng 🐷 thấy kèo này khó đoán thật, may mà Đức nhà ta không làm Heo Hồng 🐷 thất vọng. Các fen cứ yên tâm mà đặt niềm tin vào Đức nhé, Heo Hồng 🐷 thấy mùi cúp đâu đây rồi!",
-    "socialMentions": {
-      "reddit": {
-        "upvotes": 892,
-        "commentsCount": 127,
-        "topComment": "I hope Heo Hong's tip holds true. Placed a small fun bet on the Draw!"
-      },
-      "x": {
-        "likes": 2442,
-        "reposts": 222,
-        "hotPost": "MetLife Stadium is absolutely rocking. The atmosphere for WC2026 opening week is insane! #MetLife"
       }
     },
     "isLive": false
@@ -594,114 +999,6 @@
       "x": {
         "likes": 2367,
         "reposts": 897,
-        "hotPost": "Lịch sử vẫy gọi các chiến binh Sao Vàng! Quyết chiến Colombia! 🇻🇳🔥 #VietnamWorldCup"
-      }
-    },
-    "isLive": false
-  },
-  {
-    "id": "ee735db7fe2d122",
-    "source": "Bongda.com.vn",
-    "url": "https://bongda.com.vn/soi-tran-phap-vs-iraq-xay-chac-ngoi-dau-d836335.html",
-    "title": "Soi trận Pháp vs Iraq: Xây chắc ngôi đầu",
-    "titleVi": "Soi trận Pháp vs Iraq: Xây chắc ngôi đầu",
-    "pubDate": 1782003600000,
-    "pubDateStr": "21/06/2026 11:00",
-    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
-    "content": "BongDa.com.vnVới dàn sao vượt trội và chỉ gặp phải đối thủ dưới cơ như Iraq, tuyển Pháp hướng đến chiến thắng thứ hai liên tiếp để sớm giành vé đi tiếp tại World Cup 2026.\n\nVòng đấu: Lượt trận thứ hai - Bảng I\n\nĐịa điểm: Sân vận động Philadelphia\n\nThời gian thi đấu: 04h00 ngày 24/6 (theo giờ Việt Nam)\n\nĐội tuyển Pháp bước vào chiến dịch World Cup 2026 với áp lực khẳng định vị thế ứng viên vô địch. Ở trận ra quân, đoàn quân của huấn luyện viên Didier Deschamps đã vượt qua Senegal với tỷ số 3-1. Dù chiến thắng này bộc lộ một vài sơ hở ở hàng phòng ngự khi đây đã là trận thứ 6 liên tiếp họ không thể giữ sạch lưới, nhưng hàng công của Pháp vẫn chứng minh hiệu suất làm bàn ấn tượng với chuỗi 14 trận ghi bàn liên tiếp trên mọi đấu trường.\n\nPhía bên kia chiến tuyến, Iraq chịu thất bại nặng nề 1-4 trước Na Uy ở lượt trận đầu tiên. Phong độ gần đây của \"Sư tử Lưỡng Hà\" không mấy khả quan khi họ chỉ thắng 1 trong 6 trận gần nhất.\n\nTrận đấu tại Philadelphia sắp tới mới là lần chạm trán chính thức đầu tiên giữa đội tuyển Pháp và Iraq trong lịch sử các giải đấu quốc tế.\n\nBan huấn luyện đội tuyển Pháp đang theo dõi sát sao tình hình thể trạng của bộ tứ vệ William Saliba, Dayot Upamecano, Theo Hernandez và Malo Gusto. Tuy nhiên, khả năng ra sân của các cầu thủ này vẫn ở mức cao. Dự kiến, huấn luyện viên Deschamps sẽ thực hiện một số điều chỉnh nhân sự để xoay tua đội hình.\n\nBên phía Iraq, cầu thủ chạy cánh Ali Jasim đã hoàn toàn bình phục chấn thương nhẹ và sẵn sàng ra sân từ đầu. Thủ môn Jalal Hassan cũng đã ổn định thể lực, song truyền thông Iraq dự đoán Ahmed Basil có thể được trao cơ hội bắt chính sau màn trình diễn thiếu thuyết phục của Hassan trước Na Uy. Tiền đạo chủ lực Aymen Hussein tiếp tục là niềm hy vọng lớn nhất trên hàng công.\n\nPháp (4-2-3-1): Maignan; Kounde, Saliba, Upamecano, Digne; Rabiot, Kone; Dembele, Olise, Barcola; Mbappe.\n\nIraq (4-4-2): Basil; Ali, Tahseen, Hashem, Doski; Bayesh, Al-Ammari, Iqbal, Ali Jasim; Hussein, Al-Hamadi.\n\nKylian Mbappe (Pháp): Tiền đạo 27 tuổi vừa chính thức vượt qua Olivier Giroud để trở thành chân sút vĩ đại nhất lịch sử bóng đá Pháp, đồng thời phá kỷ lục ghi bàn tại World Cup của huyền thoại Just Fontaine cho bóng đá nam nước này. Tốc độ, khả năng dứt điểm sắc bén cùng tầm ảnh hưởng lớn của Mbappe sẽ là bài toán vô cùng nan giải cho hàng thủ đối phương.\n\nAymen Hussein (Iraq): Dù Iraq để thua đậm ở lượt trận đầu, Hussein vẫn kịp để lại dấu ấn bằng bàn gỡ hòa tạm thời vào lưới Na Uy. Khả năng không chiến và tì đè của tiền đạo này là điểm tựa để Iraq triển khai các phương án phản công nhanh.\n\nĐội tuyển Pháp dự kiến vận hành sơ đồ 4-2-3-1 linh hoạt. Khi kiểm soát bóng, sơ đồ này có thể chuyển thành 3-2-5 với việc các cầu thủ chạy cánh dâng cao bó vào trung lộ, tạo khoảng trống cho các hậu vệ biên băng lên.\n\nLối chơi của Pháp đề cao tính trực diện, tận dụng tốc độ của Barcola và Dembele ở hai biên để kéo giãn hàng phòng ngự đối phương, trước khi tìm kiếm khoảng trống cho Mbappe dứt điểm.",
-    "contentVi": "BongDa.com.vnVới dàn sao vượt trội và chỉ gặp phải đối thủ dưới cơ như Iraq, tuyển Pháp hướng đến chiến thắng thứ hai liên tiếp để sớm giành vé đi tiếp tại World Cup 2026.\n\nVòng đấu: Lượt trận thứ hai - Bảng I\n\nĐịa điểm: Sân vận động Philadelphia\n\nThời gian thi đấu: 04h00 ngày 24/6 (theo giờ Việt Nam)\n\nĐội tuyển Pháp bước vào chiến dịch World Cup 2026 với áp lực khẳng định vị thế ứng viên vô địch. Ở trận ra quân, đoàn quân của huấn luyện viên Didier Deschamps đã vượt qua Senegal với tỷ số 3-1. Dù chiến thắng này bộc lộ một vài sơ hở ở hàng phòng ngự khi đây đã là trận thứ 6 liên tiếp họ không thể giữ sạch lưới, nhưng hàng công của Pháp vẫn chứng minh hiệu suất làm bàn ấn tượng với chuỗi 14 trận ghi bàn liên tiếp trên mọi đấu trường.\n\nPhía bên kia chiến tuyến, Iraq chịu thất bại nặng nề 1-4 trước Na Uy ở lượt trận đầu tiên. Phong độ gần đây của \"Sư tử Lưỡng Hà\" không mấy khả quan khi họ chỉ thắng 1 trong 6 trận gần nhất.\n\nTrận đấu tại Philadelphia sắp tới mới là lần chạm trán chính thức đầu tiên giữa đội tuyển Pháp và Iraq trong lịch sử các giải đấu quốc tế.\n\nBan huấn luyện đội tuyển Pháp đang theo dõi sát sao tình hình thể trạng của bộ tứ vệ William Saliba, Dayot Upamecano, Theo Hernandez và Malo Gusto. Tuy nhiên, khả năng ra sân của các cầu thủ này vẫn ở mức cao. Dự kiến, huấn luyện viên Deschamps sẽ thực hiện một số điều chỉnh nhân sự để xoay tua đội hình.\n\nBên phía Iraq, cầu thủ chạy cánh Ali Jasim đã hoàn toàn bình phục chấn thương nhẹ và sẵn sàng ra sân từ đầu. Thủ môn Jalal Hassan cũng đã ổn định thể lực, song truyền thông Iraq dự đoán Ahmed Basil có thể được trao cơ hội bắt chính sau màn trình diễn thiếu thuyết phục của Hassan trước Na Uy. Tiền đạo chủ lực Aymen Hussein tiếp tục là niềm hy vọng lớn nhất trên hàng công.\n\nPháp (4-2-3-1): Maignan; Kounde, Saliba, Upamecano, Digne; Rabiot, Kone; Dembele, Olise, Barcola; Mbappe.\n\nIraq (4-4-2): Basil; Ali, Tahseen, Hashem, Doski; Bayesh, Al-Ammari, Iqbal, Ali Jasim; Hussein, Al-Hamadi.\n\nKylian Mbappe (Pháp): Tiền đạo 27 tuổi vừa chính thức vượt qua Olivier Giroud để trở thành chân sút vĩ đại nhất lịch sử bóng đá Pháp, đồng thời phá kỷ lục ghi bàn tại World Cup của huyền thoại Just Fontaine cho bóng đá nam nước này. Tốc độ, khả năng dứt điểm sắc bén cùng tầm ảnh hưởng lớn của Mbappe sẽ là bài toán vô cùng nan giải cho hàng thủ đối phương.\n\nAymen Hussein (Iraq): Dù Iraq để thua đậm ở lượt trận đầu, Hussein vẫn kịp để lại dấu ấn bằng bàn gỡ hòa tạm thời vào lưới Na Uy. Khả năng không chiến và tì đè của tiền đạo này là điểm tựa để Iraq triển khai các phương án phản công nhanh.\n\nĐội tuyển Pháp dự kiến vận hành sơ đồ 4-2-3-1 linh hoạt. Khi kiểm soát bóng, sơ đồ này có thể chuyển thành 3-2-5 với việc các cầu thủ chạy cánh dâng cao bó vào trung lộ, tạo khoảng trống cho các hậu vệ biên băng lên.\n\nLối chơi của Pháp đề cao tính trực diện, tận dụng tốc độ của Barcola và Dembele ở hai biên để kéo giãn hàng phòng ngự đối phương, trước khi tìm kiếm khoảng trống cho Mbappe dứt điểm.",
-    "summary": "<ul><li>Tóm tắt bài báo về: Soi trận Pháp vs Iraq: Xây chắc ngôi đầu</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
-    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
-    "socialMentions": {
-      "reddit": {
-        "upvotes": 459,
-        "commentsCount": 74,
-        "topComment": "The ELO model on this app is actually spot on. Argentina at 2080 is very accurate."
-      },
-      "x": {
-        "likes": 2009,
-        "reposts": 239,
-        "hotPost": "Heo Hong forecast says France is a value bet (+20% EV). Let's see if the pig is right! 🐷 #HeoHongTips"
-      }
-    },
-    "isLive": false
-  },
-  {
-    "id": "c0453c18fb244c9",
-    "source": "Bongda.com.vn",
-    "url": "https://bongda.com.vn/rao-can-tu-my-bien-world-cup-thanh-ac-mong-voi-iran-d836357.html",
-    "title": "Rào cản từ Mỹ biến World Cup thành ác mộng với Iran",
-    "titleVi": "Rào cản từ Mỹ biến World Cup thành ác mộng với Iran",
-    "pubDate": 1782001495000,
-    "pubDateStr": "21/06/2026 10:24",
-    "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
-    "content": "BongDa.com.vnĐội tuyển Iran đang phải đối mặt với vô vàn khó khăn về visa, kiểm soát an ninh và lịch trình di chuyển vắt kiệt sức lực tại kỳ World Cup 2026 trên đất Mỹ.\n\nWorld Cup luôn được biết đến là ngày hội bóng đá lớn nhất hành tinh, nơi các đội tuyển quốc gia được tạo điều kiện tối đa để cống hiến những màn trình diễn đỉnh cao. Tuy nhiên, với đội tuyển Iran tại vòng chung kết World Cup 2026, giải đấu này đang biến thành một cơn ác mộng về mặt hậu cần và di chuyển.\n\nNhững rào cản từ nước chủ nhà Mỹ không chỉ gây ảnh hưởng nghiêm trọng đến thể lực của các cầu thủ mà còn tạo ra một rào cản tâm lý khổng lồ, khiến huấn luyện viên trưởng Amir Ghalenoei phải cay đắng thốt lên rằng Iran chính là \"đội bóng bị chèn ép nhất tại kỳ World Cup lần này\". Sự bức xúc đã lên đến đỉnh điểm khi Liên đoàn Bóng đá Iran chính thức đệ đơn phàn nàn lên FIFA, yêu cầu sự can thiệp công bằng.\n\nVấn đề cốt lõi và nghiêm trọng nhất mà đại diện châu Á đang phải gánh chịu nằm ở những quy định nhập cảnh và lưu trú vô cùng ngặt nghèo. Khác với các đội tuyển khác được đóng quân ngay tại Mỹ để thuận tiện làm quen khí hậu và sân bãi, Iran buộc phải thiết lập đại bản doanh tại khu vực Tijuana, Mexico.\n\nĐội bóng của HLV Amir Ghalenoei chỉ được cấp phép nhập cảnh vào lãnh thổ Mỹ đúng 24 giờ trước khi tiếng còi khai cuộc vang lên. Ngay sau khi trận đấu kết thúc, toàn đội phải lập tức thu dọn hành lý để rời khỏi Mỹ, quay trở lại lãnh thổ Mexico. Đây là một lịch trình di chuyển mang tính vắt kiệt sức lực, hoàn toàn đi ngược lại với các nguyên tắc phục hồi thể trạng trong môi trường thể thao đỉnh cao.\n\nHệ lụy trực tiếp của quy định \"đến muộn, về sớm\" này là quỹ thời gian chuẩn bị chuyên môn bị cắt giảm một cách nghiêm trọng. Lấy ví dụ ở trận đấu vòng bảng chạm trán với đội tuyển Bỉ sắp tới, các cầu thủ Iran chỉ có vỏn vẹn khoảng 16 giờ đồng hồ để nghỉ ngơi và tập luyện làm quen mặt cỏ tại Mỹ.\n\nKhoảng thời gian ít ỏi này chỉ bằng một nửa so với tiêu chuẩn chuẩn bị thông thường của các đội bóng khác. Việc thiếu hụt thời gian thích nghi sân bãi và không gian chiến thuật chắc chắn sẽ bào mòn lợi thế cạnh tranh của Iran khi phải đối đầu với những đại diện hàng đầu thế giới.\n\nChưa dừng lại ở đó, bản thân quá trình di chuyển từ Mexico sang Mỹ cũng là một rào cản khổng lồ. Dù Tijuana và Los Angeles không cách quá xa về mặt địa lý, nhưng hành trình bay của tuyển Iran lại kéo dài lên tới 5 giờ đồng hồ. Nguyên nhân chính xuất phát từ hàng loạt các thủ tục kiểm tra an ninh và xuất nhập cảnh rườm rà, gắt gao mà lực lượng chức năng Mỹ áp đặt lên phái đoàn nước này.\n\nViệc phải chờ đợi mệt mỏi tại các trạm kiểm soát trước ngày thi đấu là đòn giáng mạnh vào tâm lý và thể lực của những ngôi sao vốn đã phải cày ải liên tục với cường độ cao.\n\nKhông chỉ gặp khó khăn ở lực lượng thi đấu, khâu hậu cần của Iran cũng bị sứt mẻ nghiêm trọng bởi các vấn đề liên quan đến visa. Mặc dù Mỹ đã chấp thuận cấp thị thực cho toàn bộ các cầu thủ và ban huấn luyện, nhưng một số quan chức cấp cao và nhân viên hỗ trợ quan trọng của đoàn lại bị từ chối nhập cảnh.\n\nPhía Mỹ viện dẫn lý do liên quan đến những \"thông tin bất lợi\" để biện minh cho động thái này. Tại một giải đấu khắc nghiệt như World Cup, việc thiếu vắng các nhân sự hậu cần, y tế hoặc chuyên gia phân tích sẽ đẩy đội bóng vào thế bị động trong việc vận hành bộ máy hỗ trợ cầu thủ.\n\nPhản hồi trước những cáo buộc từ phía Iran, các quan chức phụ trách tổ chức World Cup của Nhà Trắng đã lên tiếng khẳng định rằng mọi quy định hiện hành vẫn tuân thủ đúng các tiêu chuẩn cơ bản do FIFA đề ra.\n\nHọ lập luận rằng các biện pháp hạn chế di chuyển và kiểm soát an ninh là điều kiện bắt buộc nhằm đảm bảo an toàn tuyệt đối cho giải đấu. Dẫu vậy, lời giải thích này dường như chưa đủ để xoa dịu những bất công mà đội tuyển châu Á đang phải gánh chịu.\n\nRõ ràng, bóng đá không thể hoàn toàn tách rời khỏi những bối cảnh địa chính trị phức tạp. Việc đại diện Tây Á phải thi đấu trong vòng vây của những rào cản an ninh và ngoại giao đang khiến hành trình tại World Cup 2026 của họ trở nên chông gai hơn bao giờ hết.\n\nLiệu thầy trò HLV Amir Ghalenoei có thể vượt qua nghịch cảnh để tạo nên kỳ tích, hay sẽ gục ngã trước những áp lực không tên từ bên ngoài sân cỏ? Đó vẫn là bài toán khó chờ lời giải đáp trong những ngày thi đấu sắp tới.",
-    "contentVi": "BongDa.com.vnĐội tuyển Iran đang phải đối mặt với vô vàn khó khăn về visa, kiểm soát an ninh và lịch trình di chuyển vắt kiệt sức lực tại kỳ World Cup 2026 trên đất Mỹ.\n\nWorld Cup luôn được biết đến là ngày hội bóng đá lớn nhất hành tinh, nơi các đội tuyển quốc gia được tạo điều kiện tối đa để cống hiến những màn trình diễn đỉnh cao. Tuy nhiên, với đội tuyển Iran tại vòng chung kết World Cup 2026, giải đấu này đang biến thành một cơn ác mộng về mặt hậu cần và di chuyển.\n\nNhững rào cản từ nước chủ nhà Mỹ không chỉ gây ảnh hưởng nghiêm trọng đến thể lực của các cầu thủ mà còn tạo ra một rào cản tâm lý khổng lồ, khiến huấn luyện viên trưởng Amir Ghalenoei phải cay đắng thốt lên rằng Iran chính là \"đội bóng bị chèn ép nhất tại kỳ World Cup lần này\". Sự bức xúc đã lên đến đỉnh điểm khi Liên đoàn Bóng đá Iran chính thức đệ đơn phàn nàn lên FIFA, yêu cầu sự can thiệp công bằng.\n\nVấn đề cốt lõi và nghiêm trọng nhất mà đại diện châu Á đang phải gánh chịu nằm ở những quy định nhập cảnh và lưu trú vô cùng ngặt nghèo. Khác với các đội tuyển khác được đóng quân ngay tại Mỹ để thuận tiện làm quen khí hậu và sân bãi, Iran buộc phải thiết lập đại bản doanh tại khu vực Tijuana, Mexico.\n\nĐội bóng của HLV Amir Ghalenoei chỉ được cấp phép nhập cảnh vào lãnh thổ Mỹ đúng 24 giờ trước khi tiếng còi khai cuộc vang lên. Ngay sau khi trận đấu kết thúc, toàn đội phải lập tức thu dọn hành lý để rời khỏi Mỹ, quay trở lại lãnh thổ Mexico. Đây là một lịch trình di chuyển mang tính vắt kiệt sức lực, hoàn toàn đi ngược lại với các nguyên tắc phục hồi thể trạng trong môi trường thể thao đỉnh cao.\n\nHệ lụy trực tiếp của quy định \"đến muộn, về sớm\" này là quỹ thời gian chuẩn bị chuyên môn bị cắt giảm một cách nghiêm trọng. Lấy ví dụ ở trận đấu vòng bảng chạm trán với đội tuyển Bỉ sắp tới, các cầu thủ Iran chỉ có vỏn vẹn khoảng 16 giờ đồng hồ để nghỉ ngơi và tập luyện làm quen mặt cỏ tại Mỹ.\n\nKhoảng thời gian ít ỏi này chỉ bằng một nửa so với tiêu chuẩn chuẩn bị thông thường của các đội bóng khác. Việc thiếu hụt thời gian thích nghi sân bãi và không gian chiến thuật chắc chắn sẽ bào mòn lợi thế cạnh tranh của Iran khi phải đối đầu với những đại diện hàng đầu thế giới.\n\nChưa dừng lại ở đó, bản thân quá trình di chuyển từ Mexico sang Mỹ cũng là một rào cản khổng lồ. Dù Tijuana và Los Angeles không cách quá xa về mặt địa lý, nhưng hành trình bay của tuyển Iran lại kéo dài lên tới 5 giờ đồng hồ. Nguyên nhân chính xuất phát từ hàng loạt các thủ tục kiểm tra an ninh và xuất nhập cảnh rườm rà, gắt gao mà lực lượng chức năng Mỹ áp đặt lên phái đoàn nước này.\n\nViệc phải chờ đợi mệt mỏi tại các trạm kiểm soát trước ngày thi đấu là đòn giáng mạnh vào tâm lý và thể lực của những ngôi sao vốn đã phải cày ải liên tục với cường độ cao.\n\nKhông chỉ gặp khó khăn ở lực lượng thi đấu, khâu hậu cần của Iran cũng bị sứt mẻ nghiêm trọng bởi các vấn đề liên quan đến visa. Mặc dù Mỹ đã chấp thuận cấp thị thực cho toàn bộ các cầu thủ và ban huấn luyện, nhưng một số quan chức cấp cao và nhân viên hỗ trợ quan trọng của đoàn lại bị từ chối nhập cảnh.\n\nPhía Mỹ viện dẫn lý do liên quan đến những \"thông tin bất lợi\" để biện minh cho động thái này. Tại một giải đấu khắc nghiệt như World Cup, việc thiếu vắng các nhân sự hậu cần, y tế hoặc chuyên gia phân tích sẽ đẩy đội bóng vào thế bị động trong việc vận hành bộ máy hỗ trợ cầu thủ.\n\nPhản hồi trước những cáo buộc từ phía Iran, các quan chức phụ trách tổ chức World Cup của Nhà Trắng đã lên tiếng khẳng định rằng mọi quy định hiện hành vẫn tuân thủ đúng các tiêu chuẩn cơ bản do FIFA đề ra.\n\nHọ lập luận rằng các biện pháp hạn chế di chuyển và kiểm soát an ninh là điều kiện bắt buộc nhằm đảm bảo an toàn tuyệt đối cho giải đấu. Dẫu vậy, lời giải thích này dường như chưa đủ để xoa dịu những bất công mà đội tuyển châu Á đang phải gánh chịu.\n\nRõ ràng, bóng đá không thể hoàn toàn tách rời khỏi những bối cảnh địa chính trị phức tạp. Việc đại diện Tây Á phải thi đấu trong vòng vây của những rào cản an ninh và ngoại giao đang khiến hành trình tại World Cup 2026 của họ trở nên chông gai hơn bao giờ hết.\n\nLiệu thầy trò HLV Amir Ghalenoei có thể vượt qua nghịch cảnh để tạo nên kỳ tích, hay sẽ gục ngã trước những áp lực không tên từ bên ngoài sân cỏ? Đó vẫn là bài toán khó chờ lời giải đáp trong những ngày thi đấu sắp tới.",
-    "summary": "<ul><li>Tóm tắt bài báo về: Rào cản từ Mỹ biến World Cup thành ác mộng với Iran</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
-    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
-    "socialMentions": {
-      "reddit": {
-        "upvotes": 476,
-        "commentsCount": 51,
-        "topComment": "I hope Heo Hong's tip holds true. Placed a small fun bet on the Draw!"
-      },
-      "x": {
-        "likes": 5026,
-        "reposts": 406,
-        "hotPost": "Group I is wide open. If Senegal gets a result here, France will be under massive pressure. #WC2026"
-      }
-    },
-    "isLive": false
-  },
-  {
-    "id": "4fee7b5ae849786",
-    "source": "The Guardian",
-    "url": "https://www.theguardian.com/football/live/2026/jun/21/world-cup-news-live-curacao-iran-spain-saudi-arabia-belgium-cape-verde-uruguay-new-zealand-egypt",
-    "title": "World Cup 2026: Infantino criticised over private jet use; Curaçao secure historic point – live",
-    "titleVi": "SỐC! Chủ tịch FIFA Infantino bị 'ném đá' vì dùng chuyên cơ riêng; Curaçao làm nên lịch sử tại Vòng loại World Cup 2026!",
-    "pubDate": 1782001451000,
-    "pubDateStr": "21/06/2026 10:24",
-    "image": "https://i.guim.co.uk/img/media/af406896b9d535045122d7dfdb30b5077cb8502a/516_0_4529_3625/master/4529.jpg?width=140&quality=85&auto=format&fit=max&s=9d7c37fac5434d356c4e9b9a505b80e4",
-    "content": "Right, how about an Associated Press piece on the iconic Lionel Messi? Coming up shortly …",
-    "contentVi": "Được rồi, còn bài viết của Associated Press về biểu tượng Lionel Messi thì sao? Sẽ sớm có mặt thôi…",
-    "summary": "<ul><li>Bài viết sắp tới sẽ là một phần tin tức từ Associated Press.</li><li>Nội dung chính của phần tin tức này sẽ xoay quanh biểu tượng Lionel Messi.</li><li>Độc giả được thông báo rằng bài viết chi tiết sẽ sớm được cập nhật.</li></ul>",
-    "drpigComment": "Heo Hồng 🐷 chào các fen! Nghe bảo sắp có bài 'xịn xò' về Messi rồi đó nha. Chắc kèo này Heo Hồng 🐷 phải ngồi hóng cùng các fen thôi, chứ chưa có gì để 'phán' đâu nè! Cứ chờ xem Messi lại làm 'xiếc' gì đây!",
-    "socialMentions": {
-      "reddit": {
-        "upvotes": 1540,
-        "commentsCount": 195,
-        "topComment": "I hope Heo Hong's tip holds true. Placed a small fun bet on the Draw!"
-      },
-      "x": {
-        "likes": 3690,
-        "reposts": 920,
-        "hotPost": "MetLife Stadium is absolutely rocking. The atmosphere for WC2026 opening week is insane! #MetLife"
-      }
-    },
-    "isLive": false
-  },
-  {
-    "id": "359b988a320410f",
-    "source": "Mirror Football",
-    "url": "https://www.mirror.co.uk/sport/football/news/gary-lineker-world-cup-bbc-37326465",
-    "title": "Gary Lineker drops 'shut the f*** up' response to BBC 'traitor' rant after ITV surprise",
-    "titleVi": "[Dịch] Gary Lineker drops 'shut the f*** up' response to BBC 'traitor' rant after ITV surprise",
-    "pubDate": 1782001146000,
-    "pubDateStr": "21/06/2026 10:19",
-    "image": "https://i2-prod.mirror.co.uk/sport/football/news/article37326551.ece/ALTERNATES/s98/0_G-Lineker-2JPG.jpg",
-    "content": "Gary Lineker made a surprise appearance on ITV's World Cup coverage, firing several digs at the BBC.(Image: ITV Sport)\n\nGary Lineker fired a blunt response to the BBC after appearing on ITV's World Cup coverage, cheekily telling Micah Richards to 'f*** off' after being dubbed a 'traitor'. The former England international, who spent over two decades working for the BBC, joined the broadcaster's arch-rivals for a cameo appearance on Saturday ahead of Germany's clash with Ivory Coast.\n\nLineker took just a few seconds to fire a dig at his former employers, claiming the ITV was 'absolutely amazing' in contrast to the BBC's remote setup, following his controversial departure from the company last year. The former Match of the Day presenter has been following the tournament from New York, where he has been hosting daily editions of The Rest Is Football for Netflix.\n\nLineker had initially intended to continue his involvement with the BBC's World Cup output after departing Match of the Day, but it emerged in May last year that he would be severing all ties with the organisation. As ITV launched their live coverage on Saturday evening, Lineker remarked: \"Thank you for joining us on ITV for this one, another day, another game, another channel.\"\n\nJOIN US ON FACEBOOK! Latest news, analysis and much more on Mirror Football's Facebook page\n\nPresenter Laura Woods then interrupted: \"Woah, woah, woah Gary that's my job,\" before Lineker responded: \"Sorry, sorry, old habits Laura, old habits.\"\n\nThe ITV appearance drew plenty of attention from viewers who loved seeing Lineker back on their TV screens discussing the football, despite it only being brief. Now, on his own Netflix show, Lineker and Micah Richards made light of his appearance as an ITV pundit.\n\nRichards, copying Lineker's appearance on ITV, introduced the podcast and said: \"Hello and welcome to the Rest Is Football with me Micah Richards.\"\n\nGary Lineker disappeared very quickly into his ITV cameo for the World Cup(Image: ITV)\n\nLineker quickly interrupted his fellow co-host and said \"Woah, woah, woah, woah. Micah that's my job,\" followed by laughter from the pair.\n\n\"It's not nice is it?\" Richards said, appearing on a TV monitor. \"Absolute traitor you are. 26 years of blood, sweat and tears to the BBC then you go over to the rival.\"\n\nLineker responds: \"Hang on a minute Micah. Shut the f*** up (before turning the TV off Richards was appearing on). I’ll do it properly now.\"\n\nWhen Richards did return to the programme, he asked Lineker what he was doing on ITV. The former England striker explained, with a wry smile on his face: \"I was making an appearance to promote my show ‘The Box’ which is also on ITV in September.\n\n\"And also I wanted to go and have a little look at the studio. I also wanted to go and promote our Netflix show which I got two mentions in for. It was just for purely professional reasons Micah.\"\n\nGet the latest World Cup news straight to your inbox by signing up to our Make Football Great Again newsletter now!",
-    "contentVi": "[Bản dịch tự động] Gary Lineker made a surprise appearance on ITV's World Cup coverage, firing several digs at the BBC.(Image: ITV Sport)\n\nGary Lineker fired a blunt response to the BBC after appearing on ITV's World Cup coverage, cheekily telling Micah Richards to 'f*** off' after being dubbed a 'traitor'. The former England international, who spent over two decades working for the BBC, joined the broadcaster's arch-rivals for a cameo appearance on Saturday ahead of Germany's clash with Ivory Coast.\n\nLineker took just a few seconds to fire a dig at his former employers, claiming the ITV was 'absolutely amazing' in contrast to the BBC's remote setup, following his controversial departure from the company last year. The former Match of the Day presenter has been following the tournament from New York, where he has been hosting daily editions of The Rest Is Football for Netflix.\n\nLineker had initially intended to continue his involvement with the BBC's World Cup output after departing Match of the Day, but it emerged in May last year that he would be severing all ties with the organisation. As ITV launched their live coverage on Saturday evening, Lineker remarked: \"Thank you for joining us on ITV for t...",
-    "summary": "<ul><li>Tóm tắt bài báo về: Gary Lineker drops 'shut the f*** up' response to BBC 'traitor' rant after ITV surprise</li><li>Chi tiết thông tin cập nhật trực tiếp tại nguồn.</li></ul>",
-    "drpigComment": "🐷 Heo Hồng 🐷: Tin này đang nóng lắm các fen ơi, FPT Cloud đang nghẽn tí nhưng cược Pháp/Việt Nam vẫn ngon ăn nhé! 🐷⚽",
-    "socialMentions": {
-      "reddit": {
-        "upvotes": 1357,
-        "commentsCount": 192,
-        "topComment": "WhoScored stats showed France struggling with high presses recently. Senegal might sneak a point."
-      },
-      "x": {
-        "likes": 1107,
-        "reposts": 937,
         "hotPost": "Lịch sử vẫy gọi các chiến binh Sao Vàng! Quyết chiến Colombia! 🇻🇳🔥 #VietnamWorldCup"
       }
     },

@@ -98,7 +98,7 @@ Yêu cầu:
         <li>Thông tin chi tiết đang cập nhật trực tiếp tại giải đấu.</li>
         <li>Anh em hãy chú ý đón đọc diễn biến mới nhất.</li>
       </ul>
-      <p style="font-style: italic; color: var(--primary); margin-top: 8px;">🐷 Heo Hồng 🐷: Mạng lag tí các fen ơi, nhưng tin này vẫn cực nóng, cược ngay cho nóng nhé! 🐷⚽</p>
+      <p style="font-style: italic; color: var(--primary); margin-top: 8px;">🐷 Heo Hồng 🐷: Mạng lag tí các fen ơi, nhưng tin này vẫn cực nóng, gieo quẻ ngay cho nóng nhé! 🐷⚽🔮</p>
     `;
   }
 }

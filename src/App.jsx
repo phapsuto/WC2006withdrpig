@@ -223,14 +223,14 @@ function App() {
           localStorage.setItem('wc2026_user_profile', JSON.stringify(updatedUser));
           if (refilled) {
             setTimeout(() => {
-              alert('Số dư xu của bạn đã xuống dưới mức tối thiểu! Heo Hồng 🐷 đã tự động tặng thêm cho bạn 10.000 xu Heo Vàng miễn phí để tiếp tục vui chơi! 🎉');
+              alert(t('refilledCoinsAlert'));
             }, 500);
           }
           return updatedUser;
         });
       }, 0);
     }
-  }, [matches, user]);
+  }, [matches, user, t]);
 
   const activeMatch = matches.find((m) => m.id === activeMatchId);
 
@@ -324,7 +324,7 @@ function App() {
       return Promise.reject('Not logged in');
     }
     if (user.balance < stake) {
-      alert('Số dư xu Heo Vàng không đủ để đặt cược vui!');
+      alert(t('alertInsufficientBalance'));
       return Promise.reject('Insufficient balance');
     }
 
@@ -360,7 +360,7 @@ function App() {
     
     if (refilled) {
       setTimeout(() => {
-        alert('Số dư xu của bạn đã xuống dưới mức tối thiểu! Heo Hồng 🐷 đã tự động tặng thêm cho bạn 10.000 xu Heo Vàng miễn phí để tiếp tục vui chơi! 🎉');
+        alert(t('refilledCoinsAlert'));
       }, 500);
     }
 
@@ -427,13 +427,13 @@ function App() {
                 />
                 <div className="absolute bottom-3 left-3 text-left z-10">
                   <span className="inline-block px-2.5 py-0.5 bg-white/85 backdrop-blur-md rounded-full font-bold text-[10px] text-primary mb-1 shadow-sm border border-white/20">
-                    Cùng Heo Hồng 🐷
+                    {t('withHeoHong')}
                   </span>
-                  <h2 className="text-base font-black text-on-surface leading-tight">Mùa giải World Cup 2026</h2>
+                  <h2 className="text-base font-black text-on-surface leading-tight">{t('wc2026Season')}</h2>
                 </div>
               </div>
               <p className="text-xs text-on-surface-variant max-w-[280px]">
-                Đồng hành cùng chú heo tiên tri siêu quậy Heo Hồng để nhận định soi kèo đỉnh cao!
+                {t('heroDescSub')}
               </p>
             </div>
 
@@ -452,14 +452,14 @@ function App() {
                       {isLive ? (
                         <>
                           <span className="w-2 h-2 rounded-full bg-danger animate-pulse"></span>
-                          <span className="text-danger uppercase tracking-wider text-[10px] font-black">Trực tiếp</span>
+                          <span className="text-danger uppercase tracking-wider text-[10px] font-black">{t('liveText')}</span>
                         </>
                       ) : (
-                        <span className="text-primary uppercase tracking-wider text-[10px] font-black">Nổi bật</span>
+                        <span className="text-primary uppercase tracking-wider text-[10px] font-black">{t('featuredText')}</span>
                       )}
                     </h3>
                     <span className="text-[10px] font-bold text-secondary">
-                      {isLive ? `Phút ${liveMatch.minute}'` : 'Lịch thi đấu'}
+                      {isLive ? `Phút ${liveMatch.minute}'` : t('kickoffSchedule')}
                     </span>
                   </div>
                   <div className="flex justify-between items-center bg-white/45 rounded-2xl p-4 border border-white/60 shadow-inner">
@@ -500,11 +500,11 @@ function App() {
               >
                 <div>
                   <span className="material-symbols-outlined text-3xl text-tertiary mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>psychology</span>
-                  <h3 className="text-[9px] font-bold text-on-surface-variant uppercase tracking-wider">Tiên tri</h3>
-                  <p className="font-black text-xs text-primary leading-tight">Heo Hồng AI</p>
+                  <h3 className="text-[9px] font-bold text-on-surface-variant uppercase tracking-wider">{t('navOracle')}</h3>
+                  <p className="font-black text-xs text-primary leading-tight">{t('withHeoHong')}</p>
                 </div>
                 <button className="w-full py-1 bg-white/85 rounded-xl text-primary font-bold text-[10px] shadow-sm border border-white/50">
-                  Hỏi ngay
+                  {t('askNow')}
                 </button>
               </div>
               {/* Quick Bet */}
@@ -519,11 +519,11 @@ function App() {
               >
                 <div>
                   <span className="material-symbols-outlined text-3xl text-secondary mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>payments</span>
-                  <h3 className="text-[9px] font-bold text-on-surface-variant uppercase tracking-wider">Cược vui</h3>
-                  <p className="font-black text-xs text-secondary leading-tight">Đặt cược</p>
+                  <h3 className="text-[9px] font-bold text-on-surface-variant uppercase tracking-wider">{t('quickBetHeading')}</h3>
+                  <p className="font-black text-xs text-secondary leading-tight">{t('chooseOdds')}</p>
                 </div>
                 <button className="w-full py-1 bg-primary text-white rounded-xl font-bold text-[10px] shadow-sm border border-primary/25">
-                  Chọn kèo
+                  {t('chooseOdds')}
                 </button>
               </div>
             </div>
@@ -564,6 +564,11 @@ function App() {
           </div>
         )}
 
+        <footer className="w-full mt-8 mb-24 px-4 text-center text-[10px] text-on-surface-variant/75 leading-relaxed">
+          <p>{t('bettingLegalWarning')}</p>
+          <p className="font-bold mt-2">{t('copyrightFooter')}</p>
+        </footer>
+
         {/* Mobile Slide-Up Match Detail Bottom Sheet */}
         {activeMatchId && activeMatch && (
           <div className="mobile-match-detail-sheet">
@@ -590,7 +595,7 @@ function App() {
             className="mobile-betslip-fab"
           >
             <span className="material-symbols-outlined text-[18px]">shopping_cart</span>
-            <span>Vé cược vui ({activeBet.label} x{activeBet.value.toFixed(2)})</span>
+            <span>{t('liveBetLabel')} ({activeBet.label} x{activeBet.value.toFixed(2)})</span>
           </button>
         )}
 
@@ -627,7 +632,7 @@ function App() {
                 }`}
               >
                 <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: activePage === 'DASHBOARD' ? "'FILL' 1" : "'FILL' 0" }}>sports_soccer</span>
-                <span className="text-[9px] font-bold tracking-tight">Trận đấu</span>
+                <span className="text-[9px] font-bold tracking-tight">{t('navMatches')}</span>
                 {activePage === 'DASHBOARD' && <span className="mobile-tab-indicator"></span>}
               </button>
             </li>
@@ -639,7 +644,7 @@ function App() {
                 }`}
               >
                 <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: activePage === 'NEWS_HUB' ? "'FILL' 1" : "'FILL' 0" }}>article</span>
-                <span className="text-[9px] font-bold tracking-tight">Tin tức</span>
+                <span className="text-[9px] font-bold tracking-tight">{t('navNews')}</span>
                 {activePage === 'NEWS_HUB' && <span className="mobile-tab-indicator"></span>}
               </button>
             </li>
@@ -651,7 +656,7 @@ function App() {
                 }`}
               >
                 <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: activePage === 'STANDINGS' ? "'FILL' 1" : "'FILL' 0" }}>format_list_numbered</span>
-                <span className="text-[9px] font-bold tracking-tight">Xếp hạng</span>
+                <span className="text-[9px] font-bold tracking-tight">{t('navStandings')}</span>
                 {activePage === 'STANDINGS' && <span className="mobile-tab-indicator"></span>}
               </button>
             </li>
@@ -663,7 +668,7 @@ function App() {
                 }`}
               >
                 <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: activePage === 'ORACLE' ? "'FILL' 1" : "'FILL' 0" }}>auto_awesome</span>
-                <span className="text-[9px] font-bold tracking-tight">Tiên tri</span>
+                <span className="text-[9px] font-bold tracking-tight">{t('navOracle')}</span>
                 {activePage === 'ORACLE' && <span className="mobile-tab-indicator"></span>}
               </button>
             </li>
@@ -675,7 +680,7 @@ function App() {
                 }`}
               >
                 <span className="material-symbols-outlined text-[24px]" style={{ fontVariationSettings: activePage === 'PROFILE' ? "'FILL' 1" : "'FILL' 0" }}>account_circle</span>
-                <span className="text-[9px] font-bold tracking-tight">Cá nhân</span>
+                <span className="text-[9px] font-bold tracking-tight">{t('navProfile')}</span>
                 {activePage === 'PROFILE' && <span className="mobile-tab-indicator"></span>}
               </button>
             </li>

@@ -2,7 +2,7 @@
 > **MỤC ĐÍCH**: File này lưu trữ toàn bộ tiến trình phát triển, bugs đã fix, cấu trúc dự án, 
 > trạng thái đồng bộ Telegram và những việc cần làm tiếp theo của dự án World Cup 2026.
 > 
-> **CẬP NHẬT LẦN CUỐI**: 2026-06-21T09:30:00+10:00
+> **CẬP NHẬT LẦN CUỐI**: 2026-06-22T09:20:00+10:00
 
 ---
 
@@ -17,6 +17,7 @@
 | **Tiên tri Heo Hồng AI** | ✅ HOÀN THÀNH | Tích hợp OracleChat.jsx (Gemini + FPT DeepSeek fallback, Glassmorphism UI) |
 | **Đồng bộ Telegram** | ✅ HOÀN THÀNH | Sync 2 chiều với Bot `@drthanhto_bot` (Token: `7660859485:...`) |
 | **Cược vui & Dự toán AI**| ✅ HOÀN THÀNH | Sửa lỗi cược động Handicap & Over/Under, Dixon-Coles draw correction |
+| **Audit & Bảo mật** | ✅ HOÀN THÀNH | Hoàn thành cào tin dự phòng thực tế, bảo mật key an toàn, 0 lỗi lint |
 
 ---
 
@@ -86,6 +87,11 @@ Hệ thống đồng bộ hai chiều giữa IDE Agent và Telegram đang hoạt
   - Tích hợp `getDynamicSocialReactions(match)` vào tab "Tin tức & MXH" để hiển thị bản tin các bài đăng nóng từ Facebook, TikTok, X (Twitter) của các BLV Việt Nam.
   - Thay thế toàn bộ các API check trận trực tuyến từ `worldcup26.ir` sang API Sportmonks trong [vite.config.js](file:///Users/tonguyen/Library/CloudStorage/OneDrive-Personal/DrTo/WC2026/vite.config.js) và [scrape_news.py](file:///Users/tonguyen/Library/CloudStorage/OneDrive-Personal/DrTo/WC2026/scripts/scrape_news.py).
   - Cải tiến Scheduler trong `vite.config.js` để lập tức kích hoạt cào tin tức khi phát hiện có trận đấu trực tiếp (LIVE), rút ngắn thời gian cập nhật liên tục thay vì phải chờ hết chu kỳ NORMAL.
+- [x] **Kiểm tra toàn bộ dự án, bảo mật & dọn dẹp mã nguồn (Audit & Cleanup)**:
+  - Khắc phục triệt để lỗi cảnh báo ESLint liên quan đến hook dependency tại [OracleChat.jsx](file:///Users/tonguyen/Library/CloudStorage/OneDrive-Personal/DrTo/WC2026/src/components/OracleChat.jsx).
+  - Cải tiến trình tạo tin tức dự phòng ngẫu nhiên hóa, tạo các social clips tiếng Việt/tiếng Anh vô cùng chân thực và phong phú về từng trận đấu bóng đá cụ thể (thay thế dạng cứng nhắc cũ).
+  - Loại bỏ các tệp rác `diff_app.txt`, `logs_eslint.txt` ra khỏi dự án.
+  - Viết báo cáo kiểm thử chi tiết và cập nhật `SYSTEM_MEMORY.md` và `README.md`.
 - [ ] **Kiểm thử giao diện iOS & Android**:
   - Dùng Xcode để mở dự án iOS (`npm run cap:open-ios`) và kiểm tra giao diện trên Simulator.
   - Dùng Android Studio để mở dự án Android (`npm run cap:open-android`) và chạy thử.

@@ -5,9 +5,11 @@ import { predictMatch } from '../utils/aiPredictor';
 import { fetchSportmonksFixtureDetail, fetchSportmonksH2H } from '../services/api';
 import { STADIUMS_INFO, convertToUserTimezone } from '../services/worldcup26api';
 import { useLiveMatchClock } from '../services/useLiveMatchClock';
+import { useLanguage } from '../utils/LanguageContext';
 
 export default function MatchDetail({ match, onAddBet, activeBetId, onClose, user, onToggleBookmark, matches = [] }) {
   const [activeTab, setActiveTab] = useState('ODDS'); // STATS, TIMELINE, LINEUPS, ODDS, NEWS, ANALYTICS, CHAT
+  const { t, language } = useLanguage();
   const [aiPrediction, setAiPrediction] = useState('');
   const [matchNews, setMatchNews] = useState([]);
   const [loadingAi, setLoadingAi] = useState(false);
@@ -17,7 +19,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
   
   // Chat States
   const [chatMessages, setChatMessages] = useState([
-    { role: 'model', text: 'Chào các fen! Heo Hồng 🐷 đã sẵn sàng cùng anh em đàm đạo soi kèo trận đấu rực lửa này rồi đây. Anh em muốn hỏi gì về chiến thuật, tỉ số hay kèo tài xỉu nào? 🐷⚽' }
+    { role: 'model', text: language === 'vi' ? 'Chào các fen! Heo Hồng 🐷 đã sẵn sàng cùng anh em đàm đạo gieo quẻ bóng đá trận đấu rực lửa này rồi đây. Anh em muốn hỏi gì về chiến thuật, tỉ số hay chọn cửa nào? 🐷⚽' : 'Hello fens! Heo Hong 🐷 is ready to discuss match predictions for this fiery clash. Ask me about tactics, score predictions, or which side to choose! 🐷⚽' }
   ]);
   const [chatInput, setChatInput] = useState('');
   const [sendingChat, setSendingChat] = useState(false);
@@ -66,11 +68,11 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
       setAnalyticsData(null);
       setSelectedSocial(null);
       setChatMessages([
-        { role: 'model', text: 'Chào các fen! Heo Hồng 🐷 đã sẵn sàng cùng anh em đàm đạo soi kèo trận đấu rực lửa này rồi đây. Anh em muốn hỏi gì về chiến thuật, tỉ số hay kèo tài xỉu nào? 🐷⚽' }
+        { role: 'model', text: language === 'vi' ? 'Chào các fen! Heo Hồng 🐷 đã sẵn sàng cùng anh em đàm đạo gieo quẻ bóng đá trận đấu rực lửa này rồi đây. Anh em muốn hỏi gì về chiến thuật, tỉ số hay chọn cửa nào? 🐷⚽' : 'Hello fens! Heo Hong 🐷 is ready to discuss match predictions for this fiery clash. Ask me about tactics, score predictions, or which side to choose! 🐷⚽' }
       ]);
       setChatInput('');
     }, 0);
-  }, [match.id]);
+  }, [match.id, language]);
 
   // Fetch match-specific media (news & clips) with on-demand crawl fallback
   useEffect(() => {
@@ -535,13 +537,13 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/40 border border-white/60 text-xs font-bold text-on-surface hover:bg-white/80 active:scale-95 transition-all"
           >
             <ArrowLeft size={14} />
-            Quay lại
+            {t('backToList')}
           </button>
           
           <button 
             onClick={() => onToggleBookmark && onToggleBookmark(match.id)}
             className="w-8 h-8 rounded-full bg-white/40 border border-white/60 flex items-center justify-center text-on-surface hover:bg-white/80 active:scale-95 transition-all"
-            title={isBookmarked ? "Bỏ theo dõi" : "Theo dõi trận đấu"}
+            title={isBookmarked ? t('unfollow') : t('followMatch')}
           >
             <Star size={16} fill={isBookmarked ? "var(--accent-gold)" : "none"} color={isBookmarked ? "var(--accent-gold)" : "currentColor"} />
           </button>
@@ -708,14 +710,14 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
       {/* Segmented Control detail tabs navigation */}
       <div className="flex gap-1.5 p-1.5 bg-white/40 border border-white/50 rounded-2xl overflow-x-auto no-scrollbar">
         {[
-          { key: 'ODDS', icon: <BadgePercent size={14} />, label: 'Kèo cược' },
-          { key: 'ANALYTICS', icon: <Cpu size={14} />, label: 'AI Nhận định' },
-          { key: 'CHAT', icon: <MessageSquare size={14} />, label: 'Hỏi Heo Hồng' },
-          { key: 'STATS', icon: <BarChart2 size={14} />, label: 'Thống kê' },
-          { key: 'H2H', icon: <History size={14} />, label: 'Đối đầu' },
-          { key: 'TIMELINE', icon: <ListTodo size={14} />, label: 'Diễn biến' },
-          { key: 'NEWS', icon: <Newspaper size={14} />, label: 'Tin tức & MXH' },
-          { key: 'LINEUPS', icon: <Users size={14} />, label: 'Đội hình' }
+          { key: 'ODDS', icon: <BadgePercent size={14} />, label: t('tabBettingOdds') },
+          { key: 'ANALYTICS', icon: <Cpu size={14} />, label: t('tabAiPredictor') },
+          { key: 'CHAT', icon: <MessageSquare size={14} />, label: language === 'vi' ? 'Hỏi Heo Hồng' : 'Ask Heo Hong' },
+          { key: 'STATS', icon: <BarChart2 size={14} />, label: t('tabStats') },
+          { key: 'H2H', icon: <History size={14} />, label: language === 'vi' ? 'Đối đầu' : 'Head to Head' },
+          { key: 'TIMELINE', icon: <ListTodo size={14} />, label: t('tabTimeline') },
+          { key: 'NEWS', icon: <Newspaper size={14} />, label: language === 'vi' ? 'Tin tức & MXH' : 'News & Social' },
+          { key: 'LINEUPS', icon: <Users size={14} />, label: t('tabLineups') }
         ].map(tab => (
           <button 
             key={tab.key}
@@ -742,7 +744,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
             {/* 1X2 Market */}
             <div className="space-y-3">
               <div className="text-xs font-black text-primary tracking-wider uppercase border-l-3 border-primary pl-2.5">
-                Kèo Châu Âu (1X2)
+                {t('oddsEuro')}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <button 
@@ -768,7 +770,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 </button>
 
                 <button 
-                  onClick={() => onAddBet(match, '1X2 - Hòa', odds.h2h.draw, `${match.id}-1x2-draw`)}
+                  onClick={() => onAddBet(match, `1X2 - ${t('drawLabel')}`, odds.h2h.draw, `${match.id}-1x2-draw`)}
                   className={`flex flex-col gap-1.5 p-4 rounded-2xl border transition-all text-left shadow-sm active:scale-[0.98] ${
                     activeBetId === `${match.id}-1x2-draw` 
                       ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
@@ -816,11 +818,11 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
             {/* Handicap Market */}
             <div className="space-y-3">
               <div className="text-xs font-black text-primary tracking-wider uppercase border-l-3 border-primary pl-2.5">
-                Kèo Châu Á (Handicap {odds.handicap.line})
+                {t('oddsHandicap')} ({odds.handicap.line})
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <button 
-                  onClick={() => onAddBet(match, `Chấp ${odds.handicap.line} - ${home.name}`, odds.handicap.home, `${match.id}-handicap-home_${odds.handicap.line}`)}
+                  onClick={() => onAddBet(match, `${language === 'vi' ? 'Chấp' : 'Handicap'} ${odds.handicap.line} - ${home.name}`, odds.handicap.home, `${match.id}-handicap-home_${odds.handicap.line}`)}
                   className={`flex items-center justify-between p-4 rounded-2xl border transition-all shadow-sm active:scale-[0.98] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-home` 
                       ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
@@ -835,7 +837,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 </button>
 
                 <button 
-                  onClick={() => onAddBet(match, `Được chấp ${odds.handicap.line.startsWith('-') ? odds.handicap.line.replace('-', '+') : `-${odds.handicap.line}`} - ${away.name}`, odds.handicap.away, `${match.id}-handicap-away_${-parseFloat(odds.handicap.line)}`)}
+                  onClick={() => onAddBet(match, `${language === 'vi' ? 'Được chấp' : 'Receive Handicap'} ${odds.handicap.line.startsWith('-') ? odds.handicap.line.replace('-', '+') : `-${odds.handicap.line}`} - ${away.name}`, odds.handicap.away, `${match.id}-handicap-away_${-parseFloat(odds.handicap.line)}`)}
                   className={`flex items-center justify-between p-4 rounded-2xl border transition-all shadow-sm active:scale-[0.98] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-away` 
                       ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
@@ -854,11 +856,11 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
             {/* Over/Under Market */}
             <div className="space-y-3">
               <div className="text-xs font-black text-primary tracking-wider uppercase border-l-3 border-primary pl-2.5">
-                Tài Xỉu (Over/Under {odds.overUnder.line})
+                {t('oddsOverUnder')} ({odds.overUnder.line})
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <button 
-                  onClick={() => onAddBet(match, `Tài ${odds.overUnder.line}`, odds.overUnder.over, `${match.id}-ou-over_${odds.overUnder.line}`)}
+                  onClick={() => onAddBet(match, `${t('overLabel')} ${odds.overUnder.line}`, odds.overUnder.over, `${match.id}-ou-over_${odds.overUnder.line}`)}
                   className={`flex flex-col gap-1.5 p-4 rounded-2xl border transition-all text-left shadow-sm active:scale-[0.98] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-over` 
                       ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
@@ -866,7 +868,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   }`}
                 >
                   <div className="flex justify-between items-center w-full">
-                    <span className={`text-xs font-bold ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-over` ? 'text-white' : 'text-on-surface-variant'}`}>Tài ({odds.overUnder.line})</span>
+                    <span className={`text-xs font-bold ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-over` ? 'text-white' : 'text-on-surface-variant'}`}>{t('overLabel')} ({odds.overUnder.line})</span>
                     <span className={`text-base font-black flex items-center ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-over` ? 'text-white' : getOddsClass('overUnder', 'over')}`}>
                       {odds.overUnder.over.toFixed(2)}
                       {renderOddsArrow('overUnder', 'over')}
@@ -880,7 +882,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 </button>
 
                 <button 
-                  onClick={() => onAddBet(match, `Xỉu ${odds.overUnder.line}`, odds.overUnder.under, `${match.id}-ou-under_${odds.overUnder.line}`)}
+                  onClick={() => onAddBet(match, `${t('underLabel')} ${odds.overUnder.line}`, odds.overUnder.under, `${match.id}-ou-under_${odds.overUnder.line}`)}
                   className={`flex flex-col gap-1.5 p-4 rounded-2xl border transition-all text-left shadow-sm active:scale-[0.98] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-under` 
                       ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
@@ -888,7 +890,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   }`}
                 >
                   <div className="flex justify-between items-center w-full">
-                    <span className={`text-xs font-bold ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-under` ? 'text-white' : 'text-on-surface-variant'}`}>Xỉu ({odds.overUnder.line})</span>
+                    <span className={`text-xs font-bold ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-under` ? 'text-white' : 'text-on-surface-variant'}`}>{t('underLabel')} ({odds.overUnder.line})</span>
                     <span className={`text-base font-black flex items-center ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-under` ? 'text-white' : getOddsClass('overUnder', 'under')}`}>
                       {odds.overUnder.under.toFixed(2)}
                       {renderOddsArrow('overUnder', 'under')}
@@ -1072,14 +1074,14 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   <div className="p-4 bg-primary/10 border border-primary/20 rounded-2xl space-y-3">
                     <h4 className="text-xs font-black text-primary flex items-center gap-1.5 uppercase tracking-wide">
                       <span className="material-symbols-outlined text-[18px]">verified</span>
-                      Gợi ý Kèo Thơm của Heo Hồng (+EV Value Bets)
+                      {language === 'vi' ? 'Gợi ý Cửa Sáng của Heo Hồng (+EV Value Bets)' : 'Heo Hong\'s Value Choices (+EV Value Bets)'}
                     </h4>
                     <div className="flex flex-col gap-2">
                       {valueBets.map((item, idx) => (
                         <div key={idx} className="flex items-center justify-between p-3 bg-white/60 border border-white/80 rounded-xl hover:bg-white/80 transition-colors">
                           <div className="flex flex-col">
                             <span className="text-xs font-black text-on-surface">{item.label}</span>
-                            <span className="text-[10px] text-on-surface-variant/70">Kèo: {item.odds} • Lợi nhuận kỳ vọng: +{(item.ev * 100).toFixed(1)}%</span>
+                            <span className="text-[10px] text-on-surface-variant/70">{t('oddsLabel')}: {item.odds} • {language === 'vi' ? 'Lợi nhuận kỳ vọng' : 'Est. Yield'}: +{(item.ev * 100).toFixed(1)}%</span>
                           </div>
                           <span className="px-2.5 py-1 bg-primary text-white rounded-lg text-[10px] font-black flex items-center gap-1 shadow-sm">
                             🔥 +{(item.ev * 100).toFixed(1)}% EV
@@ -1088,7 +1090,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                       ))}
                     </div>
                     <p className="text-[9px] text-on-surface-variant/85 italic leading-relaxed">
-                      * Kèo thơm (+EV) là các cược có tỷ lệ nhà cái trả thưởng cao hơn tỷ số xác suất thực của trận đấu. Chọn kèo này đem lại lợi nhuận toán học lâu dài.
+                      * {language === 'vi' ? 'Cửa sáng (+EV) là các lựa chọn có tỷ lệ trả thưởng cao hơn tỷ số xác suất thực của trận đấu. Chọn phe này đem lại lợi thế toán học lâu dài.' : 'Value Choices (+EV) are selections with higher payouts than their actual mathematical probability. Choosing these offers a long-term mathematical advantage.'}
                     </p>
                   </div>
                 )}
@@ -1137,15 +1139,15 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 <div className="p-4 bg-tertiary/10 border border-tertiary/20 rounded-2xl space-y-3">
                   <h4 className="text-xs font-black text-tertiary flex items-center gap-1.5 uppercase tracking-wide">
                     <span className="material-symbols-outlined text-tertiary text-[18px]">trending_up</span>
-                    Quản lý vốn AI (Công thức Kelly Criterion)
+                    {language === 'vi' ? 'Quản lý vốn AI (Công thức Kelly Criterion)' : 'AI Bankroll Management (Kelly Criterion)'}
                   </h4>
                   <div className="flex items-center gap-4">
                     <div className="px-4 py-2 bg-tertiary text-white rounded-xl text-center min-w-[90px] shadow-sm">
-                      <div className="text-[9px] font-black uppercase opacity-90 leading-none mb-1">Vốn đề xuất</div>
+                      <div className="text-[9px] font-black uppercase opacity-90 leading-none mb-1">{language === 'vi' ? 'Vốn đề xuất' : 'Rec. Stake'}</div>
                       <div className="text-xl font-black leading-none">{analyticsData.kellyCriterion?.stakePercent}%</div>
                     </div>
                     <div>
-                      <div className="text-[10px] text-on-surface-variant/80 font-bold">Kèo cược đề xuất của mô hình:</div>
+                      <div className="text-[10px] text-on-surface-variant/80 font-bold">{language === 'vi' ? 'Quẻ đề xuất của mô hình:' : 'Model\'s Recommended Choice:'}</div>
                       <div className="text-sm font-black text-on-surface">
                         {analyticsData.kellyCriterion?.recommendedBet}
                       </div>
@@ -1207,17 +1209,17 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   className="w-8 h-8 rounded-full border border-primary/30"
                 />
                 <div>
-                  <div className="text-xs font-black text-on-surface">Cố vấn soi kèo Heo Hồng 🐷</div>
+                  <div className="text-xs font-black text-on-surface">{language === 'vi' ? 'Giải mã trận đấu cùng Heo Hồng 🐷' : 'Decode Match with Heo Hong 🐷'}</div>
                   <div className="text-[9px] text-tertiary font-bold flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
-                    Trực tuyến • Trợ lý AI thế hệ mới
+                    {language === 'vi' ? 'Trực tuyến • Trợ lý AI thế hệ mới' : 'Online • Next-Gen AI Assistant'}
                   </div>
                 </div>
               </div>
               
               <button 
                 onClick={() => setChatMessages([
-                  { role: 'model', text: 'Chào các fen! Heo Hồng 🐷 đã sẵn sàng cùng anh em đàm đạo soi kèo trận đấu rực lửa này rồi đây. Anh em muốn hỏi gì về chiến thuật, tỉ số hay kèo tài xỉu nào? 🐷⚽' }
+                  { role: 'model', text: language === 'vi' ? 'Chào các fen! Heo Hồng 🐷 đã sẵn sàng cùng anh em đàm đạo gieo quẻ bóng đá trận đấu rực lửa này rồi đây. Anh em muốn hỏi gì về chiến thuật, tỉ số hay chọn cửa nào? 🐷⚽' : 'Hello fens! Heo Hong 🐷 is ready to discuss match predictions for this fiery clash. Ask me about tactics, score predictions, or which side to choose! 🐷⚽' }
                 ])}
                 className="p-1.5 rounded-lg hover:bg-white/60 text-on-surface-variant/80 hover:text-primary active:scale-95 transition-all"
                 title="Làm mới trò chuyện"
@@ -1261,7 +1263,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   />
                   <div className="p-3 bg-white/60 border border-white/60 rounded-2xl rounded-tl-none text-xs text-on-surface-variant flex items-center gap-1.5 shadow-sm">
                     <Loader2 size={12} className="animate-spin text-primary" />
-                    <span>Heo Hồng đang soi dữ liệu...</span>
+                    <span>{language === 'vi' ? 'Heo Hồng đang gieo quẻ dữ liệu...' : 'Heo Hong is casting spell on data...'}</span>
                   </div>
                 </div>
               )}
@@ -1270,12 +1272,20 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
             {/* Prompt Quick Tags */}
             <div className="px-4 py-2 border-t border-white/40 bg-white/10 flex gap-2 overflow-x-auto no-scrollbar">
-              {[
-                "Kèo nào thơm nhất trận này?",
-                "Có nên bắt Tài không?",
-                "Dự đoán đội thắng",
-                "Xem chấn thương cốt lõi"
-              ].map((text, idx) => (
+              {(language === 'vi' 
+                ? [
+                    "Chọn phe nào ngon nhất?",
+                    "Có nên gieo quẻ cửa Tài không?",
+                    "Giải mã đội gáy sớm",
+                    "Xem phong độ & chấn thương"
+                  ]
+                : [
+                    "Which side is best?",
+                    "Should I predict Over?",
+                    "Who will win?",
+                    "Check form & injuries"
+                  ]
+              ).map((text, idx) => (
                 <button 
                   key={idx}
                   onClick={() => {
@@ -1294,7 +1304,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 type="text"
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
-                placeholder="Hỏi Heo Hồng về kèo cược, tỉ số, phạt góc..."
+                placeholder={language === 'vi' ? "Hỏi Heo Hồng về chọn phe, gieo quẻ, tỉ số, phạt góc..." : "Ask Heo Hong about choosing teams, score prediction, corners..."}
                 disabled={sendingChat}
                 className="flex-1 bg-white/50 border border-white/60 rounded-xl px-3.5 py-2 text-xs text-on-surface placeholder-on-surface-variant/60 focus:outline-none focus:border-primary focus:bg-white transition-all"
               />
@@ -1438,11 +1448,11 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
               {loadingAi ? (
                 <div className="flex items-center gap-2 py-2 text-xs font-bold text-on-surface-variant">
                   <Loader2 size={14} className="animate-spin text-secondary" />
-                  <span>Heo Hồng đang lắc mai rùa xin quẻ kèo cược...</span>
+                  <span>{language === 'vi' ? 'Heo Hồng đang lắc mai rùa xin quẻ bóng đá... 🔮' : 'Heo Hong is shaking turtle shell to predict... 🔮'}</span>
                 </div>
               ) : (
                 <p className="text-xs text-on-surface-variant leading-relaxed">
-                  {aiPrediction || 'Heo Hồng đang nghiên cứu các nguồn tin tức bóng đá quốc tế. Click nút xoay tròn để xem quẻ soi kèo nóng hổi từ heo! 🐷'}
+                  {aiPrediction || (language === 'vi' ? 'Heo Hồng đang nghiên cứu các nguồn tin tức bóng đá quốc tế. Click nút xoay tròn để xem quẻ dự đoán nóng hổi từ heo! 🐷' : 'Heo Hong is studying international football news. Click reload to see the latest predictions! 🐷')}
                 </p>
               )}
             </div>
@@ -1469,10 +1479,10 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                     >
                       <div className="space-y-2">
                         <div className="flex justify-between items-center text-[10px] font-bold">
-                          <span className="text-primary font-black truncate max-w-[120px]">{post.source}</span>
+                          <span className="text-primary font-black truncate max-w-[150px]">{post.source}</span>
                           <span className="text-on-surface-variant/80 whitespace-nowrap">{post.time}</span>
                         </div>
-                        <h5 className="text-[11px] font-black text-on-surface leading-snug line-clamp-1 group-hover:text-primary transition-colors">
+                        <h5 className="text-[11px] font-black text-on-surface leading-snug line-clamp-2 group-hover:text-primary transition-colors">
                           {post.title}
                         </h5>
                         <p className="text-[10px] text-on-surface-variant/90 line-clamp-2 leading-relaxed font-semibold">

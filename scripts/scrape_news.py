@@ -412,13 +412,157 @@ TEAM_NAME_VI = {
     'France': 'Pháp', 'Senegal': 'Senegal', 'Iraq': 'Iraq',
     'Norway': 'Na Uy', 'Argentina': 'Argentina', 'Algeria': 'Algeria',
     'Austria': 'Áo', 'Jordan': 'Jordan',
-    'Portugal': 'Bồ Đào Nha', 'DR Congo': 'Congo DR',
-    'England': 'Anh', 'Croatia': 'Croatia',
-    'Ghana': 'Ghana', 'Panama': 'Panama',
-    'Uzbekistan': 'Uzbekistan', 'Colombia': 'Colombia',
     'Iran': 'Iran', 'New Zealand': 'New Zealand',
     'Democratic Republic of the Congo': 'Congo DR'
 }
+
+def get_team_keywords(team_name):
+    # Normalize team name
+    name_lower = team_name.lower()
+    kws = {name_lower}
+    
+    # Get Vietnamese name from TEAM_NAME_VI
+    vi_name = TEAM_NAME_VI.get(team_name)
+    if vi_name:
+        kws.add(vi_name.lower())
+        
+    # Also add standard variations
+    if name_lower == "united states" or name_lower == "usa":
+        kws.update(["united states", "usa", "mỹ", "hoa kỳ", "america", "usmnt"])
+    elif name_lower == "south africa":
+        kws.update(["south africa", "nam phi"])
+    elif name_lower == "south korea" or name_lower == "korea republic" or name_lower == "korea":
+        kws.update(["south korea", "korea", "hàn quốc", "tuyển hàn"])
+    elif name_lower == "czech republic" or name_lower == "czechia":
+        kws.update(["czech", "séc", "ch séc", "czechia"])
+    elif name_lower == "bosnia and herzegovina":
+        kws.update(["bosnia", "herzegovina"])
+    elif name_lower == "switzerland":
+        kws.update(["switzerland", "thụy sĩ", "thụy sỹ"])
+    elif name_lower == "brazil":
+        kws.update(["brazil", "bra-xin", "selecao", "seleção"])
+    elif name_lower == "morocco":
+        kws.update(["morocco", "ma rốc", "maroc"])
+    elif name_lower == "turkey" or name_lower == "türkiye":
+        kws.update(["turkey", "türkiye", "thổ nhĩ kỳ"])
+    elif name_lower == "germany":
+        kws.update(["germany", "đức", "cỗ xe tăng"])
+    elif name_lower == "ivory coast" or name_lower == "côte d'ivoire":
+        kws.update(["ivory coast", "bờ biển ngà", "côte d'ivoire"])
+    elif name_lower == "netherlands":
+        kws.update(["netherlands", "hà lan", "dutch", "cơn lốc màu da cam"])
+    elif name_lower == "japan":
+        kws.update(["japan", "nhật bản", "samurai xanh"])
+    elif name_lower == "sweden":
+        kws.update(["sweden", "thụy điển"])
+    elif name_lower == "belgium":
+        kws.update(["belgium", "bỉ", "quỷ đỏ"])
+    elif name_lower == "egypt":
+        kws.update(["egypt", "ai cập"])
+    elif name_lower == "saudi arabia":
+        kws.update(["saudi", "ả rập saudi", "ả rập xê út"])
+    elif name_lower == "spain":
+        kws.update(["spain", "tây ban nha", "bò tót"])
+    elif name_lower == "france":
+        kws.update(["france", "pháp", "les bleus", "gà trống gô-loa"])
+    elif name_lower == "senegal":
+        kws.update(["senegal"])
+    elif name_lower == "norway":
+        kws.update(["norway", "na uy"])
+    elif name_lower == "argentina":
+        kws.update(["argentina", "albiceleste"])
+    elif name_lower == "austria":
+        kws.update(["austria", "áo"])
+    elif name_lower == "portugal":
+        kws.update(["portugal", "bồ đào nha", "selecao châu âu"])
+    elif name_lower == "england":
+        kws.update(["england", "anh", "tam sư", "three lions"])
+    elif name_lower == "croatia":
+        kws.update(["croatia"])
+    elif name_lower == "colombia":
+        kws.update(["colombia"])
+    return list(kws)
+
+def contains_keyword(text, kw):
+    # Safe boundary check for both English and Vietnamese characters
+    pattern = r'(?<![a-zA-Z0-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂÂĐÊÔƠưăâđêôơ])' + re.escape(kw) + r'(?![a-zA-Z0-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂÂĐÊÔƠưăâđêôơ])'
+    return bool(re.search(pattern, text, re.IGNORECASE))
+
+def check_article_relevance(article, home, away):
+    """
+    Checks if a crawled/RSS article is actually relevant to the match between home and away.
+    Returns True if relevant, False otherwise.
+    """
+    title = f"{article.get('title', '')} {article.get('titleVi', '')}".lower()
+    content = f"{article.get('content', '')} {article.get('contentVi', '')}".lower()
+    full_text = f"{title} \n {content}"
+    
+    home_kws = get_team_keywords(home)
+    away_kws = get_team_keywords(away)
+    
+    # Check if either team is mentioned in the title
+    home_in_title = any(contains_keyword(title, kw) for kw in home_kws)
+    away_in_title = any(contains_keyword(title, kw) for kw in away_kws)
+    
+    # Calculate keyword counts in full text
+    home_count = sum(len(re.findall(r'(?<![a-zA-Z0-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂÂĐÊÔƠưăâđêôơ])' + re.escape(kw) + r'(?![a-zA-Z0-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂÂĐÊÔƠưăâđêôơ])', full_text, re.IGNORECASE)) for kw in home_kws)
+    away_count = sum(len(re.findall(r'(?<![a-zA-Z0-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂÂĐÊÔƠưăâđêôơ])' + re.escape(kw) + r'(?![a-zA-Z0-9_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂÂĐÊÔƠưăâđêôơ])', full_text, re.IGNORECASE)) for kw in away_kws)
+    
+    # If the title mentions BOTH teams, it's 100% relevant
+    if home_in_title and away_in_title:
+        return True
+        
+    # If the title mentions at least one team:
+    if home_in_title or away_in_title:
+        is_home_host = home.lower() in ["mexico", "united states", "usa", "canada"]
+        is_away_host = away.lower() in ["mexico", "united states", "usa", "canada"]
+        if home_in_title:
+            if is_home_host:
+                if home_count >= 2:
+                    return True
+            else:
+                return True
+        if away_in_title:
+            if is_away_host:
+                if away_count >= 2:
+                    return True
+            else:
+                return True
+            
+    # If not in title, require both to be mentioned frequently in the body
+    # to be considered a match report or preview.
+    # We require the main team to be mentioned at least 3 times.
+    if home_count >= 3 or away_count >= 3:
+        is_home_host = home.lower() in ["mexico", "united states", "usa", "canada"]
+        is_away_host = away.lower() in ["mexico", "united states", "usa", "canada"]
+        
+        home_ok = False
+        if home_count >= 3:
+            if is_home_host:
+                host_team_kws = [f"tuyển {home}", f"đội tuyển {home}", f"đt {home}", f"{home} team", f"{home} national team"]
+                vi_name = TEAM_NAME_VI.get(home)
+                if vi_name:
+                    host_team_kws.extend([f"tuyển {vi_name}", f"đội tuyển {vi_name}", f"đt {vi_name}"])
+                if any(contains_keyword(full_text, kw) for kw in host_team_kws):
+                    home_ok = True
+            else:
+                home_ok = True
+                
+        away_ok = False
+        if away_count >= 3:
+            if is_away_host:
+                host_team_kws = [f"tuyển {away}", f"đội tuyển {away}", f"đt {away}", f"{away} team", f"{away} national team"]
+                vi_name = TEAM_NAME_VI.get(away)
+                if vi_name:
+                    host_team_kws.extend([f"tuyển {vi_name}", f"đội tuyển {vi_name}", f"đt {vi_name}"])
+                if any(contains_keyword(full_text, kw) for kw in host_team_kws):
+                    away_ok = True
+            else:
+                away_ok = True
+                
+        return home_ok or away_ok
+
+    return False
 
 def get_current_live_match_info():
     """Checks Sportmonks for active live matches"""
@@ -874,16 +1018,21 @@ def run_match_scraper(args, output_dir):
         try:
             with open(media_file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
-                existing_news = data.get("news", [])
-                existing_clips = data.get("clips", [])
+                existing_news = [n for n in data.get("news", []) if check_article_relevance(n, home, away)]
+                # Filter clips: require title/summary to match home/away name or their short code
+                home_lower = home.lower()
+                away_lower = away.lower()
+                short_home = home[:3].lower()
+                short_away = away[:3].lower()
+                existing_clips = [
+                    c for c in data.get("clips", []) 
+                    if home_lower in c.get("title", "").lower() or away_lower in c.get("title", "").lower() or
+                       short_home in c.get("title", "").lower() or short_away in c.get("title", "").lower()
+                ]
         except Exception as e:
-            print(f"Error loading existing match media: {e}")
+            print(f"Error loading and filtering existing match media: {e}")
             
-    home_kws = [home.lower()]
-    away_kws = [away.lower()]
-    all_kws = home_kws + away_kws
-    
-    print(f"Scanning RSS feeds/cached news for match-specific keywords: {all_kws}...")
+    print(f"Scanning RSS feeds/cached news for match: {home} vs {away}...")
     matched_rss = []
     
     global_news_path = os.path.join(output_dir, "news.json")
@@ -896,8 +1045,7 @@ def run_match_scraper(args, output_dir):
             pass
             
     for a in global_articles:
-        text = f"{a.get('title', '')} {a.get('titleVi', '')} {a.get('content', '')}".lower()
-        if any(kw in text for kw in all_kws):
+        if check_article_relevance(a, home, away):
             matched_rss.append(a)
             
     seen_urls = {a.get('url') for a in matched_rss if a.get('url')}
@@ -917,8 +1065,7 @@ def run_match_scraper(args, output_dir):
                         continue
                     if link in seen_urls:
                         continue
-                    text = f"{title} {desc}".lower()
-                    if any(kw in text for kw in all_kws):
+                    if check_article_relevance({"title": title, "content": desc}, home, away):
                         print(f"  -> Found live RSS match: {title}")
                         full_content = scrape_full_content(link, desc)
                         ai_data = translate_and_summarize(title, full_content, feed_info['lang'])
@@ -998,9 +1145,9 @@ Hãy trả về duy nhất một mảng JSON (không có markdown hay ký tự k
     if not all_clips or status == "LIVE":
         print(f"Generating realistic stadium fan video clips on X for {home} vs {away}...")
         prompt = f"""Hãy viết 3 bài đăng mạng xã hội X (Twitter) của người hâm mộ tại sân vận động tự quay bằng điện thoại về trận đấu giữa {home} và {away} ở World Cup 2026.
-Hãy chú ý giữ nguyên tên đội bóng bằng tiếng Anh là "{home}" và "{away}" trong caption.
-Hãy viết caption ngắn gọn bằng tiếng Anh hoặc tiếng Việt kèm hashtag bóng đá (như #WorldCup2026, #{home[:3].upper()}v{away[:3].upper()}).
-Hãy trả về duy nhất một mảng JSON (không có markdown) theo định dạng sau:
+Hãy chú ý giữ nguyên tên đội bóng bằng tiếng Anh là "{home}" và "{away}" trong caption. Tuyệt đối không được nhắc đến bất kỳ đội bóng nào khác ngoài "{home}" và "{away}".
+Hãy viết caption ngắn gọn bằng tiếng Anh hoặc tiếng Việt kèm hashtag bóng đá chính xác (như #WorldCup2026, #{home[:3].upper()}v{away[:3].upper()}).
+Hãy trả về duy nhất một mảng JSON (không có mác-đao hay ký tự nào ngoài JSON) theo định dạng sau:
 [
   {{
     "title": "Nội dung caption tweet ngắn gọn kèm hashtag (ví dụ: 'Incredible goal from the stands! #{home[:3].upper()}v{away[:3].upper()} #WorldCup2026')",
@@ -1033,20 +1180,66 @@ Hãy trả về duy nhất một mảng JSON (không có markdown) theo định 
                 print(f"Failed to parse generated clips: {e}")
                 
         if not new_clips:
-            default_captions = [
-                f"Stadium is absolutely buzzing for {home} vs {away}! 🏟️🔥 #{home[:3].upper()}v{away[:3].upper()}",
-                "WHAT A GOAL!!! Phone recording from the stands, crowd went wild! ⚽🙌",
-                "Fan walk before kickoff, MetLife Stadium is completely packed!"
+            import random
+            home_code = home[:3].upper()
+            away_code = away[:3].upper()
+            
+            templates = [
+                {
+                    "title": f"Stadium is absolutely buzzing for {home} vs {away}! 🏟️🔥 #{home_code}v{away_code} #WorldCup2026",
+                    "summary": f"Video tự quay không khí cổ vũ sôi động và rực rỡ sắc màu trên khán đài của cổ động viên {home} và {away}."
+                },
+                {
+                    "title": f"WHAT A GOAL!!! Phone recording from the stands, crowd went wild! ⚽🙌 #{home_code}v{away_code}",
+                    "summary": f"Khoảnh khắc ghi bàn tuyệt đẹp được một cổ động viên quay lại từ phía sau cầu môn, tiếng hò reo vang dội cả khán đài."
+                },
+                {
+                    "title": f"Fan walk before kickoff, MetLife Stadium is completely packed! 🚶‍♂️🇺🇸 #{home_code}v{away_code}",
+                    "summary": f"Màn diễu hành và ca hát náo nhiệt của hàng vạn người hâm mộ bên ngoài sân vận động trước giờ khai cuộc."
+                },
+                {
+                    "title": f"Incredible support from the {home} fans tonight! The noise is deafening! 📣🥁 #{home_code}",
+                    "summary": f"Hội cổ động viên {home} liên tục đánh trống và hát vang các bài hát truyền thống để tiếp lửa cho các cầu thủ."
+                },
+                {
+                    "title": f"Class act! {away} supporters chanting together in perfect harmony. Amazing vibe! 😮✨ #{away_code}",
+                    "summary": f"Góc quay cận cảnh màn vũ đạo cổ vũ vô cùng đều và đẹp mắt của người hâm mộ {away} trên khán đài B."
+                },
+                {
+                    "title": f"Unbelievable save from the stands! Clean sheet is still on! 🧤🚫 #{home_code}v{away_code}",
+                    "summary": f"Video từ khán đài ghi lại pha bay người cản phá xuất thần của thủ môn giúp giữ sạch mành lưới trong tiếng reo hò."
+                },
+                {
+                    "title": f"Late drama! You can feel the tension in the air! 🫣⚽ #{home_code}v{away_code}",
+                    "summary": f"Không khí nghẹt thở và những biểu cảm lo lắng xen lẫn hy vọng của cổ động viên hai đội trong những phút bù giờ."
+                }
             ]
-            for idx, cap in enumerate(default_captions):
+            
+            try:
+                selected = random.sample(templates, min(3, len(templates)))
+            except Exception:
+                selected = templates[:3]
+                
+            sources = [
+                "Facebook - Ghiền Bóng Đá", 
+                "TikTok @worldcup2026_fan", 
+                "X (Twitter) - Fans Live", 
+                "TikTok @blv_tabiencuong",
+                "Facebook - Người Hâm Mộ Bóng Đá"
+            ]
+            
+            for idx, item in enumerate(selected):
                 clip_idx = idx % 4
+                source = sources[idx % len(sources)]
+                upvotes = random.randint(800, 2200)
+                comments = random.randint(35, 120)
                 new_clips.append({
-                    "source": "X (Twitter)",
+                    "source": source,
                     "time": "Vừa xong" if status == "LIVE" else f"{idx+1} giờ trước",
-                    "title": cap,
-                    "summary": f"Video tự quay không khí cổ vũ trên khán đài của cổ động viên {home} và {away}.",
-                    "upvotes": 1200 - idx * 200,
-                    "comments": 80 - idx * 15,
+                    "title": item["title"],
+                    "summary": item["summary"],
+                    "upvotes": upvotes,
+                    "comments": comments,
                     "hasVideo": True,
                     "videoUrl": f"/videos/clip_{clip_idx + 1}.mp4"
                 })

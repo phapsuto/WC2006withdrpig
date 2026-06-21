@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Ticket, X, CheckCircle2, Loader2, History, Trash2 } from 'lucide-react';
+import { useLanguage } from '../utils/LanguageContext';
 
 export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onClearBetHistory }) {
+  const { t } = useLanguage();
   const [stake, setStake] = useState('10'); // Default stake: 10 xu
   const [isPlacing, setIsPlacing] = useState(false);
   const [betResult, setBetResult] = useState(null); // { success: true, betId: '...' }
@@ -26,15 +28,15 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
     const stakeNum = parseInt(stake, 10);
     if (!stakeNum || stakeNum <= 0) return;
     if (stakeNum % 10 !== 0) {
-      alert('Số xu cược phải là bội số của 10 (ví dụ: 10, 20, 50, 100...).');
+      alert(t('alertMultipleTen'));
       return;
     }
     if (!user) {
-      alert('Vui lòng đăng nhập bằng Google để thực hiện đặt cược vui!');
+      alert(t('alertLoginRequired'));
       return;
     }
     if (user.balance < stakeNum) {
-      alert('Số dư xu Heo Vàng không đủ để đặt cược vui!');
+      alert(t('alertInsufficientBalance'));
       return;
     }
     setIsPlacing(true);
@@ -45,14 +47,14 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
       }
     } catch (e) {
       console.error(e);
-      alert('Có lỗi xảy ra khi đặt cược');
+      alert(t('alertErrorPlacingBet'));
     } finally {
       setIsPlacing(false);
     }
   };
 
   const clearHistory = () => {
-    if (window.confirm("Bạn muốn xóa toàn bộ lịch sử cược?")) {
+    if (window.confirm(t('confirmClearHistory'))) {
       if (onClearBetHistory) {
         onClearBetHistory();
       }
@@ -67,7 +69,7 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
       <div className="flex justify-between items-center pb-2 border-b border-white/40">
         <h3 className="font-bold text-sm flex items-center gap-1.5 text-primary">
           <Ticket size={16} className="text-primary" />
-          Phiếu cược vui
+          {t('betSlipTitle')}
         </h3>
         {activeBet && !betResult && (
           <button 
@@ -82,15 +84,15 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
       {betResult ? (
         <div className="flex flex-col items-center justify-center text-center p-6 gap-3">
           <CheckCircle2 size={36} className="text-tertiary animate-bounce" />
-          <h4 className="text-xs font-black text-on-background">Đặt cược thành công!</h4>
+          <h4 className="text-xs font-black text-on-background">{t('betPlacedSuccess')}</h4>
           <p className="text-[10px] text-on-surface-variant/80">
-            Vé cược: <code className="bg-white/60 border border-white/80 px-1.5 py-0.5 rounded font-black text-on-surface">{betResult.betId}</code>
+            {t('betTicketId')} <code className="bg-white/60 border border-white/80 px-1.5 py-0.5 rounded font-black text-on-surface">{betResult.betId}</code>
           </p>
           <button 
             onClick={onClearBet}
             className="mt-2 px-5 py-2 bg-primary text-white text-[11px] font-black rounded-xl hover:brightness-105 active:scale-95 transition-all shadow"
           >
-            Đóng phiếu cược
+            {t('closeBetSlip')}
           </button>
         </div>
       ) : activeBet ? (
@@ -99,7 +101,7 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
           <div className="p-3.5 bg-white/45 border border-white/60 rounded-2xl space-y-2 text-xs">
             <div className="flex justify-between items-center text-[10px] text-on-surface-variant/70 font-bold uppercase tracking-wider">
               <span>{match.league.name}</span>
-              <span>Kèo Trực tiếp</span>
+              <span>{t('liveBetLabel')}</span>
             </div>
             
             <div className="font-black text-on-surface leading-tight text-sm">
@@ -115,7 +117,7 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
           {/* Stake input container */}
           <div className="space-y-3">
             <div className="flex justify-between items-center p-3 bg-white/50 border border-white/60 rounded-xl">
-              <span className="text-xs font-bold text-on-surface-variant">Xu cược</span>
+              <span className="text-xs font-bold text-on-surface-variant">{t('stakeLabel')}</span>
               <div className="flex items-center gap-1">
                 <input
                   type="text"
@@ -124,19 +126,19 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
                   placeholder="0"
                   className="w-16 bg-transparent border-none text-right font-black text-sm text-on-surface outline-none p-0 focus:ring-0"
                 />
-                <span className="text-xs font-black text-on-surface-variant">xu 🐷</span>
+                <span className="text-xs font-black text-on-surface-variant">{t('coinMascot')}</span>
               </div>
             </div>
 
             {/* Payout summary row */}
             <div className="p-1.5 space-y-1.5 text-[11px] font-bold text-on-surface-variant">
               <div className="flex justify-between items-center">
-                <span>Tỉ lệ cược</span>
+                <span>{t('oddsLabel')}</span>
                 <span className="text-on-surface font-extrabold">x{value.toFixed(2)}</span>
               </div>
               <div className="flex justify-between items-center text-xs">
-                <span>Nhận lại dự kiến</span>
-                <span className="text-tertiary font-black">{potentialPayout} xu Heo Vàng 🐷</span>
+                <span>{t('estReturnLabel')}</span>
+                <span className="text-tertiary font-black">{potentialPayout} {t('coinMascot')}</span>
               </div>
             </div>
 
@@ -153,10 +155,10 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
               {isPlacing ? (
                 <>
                   <Loader2 size={12} className="animate-spin" />
-                  Đang giao dịch cược...
+                  {t('placingBetLoader')}
                 </>
               ) : (
-                'Đặt cược ngay'
+                t('placeBetNow')
               )}
             </button>
           </div>
@@ -164,9 +166,9 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
       ) : (
         <div className="flex flex-col items-center justify-center text-center py-12 gap-2 text-on-surface-variant/80">
           <Ticket size={36} strokeWidth={1.5} className="opacity-45" />
-          <div className="text-xs font-black text-on-surface">Phiếu cược trống</div>
+          <div className="text-xs font-black text-on-surface">{t('emptyBetSlipTitle')}</div>
           <span className="text-[10px] text-on-surface-variant leading-relaxed max-w-[190px]">
-            Chọn bất kỳ nút kèo cược nào trong bảng chi tiết trận đấu để bắt đầu.
+            {t('emptyBetSlipDesc')}
           </span>
         </div>
       )}
@@ -177,13 +179,13 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
           <div className="flex justify-between items-center text-xs font-bold text-on-surface-variant">
             <span className="flex items-center gap-1">
               <History size={12} />
-              Lịch sử cược ({history.length})
+              {t('betHistoryCount').replace('{count}', history.length)}
             </span>
             
             <button 
               onClick={clearHistory} 
               className="text-on-surface-variant hover:text-secondary active:scale-95 transition-all"
-              title="Xóa lịch sử cược"
+              title={t('clearBetHistory')}
             >
               <Trash2 size={12} />
             </button>
@@ -200,7 +202,7 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
                   ? 'bg-tertiary/10 text-tertiary border-tertiary/10' 
                   : 'bg-secondary/10 text-secondary border-secondary/10';
 
-              const statusLabel = isPending ? 'Đang chạy' : isWon ? 'Thắng' : 'Thua';
+              const statusLabel = isPending ? t('statusPending') : isWon ? t('statusWon') : t('statusLost');
               const displayStake = bet.stake;
 
               return (
@@ -210,8 +212,8 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
                 >
                   <div className="flex flex-col gap-0.5 leading-tight truncate mr-2">
                     <span className="text-on-surface truncate">{bet.matchTeams || bet.matchTitle}</span>
-                    <span className="text-on-surface-variant/80 truncate">Bắt: {bet.optionLabel || bet.choice} (x{bet.odds.toFixed(2)})</span>
-                    <span className="text-[9px] text-on-surface-variant/65">Vốn: {displayStake} xu 🐷 • lúc {bet.time}</span>
+                    <span className="text-on-surface-variant/80 truncate">{t('betHistoryPicked')} {bet.optionLabel || bet.choice} (x{bet.odds.toFixed(2)})</span>
+                    <span className="text-[9px] text-on-surface-variant/65">{t('betHistoryCardDesc').replace('{stake}', displayStake).replace('{time}', bet.time)}</span>
                   </div>
                   <span className={`px-2 py-0.5 rounded border font-black text-[9px] whitespace-nowrap flex-shrink-0 ${statusClass}`}>
                     {statusLabel}

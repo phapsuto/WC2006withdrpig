@@ -2595,8 +2595,8 @@
         "minuteDisplay": "37'",
         "type": "YELLOW",
         "team": "home",
-        "detail": "André Pawlak",
-        "player": "André Pawlak",
+        "detail": "Casimiro",
+        "player": "Casimiro",
         "assist": null,
         "playerIn": null,
         "playerOut": null
@@ -2628,10 +2628,10 @@
         "minuteDisplay": "46'",
         "type": "SUBSTITUTION",
         "team": "home",
-        "detail": "🔄 André Pawlak thế chỗ Fabinho",
+        "detail": "🔄 Casimiro thế chỗ Fabinho",
         "player": "Fabinho",
-        "assist": "André Pawlak",
-        "playerIn": "André Pawlak",
+        "assist": "Casimiro",
+        "playerIn": "Casimiro",
         "playerOut": "Fabinho"
       },
       {
@@ -2762,7 +2762,7 @@
         },
         {
           "number": 5,
-          "name": "André Pawlak",
+          "name": "Casimiro",
           "role": "MF",
           "x": 12,
           "y": 50
@@ -17098,18 +17098,18 @@
       "color": "#006233",
       "textColor": "#ffffff"
     },
-    "homeScore": 0,
+    "homeScore": 4,
     "awayScore": 0,
-    "status": "UPCOMING",
-    "minute": 0,
+    "status": "FINISHED",
+    "minute": 99,
     "second": 0,
     "date": "2026-06-21 16:00:00",
     "group": "H",
     "stadiumId": "7",
     "stats": {
       "possession": {
-        "home": 50,
-        "away": 50
+        "home": 67,
+        "away": 33
       },
       "xg": null,
       "shotsTotal": {
@@ -17117,8 +17117,8 @@
         "away": 0
       },
       "shotsOnTarget": {
-        "home": 0,
-        "away": 0
+        "home": 8,
+        "away": 1
       },
       "shotsOffTarget": {
         "home": 0,
@@ -17126,31 +17126,31 @@
       },
       "shotsBlocked": {
         "home": 0,
-        "away": 0
+        "away": 2
       },
       "corners": {
-        "home": 0,
-        "away": 0
+        "home": 6,
+        "away": 1
       },
       "offsides": {
         "home": 0,
         "away": 0
       },
       "fouls": {
-        "home": 0,
-        "away": 0
+        "home": 10,
+        "away": 2
       },
       "throwIns": {
         "home": 0,
         "away": 0
       },
       "yellowCards": {
-        "home": 0,
-        "away": 0
+        "home": 1,
+        "away": 5
       },
       "redCards": {
-        "home": 0,
-        "away": 0
+        "home": 2,
+        "away": 1
       },
       "crosses": {
         "home": 0,
@@ -17161,11 +17161,11 @@
         "away": 0
       },
       "saves": {
-        "home": 0,
-        "away": 0
+        "home": 2,
+        "away": 3
       },
       "goalKicks": {
-        "home": 0,
+        "home": 1,
         "away": 0
       },
       "shots": {
@@ -17197,7 +17197,184 @@
         "away": 0
       }
     },
-    "timeline": [],
+    "timeline": [
+      {
+        "minute": 10,
+        "minuteDisplay": "10'",
+        "type": "GOAL",
+        "team": "home",
+        "detail": "Lamine Yamal (Kiến tạo: Mikel Oyarzabal)",
+        "player": "Lamine Yamal",
+        "assist": "Mikel Oyarzabal",
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 21,
+        "minuteDisplay": "21'",
+        "type": "GOAL",
+        "team": "home",
+        "detail": "Mikel Oyarzabal (Kiến tạo: Aymeric Laporte)",
+        "player": "Mikel Oyarzabal",
+        "assist": "Aymeric Laporte",
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 24,
+        "minuteDisplay": "24'",
+        "type": "GOAL",
+        "team": "home",
+        "detail": "Mikel Oyarzabal (Kiến tạo: Dani Olmo)",
+        "player": "Mikel Oyarzabal",
+        "assist": "Dani Olmo",
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 30,
+        "minuteDisplay": "30'",
+        "type": "YELLOW",
+        "team": "away",
+        "detail": "Salem Al-Dawsari",
+        "player": "Salem Al-Dawsari",
+        "assist": null,
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 46,
+        "minuteDisplay": "46'",
+        "type": "SUBSTITUTION",
+        "team": "away",
+        "detail": "🔄 Musab Al-Juwayr thế chỗ Abdullah Al-Hamdan",
+        "player": "Abdullah Al-Hamdan",
+        "assist": "Musab Al-Juwayr",
+        "playerIn": "Musab Al-Juwayr",
+        "playerOut": "Abdullah Al-Hamdan"
+      },
+      {
+        "minute": 46,
+        "minuteDisplay": "46'",
+        "type": "SUBSTITUTION",
+        "team": "away",
+        "detail": "🔄 Abdullah Al-Khaibari thế chỗ Mohamed Kanno",
+        "player": "Mohamed Kanno",
+        "assist": "Abdullah Al-Khaibari",
+        "playerIn": "Abdullah Al-Khaibari",
+        "playerOut": "Mohamed Kanno"
+      },
+      {
+        "minute": 46,
+        "minuteDisplay": "46'",
+        "type": "SUBSTITUTION",
+        "team": "home",
+        "detail": "🔄 Lamine Yamal thế chỗ Yéremy Pino",
+        "player": "Yéremy Pino",
+        "assist": "Lamine Yamal",
+        "playerIn": "Lamine Yamal",
+        "playerOut": "Yéremy Pino"
+      },
+      {
+        "minute": 46,
+        "minuteDisplay": "46'",
+        "type": "SUBSTITUTION",
+        "team": "home",
+        "detail": "🔄 Mikel Oyarzabal thế chỗ Ferran Torres",
+        "player": "Ferran Torres",
+        "assist": "Mikel Oyarzabal",
+        "playerIn": "Mikel Oyarzabal",
+        "playerOut": "Ferran Torres"
+      },
+      {
+        "minute": 49,
+        "minuteDisplay": "49'",
+        "type": "GOAL",
+        "team": "home",
+        "detail": "Hassan Tambakti (o.g.)",
+        "player": "Hassan Tambakti",
+        "assist": null,
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 60,
+        "minuteDisplay": "60'",
+        "type": "SUBSTITUTION",
+        "team": "away",
+        "detail": "🔄 Abdulelah Al-Amri thế chỗ Alaa Hejji",
+        "player": "Alaa Hejji",
+        "assist": "Abdulelah Al-Amri",
+        "playerIn": "Abdulelah Al-Amri",
+        "playerOut": "Alaa Hejji"
+      },
+      {
+        "minute": 60,
+        "minuteDisplay": "60'",
+        "type": "SUBSTITUTION",
+        "team": "away",
+        "detail": "🔄 Firas Al-Buraikan thế chỗ Mohammed Abu Al-Shamat",
+        "player": "Mohammed Abu Al-Shamat",
+        "assist": "Firas Al-Buraikan",
+        "playerIn": "Firas Al-Buraikan",
+        "playerOut": "Mohammed Abu Al-Shamat"
+      },
+      {
+        "minute": 60,
+        "minuteDisplay": "60'",
+        "type": "YELLOW",
+        "team": "away",
+        "detail": "Mohamed Kanno",
+        "player": "Mohamed Kanno",
+        "assist": null,
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 61,
+        "minuteDisplay": "61'",
+        "type": "SUBSTITUTION",
+        "team": "home",
+        "detail": "🔄 Dani Olmo thế chỗ Mikel Merino",
+        "player": "Mikel Merino",
+        "assist": "Dani Olmo",
+        "playerIn": "Dani Olmo",
+        "playerOut": "Mikel Merino"
+      },
+      {
+        "minute": 61,
+        "minuteDisplay": "61'",
+        "type": "SUBSTITUTION",
+        "team": "home",
+        "detail": "🔄 Álex Baena thế chỗ Nico Williams",
+        "player": "Nico Williams",
+        "assist": "Álex Baena",
+        "playerIn": "Álex Baena",
+        "playerOut": "Nico Williams"
+      },
+      {
+        "minute": 70,
+        "minuteDisplay": "70'",
+        "type": "SUBSTITUTION",
+        "team": "home",
+        "detail": "🔄 Pedri thế chỗ Fabián Ruiz",
+        "player": "Fabián Ruiz",
+        "assist": "Pedri",
+        "playerIn": "Pedri",
+        "playerOut": "Fabián Ruiz"
+      },
+      {
+        "minute": 90,
+        "minuteDisplay": "90'",
+        "type": "SUBSTITUTION",
+        "team": "away",
+        "detail": "🔄 Nasser Al-Dawsari thế chỗ Khalid Al-Ghannam",
+        "player": "Khalid Al-Ghannam",
+        "assist": "Nasser Al-Dawsari",
+        "playerIn": "Nasser Al-Dawsari",
+        "playerOut": "Khalid Al-Ghannam"
+      }
+    ],
     "lineups": {
       "home": [
         {
@@ -17208,8 +17385,8 @@
           "y": 88
         },
         {
-          "number": 5,
-          "name": "Marcos Llorente",
+          "number": 12,
+          "name": "Pedro Porro",
           "role": "DF",
           "x": 12,
           "y": 72
@@ -17236,8 +17413,8 @@
           "y": 72
         },
         {
-          "number": 8,
-          "name": "Fabián Ruiz",
+          "number": 10,
+          "name": "Dani Olmo",
           "role": "MF",
           "x": 12,
           "y": 50
@@ -17271,8 +17448,8 @@
           "y": 28
         },
         {
-          "number": 17,
-          "name": "Nico Williams",
+          "number": 15,
+          "name": "Álex Baena",
           "role": "FW",
           "x": 88,
           "y": 28
@@ -17287,10 +17464,17 @@
           "y": 88
         },
         {
-          "number": 4,
-          "name": "Abdulelah Al-Amri",
+          "number": 24,
+          "name": "Moteb Al-Harbi",
           "role": "DF",
           "x": 12,
+          "y": 72
+        },
+        {
+          "number": 5,
+          "name": "Hassan Tambakti",
+          "role": "DF",
+          "x": 31,
           "y": 72
         },
         {
@@ -17301,67 +17485,60 @@
           "y": 72
         },
         {
-          "number": 5,
-          "name": "Hassan Tambakti",
+          "number": 4,
+          "name": "Abdulelah Al-Amri",
           "role": "DF",
-          "x": 88,
+          "x": 69,
           "y": 72
-        },
-        {
-          "number": 24,
-          "name": "Moteb Al-Harbi",
-          "role": "DF",
-          "x": 12,
-          "y": 50
-        },
-        {
-          "number": 15,
-          "name": "Abdullah Al-Khaibari",
-          "role": "MF",
-          "x": 37,
-          "y": 50
-        },
-        {
-          "number": 23,
-          "name": "Mohamed Kanno",
-          "role": "MF",
-          "x": 63,
-          "y": 50
         },
         {
           "number": 12,
           "name": "Saud Abdulhamid",
           "role": "DF",
           "x": 88,
-          "y": 50
+          "y": 72
         },
         {
           "number": 10,
           "name": "Salem Al-Dawsari",
           "role": "MF",
           "x": 12,
-          "y": 28
+          "y": 50
+        },
+        {
+          "number": 6,
+          "name": "Nasser Al-Dawsari",
+          "role": "MF",
+          "x": 37,
+          "y": 50
+        },
+        {
+          "number": 15,
+          "name": "Abdullah Al-Khaibari",
+          "role": "MF",
+          "x": 63,
+          "y": 50
         },
         {
           "number": 7,
           "name": "Musab Al-Juwayr",
           "role": "MF",
           "x": 88,
-          "y": 28
+          "y": 50
         },
         {
           "number": 9,
           "name": "Firas Al-Buraikan",
           "role": "FW",
           "x": 50,
-          "y": 18
+          "y": 28
         }
       ]
     },
     "odds": {
       "h2h": {
         "home": 1.1,
-        "draw": 10,
+        "draw": 11,
         "away": 21
       },
       "handicap": {
@@ -17407,57 +17584,57 @@
     },
     "homeScore": 0,
     "awayScore": 0,
-    "status": "UPCOMING",
-    "minute": 0,
+    "status": "FINISHED",
+    "minute": 95,
     "second": 0,
     "date": "2026-06-21 19:00:00",
     "group": "G",
     "stadiumId": "16",
     "stats": {
       "possession": {
-        "home": 50,
-        "away": 50
+        "home": 70,
+        "away": 30
       },
       "xg": null,
       "shotsTotal": {
-        "home": 0,
+        "home": 1,
         "away": 0
       },
       "shotsOnTarget": {
-        "home": 0,
-        "away": 0
+        "home": 7,
+        "away": 3
       },
       "shotsOffTarget": {
         "home": 0,
-        "away": 0
+        "away": 1
       },
       "shotsBlocked": {
-        "home": 0,
-        "away": 0
+        "home": 1,
+        "away": 1
       },
       "corners": {
-        "home": 0,
-        "away": 0
+        "home": 4,
+        "away": 2
       },
       "offsides": {
         "home": 0,
         "away": 0
       },
       "fouls": {
-        "home": 0,
-        "away": 0
+        "home": 7,
+        "away": 9
       },
       "throwIns": {
         "home": 0,
         "away": 0
       },
       "yellowCards": {
-        "home": 0,
-        "away": 0
+        "home": 3,
+        "away": 7
       },
       "redCards": {
-        "home": 0,
-        "away": 0
+        "home": 6,
+        "away": 1
       },
       "crosses": {
         "home": 0,
@@ -17468,15 +17645,15 @@
         "away": 0
       },
       "saves": {
-        "home": 0,
-        "away": 0
+        "home": 3,
+        "away": 4
       },
       "goalKicks": {
         "home": 0,
         "away": 0
       },
       "shots": {
-        "home": 0,
+        "home": 1,
         "away": 0
       },
       "attacks": {
@@ -17504,7 +17681,151 @@
         "away": 0
       }
     },
-    "timeline": [],
+    "timeline": [
+      {
+        "minute": 3,
+        "minuteDisplay": "3'",
+        "type": "YELLOW",
+        "team": "home",
+        "detail": "Romelu Lukaku",
+        "player": "Romelu Lukaku",
+        "assist": null,
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 33,
+        "minuteDisplay": "33'",
+        "type": "YELLOW",
+        "team": "away",
+        "detail": "Saeed Ezatolahi",
+        "player": "Saeed Ezatolahi",
+        "assist": null,
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 46,
+        "minuteDisplay": "46'",
+        "type": "SUBSTITUTION",
+        "team": "away",
+        "detail": "🔄 Saleh Hardani thế chỗ Alireza Jahanbakhsh",
+        "player": "Alireza Jahanbakhsh",
+        "assist": "Saleh Hardani",
+        "playerIn": "Saleh Hardani",
+        "playerOut": "Alireza Jahanbakhsh"
+      },
+      {
+        "minute": 58,
+        "minuteDisplay": "58'",
+        "type": "SUBSTITUTION",
+        "team": "home",
+        "detail": "🔄 Thomas Meunier thế chỗ Timothy Castagne",
+        "player": "Timothy Castagne",
+        "assist": "Thomas Meunier",
+        "playerIn": "Thomas Meunier",
+        "playerOut": "Timothy Castagne"
+      },
+      {
+        "minute": 58,
+        "minuteDisplay": "58'",
+        "type": "SUBSTITUTION",
+        "team": "home",
+        "detail": "🔄 Alexis Saelemaekers thế chỗ Dodi Lukébakio",
+        "player": "Dodi Lukébakio",
+        "assist": "Alexis Saelemaekers",
+        "playerIn": "Alexis Saelemaekers",
+        "playerOut": "Dodi Lukébakio"
+      },
+      {
+        "minute": 58,
+        "minuteDisplay": "58'",
+        "type": "SUBSTITUTION",
+        "team": "home",
+        "detail": "🔄 Nicolas Raskin thế chỗ Hans Vanaken",
+        "player": "Hans Vanaken",
+        "assist": "Nicolas Raskin",
+        "playerIn": "Nicolas Raskin",
+        "playerOut": "Hans Vanaken"
+      },
+      {
+        "minute": 66,
+        "minuteDisplay": "66'",
+        "type": "SUBSTITUTION",
+        "team": "away",
+        "detail": "🔄 Ehsan Hajsafi thế chỗ Milad Mohammadi",
+        "player": "Milad Mohammadi",
+        "assist": "Ehsan Hajsafi",
+        "playerIn": "Ehsan Hajsafi",
+        "playerOut": "Milad Mohammadi"
+      },
+      {
+        "minute": 66,
+        "minuteDisplay": "66'",
+        "type": "SUBSTITUTION",
+        "team": "away",
+        "detail": "🔄 Mohammad Mohebi thế chỗ Mehdi Torabi",
+        "player": "Mehdi Torabi",
+        "assist": "Mohammad Mohebi",
+        "playerIn": "Mohammad Mohebi",
+        "playerOut": "Mehdi Torabi"
+      },
+      {
+        "minute": 66,
+        "minuteDisplay": "66'",
+        "type": "RED",
+        "team": "home",
+        "detail": "Nathan Ngoy",
+        "player": "Nathan Ngoy",
+        "assist": null,
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 73,
+        "minuteDisplay": "73'",
+        "type": "SUBSTITUTION",
+        "team": "home",
+        "detail": "🔄 Romelu Lukaku thế chỗ Arthur Theate",
+        "player": "Arthur Theate",
+        "assist": "Romelu Lukaku",
+        "playerIn": "Romelu Lukaku",
+        "playerOut": "Arthur Theate"
+      },
+      {
+        "minute": 79,
+        "minuteDisplay": "79'",
+        "type": "SUBSTITUTION",
+        "team": "away",
+        "detail": "🔄 Saman Ghoddos thế chỗ Shahriar Moghanlou",
+        "player": "Shahriar Moghanlou",
+        "assist": "Saman Ghoddos",
+        "playerIn": "Saman Ghoddos",
+        "playerOut": "Shahriar Moghanlou"
+      },
+      {
+        "minute": 85,
+        "minuteDisplay": "85'",
+        "type": "SUBSTITUTION",
+        "team": "away",
+        "detail": "🔄 Saeed Ezatolahi thế chỗ Amirhossein Hosseinzadeh",
+        "player": "Amirhossein Hosseinzadeh",
+        "assist": "Saeed Ezatolahi",
+        "playerIn": "Saeed Ezatolahi",
+        "playerOut": "Amirhossein Hosseinzadeh"
+      },
+      {
+        "minute": 87,
+        "minuteDisplay": "87'",
+        "type": "SUBSTITUTION",
+        "team": "home",
+        "detail": "🔄 Kevin De Bruyne  thế chỗ Matías Fernández-Pardo",
+        "player": "Matías Fernández-Pardo",
+        "assist": "Kevin De Bruyne ",
+        "playerIn": "Kevin De Bruyne ",
+        "playerOut": "Matías Fernández-Pardo"
+      }
+    ],
     "lineups": {
       "home": [
         {
@@ -17543,8 +17864,8 @@
           "y": 72
         },
         {
-          "number": 7,
-          "name": "Kevin De Bruyne",
+          "number": 23,
+          "name": "Nicolas Raskin",
           "role": "MF",
           "x": 12,
           "y": 50
@@ -17557,23 +17878,23 @@
           "y": 50
         },
         {
-          "number": 14,
-          "name": "Dodi Lukébakio",
-          "role": "FW",
+          "number": 22,
+          "name": "Alexis Saelemaekers",
+          "role": "MF",
           "x": 12,
           "y": 28
         },
         {
-          "number": 20,
-          "name": "Hans Vanaken",
+          "number": 7,
+          "name": "Kevin De Bruyne",
           "role": "MF",
           "x": 50,
           "y": 28
         },
         {
-          "number": 11,
-          "name": "Jérémy Doku",
-          "role": "FW",
+          "number": 10,
+          "name": "Leandro Trossard",
+          "role": "MF",
           "x": 88,
           "y": 28
         },
@@ -17594,8 +17915,8 @@
           "y": 88
         },
         {
-          "number": 5,
-          "name": "Milad Mohammadi",
+          "number": 3,
+          "name": "Ehsan Hajsafi",
           "role": "DF",
           "x": 12,
           "y": 72
@@ -17604,26 +17925,33 @@
           "number": 19,
           "name": "Ali Nemati",
           "role": "DF",
-          "x": 37,
+          "x": 31,
           "y": 72
         },
         {
           "number": 4,
           "name": "Shoja Khalilzadeh",
           "role": "DF",
-          "x": 63,
+          "x": 50,
           "y": 72
         },
         {
-          "number": 23,
-          "name": "Ramin Rezaeian",
+          "number": 13,
+          "name": "Hossein Kanaani",
+          "role": "DF",
+          "x": 69,
+          "y": 72
+        },
+        {
+          "number": 2,
+          "name": "Saleh Hardani",
           "role": "DF",
           "x": 88,
           "y": 72
         },
         {
-          "number": 10,
-          "name": "Mehdi Ghayedi",
+          "number": 8,
+          "name": "Mohammad Mohebi",
           "role": "MF",
           "x": 12,
           "y": 50
@@ -17643,8 +17971,8 @@
           "y": 50
         },
         {
-          "number": 8,
-          "name": "Mohammad Mohebi",
+          "number": 23,
+          "name": "Ramin Rezaeian",
           "role": "MF",
           "x": 88,
           "y": 50
@@ -17653,14 +17981,7 @@
           "number": 9,
           "name": "Mehdi Taremi",
           "role": "FW",
-          "x": 12,
-          "y": 28
-        },
-        {
-          "number": 20,
-          "name": "Shahriar Moghanlou",
-          "role": "FW",
-          "x": 88,
+          "x": 50,
           "y": 28
         }
       ]
@@ -17668,7 +17989,7 @@
     "odds": {
       "h2h": {
         "home": 1.4,
-        "draw": 4.5,
+        "draw": 4.75,
         "away": 8
       },
       "handicap": {
@@ -17712,18 +18033,18 @@
       "color": "#666",
       "textColor": "#fff"
     },
-    "homeScore": 0,
-    "awayScore": 0,
-    "status": "UPCOMING",
-    "minute": 0,
-    "second": 0,
+    "homeScore": 2,
+    "awayScore": 1,
+    "status": "LIVE",
+    "minute": 54,
+    "second": 50,
     "date": "2026-06-21 22:00:00",
     "group": "H",
     "stadiumId": "8",
     "stats": {
       "possession": {
-        "home": 50,
-        "away": 50
+        "home": 67,
+        "away": 33
       },
       "xg": null,
       "shotsTotal": {
@@ -17731,39 +18052,39 @@
         "away": 0
       },
       "shotsOnTarget": {
-        "home": 0,
-        "away": 0
+        "home": 2,
+        "away": 1
       },
       "shotsOffTarget": {
         "home": 0,
         "away": 0
       },
       "shotsBlocked": {
-        "home": 0,
-        "away": 0
+        "home": 1,
+        "away": 1
       },
       "corners": {
-        "home": 0,
-        "away": 0
+        "home": 5,
+        "away": 1
       },
       "offsides": {
         "home": 0,
         "away": 0
       },
       "fouls": {
-        "home": 0,
-        "away": 0
+        "home": 7,
+        "away": 2
       },
       "throwIns": {
         "home": 0,
         "away": 0
       },
       "yellowCards": {
-        "home": 0,
-        "away": 0
+        "home": 1,
+        "away": 1
       },
       "redCards": {
-        "home": 0,
+        "home": 4,
         "away": 0
       },
       "crosses": {
@@ -17775,11 +18096,11 @@
         "away": 0
       },
       "saves": {
-        "home": 0,
+        "home": 2,
         "away": 0
       },
       "goalKicks": {
-        "home": 0,
+        "home": 1,
         "away": 0
       },
       "shots": {
@@ -17811,172 +18132,80 @@
         "away": 0
       }
     },
-    "timeline": [],
-    "lineups": {
-      "home": [
-        {
-          "number": 23,
-          "name": "Fernando Muslera",
-          "role": "GK",
-          "x": 50,
-          "y": 88
-        },
-        {
-          "number": 13,
-          "name": "Guillermo Varela",
-          "role": "DF",
-          "x": 12,
-          "y": 72
-        },
-        {
-          "number": 3,
-          "name": "Sebastián Cáceres",
-          "role": "DF",
-          "x": 37,
-          "y": 72
-        },
-        {
-          "number": 16,
-          "name": "Mathías Olivera",
-          "role": "DF",
-          "x": 63,
-          "y": 72
-        },
-        {
-          "number": 25,
-          "name": "Juan Manuel Sanabria",
-          "role": "DF",
-          "x": 88,
-          "y": 72
-        },
-        {
-          "number": 8,
-          "name": "Federico Valverde",
-          "role": "MF",
-          "x": 12,
-          "y": 50
-        },
-        {
-          "number": 7,
-          "name": "Nicolás de la Cruz",
-          "role": "MF",
-          "x": 50,
-          "y": 50
-        },
-        {
-          "number": 6,
-          "name": "Rodrigo Bentancur",
-          "role": "MF",
-          "x": 88,
-          "y": 50
-        },
-        {
-          "number": 14,
-          "name": "Agustín Canobbio",
-          "role": "FW",
-          "x": 12,
-          "y": 28
-        },
-        {
-          "number": 21,
-          "name": "Federico Viñas",
-          "role": "FW",
-          "x": 50,
-          "y": 28
-        },
-        {
-          "number": 20,
-          "name": "Maxi Araújo",
-          "role": "FW",
-          "x": 88,
-          "y": 28
-        }
-      ],
-      "away": [
-        {
-          "number": 1,
-          "name": "Vozinha",
-          "role": "GK",
-          "x": 50,
-          "y": 88
-        },
-        {
-          "number": 13,
-          "name": "Sidny Lopes Cabral",
-          "role": "DF",
-          "x": 12,
-          "y": 72
-        },
-        {
-          "number": 3,
-          "name": "Diney Borges",
-          "role": "DF",
-          "x": 37,
-          "y": 72
-        },
-        {
-          "number": 4,
-          "name": "Roberto Lopes",
-          "role": "DF",
-          "x": 63,
-          "y": 72
-        },
-        {
-          "number": 22,
-          "name": "Steven Moreira",
-          "role": "DF",
-          "x": 88,
-          "y": 72
-        },
-        {
-          "number": 15,
-          "name": "Laros Duarte",
-          "role": "MF",
-          "x": 12,
-          "y": 50
-        },
-        {
-          "number": 6,
-          "name": "Kevin Lenini",
-          "role": "MF",
-          "x": 88,
-          "y": 50
-        },
-        {
-          "number": 7,
-          "name": "Jovane Cabral",
-          "role": "FW",
-          "x": 12,
-          "y": 28
-        },
-        {
-          "number": 10,
-          "name": "Jamiro Monteiro",
-          "role": "MF",
-          "x": 50,
-          "y": 28
-        },
-        {
-          "number": 20,
-          "name": "Ryan Mendes",
-          "role": "FW",
-          "x": 88,
-          "y": 28
-        },
-        {
-          "number": 19,
-          "name": "Dailon Livramento",
-          "role": "FW",
-          "x": 50,
-          "y": 18
-        }
-      ]
-    },
+    "timeline": [
+      {
+        "minute": 5,
+        "minuteDisplay": "5'",
+        "type": "YELLOW",
+        "team": "away",
+        "detail": "Sidny Lopes Cabral",
+        "player": "Sidny Lopes Cabral",
+        "assist": null,
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 20,
+        "minuteDisplay": "20'",
+        "type": "YELLOW",
+        "team": "home",
+        "detail": "Rodrigo Bentancur ",
+        "player": "Rodrigo Bentancur ",
+        "assist": null,
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 21,
+        "minuteDisplay": "21'",
+        "type": "GOAL",
+        "team": "away",
+        "detail": "Kevin Lenini",
+        "player": "Kevin Lenini",
+        "assist": null,
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 44,
+        "minuteDisplay": "44'",
+        "type": "GOAL",
+        "team": "home",
+        "detail": "Maxi Araújo",
+        "player": "Maxi Araújo",
+        "assist": null,
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 45,
+        "minuteDisplay": "45'+6",
+        "type": "GOAL",
+        "team": "home",
+        "detail": "Agustín Canobbio (Kiến tạo: Maxi Araújo)",
+        "player": "Agustín Canobbio",
+        "assist": "Maxi Araújo",
+        "playerIn": null,
+        "playerOut": null
+      },
+      {
+        "minute": 46,
+        "minuteDisplay": "46'",
+        "type": "SUBSTITUTION",
+        "team": "away",
+        "detail": "🔄 Telmo Arcanjo thế chỗ Deroy Duarte",
+        "player": "Deroy Duarte",
+        "assist": "Telmo Arcanjo",
+        "playerIn": "Telmo Arcanjo",
+        "playerOut": "Deroy Duarte"
+      }
+    ],
+    "lineups": null,
     "odds": {
       "h2h": {
-        "home": 1.44,
-        "draw": 4.2,
-        "away": 8
+        "home": 1.85,
+        "draw": 3.4,
+        "away": 4.2
       },
       "handicap": {
         "line": "-0.5",
@@ -18281,9 +18510,9 @@
     },
     "odds": {
       "h2h": {
-        "home": 5.75,
+        "home": 5.5,
         "draw": 4.1,
-        "away": 1.57
+        "away": 1.6
       },
       "handicap": {
         "line": "-0.5",
@@ -18430,7 +18659,7 @@
     "odds": {
       "h2h": {
         "home": 1.5,
-        "draw": 4.1,
+        "draw": 4.2,
         "away": 7
       },
       "handicap": {
@@ -18577,9 +18806,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 1.07,
-        "draw": 11,
-        "away": 34
+        "home": 1.05,
+        "draw": 12,
+        "away": 41
       },
       "handicap": {
         "line": "-0.5",
@@ -18725,9 +18954,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 2.2,
+        "home": 2.25,
         "draw": 3.6,
-        "away": 3.1
+        "away": 3
       },
       "handicap": {
         "line": "-0.5",
@@ -18873,9 +19102,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 5.5,
-        "draw": 4.2,
-        "away": 1.57
+        "home": 5.75,
+        "draw": 4.33,
+        "away": 1.53
       },
       "handicap": {
         "line": "-0.5",
@@ -19318,8 +19547,8 @@
     "odds": {
       "h2h": {
         "home": 6.5,
-        "draw": 4,
-        "away": 1.53
+        "draw": 4.1,
+        "away": 1.5
       },
       "handicap": {
         "line": "-0.5",
@@ -19613,9 +19842,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 2.37,
+        "home": 2.45,
         "draw": 3.1,
-        "away": 3.25
+        "away": 3.1
       },
       "handicap": {
         "line": "-0.5",
@@ -20057,9 +20286,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 1.18,
+        "home": 1.2,
         "draw": 7,
-        "away": 17
+        "away": 15
       },
       "handicap": {
         "line": "-0.5",
@@ -20205,9 +20434,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 5.5,
+        "home": 5.75,
         "draw": 3.9,
-        "away": 1.61
+        "away": 1.6
       },
       "handicap": {
         "line": "-0.5",
@@ -20353,9 +20582,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 3.5,
+        "home": 3.6,
         "draw": 4,
-        "away": 1.95
+        "away": 1.9
       },
       "handicap": {
         "line": "-0.5",
@@ -20797,9 +21026,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 17,
+        "home": 23,
         "draw": 8,
-        "away": 1.14
+        "away": 1.12
       },
       "handicap": {
         "line": "-0.5",
@@ -20945,9 +21174,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 2,
-        "draw": 3.3,
-        "away": 3.8
+        "home": 1.95,
+        "draw": 3.4,
+        "away": 4
       },
       "handicap": {
         "line": "-0.5",
@@ -21093,8 +21322,8 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 2.75,
-        "draw": 2.35,
+        "home": 2.87,
+        "draw": 2.25,
         "away": 3.8
       },
       "handicap": {
@@ -21241,9 +21470,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 3.25,
+        "home": 3.4,
         "draw": 4.1,
-        "away": 2
+        "away": 1.95
       },
       "handicap": {
         "line": "-0.5",
@@ -21685,9 +21914,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 5.75,
+        "home": 6,
         "draw": 4.5,
-        "away": 1.53
+        "away": 1.5
       },
       "handicap": {
         "line": "-0.5",
@@ -21833,9 +22062,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 2.62,
+        "home": 2.4,
         "draw": 3.7,
-        "away": 2.4
+        "away": 2.7
       },
       "handicap": {
         "line": "-0.5",
@@ -21982,7 +22211,7 @@
     "odds": {
       "h2h": {
         "home": 11,
-        "draw": 6.25,
+        "draw": 6.5,
         "away": 1.22
       },
       "handicap": {
@@ -22277,9 +22506,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 1.57,
+        "home": 1.6,
         "draw": 3.9,
-        "away": 5.75
+        "away": 5.5
       },
       "handicap": {
         "line": "-0.5",
@@ -22425,9 +22654,9 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 11,
-        "draw": 7.5,
-        "away": 1.2
+        "home": 9.5,
+        "draw": 7,
+        "away": 1.22
       },
       "handicap": {
         "line": "-0.5",
@@ -22573,7 +22802,7 @@
     "lineups": null,
     "odds": {
       "h2h": {
-        "home": 3.7,
+        "home": 3.6,
         "draw": 3.4,
         "away": 2
       },
@@ -23018,8 +23247,8 @@
     "odds": {
       "h2h": {
         "home": 11,
-        "draw": 7,
-        "away": 1.2
+        "draw": 7.5,
+        "away": 1.18
       },
       "handicap": {
         "line": "-0.5",

@@ -1,28 +1,33 @@
 import { useState, useEffect, useRef } from 'react';
 import { Send, Loader2, RefreshCw, Sparkles } from 'lucide-react';
 import { generalChatWithHeoHong } from '../services/gemini';
-
-const SUGGESTIONS = [
-  'Nhận định bảng A xem heo 🐷',
-  'Đội tuyển Việt Nam có cơ hội đi tiếp không?',
-  'Dự đoán trận đấu HOT nhất hôm nay ⚽',
-  'Tỉ số trận đấu khai mạc ra sao?',
-  'Heo nghĩ đội nào vô địch World Cup 2026? 🏆'
-];
-
-const INITIAL_MESSAGE = {
-  role: 'model',
-  text: 'Chào các fen! Heo Hồng 🐷 đã sẵn sàng cùng anh em đàm đạo về World Cup 2026 rồi đây. Anh em muốn hỏi gì về giải đấu, nhận định tỉ số hay kèo cược cúp thế giới nào? 🐷⚽'
-};
+import { useLanguage } from '../utils/LanguageContext';
 
 export default function OracleChat() {
+  const { language, t } = useLanguage();
+
+  const suggestions = language === 'vi' ? [
+    'Nhận định bảng A xem heo 🐷',
+    'Đội tuyển Việt Nam có cơ hội đi tiếp không?',
+    'Dự đoán trận đấu HOT nhất hôm nay ⚽',
+    'Tỉ số trận đấu khai mạc ra sao?',
+    'Heo nghĩ đội nào vô địch World Cup 2026? 🏆'
+  ] : [
+    'Analyze Group A for me 🐷',
+    'Does Vietnam have a chance to advance?',
+    'Predict today\'s hottest match ⚽',
+    'What will the opening score be?',
+    'Who does Piggy think will win the World Cup? 🏆'
+  ];
+
   const [messages, setMessages] = useState(() => {
     try {
       const saved = localStorage.getItem('wc2026_oracle_chat_history');
-      return saved ? JSON.parse(saved) : [INITIAL_MESSAGE];
+      if (saved) return JSON.parse(saved);
     } catch {
-      return [INITIAL_MESSAGE];
+      // ignore
     }
+    return [{ role: 'model', text: t('oracleGreeting') }];
   });
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -31,6 +36,15 @@ export default function OracleChat() {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  useEffect(() => {
+    if (messages.length === 1 && messages[0].role === 'model') {
+      const greeting = t('oracleGreeting');
+      if (messages[0].text !== greeting) {
+        setMessages([{ role: 'model', text: greeting }]);
+      }
+    }
+  }, [language, t, messages]);
 
   useEffect(() => {
     try {
@@ -60,7 +74,7 @@ export default function OracleChat() {
       console.error('Chat error', error);
       setMessages(prev => [...prev, { 
         role: 'model', 
-        text: '🐷 Ối các fen ơi, Heo Hồng đang bận nhai hạt ngô nên bị nghẹn rồi! Fen hỏi lại giùm heo nhé! 🌽' 
+        text: t('oracleErrorText')
       }]);
     } finally {
       setLoading(false);
@@ -68,8 +82,8 @@ export default function OracleChat() {
   };
 
   const handleResetChat = () => {
-    if (window.confirm('Bạn có chắc muốn xoá lịch sử trò chuyện với Heo Hồng?')) {
-      setMessages([INITIAL_MESSAGE]);
+    if (window.confirm(t('oracleResetConfirm'))) {
+      setMessages([{ role: 'model', text: t('oracleGreeting') }]);
       localStorage.removeItem('wc2026_oracle_chat_history');
     }
   };
@@ -92,16 +106,16 @@ export default function OracleChat() {
           </div>
           <div>
             <h3 className="text-sm font-black text-on-surface flex items-center gap-1.5">
-              <span>Đàm đạo cùng Heo Hồng 🐷</span>
-              <span className="px-1.5 py-0.5 rounded bg-secondary-container/20 text-secondary text-[9px] font-bold uppercase animate-pulse">AI Tiên Tri</span>
+              <span>{t('oracleChatTitle')}</span>
+              <span className="px-1.5 py-0.5 rounded bg-secondary-container/20 text-secondary text-[9px] font-bold uppercase animate-pulse">{language === 'vi' ? 'AI Tiên Tri' : 'AI Oracle'}</span>
             </h3>
-            <p className="text-[10px] text-on-surface-variant">Hỏi về tỉ số, chiến thuật, bảng đấu & quà tặng</p>
+            <p className="text-[10px] text-on-surface-variant">{t('oracleSubTitle')}</p>
           </div>
         </div>
         <button
           onClick={handleResetChat}
           className="p-2 text-on-surface-variant hover:text-secondary hover:bg-white/45 rounded-xl border border-transparent hover:border-white/50 transition-all flex items-center justify-center"
-          title="Xoá lịch sử chat"
+          title={t('oracleResetTitle')}
         >
           <RefreshCw size={14} />
         </button>
@@ -111,10 +125,10 @@ export default function OracleChat() {
       {messages.length === 1 && (
         <div className="mb-4 z-10 animate-fade-in">
           <span className="text-[10px] font-bold text-on-surface-variant/75 flex items-center gap-1 mb-2">
-            <Sparkles size={11} className="text-tertiary" /> Gợi ý câu hỏi nhanh:
+            <Sparkles size={11} className="text-tertiary" /> {t('oracleSuggestionHeader')}
           </span>
           <div className="flex flex-wrap gap-2 max-h-[90px] overflow-y-auto no-scrollbar">
-            {SUGGESTIONS.map((s, idx) => (
+            {suggestions.map((s, idx) => (
               <button
                 key={idx}
                 onClick={() => handleSend(s)}
@@ -168,7 +182,7 @@ export default function OracleChat() {
             </div>
             <div className="p-3.5 rounded-2xl text-[12px] leading-relaxed bg-white/65 border border-white/80 text-on-surface-variant/75 rounded-tl-sm flex items-center gap-2">
               <Loader2 size={12} className="animate-spin text-primary" />
-              <span>Heo Hồng đang soi dữ liệu...</span>
+              <span>{t('oracleLoadingText')}</span>
             </div>
           </div>
         )}
@@ -187,7 +201,7 @@ export default function OracleChat() {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Hỏi Heo Hồng về kèo cược, tỉ số, bảng đấu..."
+          placeholder={t('oraclePlaceholder')}
           disabled={loading}
           className="flex-1 bg-white/50 focus:bg-white text-[12px] border border-white/70 focus:border-primary rounded-xl px-4 py-2.5 outline-none transition-all shadow-inner placeholder-on-surface-variant/55 disabled:opacity-60"
         />

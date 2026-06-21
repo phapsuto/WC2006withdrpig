@@ -79,8 +79,13 @@ graph TD
 * **Nút cược nổi & Trượt cược (Bet Slip FAB & Sheet)**: Khi người dùng chọn kèo cược nhanh trên màn hình, một nút nổi (FAB) Heo Vàng sẽ tự động xuất hiện. Nhấp vào nút sẽ mở Bottom Sheet chứa phiếu cược vui để người dùng nhập tiền cược ngay lập tức.
 
 ### 5. 📰 Sports News & Social Media Live Scraper
-* **Đồng bộ thời gian thực**: Cào tin liên quan đến hai đội bóng trước trận đấu 8 tiếng (10 phút một lần) và trong trận đấu (1 phút một lần). Dữ liệu được lưu trữ thật (không lưu tạm), giữ lại trong vòng 7 ngày kể từ khi trận đấu kết thúc.
-* **Bản tin mạng xã hội nóng**: Thu thập các đoạn video clip thực tế quay bằng điện thoại trên sân vận động từ X (Twitter) và bài nhận định của các BLV bóng đá Việt Nam nổi tiếng để người dùng cập nhật không khí trực tiếp sôi động.
+* **Đồng bộ thời gian thực**: Cào tin liên quan đến hai đội bóng trước trận đấu 8 tiếng (10 phút một lần) và trong trận đấu (1 phút một lần). Dữ liệu được lưu trữ thật (không lưu tạm), giữ lại trong vòng 7 ngày kể từ khi trận đấu kết thúc thông qua Sportmonks API.
+* **Bản tin mạng xã hội nóng (Dynamic Fan Clips)**: Tích hợp hệ thống tạo các clip mạng xã hội (Facebook, TikTok, X) mô phỏng không khí sân vận động thực tế cực kỳ sống động. Khi API FPT Cloud gặp sự cố (như lỗi 401 hết hạn key), hệ thống sẽ kích hoạt **thuật toán sinh bài đăng tự động ngẫu nhiên**, phối hợp mã viết tắt đội tuyển (như #URUvCAP), tên đội, chỉ số tương tác (like, share, comment) và các lời bình luận bằng tiếng Việt mô tả chân thực bầu không khí cổ vũ trên khán đài, loại bỏ hoàn toàn các dòng văn bản rác cứng nhắc kiểu cũ.
+
+### 6. 📊 Thống kê trận đấu chuyên sâu & Sa bàn chiến thuật dọc (Tactical Board)
+* **15 chỉ số so sánh chuyên sâu**: Hiển thị so sánh trực quan (bàn thắng kỳ vọng xG, kiểm soát bóng, sút trúng/trượt đích, phạt góc, thẻ phạt, cứu thua...) dạng cột so sánh hai màu cam (đội nhà) và xám (đội khách) vô cùng trực quan.
+* **Độ tương quan ELO & Lịch sử đối đầu H2H**: Tự động tính toán ELO của hai đội, thống kê thắng/thua/hòa của 5 trận đối đầu gần nhất kèm tỷ số và giải đấu cụ thể.
+* **Sa bàn chiến thuật dọc co giãn (Vertical aspect-[2/3] ratio)**: Sân bóng được thiết kế dọc tối ưu cho thiết bị di động, áp dụng công thức giãn cách tọa độ Y thông minh giúp phân tách rõ hai đội về hai nửa sân riêng biệt, triệt tiêu hoàn toàn lỗi chồng lấp cầu thủ.
 
 ---
 
