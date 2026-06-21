@@ -1,6 +1,39 @@
 {
   "news": [
     {
+      "id": "81e2ff318455020",
+      "source": "Trực tiếp WC2026",
+      "url": "https://api.sportmonks.com/live-match-ecuador-curacao",
+      "title": "[LIVE] Ecuador vs Curacao (0')",
+      "titleVi": "[LIVE NÓNG] Phút 0: Tiếng còi khai cuộc vang lên! Ecuador vs Curacao – Màn so tài nảy lửa tại World Cup 2026!",
+      "pubDate": 1781999163738,
+      "pubDateStr": "21/06/2026 09:46",
+      "image": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop",
+      "content": "Trận đấu giữa Ecuador và Curacao tại World Cup 2026 vừa chính thức bắt đầu với tiếng còi khai cuộc của trọng tài. Ngay từ những giây đầu tiên, không khí trên sân vận động đã vô cùng sôi động. Các cầu thủ Ecuador nhập cuộc đầy tự tin, pressing tầm cao ngay bên phần sân đối phương, trong khi Curacao chủ động chơi phòng ngự chặt chẽ, chờ cơ hội phản công nhanh. Trên khán đài, hàng nghìn cổ động viên Ecuador liên tục hô vang những bài ca cổ vũ, tạo nên một bầu không khí cuồng nhiệt. Trên mạng xã hội, các fan bóng đá đang bàn tán sôi nổi về sơ đồ chiến thuật của hai đội. Nhiều người dự đoán Ecuador sẽ sớm có bàn thắng nhờ lợi thế sân nhà và đẳng cấp vượt trội. Tuy nhiên, Curacao cũng cho thấy họ không phải là đối thủ dễ bị bắt nạt khi liên tục có những pha tranh chấp quyết liệt ở khu vực giữa sân. Trận đấu hứa hẹn sẽ rất hấp dẫn và kịch tính!",
+      "contentVi": "Trận đấu giữa Ecuador và Curacao tại World Cup 2026 vừa chính thức bắt đầu với tiếng còi khai cuộc của trọng tài. Ngay từ những giây đầu tiên, không khí trên sân vận động đã vô cùng sôi động. Các cầu thủ Ecuador nhập cuộc đầy tự tin, pressing tầm cao ngay bên phần sân đối phương, trong khi Curacao chủ động chơi phòng ngự chặt chẽ, chờ cơ hội phản công nhanh. Trên khán đài, hàng nghìn cổ động viên Ecuador liên tục hô vang những bài ca cổ vũ, tạo nên một bầu không khí cuồng nhiệt. Trên mạng xã hội, các fan bóng đá đang bàn tán sôi nổi về sơ đồ chiến thuật của hai đội. Nhiều người dự đoán Ecuador sẽ sớm có bàn thắng nhờ lợi thế sân nhà và đẳng cấp vượt trội. Tuy nhiên, Curacao cũng cho thấy họ không phải là đối thủ dễ bị bắt nạt khi liên tục có những pha tranh chấp quyết liệt ở khu vực giữa sân. Trận đấu hứa hẹn sẽ rất hấp dẫn và kịch tính!",
+      "summary": "<ul><li>Trận đấu Ecuador vs Curacao tại World Cup 2026 đã chính thức bắt đầu với tỷ số 0-0.</li><li>Ecuador chủ động tấn công ngay từ đầu, trong khi Curacao chơi phòng ngự phản công.</li><li>Không khí trên sân và mạng xã hội rất sôi nổi, người hâm mộ đang chờ đợi bàn thắng đầu tiên.</li></ul>",
+      "drpigComment": "Heo Hồng 🐷 thấy các fen ơi, mới vào trận mà Ecuador đã ào ào như vậy, chắc phen này Curacao phải chạy đứt hơi! Theo Heo Hồng 🐷, kèo tài hiệp 1 đang ngon ăn đấy, các fen liều thì xuống luôn đi, he he! 🐷⚽",
+      "socialMentions": {
+        "reddit": {
+          "upvotes": 1798,
+          "commentsCount": 213,
+          "topComment": "Mbappe's presence completely changes the tactical balance. Senegal will need to defend deeper."
+        },
+        "x": {
+          "likes": 5148,
+          "reposts": 978,
+          "hotPost": "MetLife Stadium is absolutely rocking. The atmosphere for WC2026 opening week is insane! #MetLife"
+        }
+      },
+      "isLive": true,
+      "liveInfo": {
+        "home": "Ecuador",
+        "away": "Curacao",
+        "score": "0-0",
+        "minute": "0'"
+      }
+    },
+    {
       "id": "278c1f3ad5ee56d",
       "source": "Sky Sports Football",
       "url": "https://www.skysports.com/football/germany-vs-ivory-coast/report/549798",
@@ -141,5 +174,5 @@
       "videoUrl": "/videos/clip_3.mp4"
     }
   ],
-  "lastUpdated": 1781997714219
+  "lastUpdated": 1781999531191
 }

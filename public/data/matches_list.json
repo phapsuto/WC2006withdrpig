@@ -11326,8 +11326,8 @@
     "odds": {
       "h2h": {
         "home": 7.5,
-        "draw": 4.33,
-        "away": 1.45
+        "draw": 4.5,
+        "away": 1.44
       },
       "handicap": {
         "line": "-0.5",
@@ -13541,7 +13541,7 @@
       "h2h": {
         "home": 3.5,
         "draw": 3.8,
-        "away": 2
+        "away": 1.95
       },
       "handicap": {
         "line": "-0.5",
