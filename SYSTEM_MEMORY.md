@@ -70,6 +70,11 @@ Hệ thống đồng bộ hai chiều giữa IDE Agent và Telegram đang hoạt
 - [x] **Cập nhật hướng dẫn chi tiết & Đẩy lên GitHub**:
   - Biên soạn lại tệp `README.md` cực kỳ chi tiết, trình bày đẹp mắt bằng tiếng Việt (bao gồm sơ đồ Mermaid, cài đặt dự án, tích hợp Telegram bot, scraper và thuật toán Dixon-Coles Poisson).
   - Staging, commit và push thành công mã nguồn lên kho lưu trữ từ xa GitHub.
+- [x] **Bổ sung trang chi tiết trận đấu với đầy đủ thống kê từ Sportmonks API**:
+  - Tích hợp 15 thống kê so sánh (Expected Goals xG, kiểm soát bóng, sút trúng/trượt đích, phạt góc, phạm lỗi, thẻ phạt, cứu thua, vv.) hiển thị dạng bar so sánh màu cam (đội nhà) và xám (đội khách).
+  - Tự động ẩn thống kê xG nếu Sportmonks API không trả về (chưa đăng ký add-on).
+  - Phân tích và tính toán tỉ lệ đối đầu H2H (Thắng/Hòa/Thua toàn thời gian & 5 trận gần nhất), liệt kê giải đấu và năm cụ thể.
+  - Nâng cấp Timeline diễn biến hỗ trợ sự kiện thay người, kiến tạo bàn thắng, sắp xếp theo phút tăng dần.
 - [x] **Tích hợp đầy đủ dữ liệu thời gian thực và lịch sử từ Sportmonks API**:
   - Đã chuyển hoàn toàn sang Sportmonks API, loại bỏ worldcup26.ir.
   - Tích hợp BXH, Top Scorers & Assists, H2H, Lineups, Live stats.
