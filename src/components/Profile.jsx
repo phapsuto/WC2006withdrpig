@@ -57,7 +57,7 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
       </div>
 
       {/* Sub Tabs Segmented Control */}
-      <div className="flex gap-1.5 p-1.5 bg-white/40 border border-white/50 rounded-2xl overflow-x-auto no-scrollbar">
+      <div className="flex gap-1.5 p-1.5 bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-2xl overflow-x-auto no-scrollbar">
         {[
           { key: 'WALLET', icon: <Wallet size={12} />, label: t('subTabWallet') },
           { key: 'BOOKMARKS', icon: <Star size={12} />, label: t('subTabWatchlist') },
@@ -69,8 +69,8 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
             onClick={() => setActiveSubTab(tab.key)}
             className={`flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-bold rounded-xl transition-all border border-transparent whitespace-nowrap ${
               activeSubTab === tab.key 
-                ? 'bg-white text-primary shadow-sm border-white/60' 
-                : 'text-on-surface-variant hover:text-primary hover:bg-white/20'
+                ? 'bg-white dark:bg-white/10 text-primary dark:text-primary shadow-sm border-white/60 dark:border-white/10' 
+                : 'text-on-surface-variant hover:text-primary hover:bg-white/20 dark:hover:bg-white/5'
             }`}
           >
             {tab.icon}
@@ -101,15 +101,15 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
 
             {/* Stats grid */}
             <div className="grid grid-cols-3 gap-3">
-              <div className="bg-white/45 border border-white/50 p-3 rounded-xl text-center">
+              <div className="bg-white/45 dark:bg-white/5 border border-white/50 dark:border-white/10 p-3 rounded-xl text-center">
                 <div className="text-[10px] text-on-surface-variant/80 font-bold">{t('totalBetsLabel')}</div>
                 <div className="text-base font-black text-on-surface mt-1">{totalBets}</div>
               </div>
-              <div className="bg-white/45 border border-white/50 p-3 rounded-xl text-center">
+              <div className="bg-white/45 dark:bg-white/5 border border-white/50 dark:border-white/10 p-3 rounded-xl text-center">
                 <div className="text-[10px] text-on-surface-variant/80 font-bold">{t('winRateLabel')}</div>
                 <div className="text-base font-black text-tertiary mt-1">{winRate}%</div>
               </div>
-              <div className="bg-white/45 border border-white/50 p-3 rounded-xl text-center">
+              <div className="bg-white/45 dark:bg-white/5 border border-white/50 dark:border-white/10 p-3 rounded-xl text-center">
                 <div className="text-[10px] text-on-surface-variant/80 font-bold">{t('wonLostLabel')}</div>
                 <div className="text-base font-black text-on-surface mt-1">{wonBets}/{lostBets}</div>
               </div>
@@ -132,7 +132,7 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
                   <div 
                     key={match.id}
                     onClick={() => onSelectMatch(match.id)}
-                    className="flex items-center justify-between p-3 bg-white/45 border border-white/50 rounded-xl hover:border-primary/20 hover:bg-white transition-all cursor-pointer shadow-sm"
+                    className="flex items-center justify-between p-3 bg-white/45 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-xl hover:border-primary/20 dark:hover:border-primary/30 hover:bg-white dark:hover:bg-white/10 transition-all cursor-pointer shadow-sm"
                   >
                     <div className="flex items-center gap-2">
                       <img src={`https://flagcdn.com/w20/${match.home.flag}.png`} alt={match.home.name} className="w-5 h-3.5 object-cover rounded border border-black/5" />
@@ -158,7 +158,7 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
         {activeSubTab === 'FAVORITES' && (
           <div className="space-y-3">
             <h4 className="text-xs font-black text-on-surface border-b border-white/40 pb-2">{t('favoriteTeamsTitle')}</h4>
-            <div className="flex flex-wrap gap-2 max-h-[200px] overflow-y-auto no-scrollbar p-2 bg-white/40 border border-white/50 rounded-2xl shadow-inner">
+            <div className="flex flex-wrap gap-2 max-h-[200px] overflow-y-auto no-scrollbar p-2 bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-2xl shadow-inner">
               {allTeamsList.map(team => {
                 const isFav = user.favoriteTeams && user.favoriteTeams.includes(team.name);
                 return (
@@ -168,7 +168,7 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
                     className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border active:scale-95 transition-all text-[11px] font-bold ${
                       isFav 
                         ? 'bg-secondary/10 border-secondary/25 text-secondary font-black shadow-sm' 
-                        : 'bg-white/40 border-white/60 hover:bg-white text-on-surface-variant'
+                        : 'bg-white/40 dark:bg-white/5 border-white/60 dark:border-white/10 hover:bg-white dark:hover:bg-white/10 text-on-surface-variant'
                     }`}
                   >
                     <img src={`https://flagcdn.com/w20/${team.flag}.png`} alt={team.name} className="w-4.5 h-3 object-cover rounded border border-black/5" />
@@ -199,7 +199,7 @@ export default function Profile({ user, onLogout, onResetBalance, onSelectMatch,
                   return (
                     <div 
                       key={bet.id}
-                      className="p-3.5 bg-white/40 border border-white/50 rounded-2xl text-[11px] space-y-2 shadow-sm"
+                      className="p-3.5 bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-2xl text-[11px] space-y-2 shadow-sm"
                     >
                       <div className="flex justify-between items-center">
                         <span className="font-black text-on-surface">{bet.matchTeams}</span>

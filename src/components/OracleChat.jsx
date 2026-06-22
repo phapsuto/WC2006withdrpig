@@ -132,7 +132,7 @@ export default function OracleChat() {
               <button
                 key={idx}
                 onClick={() => handleSend(s)}
-                className="px-3 py-1.5 rounded-xl bg-white/40 hover:bg-white border border-white/60 hover:border-primary/20 text-[11px] font-semibold text-on-surface-variant hover:text-primary transition-all text-left shadow-sm active:scale-95 duration-200"
+                className="px-3 py-1.5 rounded-xl bg-white/40 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border border-white/60 dark:border-white/10 hover:border-primary/20 text-[11px] font-semibold text-on-surface-variant hover:text-primary transition-all text-left shadow-sm active:scale-95 duration-200"
               >
                 {s}
               </button>
@@ -165,7 +165,7 @@ export default function OracleChat() {
               <div
                 className={`p-3.5 rounded-2xl text-[12px] leading-relaxed shadow-sm border ${
                   isModel
-                    ? 'bg-white/65 border-white/80 text-on-surface rounded-tl-sm'
+                    ? 'bg-white/65 dark:bg-white/5 border-white/80 dark:border-white/10 text-on-surface rounded-tl-sm'
                     : 'bg-primary text-white border-primary/25 rounded-tr-sm shadow-[inset_0px_2px_4px_rgba(255,255,255,0.2)]'
                 }`}
               >
@@ -180,7 +180,7 @@ export default function OracleChat() {
             <div className="w-7 h-7 rounded-full overflow-hidden border border-accent-gold shadow-sm flex-shrink-0 bg-white flex items-center justify-center p-0.5 animate-spin">
               <img src="/drpig_mascot.png" alt="Heo Hồng" className="w-full h-full object-cover" />
             </div>
-            <div className="p-3.5 rounded-2xl text-[12px] leading-relaxed bg-white/65 border border-white/80 text-on-surface-variant/75 rounded-tl-sm flex items-center gap-2">
+            <div className="p-3.5 rounded-2xl text-[12px] leading-relaxed bg-white/65 dark:bg-white/5 border border-white/80 dark:border-white/10 text-on-surface-variant/75 rounded-tl-sm flex items-center gap-2">
               <Loader2 size={12} className="animate-spin text-primary" />
               <span>{t('oracleLoadingText')}</span>
             </div>
@@ -203,7 +203,7 @@ export default function OracleChat() {
           onChange={(e) => setInput(e.target.value)}
           placeholder={t('oraclePlaceholder')}
           disabled={loading}
-          className="flex-1 bg-white/50 focus:bg-white text-[12px] border border-white/70 focus:border-primary rounded-xl px-4 py-2.5 outline-none transition-all shadow-inner placeholder-on-surface-variant/55 disabled:opacity-60"
+          className="flex-1 bg-white/50 dark:bg-white/5 focus:bg-white dark:focus:bg-white/10 text-[12px] border border-white/70 dark:border-white/10 focus:border-primary rounded-xl px-4 py-2.5 outline-none transition-all shadow-inner placeholder-on-surface-variant/55 disabled:opacity-60"
         />
         <button
           type="submit"

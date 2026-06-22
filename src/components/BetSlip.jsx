@@ -74,7 +74,7 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
         {activeBet && !betResult && (
           <button 
             onClick={onClearBet}
-            className="w-6 h-6 rounded-full bg-white/40 border border-white/50 flex items-center justify-center text-on-surface-variant hover:bg-white hover:text-primary active:scale-95 transition-all"
+            className="w-6 h-6 rounded-full bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 flex items-center justify-center text-on-surface-variant hover:bg-white dark:hover:bg-white/10 hover:text-primary active:scale-95 transition-all"
           >
             <X size={12} />
           </button>
@@ -86,7 +86,7 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
           <CheckCircle2 size={36} className="text-tertiary animate-bounce" />
           <h4 className="text-xs font-black text-on-background">{t('betPlacedSuccess')}</h4>
           <p className="text-[10px] text-on-surface-variant/80">
-            {t('betTicketId')} <code className="bg-white/60 border border-white/80 px-1.5 py-0.5 rounded font-black text-on-surface">{betResult.betId}</code>
+            {t('betTicketId')} <code className="bg-white/60 dark:bg-white/10 border border-white/80 dark:border-white/20 px-1.5 py-0.5 rounded font-black text-on-surface">{betResult.betId}</code>
           </p>
           <button 
             onClick={onClearBet}
@@ -98,7 +98,7 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
       ) : activeBet ? (
         <div className="flex flex-col gap-4">
           {/* Active Bet Item details */}
-          <div className="p-3.5 bg-white/45 border border-white/60 rounded-2xl space-y-2 text-xs">
+          <div className="p-3.5 bg-white/45 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-2xl space-y-2 text-xs">
             <div className="flex justify-between items-center text-[10px] text-on-surface-variant/70 font-bold uppercase tracking-wider">
               <span>{match.league.name}</span>
               <span>{t('liveBetLabel')}</span>
@@ -116,7 +116,7 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
 
           {/* Stake input container */}
           <div className="space-y-3">
-            <div className="flex justify-between items-center p-3 bg-white/50 border border-white/60 rounded-xl">
+            <div className="flex justify-between items-center p-3 bg-white/50 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-xl">
               <span className="text-xs font-bold text-on-surface-variant">{t('stakeLabel')}</span>
               <div className="flex items-center gap-1">
                 <input
@@ -208,7 +208,7 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
               return (
                 <div 
                   key={bet.id} 
-                  className="flex items-center justify-between p-2.5 bg-white/40 border border-white/50 rounded-xl text-[10px] font-bold"
+                  className="flex items-center justify-between p-2.5 bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-xl text-[10px] font-bold"
                 >
                   <div className="flex flex-col gap-0.5 leading-tight truncate mr-2">
                     <span className="text-on-surface truncate">{bet.matchTeams || bet.matchTitle}</span>

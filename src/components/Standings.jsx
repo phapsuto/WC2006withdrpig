@@ -225,7 +225,7 @@ export default function Standings({ matches = [], isFullPage = false }) {
               return (
                 <tr 
                   key={team.key} 
-                  className={`border-b border-white/10 hover:bg-white/40 transition-colors ${
+                  className={`border-b border-white/10 hover:bg-white/40 dark:hover:bg-white/5 transition-colors ${
                     isPromotedZone ? 'bg-primary-fixed/15 font-semibold text-primary' : 'text-on-surface'
                   }`}
                 >
@@ -294,7 +294,7 @@ export default function Standings({ matches = [], isFullPage = false }) {
           return (
             <div 
               key={m.id} 
-              className="flex items-center justify-between p-2.5 bg-white/40 border border-white/50 rounded-xl text-[11px]"
+              className="flex items-center justify-between p-2.5 bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-xl text-[11px]"
             >
               <div className="flex flex-col w-[50px] leading-tight">
                 <span className="color-secondary font-extrabold text-secondary">{timeStr}</span>
@@ -340,7 +340,7 @@ export default function Standings({ matches = [], isFullPage = false }) {
           className={`flex items-center justify-between w-full p-3 border rounded-xl transition-all ${
             hasData 
               ? 'bg-primary/10 border-primary/20 text-primary font-bold' 
-              : 'bg-white/40 border-white/60 text-on-surface-variant'
+              : 'bg-white/40 dark:bg-white/5 border-white/60 dark:border-white/10 text-on-surface-variant'
           }`}
         >
           <span className="text-[11px] font-black tracking-wider uppercase flex items-center gap-1.5">
@@ -351,7 +351,7 @@ export default function Standings({ matches = [], isFullPage = false }) {
         </button>
 
         {isExpanded && (
-          <div className="mt-1.5 p-3 bg-white/30 border border-white/40 rounded-2xl">
+          <div className="mt-1.5 p-3 bg-white/30 dark:bg-white/5 border border-white/40 dark:border-white/10 rounded-2xl">
             {renderGroupTable(sortedTeams, true)}
           </div>
         )}
@@ -382,7 +382,7 @@ export default function Standings({ matches = [], isFullPage = false }) {
         {/* Banner header bento */}
         <div className="w-full p-8 rounded-2xl relative overflow-hidden flex flex-col justify-center gap-1 bg-gradient-to-r from-primary to-secondary text-white shadow-md">
           <div className="absolute inset-0 bg-black/10 mix-blend-overlay"></div>
-          <span className="inline-block px-3 py-1 bg-white/20 rounded-full font-bold text-xs uppercase tracking-wider w-fit mb-1">
+          <span className="inline-block px-3 py-1 bg-white/20 dark:bg-white/10 rounded-full font-bold text-xs uppercase tracking-wider w-fit mb-1">
             Mùa giải 2026
           </span>
           <h1 className="text-3xl md:text-5xl font-black tracking-tighter relative z-10 text-white">
@@ -394,13 +394,13 @@ export default function Standings({ matches = [], isFullPage = false }) {
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex gap-2 p-1.5 bg-white/40 border border-white/50 rounded-2xl w-fit">
+        <div className="flex gap-2 p-1.5 bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-2xl w-fit">
           <button 
             onClick={() => setActiveTab('STANDINGS')}
             className={`px-6 py-2.5 text-xs font-bold rounded-xl transition-all border whitespace-nowrap ${
               activeTab === 'STANDINGS' 
-                ? 'bg-white text-primary border-white/60 shadow-sm' 
-                : 'text-on-surface-variant hover:text-primary hover:bg-white/20 border-transparent'
+                ? 'bg-white dark:bg-white/10 text-primary dark:text-primary border-white/60 dark:border-white/10 shadow-sm' 
+                : 'text-on-surface-variant hover:text-primary hover:bg-white/20 dark:hover:bg-white/5 border-transparent'
             }`}
           >
             Bảng xếp hạng
@@ -409,8 +409,8 @@ export default function Standings({ matches = [], isFullPage = false }) {
             onClick={() => setActiveTab('TOP_SCORERS')}
             className={`px-6 py-2.5 text-xs font-bold rounded-xl transition-all border whitespace-nowrap ${
               activeTab === 'TOP_SCORERS' 
-                ? 'bg-white text-primary border-white/60 shadow-sm' 
-                : 'text-on-surface-variant hover:text-primary hover:bg-white/20 border-transparent'
+                ? 'bg-white dark:bg-white/10 text-primary dark:text-primary border-white/60 dark:border-white/10 shadow-sm' 
+                : 'text-on-surface-variant hover:text-primary hover:bg-white/20 dark:hover:bg-white/5 border-transparent'
             }`}
           >
             Vua phá lưới & Kiến tạo
@@ -429,13 +429,13 @@ export default function Standings({ matches = [], isFullPage = false }) {
             </div>
 
             {/* Horizontal Navigation Menu for Groups selector */}
-            <div className="flex gap-2 p-1.5 bg-white/40 border border-white/50 rounded-2xl overflow-x-auto no-scrollbar">
+            <div className="flex gap-2 p-1.5 bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-2xl overflow-x-auto no-scrollbar">
               <button 
                 onClick={() => setSelectedGroupFilter('ALL')}
                 className={`px-4 py-2 text-xs font-bold rounded-xl transition-all border whitespace-nowrap ${
                   selectedGroupFilter === 'ALL' 
-                    ? 'bg-white text-primary border-white/60 shadow-sm' 
-                    : 'text-on-surface-variant hover:text-primary hover:bg-white/20 border-transparent'
+                    ? 'bg-white dark:bg-white/10 text-primary dark:text-primary border-white/60 dark:border-white/10 shadow-sm' 
+                    : 'text-on-surface-variant hover:text-primary hover:bg-white/20 dark:hover:bg-white/5 border-transparent'
                 }`}
               >
                 Tất cả bảng
@@ -446,8 +446,8 @@ export default function Standings({ matches = [], isFullPage = false }) {
                   onClick={() => setSelectedGroupFilter(g.name)}
                   className={`px-4 py-2 text-xs font-bold rounded-xl transition-all border whitespace-nowrap ${
                     selectedGroupFilter === g.name 
-                      ? 'bg-white text-primary border-white/60 shadow-sm' 
-                      : 'text-on-surface-variant hover:text-primary hover:bg-white/20 border-transparent'
+                      ? 'bg-white dark:bg-white/10 text-primary dark:text-primary border-white/60 dark:border-white/10 shadow-sm' 
+                      : 'text-on-surface-variant hover:text-primary hover:bg-white/20 dark:hover:bg-white/5 border-transparent'
                   }`}
                 >
                   {g.name}
@@ -504,13 +504,13 @@ export default function Standings({ matches = [], isFullPage = false }) {
                   </div>
 
                   {/* Group Mini Stats */}
-                  <div className="bento-glass p-5 space-y-4 bg-gradient-to-br from-white/95 to-secondary-fixed/5">
+                  <div className="bento-glass p-5 space-y-4 bg-gradient-to-br from-white/95 to-secondary-fixed/5 dark:from-[#0d1423] dark:to-[#170e17]">
                     <h3 className="text-xs font-black text-secondary uppercase tracking-wider">
                       Thống kê nhanh {selectedGroupFilter}
                     </h3>
                     
                     <div className="space-y-3">
-                      <div className="flex items-center gap-3 p-3 bg-white/55 border border-white/60 rounded-xl shadow-sm">
+                      <div className="flex items-center gap-3 p-3 bg-white/55 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-xl shadow-sm">
                         <div className="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
                           <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>sports_soccer</span>
                         </div>
@@ -520,7 +520,7 @@ export default function Standings({ matches = [], isFullPage = false }) {
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-3 p-3 bg-white/55 border border-white/60 rounded-xl shadow-sm">
+                      <div className="flex items-center gap-3 p-3 bg-white/55 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-xl shadow-sm">
                         <div className="w-9 h-9 rounded-full bg-tertiary/10 text-tertiary flex items-center justify-center flex-shrink-0">
                           <Award size={18} />
                         </div>
@@ -530,7 +530,7 @@ export default function Standings({ matches = [], isFullPage = false }) {
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-3 p-3 bg-white/55 border border-white/60 rounded-xl shadow-sm">
+                      <div className="flex items-center gap-3 p-3 bg-white/55 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-xl shadow-sm">
                         <div className="w-9 h-9 rounded-full bg-danger/10 text-danger flex items-center justify-center flex-shrink-0">
                           <ShieldAlert size={18} />
                         </div>
@@ -574,7 +574,7 @@ export default function Standings({ matches = [], isFullPage = false }) {
                     </thead>
                     <tbody>
                       {topScorers.goals.slice(0, 20).map((player, idx) => (
-                        <tr key={player.playerId || idx} className="border-b border-white/10 hover:bg-white/40 transition-colors">
+                        <tr key={player.playerId || idx} className="border-b border-white/10 hover:bg-white/40 dark:hover:bg-white/5 transition-colors">
                           <td className="py-2.5 px-1 text-center font-black text-on-surface-variant/70">{idx + 1}</td>
                           <td className="py-2.5 px-2">
                             <div className="flex items-center gap-2.5">
@@ -640,7 +640,7 @@ export default function Standings({ matches = [], isFullPage = false }) {
                     </thead>
                     <tbody>
                       {topScorers.assists.slice(0, 20).map((player, idx) => (
-                        <tr key={player.playerId || idx} className="border-b border-white/10 hover:bg-white/40 transition-colors">
+                        <tr key={player.playerId || idx} className="border-b border-white/10 hover:bg-white/40 dark:hover:bg-white/5 transition-colors">
                           <td className="py-2.5 px-1 text-center font-black text-on-surface-variant/70">{idx + 1}</td>
                           <td className="py-2.5 px-2">
                             <div className="flex items-center gap-2.5">
@@ -695,11 +695,11 @@ export default function Standings({ matches = [], isFullPage = false }) {
       </h4>
 
       {/* Tabs selectors inside sidebar panel */}
-      <div className="flex gap-1 p-1 bg-white/40 border border-white/50 rounded-xl">
+      <div className="flex gap-1 p-1 bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-xl">
         <button 
           onClick={() => setActiveTab('STANDINGS')}
           className={`flex-1 py-1.5 text-center text-xs font-bold rounded-lg transition-all ${
-            activeTab === 'STANDINGS' ? 'bg-white text-primary shadow-sm' : 'text-on-surface-variant hover:text-primary'
+            activeTab === 'STANDINGS' ? 'bg-white dark:bg-white/10 text-primary dark:text-primary shadow-sm' : 'text-on-surface-variant hover:text-primary hover:bg-white/5'
           }`}
         >
           Xếp hạng
@@ -707,7 +707,7 @@ export default function Standings({ matches = [], isFullPage = false }) {
         <button 
           onClick={() => setActiveTab('TOP_SCORERS')}
           className={`flex-1 py-1.5 text-center text-xs font-bold rounded-lg transition-all ${
-            activeTab === 'TOP_SCORERS' ? 'bg-white text-primary shadow-sm' : 'text-on-surface-variant hover:text-primary'
+            activeTab === 'TOP_SCORERS' ? 'bg-white dark:bg-white/10 text-primary dark:text-primary shadow-sm' : 'text-on-surface-variant hover:text-primary hover:bg-white/5'
           }`}
         >
           Vua phá lưới
@@ -716,16 +716,16 @@ export default function Standings({ matches = [], isFullPage = false }) {
 
       {/* Group dropdown filter inside sidebar standings tab */}
       {activeTab === 'STANDINGS' && (
-        <div className="flex items-center gap-2 p-2 bg-white/40 border border-white/55 rounded-xl text-xs font-bold">
+        <div className="flex items-center gap-2 p-2 bg-white/40 dark:bg-white/5 border border-white/55 dark:border-white/10 rounded-xl text-xs font-bold">
           <span className="text-on-surface-variant/80">Xem bảng:</span>
           <select 
             value={selectedGroupFilter} 
             onChange={(e) => setSelectedGroupFilter(e.target.value)}
             className="flex-1 bg-transparent border-none text-xs font-black text-on-surface outline-none cursor-pointer p-0"
           >
-            <option value="ALL">Tất cả các bảng (A - L)</option>
+            <option value="ALL" className="bg-background text-on-background">Tất cả các bảng (A - L)</option>
             {ALL_GROUPS.map(g => (
-              <option key={g.name} value={g.name}>{g.name}</option>
+              <option key={g.name} value={g.name} className="bg-background text-on-background">{g.name}</option>
             ))}
           </select>
         </div>
@@ -757,7 +757,7 @@ export default function Standings({ matches = [], isFullPage = false }) {
                 </thead>
                 <tbody>
                   {topScorers.goals.slice(0, 10).map((player, idx) => (
-                    <tr key={player.playerId || idx} className="border-b border-white/10 hover:bg-white/30 transition-colors">
+                    <tr key={player.playerId || idx} className="border-b border-white/10 hover:bg-white/30 dark:hover:bg-white/5 transition-colors">
                       <td className="py-2 px-1 text-[10px] font-black text-on-surface-variant/70 w-4">{idx + 1}</td>
                       <td className="py-2 px-1">
                         <div className="flex items-center gap-2">

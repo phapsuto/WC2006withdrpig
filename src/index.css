@@ -116,19 +116,76 @@ html {
   --card-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.9);
   --nav-bg: rgba(255, 255, 255, 0.7); /* Glassmorphic nav */
   --ai-card-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(200, 168, 75, 0.05));
+  --ambient-blur-1: radial-gradient(circle, rgba(0, 163, 255, 0.15) 0%, rgba(247, 249, 251, 0) 70%);
+  --ambient-blur-2: radial-gradient(circle, rgba(253, 76, 147, 0.1) 0%, rgba(247, 249, 251, 0) 70%);
+}
+
+.dark {
+  --bg-primary: #0a0f1d; /* Deep Dark Navy */
+  --bg-secondary: rgba(13, 20, 35, 0.65); /* Translucent dark navy */
+  --bg-tertiary: #141c2f; /* Slightly lighter deep navy for panels */
+  --bg-accent: rgba(0, 162, 255, 0.08); /* Soft Neon Blue highlight */
+  
+  --primary: #00a2ff; /* Glowing Neon Blue */
+  --primary-rgb: 0, 162, 255;
+  --primary-glow: rgba(0, 162, 255, 0.1);
+  
+  --secondary: #fd4c93; /* Glowing Neon Pink */
+  --secondary-rgb: 253, 76, 147;
+  --secondary-glow: rgba(253, 76, 147, 0.15);
+  
+  --accent-gold: #e5c158; /* Bright Glowing Gold accent */
+  --accent-gold-rgb: 229, 193, 88;
+  
+  --danger: #ff453a; /* iOS Dark System Red */
+  --danger-rgb: 255, 69, 58;
+  
+  --warning: #ff9f0a; /* iOS Dark System Orange */
+  --info: #30d158; /* iOS Dark System Green */
+  
+  --text-primary: #f5f7fa; /* Clean off-white text */
+  --text-secondary: #a0aec0; /* Cool light grey */
+  --text-muted: #718096; /* Muted grey */
+  
+  --border: rgba(255, 255, 255, 0.08); /* Dark glassmorphic border */
+  --border-hover: rgba(0, 162, 255, 0.25);
+  --border-active: #00a2ff;
+  
+  --shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 8px 30px rgba(0, 162, 255, 0.15);
+  --glow: 0 0 15px rgba(0, 162, 255, 0.15);
+  
+  /* Theme elements */
+  --card-bg: rgba(13, 20, 35, 0.65);
+  --card-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  --nav-bg: rgba(10, 15, 30, 0.75); /* Dark Glassmorphic nav */
+  --ai-card-bg: linear-gradient(135deg, rgba(13, 20, 35, 0.85), rgba(229, 193, 88, 0.05));
+  --ambient-blur-1: radial-gradient(circle, rgba(0, 162, 255, 0.2) 0%, rgba(10, 15, 29, 0) 70%);
+  --ambient-blur-2: radial-gradient(circle, rgba(253, 76, 147, 0.15) 0%, rgba(10, 15, 29, 0) 70%);
+}
+
+/* Fluid Transitions for Theme Toggles */
+body, .bento-tile, .bento-glass, .glass-panel, header, nav, footer, input, select, button, textarea {
+  transition: background-color var(--transition-normal), border-color var(--transition-normal), color var(--transition-fast), box-shadow var(--transition-normal);
 }
 
 /* Glass Bento Tile Utility Classes */
 .bento-tile, .bento-glass, .glass-panel {
-  background-color: rgba(255, 255, 255, 0.7) !important;
+  background-color: var(--card-bg) !important;
   backdrop-filter: blur(24px) !important;
   -webkit-backdrop-filter: blur(24px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.4) !important;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--card-shadow) !important;
   border-radius: 1rem !important;
   position: relative;
   overflow: hidden;
 }
+
+.dark .bento-tile::before, .dark .bento-glass::before, .dark .glass-panel::before {
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%) border-box;
+  opacity: 0.8;
+}
+
 .bento-tile::before, .bento-glass::before, .glass-panel::before {
   content: '';
   position: absolute;
@@ -146,12 +203,12 @@ html {
 /* Ambient Background Glows */
 .ambient-glow-1 {
   position: fixed; top: -10%; left: -10%; width: 50vw; height: 50vw;
-  background: radial-gradient(circle, rgba(0, 163, 255, 0.15) 0%, rgba(247, 249, 251, 0) 70%);
+  background: var(--ambient-blur-1);
   z-index: -1; pointer-events: none;
 }
 .ambient-glow-2 {
   position: fixed; bottom: -20%; right: -10%; width: 60vw; height: 60vw;
-  background: radial-gradient(circle, rgba(253, 76, 147, 0.1) 0%, rgba(247, 249, 251, 0) 70%);
+  background: var(--ambient-blur-2);
   z-index: -1; pointer-events: none;
 }
 

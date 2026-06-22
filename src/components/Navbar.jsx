@@ -1,7 +1,7 @@
 import { Lock } from 'lucide-react';
 import { useLanguage } from '../utils/LanguageContext';
 
-export default function Navbar({ activePage, setActivePage, user, onGoogleLoginClick }) {
+export default function Navbar({ activePage, setActivePage, user, onGoogleLoginClick, theme, toggleTheme }) {
   const { t } = useLanguage();
 
   return (
@@ -111,6 +111,17 @@ export default function Navbar({ activePage, setActivePage, user, onGoogleLoginC
               <span className="hidden sm:inline">{user.name.split(' ').pop()}</span>
             </button>
           )}
+
+          {/* Theme Toggle Button */}
+          <button 
+            onClick={toggleTheme}
+            className="w-9 h-9 flex items-center justify-center rounded-xl border bg-white/40 border-white/60 text-on-surface-variant hover:text-primary hover:border-primary/40 transition-all active:scale-95 duration-200"
+            title="Đổi giao diện"
+          >
+            <span className="material-symbols-outlined text-[18px]">
+              {theme === 'light' ? 'dark_mode' : 'light_mode'}
+            </span>
+          </button>
 
           {/* Admin Portal Gateway */}
           <button 

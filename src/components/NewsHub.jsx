@@ -255,7 +255,7 @@ export default function NewsHub({ matches = [] }) {
         </div>
 
         {/* Tab Bar */}
-        <div className="flex gap-1 p-1 bg-white/20 border border-white/30 rounded-xl mt-4 mb-4">
+        <div className="flex gap-1 p-1 bg-white/20 dark:bg-white/5 border border-white/30 dark:border-white/10 rounded-xl mt-4 mb-4">
           {[
             { key: 'fulltext', label: '📖 Toàn văn' },
             { key: 'ai', label: '🐷 AI Tóm tắt' },
@@ -267,7 +267,7 @@ export default function NewsHub({ matches = [] }) {
               className={`flex-1 px-3 py-2.5 text-xs font-black rounded-lg transition-all whitespace-nowrap ${
                 activeTab === tab.key 
                   ? 'bg-primary text-white shadow-md' 
-                  : 'text-on-surface-variant hover:bg-white/30'
+                  : 'text-on-surface-variant hover:bg-white/30 dark:hover:bg-white/10'
               }`}
             >
               {tab.label}
@@ -280,7 +280,7 @@ export default function NewsHub({ matches = [] }) {
           {activeTab === 'fulltext' && (
             <div className="space-y-5">
               {selectedArticle.titleVi && selectedArticle.titleVi !== selectedArticle.title && (
-                <div className="p-3.5 bg-white/30 border-l-3 border-accent-gold rounded-xl text-xs">
+                <div className="p-3.5 bg-white/30 dark:bg-white/5 border-l-3 border-accent-gold rounded-xl text-xs">
                   <span className="text-[10px] font-black uppercase text-accent-gold block mb-1">Tiêu đề gốc</span>
                   <p className="italic text-on-surface font-semibold">"{selectedArticle.title}"</p>
                 </div>
@@ -295,7 +295,7 @@ export default function NewsHub({ matches = [] }) {
               </div>
 
               {/* Source Link */}
-              <div className="mt-6 p-4 bg-white/30 border border-white/40 rounded-xl flex items-center justify-between">
+              <div className="mt-6 p-4 bg-white/30 dark:bg-white/5 border border-white/40 dark:border-white/10 rounded-xl flex items-center justify-between">
                 <div>
                   <span className="text-[9px] font-black text-on-surface-variant/60 uppercase">Nguồn</span>
                   <div className="font-black text-primary text-sm">{selectedArticle.source}</div>
@@ -314,18 +314,18 @@ export default function NewsHub({ matches = [] }) {
 
           {activeTab === 'ai' && (
             <div className="space-y-5">
-              <div className="p-5 bg-white/40 border border-white/50 rounded-2xl space-y-3">
+              <div className="p-5 bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-2xl space-y-3">
                 <h4 className="text-xs font-black text-primary flex items-center gap-1.5 uppercase tracking-wider">
                   <Sparkles size={15} className="text-secondary animate-pulse" />
                   Tóm tắt nhanh AI
                 </h4>
                 <div 
-                  className="text-sm text-on-surface-variant space-y-2 font-bold border-t border-white/30 pt-3 leading-relaxed"
+                  className="text-sm text-on-surface-variant space-y-2 font-bold border-t border-white/30 dark:border-white/10 pt-3 leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: selectedArticle.summary || '<ul><li>Đang cập nhật tóm tắt tự động...</li></ul>' }}
                 />
               </div>
 
-              <div className="p-5 bg-gradient-to-br from-white/90 to-pink-50/50 border border-secondary/15 rounded-2xl flex items-start gap-4 relative overflow-hidden">
+              <div className="p-5 bg-gradient-to-br from-white/90 to-pink-50/50 dark:from-white/10 dark:to-pink-50/5 border border-secondary/15 dark:border-secondary/20 rounded-2xl flex items-start gap-4 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-20 h-20 bg-secondary/5 rounded-full -mr-5 -mt-5" />
                 <img 
                   src="/drpig_mascot.png" 
@@ -347,32 +347,25 @@ export default function NewsHub({ matches = [] }) {
 
           {activeTab === 'social' && (
             <div className="space-y-4">
-              <div className="p-4 bg-white/40 border-l-4 border-[#ff4500] rounded-2xl space-y-3">
-                <div className="flex justify-between items-center text-[10px] font-bold">
-                  <span className="text-[#ff4500] font-black">r/soccer Reddit 💬</span>
-                  <div className="flex gap-3 text-on-surface-variant/80">
-                    <span>▲ {selectedArticle.socialMentions?.reddit?.upvotes || 124}</span>
-                    <span>💬 {selectedArticle.socialMentions?.reddit?.commentsCount || 45}</span>
-                  </div>
+              <div className="p-5 bg-white/40 dark:bg-white/5 border border-white/30 dark:border-white/10 rounded-2xl text-center space-y-4">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full flex items-center justify-center">
+                  <span className="text-3xl">💬</span>
                 </div>
-                <div className="p-3 bg-white/50 border border-white/60 rounded-xl">
-                  <p className="text-xs font-bold italic text-on-surface leading-relaxed">
-                    "{selectedArticle.socialMentions?.reddit?.topComment || 'Great analysis on the tactical setup.'}"
+                <div className="space-y-2">
+                  <h4 className="text-sm font-black text-on-surface">Chưa có dữ liệu MXH thời gian thực</h4>
+                  <p className="text-xs text-on-surface-variant/80 font-medium leading-relaxed max-w-xs mx-auto">
+                    Phản hồi mạng xã hội cho bài viết này chưa được thu thập. Hãy xem nhận định trực tiếp từ Heo Hồng 🐷 trong phần chi tiết trận đấu để cập nhật bình luận AI thời gian thực!
                   </p>
                 </div>
-              </div>
-
-              <div className="p-4 bg-white/40 border-l-4 border-black rounded-2xl space-y-3">
-                <div className="flex justify-between items-center text-[10px] font-bold">
-                  <span className="font-black">X / Twitter 🐦</span>
-                  <div className="flex gap-3 text-on-surface-variant/80">
-                    <span>♥ {selectedArticle.socialMentions?.x?.likes || 512}</span>
-                    <span>🔄 {selectedArticle.socialMentions?.x?.reposts || 89}</span>
-                  </div>
-                </div>
-                <div className="p-3 bg-white/50 border border-white/60 rounded-xl">
-                  <p className="text-xs font-bold text-on-surface leading-relaxed">
-                    "{selectedArticle.socialMentions?.x?.hotPost || 'Matchday! Who steals the headlines? ⚽🔥'}"
+                <div className="p-4 bg-gradient-to-br from-white/90 to-pink-50/50 dark:from-white/10 dark:to-pink-50/5 border border-secondary/15 dark:border-secondary/20 rounded-xl flex items-center gap-3">
+                  <img 
+                    src="/drpig_mascot.png" 
+                    alt="Heo Hồng" 
+                    className="w-10 h-10 rounded-full border-2 border-secondary/40 flex-shrink-0"
+                    onError={(e) => { e.target.style.display = 'none' }}
+                  />
+                  <p className="text-xs font-bold italic text-on-surface leading-relaxed text-left">
+                    🐷 Heo Hồng: "Các fen ơi, muốn xem bình luận nóng hổi thì vào xem trận đấu trực tiếp, Heo Hồng sẽ cập nhật phản hồi từ BLV và CĐV liên tục cho anh em nhé!"
                   </p>
                 </div>
               </div>
@@ -403,7 +396,7 @@ export default function NewsHub({ matches = [] }) {
         <button 
           onClick={() => loadNews(true)} 
           disabled={loading}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/50 border border-white/60 text-xs font-bold text-on-surface hover:bg-white/80 active:scale-95 transition-all disabled:opacity-50"
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/50 dark:bg-white/5 border border-white/60 dark:border-white/10 text-xs font-bold text-on-surface hover:bg-white/80 dark:hover:bg-white/10 active:scale-95 transition-all disabled:opacity-50"
         >
           {loading ? (
             <><Loader2 size={13} className="animate-spin text-primary" /> Đang tải...</>
@@ -444,13 +437,13 @@ export default function NewsHub({ matches = [] }) {
               </h3>
 
               {article.liveInfo && (
-                <div className="flex items-center gap-3 p-2.5 bg-white/60 border border-white/70 rounded-xl w-fit">
+                <div className="flex items-center gap-3 p-2.5 bg-white/60 dark:bg-white/5 border border-white/70 dark:border-white/10 rounded-xl w-fit">
                   <strong className="text-sm font-black text-primary">{article.liveInfo.home}</strong>
                   <span className="text-lg font-black bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                     {article.liveInfo.score}
                   </span>
                   <strong className="text-sm font-black text-secondary">{article.liveInfo.away}</strong>
-                  <span className="text-[10px] font-bold border-l border-white/50 pl-2.5 flex items-center gap-1">
+                  <span className="text-[10px] font-bold border-l border-white/50 dark:border-white/10 pl-2.5 flex items-center gap-1">
                     <Flame size={12} className="text-red-500" /> Phút {article.liveInfo.minute}'
                   </span>
                 </div>
@@ -501,7 +494,7 @@ export default function NewsHub({ matches = [] }) {
                 <div 
                   key={article.id}
                   onClick={() => handleCardClick(article)}
-                  className="bg-white/40 hover:bg-white/70 border border-white/50 hover:border-primary/20 rounded-2xl overflow-hidden cursor-pointer group transition-all active:scale-[0.98]"
+                  className="bg-white/40 dark:bg-white/5 hover:bg-white/70 dark:hover:bg-white/10 border border-white/50 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30 rounded-2xl overflow-hidden cursor-pointer group transition-all active:scale-[0.98]"
                 >
                   {/* Thumbnail */}
                   <div className="w-full h-[140px] overflow-hidden bg-gray-100 relative">
@@ -552,7 +545,7 @@ export default function NewsHub({ matches = [] }) {
                   <div 
                     key={article.id}
                     onClick={() => handleCardClick(article)}
-                    className="flex gap-3.5 p-3 bg-white/30 hover:bg-white/60 border border-white/40 hover:border-primary/15 rounded-xl cursor-pointer transition-all group active:scale-[0.99]"
+                    className="flex gap-3.5 p-3 bg-white/30 dark:bg-white/5 hover:bg-white/60 dark:hover:bg-white/10 border border-white/40 dark:border-white/10 hover:border-primary/15 dark:hover:border-primary/25 rounded-xl cursor-pointer transition-all group active:scale-[0.99]"
                   >
                     {/* Thumbnail */}
                     <div className="w-20 h-20 md:w-24 md:h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
@@ -585,7 +578,7 @@ export default function NewsHub({ matches = [] }) {
           )}
 
           {/* Heo Hồng Prophet Corner */}
-          <div className="p-5 bg-gradient-to-br from-white/80 to-pink-50/40 border border-secondary/15 rounded-2xl flex items-start gap-4 relative overflow-hidden">
+          <div className="p-5 bg-gradient-to-br from-white/80 to-pink-50/40 dark:from-white/5 dark:to-pink-900/5 border border-secondary/15 dark:border-white/10 rounded-2xl flex items-start gap-4 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-24 h-24 bg-secondary/5 rounded-full -mr-8 -mt-8" />
             <img 
               src="/drpig_mascot.png" 

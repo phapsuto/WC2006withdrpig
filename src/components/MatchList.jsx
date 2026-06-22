@@ -228,27 +228,27 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
       {/* Filters Area */}
       <div className="flex flex-col sm:flex-row gap-2">
         {/* Group Filter */}
-        <div className="flex-1 flex items-center gap-2 px-3 py-1.5 bg-white/40 border border-white/50 rounded-xl">
+        <div className="flex-1 flex items-center gap-2 px-3 py-1.5 bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-xl">
           <span className="text-[10px] font-bold text-on-surface-variant/70 whitespace-nowrap uppercase">{t('groupFilterLabel')}</span>
           <select 
             value={selectedGroupFilter} 
             onChange={(e) => setSelectedGroupFilter(e.target.value)}
             className="flex-1 bg-transparent border-none text-xs font-bold text-on-surface outline-none cursor-pointer focus:ring-0 p-0"
           >
-            <option value="ALL" className="bg-[#f2f4f6] text-on-background">{t('allGroupsOption')}</option>
+            <option value="ALL" className="bg-background text-on-background">{t('allGroupsOption')}</option>
             {Array.from({ length: 12 }, (_, i) => String.fromCharCode(65 + i)).map(g => (
-              <option key={g} value={g} className="bg-[#f2f4f6] text-on-background">{t('groupLabel', { group: g })}</option>
+              <option key={g} value={g} className="bg-background text-on-background">{t('groupLabel', { group: g })}</option>
             ))}
           </select>
         </div>
       </div>
 
       {/* Tabs list */}
-      <div className="flex gap-1 p-1 bg-white/40 border border-white/50 rounded-xl">
+      <div className="flex gap-1 p-1 bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-xl">
         <button 
           className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-center ${
             activeTab === 'ALL' 
-              ? 'bg-white/95 text-primary shadow-sm' 
+              ? 'bg-white/95 dark:bg-white/10 text-primary shadow-sm' 
               : 'text-on-surface-variant hover:bg-white/20 hover:text-on-surface'
           }`}
           onClick={() => setActiveTab('ALL')}
@@ -258,7 +258,7 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
         <button 
           className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-center flex items-center justify-center gap-1 ${
             activeTab === 'LIVE' 
-              ? 'bg-white/95 text-primary shadow-sm' 
+              ? 'bg-white/95 dark:bg-white/10 text-primary shadow-sm' 
               : 'text-on-surface-variant hover:bg-white/20 hover:text-on-surface'
           }`}
           onClick={() => setActiveTab('LIVE')}
@@ -271,7 +271,7 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
         <button 
           className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-center ${
             activeTab === 'UPCOMING' 
-              ? 'bg-white/95 text-primary shadow-sm' 
+              ? 'bg-white/95 dark:bg-white/10 text-primary shadow-sm' 
               : 'text-on-surface-variant hover:bg-white/20 hover:text-on-surface'
           }`}
           onClick={() => setActiveTab('UPCOMING')}
@@ -281,7 +281,7 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
         <button 
           className={`flex-1 py-1.5 rounded-lg text-xs font-bold transition-all text-center ${
             activeTab === 'FINISHED' 
-              ? 'bg-white/95 text-primary shadow-sm' 
+              ? 'bg-white/95 dark:bg-white/10 text-primary shadow-sm' 
               : 'text-on-surface-variant hover:bg-white/20 hover:text-on-surface'
           }`}
           onClick={() => setActiveTab('FINISHED')}
@@ -354,7 +354,7 @@ export default function MatchList({ matches = [], onSelectMatch, activeMatchId, 
                       className={`grid grid-cols-12 items-center p-3 rounded-2xl cursor-pointer transition-all border border-transparent ${
                         isSelected 
                           ? 'bg-primary-fixed/20 border-l-4 border-l-primary shadow-sm' 
-                          : 'bg-white/40 hover:bg-white/70 border-white/40 shadow-[0_2px_8px_rgba(0,0,0,0.01)]'
+                          : 'bg-white/40 dark:bg-white/5 hover:bg-white/70 dark:hover:bg-white/10 border-white/40 dark:border-white/5 shadow-[0_2px_8px_rgba(0,0,0,0.01)]'
                       }`}
                       onClick={() => onSelectMatch(match.id)}
                     >

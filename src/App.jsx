@@ -22,6 +22,37 @@ function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [showBetSlipModal, setShowBetSlipModal] = useState(false);
 
+  const [theme, setTheme] = useState(() => {
+    try {
+      const saved = localStorage.getItem('wc2026_theme');
+      if (saved) return saved;
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    return 'light';
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    try {
+      localStorage.setItem('wc2026_theme', theme);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
+
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     window.addEventListener('resize', handleResize);
@@ -391,21 +422,32 @@ function App() {
           >
             World Cup 2026
           </h1>
-          {user ? (
+          <div className="flex items-center gap-2">
             <button 
-              onClick={() => setActivePage('PROFILE')}
-              className="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center text-xs font-black shadow border border-white/40 active:scale-95 duration-200"
-            >
-              {user.initials || user.name.charAt(0)}
-            </button>
-          ) : (
-            <button 
-              onClick={() => setShowLoginModal(true)}
+              onClick={toggleTheme}
               className="w-9 h-9 rounded-full bg-white/50 border border-white/60 flex items-center justify-center text-primary active:scale-95 duration-200"
+              title="Đổi giao diện"
             >
-              <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>account_circle</span>
+              <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>
+                {theme === 'light' ? 'dark_mode' : 'light_mode'}
+              </span>
             </button>
-          )}
+            {user ? (
+              <button 
+                onClick={() => setActivePage('PROFILE')}
+                className="w-9 h-9 rounded-full bg-primary text-white flex items-center justify-center text-xs font-black shadow border border-white/40 active:scale-95 duration-200"
+              >
+                {user.initials || user.name.charAt(0)}
+              </button>
+            ) : (
+              <button 
+                onClick={() => setShowLoginModal(true)}
+                className="w-9 h-9 rounded-full bg-white/50 border border-white/60 flex items-center justify-center text-primary active:scale-95 duration-200"
+              >
+                <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 0" }}>account_circle</span>
+              </button>
+            )}
+          </div>
         </header>
 
         {/* Mobile Page Content Switcher */}
@@ -751,6 +793,8 @@ function App() {
         setActivePage={setActivePage}
         user={user}
         onGoogleLoginClick={() => setShowLoginModal(true)}
+        theme={theme}
+        toggleTheme={toggleTheme}
       />
 
       {activePage === 'ADMIN_PORTAL' ? (

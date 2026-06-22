@@ -708,7 +708,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
       </div>
 
       {/* Segmented Control detail tabs navigation */}
-      <div className="flex gap-1.5 p-1.5 bg-white/40 border border-white/50 rounded-2xl overflow-x-auto no-scrollbar">
+      <div className="flex gap-1.5 p-1.5 bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-2xl overflow-x-auto no-scrollbar">
         {[
           { key: 'ODDS', icon: <BadgePercent size={14} />, label: t('tabBettingOdds') },
           { key: 'ANALYTICS', icon: <Cpu size={14} />, label: t('tabAiPredictor') },
@@ -724,8 +724,8 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
             onClick={() => setActiveTab(tab.key)}
             className={`flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-bold rounded-xl transition-all border border-transparent whitespace-nowrap ${
               activeTab === tab.key 
-                ? 'bg-white text-primary shadow-[0_2px_8px_rgba(0,98,157,0.08)] border-white/60' 
-                : 'text-on-surface-variant hover:text-primary hover:bg-white/20'
+                ? 'bg-white dark:bg-white/10 text-primary dark:text-primary shadow-[0_2px_8px_rgba(0,98,157,0.08)] border-white/60 dark:border-white/10' 
+                : 'text-on-surface-variant hover:text-primary hover:bg-white/20 dark:hover:bg-white/5'
             }`}
           >
             {tab.icon}
@@ -752,7 +752,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   className={`flex flex-col gap-1.5 p-4 rounded-2xl border transition-all text-left shadow-sm active:scale-[0.98] ${
                     activeBetId === `${match.id}-1x2-home` 
                       ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 hover:bg-white border-white/60 hover:border-primary/20'
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
                   }`}
                 >
                   <div className="flex justify-between items-center w-full">
@@ -774,7 +774,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   className={`flex flex-col gap-1.5 p-4 rounded-2xl border transition-all text-left shadow-sm active:scale-[0.98] ${
                     activeBetId === `${match.id}-1x2-draw` 
                       ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 hover:bg-white border-white/60 hover:border-primary/20'
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
                   }`}
                 >
                   <div className="flex justify-between items-center w-full">
@@ -796,7 +796,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   className={`flex flex-col gap-1.5 p-4 rounded-2xl border transition-all text-left shadow-sm active:scale-[0.98] ${
                     activeBetId === `${match.id}-1x2-away` 
                       ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 hover:bg-white border-white/60 hover:border-primary/20'
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
                   }`}
                 >
                   <div className="flex justify-between items-center w-full">
@@ -826,7 +826,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   className={`flex items-center justify-between p-4 rounded-2xl border transition-all shadow-sm active:scale-[0.98] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-home` 
                       ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 hover:bg-white border-white/60 hover:border-primary/20'
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
                   }`}
                 >
                   <span className={`text-xs font-bold ${activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-home` ? 'text-white' : 'text-on-surface-variant'}`}>{home.name} ({odds.handicap.line})</span>
@@ -841,7 +841,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   className={`flex items-center justify-between p-4 rounded-2xl border transition-all shadow-sm active:scale-[0.98] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-away` 
                       ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 hover:bg-white border-white/60 hover:border-primary/20'
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
                   }`}
                 >
                   <span className={`text-xs font-bold ${activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-away` ? 'text-white' : 'text-on-surface-variant'}`}>{away.name} ({odds.handicap.line.startsWith('-') ? odds.handicap.line.replace('-', '+') : `-${odds.handicap.line}`})</span>
@@ -864,7 +864,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   className={`flex flex-col gap-1.5 p-4 rounded-2xl border transition-all text-left shadow-sm active:scale-[0.98] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-over` 
                       ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 hover:bg-white border-white/60 hover:border-primary/20'
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
                   }`}
                 >
                   <div className="flex justify-between items-center w-full">
@@ -886,7 +886,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   className={`flex flex-col gap-1.5 p-4 rounded-2xl border transition-all text-left shadow-sm active:scale-[0.98] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-under` 
                       ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 hover:bg-white border-white/60 hover:border-primary/20'
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
                   }`}
                 >
                   <div className="flex justify-between items-center w-full">
@@ -1345,9 +1345,9 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                       <span className="text-on-surface">{displayAway}</span>
                     </div>
                     
-                    <div className="h-2 w-full bg-white/40 border border-white/25 rounded-full overflow-hidden flex">
-                      <div style={{ width: `${pctHome}%`, backgroundColor: '#f97316' }} className="h-full rounded-l-full"></div>
-                      <div style={{ width: `${100 - pctHome}%`, backgroundColor: '#94a3b8' }} className="h-full rounded-r-full"></div>
+                    <div className="h-2 w-full bg-white/40 dark:bg-white/5 border border-white/25 dark:border-white/10 rounded-full overflow-hidden flex">
+                      <div style={{ width: `${pctHome}%`, backgroundColor: home.color || 'var(--primary)' }} className="h-full rounded-l-full"></div>
+                      <div style={{ width: `${100 - pctHome}%`, backgroundColor: away.color || 'var(--secondary)' }} className="h-full rounded-r-full"></div>
                     </div>
                   </div>
                 );
@@ -1362,7 +1362,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
         {/* TIMELINE OF EVENTS TAB */}
         {activeTab === 'TIMELINE' && (
-          <div className="relative pl-6 space-y-4 before:content-[''] before:absolute before:top-0 before:bottom-0 before:left-2 before:w-0.5 before:bg-white/60">
+          <div className="relative pl-6 space-y-4 before:content-[''] before:absolute before:top-0 before:bottom-0 before:left-2 before:w-0.5 before:bg-white/60 dark:before:bg-white/10">
             {timeline && timeline.length > 0 ? (
               timeline.map((event, i) => (
                 <div key={i} className={`flex items-start gap-3 relative ${event.type === 'GOAL' ? 'text-primary' : 'text-on-surface'}`}>
@@ -1388,7 +1388,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   ></span>
                   
                   <span className="text-xs font-black text-secondary/90 w-8">{event.minute}'</span>
-                  <div className="flex-1 p-3 bg-white/50 border border-white/60 rounded-xl flex items-center justify-between text-xs shadow-sm">
+                  <div className="flex-1 p-3 bg-white/50 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-xl flex items-center justify-between text-xs shadow-sm">
                     <div>
                       <strong className="mr-2">
                         {event.type === 'GOAL' 
@@ -1590,7 +1590,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Home Lineup Column */}
                   <div className="space-y-3">
-                    <h4 className="text-xs font-black text-on-surface flex items-center gap-2 border-b border-white/60 pb-2">
+                    <h4 className="text-xs font-black text-on-surface flex items-center gap-2 border-b border-white/60 dark:border-white/10 pb-2">
                       <img 
                         src={`https://flagcdn.com/w40/${home.flag}.png`} 
                         alt={home.name} 
@@ -1602,7 +1602,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                     
                     <div className="flex flex-col gap-2">
                       {lineups.home.map((player) => (
-                        <div key={player.number} className="flex justify-between items-center p-2.5 bg-white/45 border border-white/50 rounded-xl text-xs">
+                        <div key={player.number} className="flex justify-between items-center p-2.5 bg-white/45 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-xl text-xs">
                           <div className="flex items-center gap-2.5">
                             <span 
                               style={{ backgroundColor: home.color || 'var(--primary)', color: home.textColor || 'white' }}
@@ -1612,7 +1612,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                             </span>
                             <span className="font-bold text-on-surface">{player.name}</span>
                           </div>
-                          <span className="px-2 py-0.5 bg-white/70 border border-white/80 rounded text-[9px] font-black text-on-surface-variant">
+                          <span className="px-2 py-0.5 bg-white/70 dark:bg-white/10 border border-white/80 dark:border-white/20 rounded text-[9px] font-black text-on-surface-variant">
                             {player.role || 'MF'}
                           </span>
                         </div>
@@ -1622,7 +1622,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                   {/* Away Lineup Column */}
                   <div className="space-y-3">
-                    <h4 className="text-xs font-black text-on-surface flex items-center gap-2 border-b border-white/60 pb-2">
+                    <h4 className="text-xs font-black text-on-surface flex items-center gap-2 border-b border-white/60 dark:border-white/10 pb-2">
                       <img 
                         src={`https://flagcdn.com/w40/${away.flag}.png`} 
                         alt={away.name} 
@@ -1634,7 +1634,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                     
                     <div className="flex flex-col gap-2">
                       {lineups.away.map((player) => (
-                        <div key={player.number} className="flex justify-between items-center p-2.5 bg-white/45 border border-white/50 rounded-xl text-xs">
+                        <div key={player.number} className="flex justify-between items-center p-2.5 bg-white/45 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-xl text-xs">
                           <div className="flex items-center gap-2.5">
                             <span 
                               style={{ backgroundColor: away.color || 'var(--secondary)', color: away.textColor || 'white' }}
@@ -1644,7 +1644,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                             </span>
                             <span className="font-bold text-on-surface">{player.name}</span>
                           </div>
-                          <span className="px-2 py-0.5 bg-white/70 border border-white/80 rounded text-[9px] font-black text-on-surface-variant">
+                          <span className="px-2 py-0.5 bg-white/70 dark:bg-white/10 border border-white/80 dark:border-white/20 rounded text-[9px] font-black text-on-surface-variant">
                             {player.role || 'MF'}
                           </span>
                         </div>
@@ -1659,32 +1659,32 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                     Sa bàn chiến thuật (Vertical Field)
                   </h4>
                   
-                  <div className="relative aspect-[2/3] w-full max-w-[400px] mx-auto rounded-3xl overflow-hidden bg-gradient-to-b from-[#1b5e20] via-[#2e7d32] to-[#1b5e20] border-3 border-white/45 shadow-[inset_0_4px_20px_rgba(0,0,0,0.45),0_10px_25px_rgba(0,0,0,0.15)] p-4">
+                  <div className="relative aspect-[2/3] w-full max-w-[400px] mx-auto rounded-3xl overflow-hidden bg-gradient-to-b from-[#1b5e20] via-[#2e7d32] to-[#1b5e20] dark:from-[#0b2b11] dark:via-[#113a18] dark:to-[#0b2b11] border-3 border-white/45 dark:border-white/20 shadow-[inset_0_4px_20px_rgba(0,0,0,0.45),0_10px_25px_rgba(0,0,0,0.15)] p-4">
                     {/* Pitch markings */}
                     {/* Outer border margin */}
-                    <div className="absolute inset-2.5 border border-white/25 pointer-events-none"></div>
+                    <div className="absolute inset-2.5 border border-white/25 dark:border-white/15 pointer-events-none"></div>
                     
                     {/* Half-way line */}
-                    <div className="absolute top-1/2 left-2.5 right-2.5 h-px bg-white/25 pointer-events-none -translate-y-1/2"></div>
+                    <div className="absolute top-1/2 left-2.5 right-2.5 h-px bg-white/25 dark:bg-white/15 pointer-events-none -translate-y-1/2"></div>
                     
                     {/* Center circle */}
-                    <div className="absolute top-1/2 left-1/2 w-20 h-20 border border-white/25 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
+                    <div className="absolute top-1/2 left-1/2 w-20 h-20 border border-white/25 dark:border-white/15 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
                     {/* Center spot */}
-                    <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-white/50 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
+                    <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-white/50 dark:bg-white/30 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
                     
                     {/* Penalty Area Top (Away Team) */}
-                    <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-[55%] h-[16%] border-b border-x border-white/25 pointer-events-none"></div>
+                    <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-[55%] h-[16%] border-b border-x border-white/25 dark:border-white/15 pointer-events-none"></div>
                     {/* Goal Area Top */}
-                    <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-[25%] h-[6%] border-b border-x border-white/25 pointer-events-none"></div>
+                    <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-[25%] h-[6%] border-b border-x border-white/25 dark:border-white/15 pointer-events-none"></div>
                     {/* Penalty spot top */}
-                    <div className="absolute top-[12%] left-1/2 -translate-x-1/2 w-1.2 h-1.2 bg-white/50 rounded-full pointer-events-none"></div>
+                    <div className="absolute top-[12%] left-1/2 -translate-x-1/2 w-1.2 h-1.2 bg-white/50 dark:bg-white/30 rounded-full pointer-events-none"></div>
 
                     {/* Penalty Area Bottom (Home Team) */}
-                    <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-[55%] h-[16%] border-t border-x border-white/25 pointer-events-none"></div>
+                    <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-[55%] h-[16%] border-t border-x border-white/25 dark:border-white/15 pointer-events-none"></div>
                     {/* Goal Area Bottom */}
-                    <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-[25%] h-[6%] border-t border-x border-white/25 pointer-events-none"></div>
+                    <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 w-[25%] h-[6%] border-t border-x border-white/25 dark:border-white/15 pointer-events-none"></div>
                     {/* Penalty spot bottom */}
-                    <div className="absolute bottom-[12%] left-1/2 -translate-x-1/2 w-1.2 h-1.2 bg-white/50 rounded-full pointer-events-none"></div>
+                    <div className="absolute bottom-[12%] left-1/2 -translate-x-1/2 w-1.2 h-1.2 bg-white/50 dark:bg-white/30 rounded-full pointer-events-none"></div>
 
                     {/* Players dots mapping */}
                     <div className="absolute inset-0 z-10">
