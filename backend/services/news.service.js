@@ -32,7 +32,7 @@ exports.getAllNews = async (page = 1, limit = 12) => {
     url: article.url,
     author: article.author || '',
     image: article.localImage
-      ? `http://localhost:${process.env.PORT || 5001}${article.localImage}`
+      ? `${process.env.API_BASE_URL || `http://localhost:${process.env.PORT || 5001}`}${article.localImage}`
       : article.image,
     pubDate: article.pubDate ? new Date(article.pubDate).getTime() : Date.now(),
     pubDateStr: article.pubDateStr || '',
@@ -79,7 +79,7 @@ exports.getNewsBySlug = async (slug) => {
     url: article.url,
     author: article.author || '',
     image: article.localImage
-      ? `http://localhost:${process.env.PORT || 5001}${article.localImage}`
+      ? `${process.env.API_BASE_URL || `http://localhost:${process.env.PORT || 5001}`}${article.localImage}`
       : article.image,
     pubDate: article.pubDate ? new Date(article.pubDate).getTime() : Date.now(),
     pubDateStr: article.pubDateStr || '',
