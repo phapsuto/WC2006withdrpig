@@ -1,0 +1,3931 @@
+{
+  "id": 96611,
+  "sport_id": 1,
+  "country_id": 17,
+  "nationality_id": 17,
+  "city_id": 67223,
+  "position_id": 27,
+  "detailed_position_id": 151,
+  "type_id": 27,
+  "common_name": "K. Mbappé",
+  "firstname": "Kylian",
+  "lastname": "Mbappé Lottin",
+  "name": "Kylian Mbappé Lottin",
+  "display_name": "Kylian Mbappé",
+  "image_path": "https://cdn.sportmonks.com/images/soccer/players/3/96611.png",
+  "height": 180,
+  "weight": 75,
+  "date_of_birth": "1998-12-20",
+  "gender": "male",
+  "position": {
+    "id": 27,
+    "name": "Attacker",
+    "code": "attacker",
+    "developer_name": "ATTACKER",
+    "model_type": "position",
+    "stat_group": null
+  },
+  "country": {
+    "id": 17,
+    "continent_id": 1,
+    "name": "France",
+    "official_name": "French Republic",
+    "fifa_name": "FRA",
+    "iso2": "FR",
+    "iso3": "FRA",
+    "latitude": "46.63727951049805",
+    "longitude": "2.3382623195648193",
+    "borders": [
+      "AND",
+      "BEL",
+      "DEU",
+      "ITA",
+      "LUX",
+      "MCO",
+      "ESP",
+      "CHE"
+    ],
+    "image_path": "https://cdn.sportmonks.com/images/countries/png/short/fr.png"
+  },
+  "statistics": [
+    {
+      "id": 27333134,
+      "player_id": 96611,
+      "team_id": 18647,
+      "season_id": 892,
+      "has_values": true,
+      "position_id": 26,
+      "jersey_number": 10,
+      "details": [
+        {
+          "id": 34624255,
+          "player_statistic_id": 27333134,
+          "type_id": 41,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 41,
+            "name": "Shots Off Target",
+            "code": "shots-off-target",
+            "developer_name": "SHOTS_OFF_TARGET",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26891460,
+          "player_statistic_id": 27333134,
+          "type_id": 42,
+          "value": {
+            "total": 8
+          },
+          "type": {
+            "id": 42,
+            "name": "Shots Total",
+            "code": "shots-total",
+            "developer_name": "SHOTS_TOTAL",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 34624253,
+          "player_statistic_id": 27333134,
+          "type_id": 47,
+          "value": {
+            "total": 0,
+            "won": 1,
+            "scored": 0,
+            "committed": 0,
+            "saved": 0,
+            "missed": 0
+          },
+          "type": {
+            "id": 47,
+            "name": "Penalties",
+            "code": "penalties",
+            "developer_name": "PENALTIES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26891450,
+          "player_statistic_id": 27333134,
+          "type_id": 51,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 51,
+            "name": "Offsides",
+            "code": "offsides",
+            "developer_name": "OFFSIDES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26891430,
+          "player_statistic_id": 27333134,
+          "type_id": 52,
+          "value": {
+            "total": 4,
+            "goals": 4,
+            "penalties": 0
+          },
+          "type": {
+            "id": 52,
+            "name": "Goals",
+            "code": "goals",
+            "developer_name": "GOALS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26891422,
+          "player_statistic_id": 27333134,
+          "type_id": 56,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 56,
+            "name": "Fouls",
+            "code": "fouls",
+            "developer_name": "FOULS",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 3100664,
+          "player_statistic_id": 27333134,
+          "type_id": 59,
+          "value": {
+            "in": 1,
+            "out": 3
+          },
+          "type": {
+            "id": 59,
+            "name": "Substitutions",
+            "code": "substitutions",
+            "developer_name": "SUBSTITUTIONS",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 29650268,
+          "player_statistic_id": 27333134,
+          "type_id": 78,
+          "value": {
+            "total": 6
+          },
+          "type": {
+            "id": 78,
+            "name": "Tackles",
+            "code": "tackles",
+            "developer_name": "TACKLES",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 29650266,
+          "player_statistic_id": 27333134,
+          "type_id": 80,
+          "value": {
+            "total": 152
+          },
+          "type": {
+            "id": 80,
+            "name": "Passes",
+            "code": "passes",
+            "developer_name": "PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 3100967,
+          "player_statistic_id": 27333134,
+          "type_id": 84,
+          "value": {
+            "total": 2,
+            "home": 1,
+            "away": 1
+          },
+          "type": {
+            "id": 84,
+            "name": "Yellowcards",
+            "code": "yellowcards",
+            "developer_name": "YELLOWCARDS",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 26891461,
+          "player_statistic_id": 27333134,
+          "type_id": 86,
+          "value": {
+            "total": 7
+          },
+          "type": {
+            "id": 86,
+            "name": "Shots On Target",
+            "code": "shots-on-target",
+            "developer_name": "SHOTS_ON_TARGET",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26891437,
+          "player_statistic_id": 27333134,
+          "type_id": 88,
+          "value": {
+            "total": 5
+          },
+          "type": {
+            "id": 88,
+            "name": "Goals Conceded",
+            "code": "goals-conceded",
+            "developer_name": "GOALS_CONCEDED",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 29650261,
+          "player_statistic_id": 27333134,
+          "type_id": 94,
+          "value": {
+            "total": 14
+          },
+          "type": {
+            "id": 94,
+            "name": "Dispossessed",
+            "code": "dispossessed",
+            "developer_name": "DISPOSSESSED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26891428,
+          "player_statistic_id": 27333134,
+          "type_id": 96,
+          "value": {
+            "total": 14
+          },
+          "type": {
+            "id": 96,
+            "name": "Fouls Drawn",
+            "code": "fouls-drawn",
+            "developer_name": "FOULS_DRAWN",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 29650269,
+          "player_statistic_id": 27333134,
+          "type_id": 98,
+          "value": {
+            "total": 11
+          },
+          "type": {
+            "id": 98,
+            "name": "Total Crosses",
+            "code": "total-crosses",
+            "developer_name": "TOTAL_CROSSES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 29650254,
+          "player_statistic_id": 27333134,
+          "type_id": 99,
+          "value": {
+            "total": 3
+          },
+          "type": {
+            "id": 99,
+            "name": "Accurate Crosses",
+            "code": "accurate-crosses",
+            "developer_name": "ACCURATE_CROSSES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 29650264,
+          "player_statistic_id": 27333134,
+          "type_id": 100,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 100,
+            "name": "Interceptions",
+            "code": "interceptions",
+            "developer_name": "INTERCEPTIONS",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 29650260,
+          "player_statistic_id": 27333134,
+          "type_id": 101,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 101,
+            "name": "Clearances",
+            "code": "clearances",
+            "developer_name": "CLEARANCES",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 29650262,
+          "player_statistic_id": 27333134,
+          "type_id": 105,
+          "value": {
+            "total": 95
+          },
+          "type": {
+            "id": 105,
+            "name": "Total Duels",
+            "code": "total-duels",
+            "developer_name": "TOTAL_DUELS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 29650263,
+          "player_statistic_id": 27333134,
+          "type_id": 106,
+          "value": {
+            "total": 54
+          },
+          "type": {
+            "id": 106,
+            "name": "Duels Won",
+            "code": "duels-won",
+            "developer_name": "DUELS_WON",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 29650257,
+          "player_statistic_id": 27333134,
+          "type_id": 107,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 107,
+            "name": "Aerials Won",
+            "code": "aeriels-won",
+            "developer_name": "AERIALS_WON",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 29650256,
+          "player_statistic_id": 27333134,
+          "type_id": 116,
+          "value": {
+            "total": 118
+          },
+          "type": {
+            "id": 116,
+            "name": "Accurate Passes",
+            "code": "accurate-passes",
+            "developer_name": "ACCURATE_PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 29650265,
+          "player_statistic_id": 27333134,
+          "type_id": 117,
+          "value": {
+            "total": 9
+          },
+          "type": {
+            "id": 117,
+            "name": "Key Passes",
+            "code": "key-passes",
+            "developer_name": "KEY_PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 29650267,
+          "player_statistic_id": 27333134,
+          "type_id": 118,
+          "value": {
+            "average": 7.49,
+            "highest": 9.28,
+            "lowest": 6.73
+          },
+          "type": {
+            "id": 118,
+            "name": "Rating",
+            "code": "rating",
+            "developer_name": "RATING",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 3100286,
+          "player_statistic_id": 27333134,
+          "type_id": 119,
+          "value": {
+            "total": 534
+          },
+          "type": {
+            "id": 119,
+            "name": "Minutes Played",
+            "code": "minutes-played",
+            "developer_name": "MINUTES_PLAYED",
+            "model_type": "statistic",
+            "stat_group": "NULL"
+          }
+        },
+        {
+          "id": 34624248,
+          "player_statistic_id": 27333134,
+          "type_id": 122,
+          "value": {
+            "total": 4
+          },
+          "type": {
+            "id": 122,
+            "name": "Long Balls",
+            "code": "long-balls",
+            "developer_name": "LONG_BALLS",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 34624251,
+          "player_statistic_id": 27333134,
+          "type_id": 123,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 123,
+            "name": "Long Balls Won",
+            "code": "long-balls-won",
+            "developer_name": "LONG_BALLS_WON",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 3099888,
+          "player_statistic_id": 27333134,
+          "type_id": 321,
+          "value": {
+            "total": 7
+          },
+          "type": {
+            "id": 321,
+            "name": "Appearances",
+            "code": "appearances",
+            "developer_name": "APPEARANCES",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 3100247,
+          "player_statistic_id": 27333134,
+          "type_id": 322,
+          "value": {
+            "total": 6
+          },
+          "type": {
+            "id": 322,
+            "name": "Lineups",
+            "code": "lineups",
+            "developer_name": "LINEUPS",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 3099984,
+          "player_statistic_id": 27333134,
+          "type_id": 323,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 323,
+            "name": "Bench",
+            "code": "bench",
+            "developer_name": "BENCH",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 29650258,
+          "player_statistic_id": 27333134,
+          "type_id": 580,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 580,
+            "name": "Big Chances Created",
+            "code": "big-chances-created",
+            "developer_name": "BIG_CHANCES_CREATED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 29650259,
+          "player_statistic_id": 27333134,
+          "type_id": 581,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 581,
+            "name": "Big Chances Missed",
+            "code": "big-chances-missed",
+            "developer_name": "BIG_CHANCES_MISSED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 29650255,
+          "player_statistic_id": 27333134,
+          "type_id": 1584,
+          "value": {
+            "total": 77.63
+          },
+          "type": {
+            "id": 1584,
+            "name": "Accurate Passes Percentage",
+            "code": "accurate-passes-percentage",
+            "developer_name": "ACCURATE_PASSES_PERCENTAGE",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        }
+      ]
+    },
+    {
+      "id": 27334789,
+      "player_id": 96611,
+      "team_id": 18647,
+      "season_id": 898,
+      "has_values": true,
+      "position_id": 27,
+      "jersey_number": 12,
+      "details": [
+        {
+          "id": 26894585,
+          "player_statistic_id": 27334789,
+          "type_id": 52,
+          "value": {
+            "total": 1,
+            "goals": 1,
+            "penalties": 0
+          },
+          "type": {
+            "id": 52,
+            "name": "Goals",
+            "code": "goals",
+            "developer_name": "GOALS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 3135470,
+          "player_statistic_id": 27334789,
+          "type_id": 59,
+          "value": {
+            "in": 4,
+            "out": 2
+          },
+          "type": {
+            "id": 59,
+            "name": "Substitutions",
+            "code": "substitutions",
+            "developer_name": "SUBSTITUTIONS",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 26894588,
+          "player_statistic_id": 27334789,
+          "type_id": 88,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 88,
+            "name": "Goals Conceded",
+            "code": "goals-conceded",
+            "developer_name": "GOALS_CONCEDED",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 3135104,
+          "player_statistic_id": 27334789,
+          "type_id": 119,
+          "value": {
+            "total": 213
+          },
+          "type": {
+            "id": 119,
+            "name": "Minutes Played",
+            "code": "minutes-played",
+            "developer_name": "MINUTES_PLAYED",
+            "model_type": "statistic",
+            "stat_group": "NULL"
+          }
+        },
+        {
+          "id": 39600518,
+          "player_statistic_id": 27334789,
+          "type_id": 194,
+          "value": {
+            "total": 3,
+            "home": 2,
+            "away": 1
+          },
+          "type": {
+            "id": 194,
+            "name": "Cleansheets",
+            "code": "cleansheets",
+            "developer_name": "CLEANSHEET",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 39600569,
+          "player_statistic_id": 27334789,
+          "type_id": 214,
+          "value": {
+            "total": 4
+          },
+          "type": {
+            "id": 214,
+            "name": "Team Wins",
+            "code": "team-wins",
+            "developer_name": "WIN",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 39600525,
+          "player_statistic_id": 27334789,
+          "type_id": 215,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 215,
+            "name": "Team Draws",
+            "code": "team-draws",
+            "developer_name": "DRAW",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 39600543,
+          "player_statistic_id": 27334789,
+          "type_id": 216,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 216,
+            "name": "Team Lost",
+            "code": "team-lost",
+            "developer_name": "LOST",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 3134674,
+          "player_statistic_id": 27334789,
+          "type_id": 321,
+          "value": {
+            "total": 6
+          },
+          "type": {
+            "id": 321,
+            "name": "Appearances",
+            "code": "appearances",
+            "developer_name": "APPEARANCES",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 3135059,
+          "player_statistic_id": 27334789,
+          "type_id": 322,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 322,
+            "name": "Lineups",
+            "code": "lineups",
+            "developer_name": "LINEUPS",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 3134754,
+          "player_statistic_id": 27334789,
+          "type_id": 323,
+          "value": {
+            "total": 4
+          },
+          "type": {
+            "id": 323,
+            "name": "Bench",
+            "code": "bench",
+            "developer_name": "BENCH",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 39600552,
+          "player_statistic_id": 27334789,
+          "type_id": 9676,
+          "value": {
+            "average": "0.17"
+          },
+          "type": {
+            "id": 9676,
+            "name": "Average Points Per Game",
+            "code": "average-points-per-game",
+            "developer_name": "AVERAGE_POINTS_PER_GAME",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        }
+      ]
+    },
+    {
+      "id": 117523096,
+      "player_id": 96611,
+      "team_id": 18647,
+      "season_id": 5796,
+      "has_values": false,
+      "position_id": null,
+      "jersey_number": 10,
+      "details": []
+    },
+    {
+      "id": 697245,
+      "player_id": 96611,
+      "team_id": 18647,
+      "season_id": 15838,
+      "has_values": true,
+      "position_id": 27,
+      "jersey_number": 10,
+      "details": [
+        {
+          "id": 26739375,
+          "player_statistic_id": 697245,
+          "type_id": 42,
+          "value": {
+            "total": 17
+          },
+          "type": {
+            "id": 42,
+            "name": "Shots Total",
+            "code": "shots-total",
+            "developer_name": "SHOTS_TOTAL",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 35112556,
+          "player_statistic_id": 697245,
+          "type_id": 47,
+          "value": {
+            "total": 1,
+            "won": 1,
+            "scored": 0,
+            "committed": 0,
+            "saved": 0,
+            "missed": 1
+          },
+          "type": {
+            "id": 47,
+            "name": "Penalties",
+            "code": "penalties",
+            "developer_name": "PENALTIES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26739338,
+          "player_statistic_id": 697245,
+          "type_id": 51,
+          "value": {
+            "total": 5
+          },
+          "type": {
+            "id": 51,
+            "name": "Offsides",
+            "code": "offsides",
+            "developer_name": "OFFSIDES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 11990774,
+          "player_statistic_id": 697245,
+          "type_id": 52,
+          "value": {
+            "total": 5,
+            "goals": 5,
+            "penalties": 0
+          },
+          "type": {
+            "id": 52,
+            "name": "Goals",
+            "code": "goals",
+            "developer_name": "GOALS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26739226,
+          "player_statistic_id": 697245,
+          "type_id": 56,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 56,
+            "name": "Fouls",
+            "code": "fouls",
+            "developer_name": "FOULS",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 11991224,
+          "player_statistic_id": 697245,
+          "type_id": 59,
+          "value": {
+            "in": 1,
+            "out": 3
+          },
+          "type": {
+            "id": 59,
+            "name": "Substitutions",
+            "code": "substitutions",
+            "developer_name": "SUBSTITUTIONS",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 26739291,
+          "player_statistic_id": 697245,
+          "type_id": 64,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 64,
+            "name": "Hit Woodwork",
+            "code": "hit-woodwork",
+            "developer_name": "HIT_WOODWORK",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 11990516,
+          "player_statistic_id": 697245,
+          "type_id": 79,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 79,
+            "name": "Assists",
+            "code": "assists",
+            "developer_name": "ASSISTS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 11990942,
+          "player_statistic_id": 697245,
+          "type_id": 80,
+          "value": {
+            "total": 208
+          },
+          "type": {
+            "id": 80,
+            "name": "Passes",
+            "code": "passes",
+            "developer_name": "PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 26739386,
+          "player_statistic_id": 697245,
+          "type_id": 86,
+          "value": {
+            "total": 11
+          },
+          "type": {
+            "id": 86,
+            "name": "Shots On Target",
+            "code": "shots-on-target",
+            "developer_name": "SHOTS_ON_TARGET",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 32383237,
+          "player_statistic_id": 697245,
+          "type_id": 87,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 87,
+            "name": "Injuries",
+            "code": "injuries",
+            "developer_name": "INJURIES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 26739284,
+          "player_statistic_id": 697245,
+          "type_id": 88,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 88,
+            "name": "Goals Conceded",
+            "code": "goals-conceded",
+            "developer_name": "GOALS_CONCEDED",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 26739188,
+          "player_statistic_id": 697245,
+          "type_id": 94,
+          "value": {
+            "total": 7
+          },
+          "type": {
+            "id": 94,
+            "name": "Dispossessed",
+            "code": "dispossessed",
+            "developer_name": "DISPOSSESSED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26739234,
+          "player_statistic_id": 697245,
+          "type_id": 96,
+          "value": {
+            "total": 7
+          },
+          "type": {
+            "id": 96,
+            "name": "Fouls Drawn",
+            "code": "fouls-drawn",
+            "developer_name": "FOULS_DRAWN",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 26739416,
+          "player_statistic_id": 697245,
+          "type_id": 98,
+          "value": {
+            "total": 19
+          },
+          "type": {
+            "id": 98,
+            "name": "Total Crosses",
+            "code": "total-crosses",
+            "developer_name": "TOTAL_CROSSES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26739062,
+          "player_statistic_id": 697245,
+          "type_id": 99,
+          "value": {
+            "total": 5
+          },
+          "type": {
+            "id": 99,
+            "name": "Accurate Crosses",
+            "code": "accurate-crosses",
+            "developer_name": "ACCURATE_CROSSES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 11990737,
+          "player_statistic_id": 697245,
+          "type_id": 105,
+          "value": {
+            "total": 49
+          },
+          "type": {
+            "id": 105,
+            "name": "Total Duels",
+            "code": "total-duels",
+            "developer_name": "TOTAL_DUELS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26739214,
+          "player_statistic_id": 697245,
+          "type_id": 106,
+          "value": {
+            "total": 22
+          },
+          "type": {
+            "id": 106,
+            "name": "Duels Won",
+            "code": "duels-won",
+            "developer_name": "DUELS_WON",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26739112,
+          "player_statistic_id": 697245,
+          "type_id": 107,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 107,
+            "name": "Aerials Won",
+            "code": "aeriels-won",
+            "developer_name": "AERIALS_WON",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 30619841,
+          "player_statistic_id": 697245,
+          "type_id": 108,
+          "value": {
+            "total": 29
+          },
+          "type": {
+            "id": 108,
+            "name": "Dribble Attempts",
+            "code": "dribble-attempts",
+            "developer_name": "DRIBBLED_ATTEMPTS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 32383232,
+          "player_statistic_id": 697245,
+          "type_id": 109,
+          "value": {
+            "total": 14
+          },
+          "type": {
+            "id": 109,
+            "name": "Successful Dribbles",
+            "code": "successful-dribbles",
+            "developer_name": "SUCCESSFUL_DRIBBLES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26739196,
+          "player_statistic_id": 697245,
+          "type_id": 110,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 110,
+            "name": "Dribbled Past",
+            "code": "dribbled-past",
+            "developer_name": "DRIBBLED_PAST",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26739098,
+          "player_statistic_id": 697245,
+          "type_id": 116,
+          "value": {
+            "total": 179
+          },
+          "type": {
+            "id": 116,
+            "name": "Accurate Passes",
+            "code": "accurate-passes",
+            "developer_name": "ACCURATE_PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 26739307,
+          "player_statistic_id": 697245,
+          "type_id": 117,
+          "value": {
+            "total": 5
+          },
+          "type": {
+            "id": 117,
+            "name": "Key Passes",
+            "code": "key-passes",
+            "developer_name": "KEY_PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 11990993,
+          "player_statistic_id": 697245,
+          "type_id": 118,
+          "value": {
+            "average": 7.6,
+            "highest": 10,
+            "lowest": 6.73
+          },
+          "type": {
+            "id": 118,
+            "name": "Rating",
+            "code": "rating",
+            "developer_name": "RATING",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 11990858,
+          "player_statistic_id": 697245,
+          "type_id": 119,
+          "value": {
+            "total": 466
+          },
+          "type": {
+            "id": 119,
+            "name": "Minutes Played",
+            "code": "minutes-played",
+            "developer_name": "MINUTES_PLAYED",
+            "model_type": "statistic",
+            "stat_group": "NULL"
+          }
+        },
+        {
+          "id": 41518351,
+          "player_statistic_id": 697245,
+          "type_id": 194,
+          "value": {
+            "total": 4,
+            "home": 1,
+            "away": 3
+          },
+          "type": {
+            "id": 194,
+            "name": "Cleansheets",
+            "code": "cleansheets",
+            "developer_name": "CLEANSHEET",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 41518386,
+          "player_statistic_id": 697245,
+          "type_id": 214,
+          "value": {
+            "total": 4
+          },
+          "type": {
+            "id": 214,
+            "name": "Team Wins",
+            "code": "team-wins",
+            "developer_name": "WIN",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 41518358,
+          "player_statistic_id": 697245,
+          "type_id": 215,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 215,
+            "name": "Team Draws",
+            "code": "team-draws",
+            "developer_name": "DRAW",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 11990477,
+          "player_statistic_id": 697245,
+          "type_id": 321,
+          "value": {
+            "total": 6
+          },
+          "type": {
+            "id": 321,
+            "name": "Appearances",
+            "code": "appearances",
+            "developer_name": "APPEARANCES",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 11990825,
+          "player_statistic_id": 697245,
+          "type_id": 322,
+          "value": {
+            "total": 5
+          },
+          "type": {
+            "id": 322,
+            "name": "Lineups",
+            "code": "lineups",
+            "developer_name": "LINEUPS",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 11990574,
+          "player_statistic_id": 697245,
+          "type_id": 323,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 323,
+            "name": "Bench",
+            "code": "bench",
+            "developer_name": "BENCH",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 26739147,
+          "player_statistic_id": 697245,
+          "type_id": 580,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 580,
+            "name": "Big Chances Created",
+            "code": "big-chances-created",
+            "developer_name": "BIG_CHANCES_CREATED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26739153,
+          "player_statistic_id": 697245,
+          "type_id": 581,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 581,
+            "name": "Big Chances Missed",
+            "code": "big-chances-missed",
+            "developer_name": "BIG_CHANCES_MISSED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26739075,
+          "player_statistic_id": 697245,
+          "type_id": 1584,
+          "value": {
+            "total": 86.06
+          },
+          "type": {
+            "id": 1584,
+            "name": "Accurate Passes Percentage",
+            "code": "accurate-passes-percentage",
+            "developer_name": "ACCURATE_PASSES_PERCENTAGE",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 41518382,
+          "player_statistic_id": 697245,
+          "type_id": 9676,
+          "value": {
+            "average": "0.83"
+          },
+          "type": {
+            "id": 9676,
+            "name": "Average Points Per Game",
+            "code": "average-points-per-game",
+            "developer_name": "AVERAGE_POINTS_PER_GAME",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 41518355,
+          "player_statistic_id": 697245,
+          "type_id": 27255,
+          "value": {
+            "crosses_blocked": 14
+          },
+          "type": {
+            "id": 27255,
+            "name": "Crosses Blocked",
+            "code": "crosses-blocked",
+            "developer_name": "CROSSES_BLOCKED",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        }
+      ]
+    },
+    {
+      "id": 684608,
+      "player_id": 96611,
+      "team_id": 18647,
+      "season_id": 18017,
+      "has_values": true,
+      "position_id": 26,
+      "jersey_number": 10,
+      "details": [
+        {
+          "id": 30830590,
+          "player_statistic_id": 684608,
+          "type_id": 41,
+          "value": {
+            "total": 7
+          },
+          "type": {
+            "id": 41,
+            "name": "Shots Off Target",
+            "code": "shots-off-target",
+            "developer_name": "SHOTS_OFF_TARGET",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 23419742,
+          "player_statistic_id": 684608,
+          "type_id": 42,
+          "value": {
+            "total": 31
+          },
+          "type": {
+            "id": 42,
+            "name": "Shots Total",
+            "code": "shots-total",
+            "developer_name": "SHOTS_TOTAL",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 33805764,
+          "player_statistic_id": 684608,
+          "type_id": 47,
+          "value": {
+            "total": 2,
+            "won": 0,
+            "scored": 2,
+            "committed": 0,
+            "saved": 0,
+            "missed": 0
+          },
+          "type": {
+            "id": 47,
+            "name": "Penalties",
+            "code": "penalties",
+            "developer_name": "PENALTIES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 23484258,
+          "player_statistic_id": 684608,
+          "type_id": 51,
+          "value": {
+            "total": 6
+          },
+          "type": {
+            "id": 51,
+            "name": "Offsides",
+            "code": "offsides",
+            "developer_name": "OFFSIDES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 23409857,
+          "player_statistic_id": 684608,
+          "type_id": 52,
+          "value": {
+            "total": 8,
+            "goals": 6,
+            "penalties": 2
+          },
+          "type": {
+            "id": 52,
+            "name": "Goals",
+            "code": "goals",
+            "developer_name": "GOALS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 23419739,
+          "player_statistic_id": 684608,
+          "type_id": 56,
+          "value": {
+            "total": 7
+          },
+          "type": {
+            "id": 56,
+            "name": "Fouls",
+            "code": "fouls",
+            "developer_name": "FOULS",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 30830589,
+          "player_statistic_id": 684608,
+          "type_id": 58,
+          "value": {
+            "total": 10
+          },
+          "type": {
+            "id": 58,
+            "name": "Shots Blocked",
+            "code": "shots-blocked",
+            "developer_name": "SHOTS_BLOCKED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 23409924,
+          "player_statistic_id": 684608,
+          "type_id": 59,
+          "value": {
+            "in": 1,
+            "out": 0
+          },
+          "type": {
+            "id": 59,
+            "name": "Substitutions",
+            "code": "substitutions",
+            "developer_name": "SUBSTITUTIONS",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 23409817,
+          "player_statistic_id": 684608,
+          "type_id": 79,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 79,
+            "name": "Assists",
+            "code": "assists",
+            "developer_name": "ASSISTS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 23409884,
+          "player_statistic_id": 684608,
+          "type_id": 80,
+          "value": {
+            "total": 200
+          },
+          "type": {
+            "id": 80,
+            "name": "Passes",
+            "code": "passes",
+            "developer_name": "PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 23419744,
+          "player_statistic_id": 684608,
+          "type_id": 86,
+          "value": {
+            "total": 14
+          },
+          "type": {
+            "id": 86,
+            "name": "Shots On Target",
+            "code": "shots-on-target",
+            "developer_name": "SHOTS_ON_TARGET",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 23419740,
+          "player_statistic_id": 684608,
+          "type_id": 88,
+          "value": {
+            "total": 3
+          },
+          "type": {
+            "id": 88,
+            "name": "Goals Conceded",
+            "code": "goals-conceded",
+            "developer_name": "GOALS_CONCEDED",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 23453738,
+          "player_statistic_id": 684608,
+          "type_id": 94,
+          "value": {
+            "total": 10
+          },
+          "type": {
+            "id": 94,
+            "name": "Dispossessed",
+            "code": "dispossessed",
+            "developer_name": "DISPOSSESSED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26735116,
+          "player_statistic_id": 684608,
+          "type_id": 96,
+          "value": {
+            "total": 7
+          },
+          "type": {
+            "id": 96,
+            "name": "Fouls Drawn",
+            "code": "fouls-drawn",
+            "developer_name": "FOULS_DRAWN",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 26735186,
+          "player_statistic_id": 684608,
+          "type_id": 98,
+          "value": {
+            "total": 25
+          },
+          "type": {
+            "id": 98,
+            "name": "Total Crosses",
+            "code": "total-crosses",
+            "developer_name": "TOTAL_CROSSES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26735076,
+          "player_statistic_id": 684608,
+          "type_id": 99,
+          "value": {
+            "total": 5
+          },
+          "type": {
+            "id": 99,
+            "name": "Accurate Crosses",
+            "code": "accurate-crosses",
+            "developer_name": "ACCURATE_CROSSES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26735109,
+          "player_statistic_id": 684608,
+          "type_id": 105,
+          "value": {
+            "total": 77
+          },
+          "type": {
+            "id": 105,
+            "name": "Total Duels",
+            "code": "total-duels",
+            "developer_name": "TOTAL_DUELS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 23419738,
+          "player_statistic_id": 684608,
+          "type_id": 106,
+          "value": {
+            "total": 33
+          },
+          "type": {
+            "id": 106,
+            "name": "Duels Won",
+            "code": "duels-won",
+            "developer_name": "DUELS_WON",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 23419737,
+          "player_statistic_id": 684608,
+          "type_id": 107,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 107,
+            "name": "Aerials Won",
+            "code": "aeriels-won",
+            "developer_name": "AERIALS_WON",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 30830585,
+          "player_statistic_id": 684608,
+          "type_id": 108,
+          "value": {
+            "total": 48
+          },
+          "type": {
+            "id": 108,
+            "name": "Dribble Attempts",
+            "code": "dribble-attempts",
+            "developer_name": "DRIBBLED_ATTEMPTS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 33805762,
+          "player_statistic_id": 684608,
+          "type_id": 109,
+          "value": {
+            "total": 25
+          },
+          "type": {
+            "id": 109,
+            "name": "Successful Dribbles",
+            "code": "successful-dribbles",
+            "developer_name": "SUCCESSFUL_DRIBBLES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 23419736,
+          "player_statistic_id": 684608,
+          "type_id": 116,
+          "value": {
+            "total": 164
+          },
+          "type": {
+            "id": 116,
+            "name": "Accurate Passes",
+            "code": "accurate-passes",
+            "developer_name": "ACCURATE_PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 23419741,
+          "player_statistic_id": 684608,
+          "type_id": 117,
+          "value": {
+            "total": 11
+          },
+          "type": {
+            "id": 117,
+            "name": "Key Passes",
+            "code": "key-passes",
+            "developer_name": "KEY_PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 23409889,
+          "player_statistic_id": 684608,
+          "type_id": 118,
+          "value": {
+            "average": 7.61,
+            "highest": 8.8,
+            "lowest": 6.6
+          },
+          "type": {
+            "id": 118,
+            "name": "Rating",
+            "code": "rating",
+            "developer_name": "RATING",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 23409871,
+          "player_statistic_id": 684608,
+          "type_id": 119,
+          "value": {
+            "total": 597
+          },
+          "type": {
+            "id": 119,
+            "name": "Minutes Played",
+            "code": "minutes-played",
+            "developer_name": "MINUTES_PLAYED",
+            "model_type": "statistic",
+            "stat_group": "NULL"
+          }
+        },
+        {
+          "id": 30830587,
+          "player_statistic_id": 684608,
+          "type_id": 122,
+          "value": {
+            "total": 11
+          },
+          "type": {
+            "id": 122,
+            "name": "Long Balls",
+            "code": "long-balls",
+            "developer_name": "LONG_BALLS",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 30830588,
+          "player_statistic_id": 684608,
+          "type_id": 123,
+          "value": {
+            "total": 7
+          },
+          "type": {
+            "id": 123,
+            "name": "Long Balls Won",
+            "code": "long-balls-won",
+            "developer_name": "LONG_BALLS_WON",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 38082842,
+          "player_statistic_id": 684608,
+          "type_id": 194,
+          "value": {
+            "total": 1,
+            "home": 1,
+            "away": 0
+          },
+          "type": {
+            "id": 194,
+            "name": "Cleansheets",
+            "code": "cleansheets",
+            "developer_name": "CLEANSHEET",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 42216265,
+          "player_statistic_id": 684608,
+          "type_id": 214,
+          "value": {
+            "total": 5
+          },
+          "type": {
+            "id": 214,
+            "name": "Team Wins",
+            "code": "team-wins",
+            "developer_name": "WIN",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 42216244,
+          "player_statistic_id": 684608,
+          "type_id": 215,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 215,
+            "name": "Team Draws",
+            "code": "team-draws",
+            "developer_name": "DRAW",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 42216255,
+          "player_statistic_id": 684608,
+          "type_id": 216,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 216,
+            "name": "Team Lost",
+            "code": "team-lost",
+            "developer_name": "LOST",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 23409810,
+          "player_statistic_id": 684608,
+          "type_id": 321,
+          "value": {
+            "total": 7
+          },
+          "type": {
+            "id": 321,
+            "name": "Appearances",
+            "code": "appearances",
+            "developer_name": "APPEARANCES",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 23409866,
+          "player_statistic_id": 684608,
+          "type_id": 322,
+          "value": {
+            "total": 6
+          },
+          "type": {
+            "id": 322,
+            "name": "Lineups",
+            "code": "lineups",
+            "developer_name": "LINEUPS",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 23484234,
+          "player_statistic_id": 684608,
+          "type_id": 323,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 323,
+            "name": "Bench",
+            "code": "bench",
+            "developer_name": "BENCH",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 23453731,
+          "player_statistic_id": 684608,
+          "type_id": 580,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 580,
+            "name": "Big Chances Created",
+            "code": "big-chances-created",
+            "developer_name": "BIG_CHANCES_CREATED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26735096,
+          "player_statistic_id": 684608,
+          "type_id": 581,
+          "value": {
+            "total": 5
+          },
+          "type": {
+            "id": 581,
+            "name": "Big Chances Missed",
+            "code": "big-chances-missed",
+            "developer_name": "BIG_CHANCES_MISSED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 26735081,
+          "player_statistic_id": 684608,
+          "type_id": 1584,
+          "value": {
+            "total": 82
+          },
+          "type": {
+            "id": 1584,
+            "name": "Accurate Passes Percentage",
+            "code": "accurate-passes-percentage",
+            "developer_name": "ACCURATE_PASSES_PERCENTAGE",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 38082855,
+          "player_statistic_id": 684608,
+          "type_id": 9676,
+          "value": {
+            "average": "0.86"
+          },
+          "type": {
+            "id": 9676,
+            "name": "Average Points Per Game",
+            "code": "average-points-per-game",
+            "developer_name": "AVERAGE_POINTS_PER_GAME",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 38082844,
+          "player_statistic_id": 684608,
+          "type_id": 27255,
+          "value": {
+            "crosses_blocked": 20
+          },
+          "type": {
+            "id": 27255,
+            "name": "Crosses Blocked",
+            "code": "crosses-blocked",
+            "developer_name": "CROSSES_BLOCKED",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        }
+      ]
+    },
+    {
+      "id": 1802168940,
+      "player_id": 96611,
+      "team_id": 18647,
+      "season_id": 21887,
+      "has_values": true,
+      "position_id": 27,
+      "jersey_number": 10,
+      "details": [
+        {
+          "id": 48068429,
+          "player_statistic_id": 1802168940,
+          "type_id": 40,
+          "value": {
+            "total": 4
+          },
+          "type": {
+            "id": 40,
+            "name": "Captain",
+            "code": "captain",
+            "developer_name": "CAPTAIN",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 48068649,
+          "player_statistic_id": 1802168940,
+          "type_id": 41,
+          "value": {
+            "total": 8
+          },
+          "type": {
+            "id": 41,
+            "name": "Shots Off Target",
+            "code": "shots-off-target",
+            "developer_name": "SHOTS_OFF_TARGET",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48068639,
+          "player_statistic_id": 1802168940,
+          "type_id": 42,
+          "value": {
+            "total": 29
+          },
+          "type": {
+            "id": 42,
+            "name": "Shots Total",
+            "code": "shots-total",
+            "developer_name": "SHOTS_TOTAL",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48142520,
+          "player_statistic_id": 1802168940,
+          "type_id": 47,
+          "value": {
+            "total": 2,
+            "won": 0,
+            "scored": 2,
+            "committed": 0,
+            "saved": 0,
+            "missed": 0
+          },
+          "type": {
+            "id": 47,
+            "name": "Penalties",
+            "code": "penalties",
+            "developer_name": "PENALTIES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48142515,
+          "player_statistic_id": 1802168940,
+          "type_id": 51,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 51,
+            "name": "Offsides",
+            "code": "offsides",
+            "developer_name": "OFFSIDES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48068518,
+          "player_statistic_id": 1802168940,
+          "type_id": 52,
+          "value": {
+            "total": 5,
+            "goals": 3,
+            "penalties": 2
+          },
+          "type": {
+            "id": 52,
+            "name": "Goals",
+            "code": "goals",
+            "developer_name": "GOALS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 49102206,
+          "player_statistic_id": 1802168940,
+          "type_id": 56,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 56,
+            "name": "Fouls",
+            "code": "fouls",
+            "developer_name": "FOULS",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 48068646,
+          "player_statistic_id": 1802168940,
+          "type_id": 58,
+          "value": {
+            "total": 9
+          },
+          "type": {
+            "id": 58,
+            "name": "Shots Blocked",
+            "code": "shots-blocked",
+            "developer_name": "SHOTS_BLOCKED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48677276,
+          "player_statistic_id": 1802168940,
+          "type_id": 59,
+          "value": {
+            "in": 0,
+            "out": 1
+          },
+          "type": {
+            "id": 59,
+            "name": "Substitutions",
+            "code": "substitutions",
+            "developer_name": "SUBSTITUTIONS",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 49102241,
+          "player_statistic_id": 1802168940,
+          "type_id": 78,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 78,
+            "name": "Tackles",
+            "code": "tackles",
+            "developer_name": "TACKLES",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 48142455,
+          "player_statistic_id": 1802168940,
+          "type_id": 79,
+          "value": {
+            "total": 3
+          },
+          "type": {
+            "id": 79,
+            "name": "Assists",
+            "code": "assists",
+            "developer_name": "ASSISTS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48068597,
+          "player_statistic_id": 1802168940,
+          "type_id": 80,
+          "value": {
+            "total": 159
+          },
+          "type": {
+            "id": 80,
+            "name": "Passes",
+            "code": "passes",
+            "developer_name": "PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 48142533,
+          "player_statistic_id": 1802168940,
+          "type_id": 84,
+          "value": {
+            "total": 1,
+            "home": 1,
+            "away": 0
+          },
+          "type": {
+            "id": 84,
+            "name": "Yellowcards",
+            "code": "yellowcards",
+            "developer_name": "YELLOWCARDS",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 48068654,
+          "player_statistic_id": 1802168940,
+          "type_id": 86,
+          "value": {
+            "total": 12
+          },
+          "type": {
+            "id": 86,
+            "name": "Shots On Target",
+            "code": "shots-on-target",
+            "developer_name": "SHOTS_ON_TARGET",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51540107,
+          "player_statistic_id": 1802168940,
+          "type_id": 87,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 87,
+            "name": "Injuries",
+            "code": "injuries",
+            "developer_name": "INJURIES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 48142495,
+          "player_statistic_id": 1802168940,
+          "type_id": 88,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 88,
+            "name": "Goals Conceded",
+            "code": "goals-conceded",
+            "developer_name": "GOALS_CONCEDED",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 48068443,
+          "player_statistic_id": 1802168940,
+          "type_id": 94,
+          "value": {
+            "total": 9
+          },
+          "type": {
+            "id": 94,
+            "name": "Dispossessed",
+            "code": "dispossessed",
+            "developer_name": "DISPOSSESSED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48677230,
+          "player_statistic_id": 1802168940,
+          "type_id": 96,
+          "value": {
+            "total": 3
+          },
+          "type": {
+            "id": 96,
+            "name": "Fouls Drawn",
+            "code": "fouls-drawn",
+            "developer_name": "FOULS_DRAWN",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 48142530,
+          "player_statistic_id": 1802168940,
+          "type_id": 98,
+          "value": {
+            "total": 4
+          },
+          "type": {
+            "id": 98,
+            "name": "Total Crosses",
+            "code": "total-crosses",
+            "developer_name": "TOTAL_CROSSES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48142445,
+          "player_statistic_id": 1802168940,
+          "type_id": 99,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 99,
+            "name": "Accurate Crosses",
+            "code": "accurate-crosses",
+            "developer_name": "ACCURATE_CROSSES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48142509,
+          "player_statistic_id": 1802168940,
+          "type_id": 100,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 100,
+            "name": "Interceptions",
+            "code": "interceptions",
+            "developer_name": "INTERCEPTIONS",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 48677206,
+          "player_statistic_id": 1802168940,
+          "type_id": 101,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 101,
+            "name": "Clearances",
+            "code": "clearances",
+            "developer_name": "CLEARANCES",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 48068462,
+          "player_statistic_id": 1802168940,
+          "type_id": 105,
+          "value": {
+            "total": 41
+          },
+          "type": {
+            "id": 105,
+            "name": "Total Duels",
+            "code": "total-duels",
+            "developer_name": "TOTAL_DUELS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48068469,
+          "player_statistic_id": 1802168940,
+          "type_id": 106,
+          "value": {
+            "total": 17
+          },
+          "type": {
+            "id": 106,
+            "name": "Duels Won",
+            "code": "duels-won",
+            "developer_name": "DUELS_WON",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48068448,
+          "player_statistic_id": 1802168940,
+          "type_id": 108,
+          "value": {
+            "total": 26
+          },
+          "type": {
+            "id": 108,
+            "name": "Dribble Attempts",
+            "code": "dribble-attempts",
+            "developer_name": "DRIBBLED_ATTEMPTS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48068453,
+          "player_statistic_id": 1802168940,
+          "type_id": 109,
+          "value": {
+            "total": 12
+          },
+          "type": {
+            "id": 109,
+            "name": "Successful Dribbles",
+            "code": "successful-dribbles",
+            "developer_name": "SUCCESSFUL_DRIBBLES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48068402,
+          "player_statistic_id": 1802168940,
+          "type_id": 116,
+          "value": {
+            "total": 137
+          },
+          "type": {
+            "id": 116,
+            "name": "Accurate Passes",
+            "code": "accurate-passes",
+            "developer_name": "ACCURATE_PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 48142510,
+          "player_statistic_id": 1802168940,
+          "type_id": 117,
+          "value": {
+            "total": 11
+          },
+          "type": {
+            "id": 117,
+            "name": "Key Passes",
+            "code": "key-passes",
+            "developer_name": "KEY_PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 48068621,
+          "player_statistic_id": 1802168940,
+          "type_id": 118,
+          "value": {
+            "average": 8.26,
+            "highest": 9.35,
+            "lowest": 7.43
+          },
+          "type": {
+            "id": 118,
+            "name": "Rating",
+            "code": "rating",
+            "developer_name": "RATING",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 48068590,
+          "player_statistic_id": 1802168940,
+          "type_id": 119,
+          "value": {
+            "total": 353
+          },
+          "type": {
+            "id": 119,
+            "name": "Minutes Played",
+            "code": "minutes-played",
+            "developer_name": "MINUTES_PLAYED",
+            "model_type": "statistic",
+            "stat_group": "NULL"
+          }
+        },
+        {
+          "id": 48068576,
+          "player_statistic_id": 1802168940,
+          "type_id": 122,
+          "value": {
+            "total": 8
+          },
+          "type": {
+            "id": 122,
+            "name": "Long Balls",
+            "code": "long-balls",
+            "developer_name": "LONG_BALLS",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 48068581,
+          "player_statistic_id": 1802168940,
+          "type_id": 123,
+          "value": {
+            "total": 8
+          },
+          "type": {
+            "id": 123,
+            "name": "Long Balls Won",
+            "code": "long-balls-won",
+            "developer_name": "LONG_BALLS_WON",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 49102242,
+          "player_statistic_id": 1802168940,
+          "type_id": 124,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 124,
+            "name": "Through Balls",
+            "code": "through-balls",
+            "developer_name": "THROUGH_BALLS",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 49102244,
+          "player_statistic_id": 1802168940,
+          "type_id": 125,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 125,
+            "name": "Through Balls Won",
+            "code": "through-balls-won",
+            "developer_name": "THROUGH_BALLS_WON",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 48068435,
+          "player_statistic_id": 1802168940,
+          "type_id": 194,
+          "value": {
+            "total": 3,
+            "home": 2,
+            "away": 1
+          },
+          "type": {
+            "id": 194,
+            "name": "Cleansheets",
+            "code": "cleansheets",
+            "developer_name": "CLEANSHEET",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 48068664,
+          "player_statistic_id": 1802168940,
+          "type_id": 214,
+          "value": {
+            "total": 4
+          },
+          "type": {
+            "id": 214,
+            "name": "Team Wins",
+            "code": "team-wins",
+            "developer_name": "WIN",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 48068411,
+          "player_statistic_id": 1802168940,
+          "type_id": 321,
+          "value": {
+            "total": 4
+          },
+          "type": {
+            "id": 321,
+            "name": "Appearances",
+            "code": "appearances",
+            "developer_name": "APPEARANCES",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 48068566,
+          "player_statistic_id": 1802168940,
+          "type_id": 322,
+          "value": {
+            "total": 4
+          },
+          "type": {
+            "id": 322,
+            "name": "Lineups",
+            "code": "lineups",
+            "developer_name": "LINEUPS",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 48142461,
+          "player_statistic_id": 1802168940,
+          "type_id": 580,
+          "value": {
+            "total": 4
+          },
+          "type": {
+            "id": 580,
+            "name": "Big Chances Created",
+            "code": "big-chances-created",
+            "developer_name": "BIG_CHANCES_CREATED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48068420,
+          "player_statistic_id": 1802168940,
+          "type_id": 581,
+          "value": {
+            "total": 5
+          },
+          "type": {
+            "id": 581,
+            "name": "Big Chances Missed",
+            "code": "big-chances-missed",
+            "developer_name": "BIG_CHANCES_MISSED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48068397,
+          "player_statistic_id": 1802168940,
+          "type_id": 1584,
+          "value": {
+            "total": 86.16
+          },
+          "type": {
+            "id": 1584,
+            "name": "Accurate Passes Percentage",
+            "code": "accurate-passes-percentage",
+            "developer_name": "ACCURATE_PASSES_PERCENTAGE",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 48068619,
+          "player_statistic_id": 1802168940,
+          "type_id": 9676,
+          "value": {
+            "average": "0.75"
+          },
+          "type": {
+            "id": 9676,
+            "name": "Average Points Per Game",
+            "code": "average-points-per-game",
+            "developer_name": "AVERAGE_POINTS_PER_GAME",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 48142468,
+          "player_statistic_id": 1802168940,
+          "type_id": 27255,
+          "value": {
+            "crosses_blocked": 2
+          },
+          "type": {
+            "id": 27255,
+            "name": "Crosses Blocked",
+            "code": "crosses-blocked",
+            "developer_name": "CROSSES_BLOCKED",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        }
+      ]
+    },
+    {
+      "id": 1871159273,
+      "player_id": 96611,
+      "team_id": 18647,
+      "season_id": 26618,
+      "has_values": true,
+      "position_id": 27,
+      "jersey_number": 10,
+      "details": [
+        {
+          "id": 51587476,
+          "player_statistic_id": 1871159273,
+          "type_id": 40,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 40,
+            "name": "Captain",
+            "code": "captain",
+            "developer_name": "CAPTAIN",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 51629649,
+          "player_statistic_id": 1871159273,
+          "type_id": 41,
+          "value": {
+            "total": 4
+          },
+          "type": {
+            "id": 41,
+            "name": "Shots Off Target",
+            "code": "shots-off-target",
+            "developer_name": "SHOTS_OFF_TARGET",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51587539,
+          "player_statistic_id": 1871159273,
+          "type_id": 42,
+          "value": {
+            "total": 12
+          },
+          "type": {
+            "id": 42,
+            "name": "Shots Total",
+            "code": "shots-total",
+            "developer_name": "SHOTS_TOTAL",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51629644,
+          "player_statistic_id": 1871159273,
+          "type_id": 51,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 51,
+            "name": "Offsides",
+            "code": "offsides",
+            "developer_name": "OFFSIDES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51587508,
+          "player_statistic_id": 1871159273,
+          "type_id": 52,
+          "value": {
+            "total": 4,
+            "goals": 4,
+            "penalties": 0
+          },
+          "type": {
+            "id": 52,
+            "name": "Goals",
+            "code": "goals",
+            "developer_name": "GOALS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51587498,
+          "player_statistic_id": 1871159273,
+          "type_id": 56,
+          "value": {
+            "total": 3
+          },
+          "type": {
+            "id": 56,
+            "name": "Fouls",
+            "code": "fouls",
+            "developer_name": "FOULS",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 51629647,
+          "player_statistic_id": 1871159273,
+          "type_id": 58,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 58,
+            "name": "Shots Blocked",
+            "code": "shots-blocked",
+            "developer_name": "SHOTS_BLOCKED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51629650,
+          "player_statistic_id": 1871159273,
+          "type_id": 59,
+          "value": {
+            "in": 0,
+            "out": 1
+          },
+          "type": {
+            "id": 59,
+            "name": "Substitutions",
+            "code": "substitutions",
+            "developer_name": "SUBSTITUTIONS",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 51629651,
+          "player_statistic_id": 1871159273,
+          "type_id": 78,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 78,
+            "name": "Tackles",
+            "code": "tackles",
+            "developer_name": "TACKLES",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 51587522,
+          "player_statistic_id": 1871159273,
+          "type_id": 80,
+          "value": {
+            "total": 55
+          },
+          "type": {
+            "id": 80,
+            "name": "Passes",
+            "code": "passes",
+            "developer_name": "PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 51587543,
+          "player_statistic_id": 1871159273,
+          "type_id": 86,
+          "value": {
+            "total": 7
+          },
+          "type": {
+            "id": 86,
+            "name": "Shots On Target",
+            "code": "shots-on-target",
+            "developer_name": "SHOTS_ON_TARGET",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51587511,
+          "player_statistic_id": 1871159273,
+          "type_id": 88,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 88,
+            "name": "Goals Conceded",
+            "code": "goals-conceded",
+            "developer_name": "GOALS_CONCEDED",
+            "model_type": "statistic",
+            "stat_group": "defensive"
+          }
+        },
+        {
+          "id": 51629629,
+          "player_statistic_id": 1871159273,
+          "type_id": 94,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 94,
+            "name": "Dispossessed",
+            "code": "dispossessed",
+            "developer_name": "DISPOSSESSED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51587499,
+          "player_statistic_id": 1871159273,
+          "type_id": 96,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 96,
+            "name": "Fouls Drawn",
+            "code": "fouls-drawn",
+            "developer_name": "FOULS_DRAWN",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 51629652,
+          "player_statistic_id": 1871159273,
+          "type_id": 98,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 98,
+            "name": "Total Crosses",
+            "code": "total-crosses",
+            "developer_name": "TOTAL_CROSSES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51587493,
+          "player_statistic_id": 1871159273,
+          "type_id": 105,
+          "value": {
+            "total": 18
+          },
+          "type": {
+            "id": 105,
+            "name": "Total Duels",
+            "code": "total-duels",
+            "developer_name": "TOTAL_DUELS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51587495,
+          "player_statistic_id": 1871159273,
+          "type_id": 106,
+          "value": {
+            "total": 6
+          },
+          "type": {
+            "id": 106,
+            "name": "Duels Won",
+            "code": "duels-won",
+            "developer_name": "DUELS_WON",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51587490,
+          "player_statistic_id": 1871159273,
+          "type_id": 108,
+          "value": {
+            "total": 10
+          },
+          "type": {
+            "id": 108,
+            "name": "Dribble Attempts",
+            "code": "dribble-attempts",
+            "developer_name": "DRIBBLED_ATTEMPTS",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51587491,
+          "player_statistic_id": 1871159273,
+          "type_id": 109,
+          "value": {
+            "total": 3
+          },
+          "type": {
+            "id": 109,
+            "name": "Successful Dribbles",
+            "code": "successful-dribbles",
+            "developer_name": "SUCCESSFUL_DRIBBLES",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51629633,
+          "player_statistic_id": 1871159273,
+          "type_id": 110,
+          "value": {
+            "total": 1
+          },
+          "type": {
+            "id": 110,
+            "name": "Dribbled Past",
+            "code": "dribbled-past",
+            "developer_name": "DRIBBLED_PAST",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51587459,
+          "player_statistic_id": 1871159273,
+          "type_id": 116,
+          "value": {
+            "total": 50
+          },
+          "type": {
+            "id": 116,
+            "name": "Accurate Passes",
+            "code": "accurate-passes",
+            "developer_name": "ACCURATE_PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 51629641,
+          "player_statistic_id": 1871159273,
+          "type_id": 117,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 117,
+            "name": "Key Passes",
+            "code": "key-passes",
+            "developer_name": "KEY_PASSES",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 51587531,
+          "player_statistic_id": 1871159273,
+          "type_id": 118,
+          "value": {
+            "average": 8.27,
+            "highest": 8.58,
+            "lowest": 7.96
+          },
+          "type": {
+            "id": 118,
+            "name": "Rating",
+            "code": "rating",
+            "developer_name": "RATING",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 51587521,
+          "player_statistic_id": 1871159273,
+          "type_id": 119,
+          "value": {
+            "total": 180
+          },
+          "type": {
+            "id": 119,
+            "name": "Minutes Played",
+            "code": "minutes-played",
+            "developer_name": "MINUTES_PLAYED",
+            "model_type": "statistic",
+            "stat_group": "NULL"
+          }
+        },
+        {
+          "id": 51629642,
+          "player_statistic_id": 1871159273,
+          "type_id": 122,
+          "value": {
+            "total": 3
+          },
+          "type": {
+            "id": 122,
+            "name": "Long Balls",
+            "code": "long-balls",
+            "developer_name": "LONG_BALLS",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 51629643,
+          "player_statistic_id": 1871159273,
+          "type_id": 123,
+          "value": {
+            "total": 3
+          },
+          "type": {
+            "id": 123,
+            "name": "Long Balls Won",
+            "code": "long-balls-won",
+            "developer_name": "LONG_BALLS_WON",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 51629627,
+          "player_statistic_id": 1871159273,
+          "type_id": 194,
+          "value": {
+            "total": 1,
+            "home": 1,
+            "away": 0
+          },
+          "type": {
+            "id": 194,
+            "name": "Cleansheets",
+            "code": "cleansheets",
+            "developer_name": "CLEANSHEET",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 51587550,
+          "player_statistic_id": 1871159273,
+          "type_id": 214,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 214,
+            "name": "Team Wins",
+            "code": "team-wins",
+            "developer_name": "WIN",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 51587466,
+          "player_statistic_id": 1871159273,
+          "type_id": 321,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 321,
+            "name": "Appearances",
+            "code": "appearances",
+            "developer_name": "APPEARANCES",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 51587517,
+          "player_statistic_id": 1871159273,
+          "type_id": 322,
+          "value": {
+            "total": 2
+          },
+          "type": {
+            "id": 322,
+            "name": "Lineups",
+            "code": "lineups",
+            "developer_name": "LINEUPS",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        },
+        {
+          "id": 51587468,
+          "player_statistic_id": 1871159273,
+          "type_id": 581,
+          "value": {
+            "total": 3
+          },
+          "type": {
+            "id": 581,
+            "name": "Big Chances Missed",
+            "code": "big-chances-missed",
+            "developer_name": "BIG_CHANCES_MISSED",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51587458,
+          "player_statistic_id": 1871159273,
+          "type_id": 1584,
+          "value": {
+            "total": 90.91
+          },
+          "type": {
+            "id": 1584,
+            "name": "Accurate Passes Percentage",
+            "code": "accurate-passes-percentage",
+            "developer_name": "ACCURATE_PASSES_PERCENTAGE",
+            "model_type": "statistic",
+            "stat_group": "offensive"
+          }
+        },
+        {
+          "id": 51587528,
+          "player_statistic_id": 1871159273,
+          "type_id": 9676,
+          "value": {
+            "average": "2.00"
+          },
+          "type": {
+            "id": 9676,
+            "name": "Average Points Per Game",
+            "code": "average-points-per-game",
+            "developer_name": "AVERAGE_POINTS_PER_GAME",
+            "model_type": "statistic",
+            "stat_group": "overall"
+          }
+        },
+        {
+          "id": 51629628,
+          "player_statistic_id": 1871159273,
+          "type_id": 27255,
+          "value": {
+            "crosses_blocked": 1
+          },
+          "type": {
+            "id": 27255,
+            "name": "Crosses Blocked",
+            "code": "crosses-blocked",
+            "developer_name": "CROSSES_BLOCKED",
+            "model_type": "statistic",
+            "stat_group": null
+          }
+        }
+      ]
+    }
+  ],
+  "teams": [
+    {
+      "id": 1213171,
+      "transfer_id": null,
+      "player_id": 96611,
+      "team_id": 18647,
+      "position_id": 27,
+      "detailed_position_id": 151,
+      "start": null,
+      "end": "2017-03-25",
+      "captain": false,
+      "jersey_number": 10,
+      "team": {
+        "id": 18647,
+        "sport_id": 1,
+        "country_id": 17,
+        "venue_id": 6152,
+        "gender": "male",
+        "name": "France",
+        "short_code": "FRA",
+        "image_path": "https://cdn.sportmonks.com/images/soccer/teams/23/18647.png",
+        "founded": 1919,
+        "type": "national",
+        "placeholder": false,
+        "last_played_at": "2026-06-22 21:00:00"
+      }
+    },
+    {
+      "id": 947903,
+      "transfer_id": null,
+      "player_id": 96611,
+      "team_id": 3468,
+      "position_id": 27,
+      "detailed_position_id": 151,
+      "start": "2024-07-01",
+      "end": "2029-06-30",
+      "captain": false,
+      "jersey_number": 10,
+      "team": {
+        "id": 3468,
+        "sport_id": 1,
+        "country_id": 32,
+        "venue_id": 2020,
+        "gender": "male",
+        "name": "Real Madrid",
+        "short_code": "RMA",
+        "image_path": "https://cdn.sportmonks.com/images/soccer/teams/12/3468.png",
+        "founded": 1902,
+        "type": "domestic",
+        "placeholder": false,
+        "last_played_at": "2026-05-23 19:00:00"
+      }
+    }
+  ],
+  "transfers": [],
+  "trophies": [
+    {
+      "id": 11307,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 307,
+      "season_id": 15293,
+      "trophy_id": 2,
+      "trophy": {
+        "id": 2,
+        "sport_id": 1,
+        "position": 2,
+        "name": "Runner-up"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 14640,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 310,
+      "season_id": 16238,
+      "trophy_id": 2,
+      "trophy": {
+        "id": 2,
+        "sport_id": 1,
+        "position": 2,
+        "name": "Runner-up"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 172330,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 301,
+      "season_id": 19745,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 724,
+      "participant_id": 96611,
+      "team_id": 18647,
+      "league_id": 732,
+      "season_id": 892,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": {
+        "id": 732,
+        "sport_id": 1,
+        "country_id": 99474,
+        "name": "World Cup",
+        "active": true,
+        "short_code": "FIFA WC",
+        "image_path": "https://cdn.sportmonks.com/images/soccer/leagues/28/732.png",
+        "type": "league",
+        "sub_type": "cup_international",
+        "last_played_at": "2026-06-26 02:00:00",
+        "category": 1,
+        "has_jerseys": true
+      },
+      "season": {
+        "id": 892,
+        "sport_id": 1,
+        "league_id": 732,
+        "tie_breaker_rule_id": 169,
+        "name": "2018",
+        "finished": true,
+        "pending": false,
+        "is_current": false,
+        "starting_at": "2018-06-14",
+        "ending_at": "2018-07-15",
+        "standings_recalculated_at": "2023-11-30 14:42:51",
+        "games_in_current_week": false
+      }
+    },
+    {
+      "id": 85536,
+      "participant_id": 96611,
+      "team_id": 6789,
+      "league_id": 301,
+      "season_id": 765,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 565746,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 301,
+      "season_id": 21779,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 551642,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 1176,
+      "season_id": 21592,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 152833,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 301,
+      "season_id": 18441,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 124911,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 301,
+      "season_id": 16043,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 22748,
+      "participant_id": 96611,
+      "team_id": 18647,
+      "league_id": 732,
+      "season_id": 18017,
+      "trophy_id": 2,
+      "trophy": {
+        "id": 2,
+        "sport_id": 1,
+        "position": 2,
+        "name": "Runner-up"
+      },
+      "league": {
+        "id": 732,
+        "sport_id": 1,
+        "country_id": 99474,
+        "name": "World Cup",
+        "active": true,
+        "short_code": "FIFA WC",
+        "image_path": "https://cdn.sportmonks.com/images/soccer/leagues/28/732.png",
+        "type": "league",
+        "sub_type": "cup_international",
+        "last_played_at": "2026-06-26 02:00:00",
+        "category": 1,
+        "has_jerseys": true
+      },
+      "season": {
+        "id": 18017,
+        "sport_id": 1,
+        "league_id": 732,
+        "tie_breaker_rule_id": 170,
+        "name": "2022",
+        "finished": true,
+        "pending": false,
+        "is_current": false,
+        "starting_at": "2022-11-20",
+        "ending_at": "2022-12-18",
+        "standings_recalculated_at": "2025-12-25 09:09:05",
+        "games_in_current_week": false
+      }
+    },
+    {
+      "id": 21807,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 307,
+      "season_id": 17805,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 14370,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 2,
+      "season_id": 16029,
+      "trophy_id": 2,
+      "trophy": {
+        "id": 2,
+        "sport_id": 1,
+        "position": 2,
+        "name": "Runner-up"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 135922,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 301,
+      "season_id": 17160,
+      "trophy_id": 2,
+      "trophy": {
+        "id": 2,
+        "sport_id": 1,
+        "position": 2,
+        "name": "Runner-up"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 11100,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 1176,
+      "season_id": 15573,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 110669,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 301,
+      "season_id": 12935,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 7353,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 307,
+      "season_id": 10680,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 6255,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 310,
+      "season_id": 8403,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 102286,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 301,
+      "season_id": 6405,
+      "trophy_id": 2,
+      "trophy": {
+        "id": 2,
+        "sport_id": 1,
+        "position": 2,
+        "name": "Runner-up"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 697050,
+      "participant_id": 96611,
+      "team_id": 6789,
+      "league_id": 1176,
+      "season_id": 6284,
+      "trophy_id": 2,
+      "trophy": {
+        "id": 2,
+        "sport_id": 1,
+        "position": 2,
+        "name": "Runner-up"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 729968,
+      "participant_id": 96611,
+      "team_id": 6789,
+      "league_id": 310,
+      "season_id": 760,
+      "trophy_id": 2,
+      "trophy": {
+        "id": 2,
+        "sport_id": 1,
+        "position": 2,
+        "name": "Runner-up"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 18560,
+      "participant_id": 96611,
+      "team_id": 18647,
+      "league_id": 1538,
+      "season_id": 17004,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 16091355,
+      "participant_id": 96611,
+      "team_id": 3468,
+      "league_id": 564,
+      "season_id": 25659,
+      "trophy_id": 2,
+      "trophy": {
+        "id": 2,
+        "sport_id": 1,
+        "position": 2,
+        "name": "Runner-up"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 12272350,
+      "participant_id": 96611,
+      "team_id": 3468,
+      "league_id": 1452,
+      "season_id": 24583,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 12287788,
+      "participant_id": 96611,
+      "team_id": 3468,
+      "league_id": 570,
+      "season_id": 24526,
+      "trophy_id": 2,
+      "trophy": {
+        "id": 2,
+        "sport_id": 1,
+        "position": 2,
+        "name": "Runner-up"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 12275640,
+      "participant_id": 96611,
+      "team_id": 3468,
+      "league_id": 1251,
+      "season_id": 23772,
+      "trophy_id": 2,
+      "trophy": {
+        "id": 2,
+        "sport_id": 1,
+        "position": 2,
+        "name": "Runner-up"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 12260273,
+      "participant_id": 96611,
+      "team_id": 3468,
+      "league_id": 564,
+      "season_id": 23621,
+      "trophy_id": 2,
+      "trophy": {
+        "id": 2,
+        "sport_id": 1,
+        "position": 2,
+        "name": "Runner-up"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 12271509,
+      "participant_id": 96611,
+      "team_id": 3468,
+      "league_id": 1328,
+      "season_id": 23534,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 581620,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 307,
+      "season_id": 22824,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    },
+    {
+      "id": 16720,
+      "participant_id": 96611,
+      "team_id": 591,
+      "league_id": 307,
+      "season_id": 16701,
+      "trophy_id": 1,
+      "trophy": {
+        "id": 1,
+        "sport_id": 1,
+        "position": 1,
+        "name": "Winner"
+      },
+      "league": null,
+      "season": null
+    }
+  ]
+}

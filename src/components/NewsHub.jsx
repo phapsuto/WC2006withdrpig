@@ -1,603 +1,688 @@
-import { useState, useEffect, useCallback } from 'react';
-import { fetchRssFeeds } from '../services/rss';
-import { 
-  Newspaper, 
-  Loader2, 
-  Sparkles, 
-  Languages, 
-  ExternalLink, 
-  ArrowLeft, 
-  Clock, 
-  TrendingUp, 
-  Flame, 
-  CheckCircle2,
-  Play,
-  Calendar,
-  ChevronRight,
-  RefreshCw
-} from 'lucide-react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useParams, useNavigate, useSearchParams, useLocation } from 'react-router-dom';
+import { Card, Tag, Button, Skeleton, Empty, Breadcrumb, Typography, Divider, ConfigProvider, Pagination } from 'antd';
+import { ReloadOutlined, ClockCircleOutlined, ReadOutlined, UserOutlined, LinkOutlined, ArrowLeftOutlined, FireOutlined, RightOutlined } from '@ant-design/icons';
+import { backendClient } from '../services/backendClient';
 
-// ── PERSISTENT NEWS STORAGE ──────────────────────────────
-const NEWS_STORAGE_KEY = 'wc2026_news_data';
-const NEWS_STORAGE_TS_KEY = 'wc2026_news_timestamp';
-const NEWS_MAX_AGE_DAYS = 30;
+const { Text, Title } = Typography;
 
-// WHITELIST: Article MUST contain at least one of these to be WC-related
-const WC_REQUIRED_KEYWORDS = [
-  'world cup', 'worldcup', 'wc 2026', 'wc2026', 'fifa', 
-  'world cup 2026', 'vòng chung kết', 'vòng bảng', 'bảng đấu',
-  'đội tuyển', 'đt ', 'tuyển quốc gia',
-  'bóng đá', 'bong da', 'football', 'soccer',
-  'trận đấu', 'bàn thắng', 'penalty', 'thẻ đỏ', 'thẻ vàng',
-  'huấn luyện viên', 'hlv', 'cầu thủ', 'tiền đạo', 'thủ môn',
-  'hậu vệ', 'tiền vệ', 'trung vệ',
-  'messi', 'ronaldo', 'mbappe', 'mbappé', 'haaland', 'vinicius',
-  'neymar', 'salah', 'kane', 'bellingham', 'saka',
-  'argentina', 'brazil', 'france', 'germany', 'england', 'spain', 'portugal',
-  'pháp', 'đức', 'anh', 'tây ban nha', 'bồ đào nha', 'brazil',
-  'mexico', 'mỹ', 'usa', 'hàn quốc', 'nhật bản', 'maroc', 'morocco',
-  'bỉ', 'hà lan', 'croatia', 'uruguay', 'colombia', 'ecuador',
-  'senegal', 'cameroon', 'nigeria', 'ghana', 'tunisia',
-  'group a', 'group b', 'group c', 'group d', 'group e', 'group f',
-  'group g', 'group h', 'group i', 'group j', 'group k', 'group l',
-  'bảng a', 'bảng b', 'bảng c', 'bảng d', 'bảng e', 'bảng f',
-  'nam phi', 'hàn quốc', 'thụy sĩ', 'thổ nhĩ kỳ', 'bờ biển ngà',
-  'tỉ số', 'tỷ số', 'xếp hạng', 'kết quả', 'lịch thi đấu',
-  'sân vận động', 'stadium', 'var ', 'trọng tài',
-  'dự đoán', 'nhận định', 'soi kèo', 'kèo',
-  'vô địch', 'champion', 'knockout', 'vòng 16', 'tứ kết', 'bán kết', 'chung kết',
-];
-
-// BLACKLIST: Even if it passes whitelist, reject these
-const NEWS_BLACKLIST = [
-  'esport', 'pickleball', 'tennis', 'boxing', 'golf', 'nba ',
-  'formula 1', 'f1 grand prix', 'mma', 'ufc', 'muay thái',
-  'asiad', 'sea games', 'olympic 2028', 's-race', 'giải chạy',
-  'marathon', 'bơi lội', 'cầu lông', 'bóng rổ', 'bóng chuyền',
-  'karate', 'judo', 'taekwondo', 'wushu', 'đấu kiếm',
-];
-
-const filterFootballNews = (articles) => {
-  return articles.filter(article => {
-    const title = (article.titleVi || article.title || '').toLowerCase();
-    const desc = (article.descriptionVi || article.description || '').toLowerCase();
-    const combined = title + ' ' + desc;
-    // BLACKLIST check first
-    if (NEWS_BLACKLIST.some(kw => combined.includes(kw))) return false;
-    // Filter out fake "[LIVE]" articles
-    if (title.startsWith('[live]') || title.includes('[trực tiếp]')) return false;
-    const url = article.url || article.link || '';
-    if (url.includes('worldcup26.ir/live-match')) return false;
-    // WHITELIST: MUST contain at least one WC/football keyword
-    const hasWcKeyword = WC_REQUIRED_KEYWORDS.some(kw => combined.includes(kw));
-    if (!hasWcKeyword) return false;
-    return true;
-  });
+// ─── Slug Generation ─────────────────────────────────────────────────────────
+const generateSlug = (text, id) => {
+  if (!text) return id;
+  return text.toString().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+    .replace(/[đĐ]/g, 'd')
+    .replace(/[^a-z0-9 -]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-') + '-' + id;
 };
 
-const cleanOldArticles = (articles) => {
-  const cutoff = Date.now() - (NEWS_MAX_AGE_DAYS * 24 * 60 * 60 * 1000);
-  return articles.filter(article => {
-    const pubDate = new Date(article.pubDate || article.publishedAt || 0).getTime();
-    // Keep articles without valid dates (assume recent)
-    return pubDate === 0 || pubDate > cutoff;
-  });
+// ─── Source badge colors ─────────────────────────────────────────────────────
+const SOURCE_CONFIG = {
+  'VnExpress':   { color: '#0066b3' },
+  'Tuổi Trẻ':   { color: '#e02020' },
+  'Thanh Niên':  { color: '#1a73e8' },
+  'BongDaPlus':  { color: '#d4380d' },
 };
 
-const persistNews = (articles) => {
-  try {
-    const cleaned = cleanOldArticles(articles);
-    localStorage.setItem(NEWS_STORAGE_KEY, JSON.stringify(cleaned));
-    localStorage.setItem(NEWS_STORAGE_TS_KEY, Date.now().toString());
-  } catch (e) {
-    console.warn('[News Storage] Failed to persist:', e.message);
-  }
+const getSourceColor = (source) => SOURCE_CONFIG[source]?.color || '#6b7280';
+
+// ─── HTML Helpers ────────────────────────────────────────────────────────────
+const stripHtml = (html) => {
+  if (!html) return '';
+  return html
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
 };
 
-const loadPersistedNews = () => {
-  try {
-    const raw = localStorage.getItem(NEWS_STORAGE_KEY);
-    if (raw) {
-      let articles = JSON.parse(raw);
-      // Apply filter on cached data too (catches stale fake/irrelevant articles)
-      articles = filterFootballNews(articles);
-      console.log(`[News Storage] Loaded ${articles.length} cached articles (filtered)`);
-      return articles;
-    }
-  } catch (e) {
-    console.warn('[News Storage] Failed to load:', e.message);
-  }
-  return [];
+const getReadingTime = (text) => {
+  if (!text) return 2;
+  return Math.max(1, Math.ceil(stripHtml(text).split(/\s+/).length / 150));
 };
 
+const formatTimeAgo = (pubDate) => {
+  if (!pubDate) return '';
+  const diff = Date.now() - pubDate;
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'Vừa xong';
+  if (mins < 60) return `${mins} phút trước`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours} giờ trước`;
+  const days = Math.floor(hours / 24);
+  return `${days} ngày trước`;
+};
+
+const FALLBACK_IMG = 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&auto=format&fit=crop';
+
+// ─── Antd Theme ──────────────────────────────────────────────────────────────
+const newsTheme = {
+  token: {
+    fontFamily: '"365 Sans", -apple-system, sans-serif',
+    colorPrimary: '#ea4c89',
+    borderRadius: 10,
+    fontSize: 14,
+  },
+  components: {
+    Card: {
+      paddingLG: 0,
+      borderRadiusLG: 12,
+    },
+    Tag: {
+      borderRadiusSM: 4,
+    },
+    Button: {
+      borderRadius: 20,
+      controlHeight: 34,
+      fontSize: 13,
+    },
+    Breadcrumb: {
+      fontSize: 13,
+    },
+  },
+};
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SOURCE TAG COMPONENT
+// ═════════════════════════════════════════════════════════════════════════════
+function SourceTag({ source, size = 'small' }) {
+  const color = getSourceColor(source);
+  return (
+    <Tag
+      color={color}
+      style={{
+        fontSize: size === 'small' ? 11 : 12,
+        lineHeight: size === 'small' ? '18px' : '20px',
+        padding: size === 'small' ? '0 6px' : '0 8px',
+        fontWeight: 600,
+        letterSpacing: 0.2,
+        textTransform: 'uppercase',
+        border: 'none',
+        borderRadius: 4,
+        margin: 0,
+      }}
+    >
+      {source}
+    </Tag>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// FEATURED CARD — Hero article
+// ═════════════════════════════════════════════════════════════════════════════
+function FeaturedCard({ article, onClick, imgErrors, onImgError }) {
+  const img = imgErrors[article.id] ? FALLBACK_IMG : (article.image || FALLBACK_IMG);
+  const excerpt = stripHtml(article.contentVi || article.content || '').substring(0, 180);
+
+  return (
+    <div
+      className="group grid grid-cols-1 md:grid-cols-2 bg-white rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all duration-300"
+      onClick={onClick}
+    >
+      {/* Image */}
+      <div className="relative overflow-hidden aspect-[16/10] md:aspect-auto">
+        <img
+          src={img}
+          alt=""
+          onError={() => onImgError(article.id)}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+        <div className="absolute top-2.5 left-2.5">
+          <SourceTag source={article.source} />
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="p-5 flex flex-col justify-center gap-2.5">
+        <h2
+          className="text-[16px] font-medium leading-[1.45] text-[--365-text-main] m-0 line-clamp-3 group-hover:text-[--color-primary] transition-colors duration-200"
+        >
+          {article.titleVi || article.title}
+        </h2>
+        <p className="text-[13px] leading-[1.6] text-[--365-text-sub] m-0 line-clamp-3">
+          {excerpt}...
+        </p>
+        <div className="flex items-center gap-2 mt-0.5">
+          <ClockCircleOutlined className="text-[11px] text-[--365-text-sub]" />
+          <Text className="!text-[12px] !text-[--365-text-sub] !font-medium">{formatTimeAgo(article.pubDate)}</Text>
+          <span className="text-[--365-text-sub] text-[11px]">·</span>
+          <ReadOutlined className="text-[11px] text-[--365-text-sub]" />
+          <Text className="!text-[12px] !text-[--365-text-sub] !font-medium">{getReadingTime(article.content)} phút đọc</Text>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// NEWS LIST ITEM — Horizontal card
+// ═════════════════════════════════════════════════════════════════════════════
+function NewsListItem({ article, onClick, imgErrors, onImgError }) {
+  const img = imgErrors[article.id] ? FALLBACK_IMG : (article.image || FALLBACK_IMG);
+  const excerpt = stripHtml(article.contentVi || article.content || '').substring(0, 120);
+
+  return (
+    <div
+      className="group flex gap-3.5 py-3.5 px-4 cursor-pointer hover:bg-[#fafafa] transition-colors duration-150 rounded-lg -mx-1"
+      onClick={onClick}
+    >
+      {/* Thumbnail */}
+      <div className="w-[160px] h-[100px] flex-shrink-0 rounded-lg overflow-hidden">
+        <img
+          src={img}
+          alt=""
+          onError={() => onImgError(article.id)}
+          className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-[1.05]"
+        />
+      </div>
+
+      {/* Body */}
+      <div className="flex flex-col justify-center min-w-0 flex-1 gap-1.5">
+        <h3 className="text-[14px] font-medium leading-[1.45] text-[--365-text-main] m-0 line-clamp-2 group-hover:text-[--color-primary] transition-colors duration-150">
+          {article.titleVi || article.title}
+        </h3>
+        <p className="text-[13px] leading-[1.55] text-[--365-text-sub] m-0 line-clamp-2 hidden sm:block">
+          {excerpt}...
+        </p>
+        <div className="flex items-center gap-2 mt-0.5">
+          <SourceTag source={article.source} size="small" />
+          <Text className="!text-[12px] !text-[#9ca3af] !font-medium">{formatTimeAgo(article.pubDate)}</Text>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SIDEBAR TRENDING ITEM
+// ═════════════════════════════════════════════════════════════════════════════
+function SidebarItem({ article, rank, onClick, imgErrors, onImgError }) {
+  const img = imgErrors[article.id] ? FALLBACK_IMG : (article.image || FALLBACK_IMG);
+
+  return (
+    <div
+      className="group flex gap-2.5 py-2 cursor-pointer"
+      onClick={onClick}
+    >
+      {/* Rank */}
+      <span
+        className="text-[16px] font-semibold min-w-[24px] pt-0.5 leading-none"
+        style={{ color: rank <= 3 ? '#ea4c89' : '#d1d5db' }}
+      >
+        {String(rank).padStart(2, '0')}
+      </span>
+
+      {/* Thumbnail */}
+      <div className="w-[64px] h-[44px] flex-shrink-0 rounded-md overflow-hidden">
+        <img
+          src={img}
+          alt=""
+          onError={() => onImgError(article.id)}
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 min-w-0">
+        <h4 className="text-[13px] font-medium leading-[1.4] text-[--365-text-main] m-0 line-clamp-2 group-hover:text-[--color-primary] transition-colors duration-150">
+          {article.titleVi || article.title}
+        </h4>
+        <div className="flex items-center gap-1.5 mt-1">
+          <span
+            className="w-[6px] h-[6px] rounded-full flex-shrink-0"
+            style={{ background: getSourceColor(article.source) }}
+          />
+          <Text className="!text-[11px] !text-[#9ca3af] !font-medium">
+            {article.source} · {formatTimeAgo(article.pubDate)}
+          </Text>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// RELATED ITEM — For detail sidebar + mobile
+// ═════════════════════════════════════════════════════════════════════════════
+function RelatedItem({ article, onClick, imgErrors, onImgError }) {
+  const img = imgErrors[article.id] ? FALLBACK_IMG : (article.image || FALLBACK_IMG);
+
+  return (
+    <div
+      className="group flex gap-3 py-2.5 cursor-pointer border-b border-[#f3f3f3] last:border-b-0"
+      onClick={onClick}
+    >
+      <div className="w-[80px] h-[54px] flex-shrink-0 rounded-md overflow-hidden">
+        <img
+          src={img}
+          alt=""
+          onError={() => onImgError(article.id)}
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <div className="flex-1 min-w-0 flex flex-col justify-center">
+        <h4 className="text-[13px] font-medium leading-[1.4] text-[--365-text-main] m-0 line-clamp-2 group-hover:text-[--color-primary] transition-colors duration-150">
+          {article.titleVi || article.title}
+        </h4>
+        <Text className="!text-[11px] !text-[#9ca3af] !font-medium mt-1">{formatTimeAgo(article.pubDate)}</Text>
+      </div>
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// SKELETON LOADING
+// ═════════════════════════════════════════════════════════════════════════════
+function NewsSkeletons() {
+  return (
+    <div className="flex flex-col gap-3">
+      {/* Featured skeleton */}
+      <div className="bg-white rounded-xl overflow-hidden shadow-sm">
+        <Skeleton.Image active style={{ width: '100%', height: 200, display: 'block' }} />
+        <div className="p-4">
+          <Skeleton active paragraph={{ rows: 2 }} title={{ width: '80%' }} />
+        </div>
+      </div>
+      {/* List skeletons */}
+      {[...Array(4)].map((_, i) => (
+        <div key={i} className="flex gap-3 p-3 bg-white rounded-xl shadow-sm">
+          <Skeleton.Image active style={{ width: 140, height: 88, borderRadius: 8, flexShrink: 0 }} />
+          <div className="flex-1">
+            <Skeleton active paragraph={{ rows: 2 }} title={{ width: '60%' }} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ═════════════════════════════════════════════════════════════════════════════
+// MAIN COMPONENT
+// ═════════════════════════════════════════════════════════════════════════════
 export default function NewsHub({ matches = [] }) {
-  // Initialize from persistent storage for instant load
-  const [articles, setArticles] = useState(() => loadPersistedNews());
-  const [loading, setLoading] = useState(() => loadPersistedNews().length === 0);
-  const [firstLoadDone, setFirstLoadDone] = useState(() => loadPersistedNews().length > 0);
-  const [selectedArticle, setSelectedArticle] = useState(null);
-  const [activeTab, setActiveTab] = useState('fulltext');
+  const [articles, setArticles] = useState([]);
+  const [totalDocs, setTotalDocs] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [firstLoadDone, setFirstLoadDone] = useState(false);
   const [imgErrors, setImgErrors] = useState({});
+
+  const { slug } = useParams();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = parseInt(searchParams.get('page')) || 1;
+
+  const location = useLocation();
+  const [detailArticle, setDetailArticle] = useState(null);
+  const [detailLoading, setDetailLoading] = useState(false);
+
+  useEffect(() => {
+    if (!slug) {
+      setDetailArticle(null);
+      return;
+    }
+    
+    // Quick find in current list
+    const found = articles.find(a => a.slug === slug || generateSlug(a.titleVi || a.title, a.id) === slug);
+    if (found) {
+      setDetailArticle(found);
+      return;
+    }
+
+    // Not in current list, fetch from server
+    const fetchDetail = async () => {
+      setDetailLoading(true);
+      try {
+        const data = await backendClient.getNewsBySlug(slug);
+        if (data.success) {
+          setDetailArticle(data.article);
+        }
+      } catch (e) {
+        console.error('Failed to load article detail:', e);
+      } finally {
+        setDetailLoading(false);
+      }
+    };
+    fetchDetail();
+  }, [slug, articles]);
 
   const loadNews = useCallback(async (isManual = false) => {
     if (isManual || !firstLoadDone) setLoading(true);
     try {
-      const response = await fetch('/data/news.json');
-      if (response.ok) {
-        let news = await response.json();
-        // Client-side filter: remove non-football articles
-        news = filterFootballNews(news);
-        // Clean old articles (> 30 days)
-        news = cleanOldArticles(news);
-        setArticles(news);
-        // Persist to localStorage permanently
-        persistNews(news);
-        console.log(`[News] Loaded ${news.length} WC articles, persisted to storage`);
-      } else {
-        const news = filterFootballNews(await fetchRssFeeds());
-        setArticles(news);
-        persistNews(news);
+      const data = await backendClient.getAllNews(currentPage, 12);
+      if (data.success) {
+        setArticles(data.docs || data.news || []);
+        setTotalDocs(data.totalDocs || 0);
       }
       setFirstLoadDone(true);
     } catch (e) {
-      console.error('News load failed, trying RSS fallback:', e);
-      try {
-        const news = filterFootballNews(await fetchRssFeeds());
-        setArticles(news);
-        persistNews(news);
-      } catch (err) {
-        console.error('RSS fallback also failed:', err);
-        // Keep showing cached articles from localStorage (already loaded in useState init)
-      }
+      console.error('News load failed:', e);
     } finally {
       setLoading(false);
     }
-  }, [firstLoadDone]);
+  }, [firstLoadDone, currentPage]);
 
-  // On mount: if we have cached data, still fetch fresh in background
   useEffect(() => { loadNews(false); }, [loadNews]);
 
   useEffect(() => {
     const hasLive = matches.some(m => m.status === 'LIVE');
     const interval = setInterval(() => loadNews(false), hasLive ? 5 * 60000 : 20 * 60000);
     return () => clearInterval(interval);
-  }, [matches, firstLoadDone, loadNews]);
+  }, [matches, loadNews]);
 
-  const handleCardClick = (article) => {
-    setSelectedArticle(article);
-    setActiveTab('fulltext');
+  const handlePageChange = (page) => {
+    setSearchParams({ page });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const getReadingTime = (text) => {
-    if (!text) return 2;
-    return Math.max(1, Math.ceil(text.split(/\s+/).length / 150));
+  const handleCardClick = (article) => {
+    const articleSlug = article.slug || generateSlug(article.titleVi || article.title, article.id);
+    navigate(`/news/${articleSlug}`, { state: { fromPage: currentPage } });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleImgError = (id) => {
-    setImgErrors(prev => ({ ...prev, [id]: true }));
-  };
+  const handleImgError = (id) => setImgErrors(prev => ({ ...prev, [id]: true }));
+  const getImg = (article) => imgErrors[article.id] ? FALLBACK_IMG : (article.image || FALLBACK_IMG);
 
-  const getFallbackImg = () => 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&auto=format&fit=crop';
-
-  const getArticleImage = (article) => {
-    if (imgErrors[article.id]) return getFallbackImg();
-    return article.image || getFallbackImg();
-  };
-
-  const [currentTime] = useState(() => Date.now());
-
-  const formatTimeAgo = (pubDate) => {
-    if (!pubDate) return '';
-    const diff = currentTime - pubDate;
-    const mins = Math.floor(diff / 60000);
-    if (mins < 60) return `${mins} phút trước`;
-    const hours = Math.floor(mins / 60);
-    if (hours < 24) return `${hours} giờ trước`;
-    const days = Math.floor(hours / 24);
-    return `${days} ngày trước`;
-  };
-
-  // ==========================================
+  // ═══════════════════════════════════════════════════════════════════════════
   // ARTICLE DETAIL VIEW
-  // ==========================================
-  if (selectedArticle) {
-    const readingTime = getReadingTime(selectedArticle.contentVi || selectedArticle.content);
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (detailLoading) {
     return (
-      <div className="space-y-0">
-        {/* Hero Image */}
-        <div className="relative w-full h-[220px] md:h-[400px] -mx-4 -mt-4 mb-0 overflow-hidden" style={{ marginLeft: '-1rem', marginRight: '-1rem', marginTop: '-1rem', width: 'calc(100% + 2rem)' }}>
-          <img 
-            src={getArticleImage(selectedArticle)} 
-            alt={selectedArticle.titleVi || selectedArticle.title} 
-            className="w-full h-full object-cover"
-            referrerPolicy="no-referrer"
-            onError={() => handleImgError(selectedArticle.id)}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-          
-          {/* Back Button Overlay */}
-          <button 
-            onClick={() => setSelectedArticle(null)}
-            className="absolute top-4 left-4 flex items-center gap-1.5 px-3 py-2 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white text-xs font-bold hover:bg-black/60 active:scale-95 transition-all"
-          >
-            <ArrowLeft size={14} /> Quay lại
-          </button>
-
-          {/* Title on Hero */}
-          <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8">
-            <div className="flex items-center gap-2 mb-2">
-              <span className="px-2.5 py-1 rounded-md bg-white/20 backdrop-blur-sm text-white text-[10px] font-black uppercase tracking-wider">
-                {selectedArticle.source}
-              </span>
-              {selectedArticle.isLive && (
-                <span className="px-2 py-0.5 rounded-full bg-red-500/90 text-white text-[9px] font-black uppercase flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                  TRỰC TIẾP
-                </span>
-              )}
-            </div>
-            <h1 className="text-xl md:text-3xl font-black text-white leading-tight drop-shadow-lg">
-              {selectedArticle.titleVi || selectedArticle.title}
-            </h1>
-          </div>
+      <ConfigProvider theme={newsTheme}>
+        <div className="font-sans max-w-4xl mx-auto py-8">
+          <Skeleton active paragraph={{ rows: 12 }} />
         </div>
-
-        {/* Meta Bar */}
-        <div className="flex flex-wrap items-center gap-3 py-4 px-1 border-b border-white/20 text-xs text-on-surface-variant font-bold">
-          <span className="flex items-center gap-1"><Calendar size={12} /> {selectedArticle.pubDateStr}</span>
-          <span className="flex items-center gap-1"><Clock size={12} /> {readingTime} phút đọc</span>
-          {(selectedArticle.url?.includes('en') || selectedArticle.url?.includes('bbc') || selectedArticle.url?.includes('espn')) && (
-            <span className="flex items-center gap-1 text-primary bg-primary/8 px-2 py-0.5 rounded-md">
-              <Languages size={11} /> Đã dịch Việt
-            </span>
-          )}
-        </div>
-
-        {/* Tab Bar */}
-        <div className="flex gap-1 p-1 bg-white/20 dark:bg-white/5 border border-white/30 dark:border-white/10 rounded-xl mt-4 mb-4">
-          {[
-            { key: 'fulltext', label: '📖 Toàn văn' },
-            { key: 'ai', label: '🐷 AI Tóm tắt' },
-            { key: 'social', label: '💬 MXH' }
-          ].map(tab => (
-            <button 
-              key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
-              className={`flex-1 px-3 py-2.5 text-xs font-black rounded-lg transition-all whitespace-nowrap ${
-                activeTab === tab.key 
-                  ? 'bg-primary text-white shadow-md' 
-                  : 'text-on-surface-variant hover:bg-white/30 dark:hover:bg-white/10'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Content */}
-        <div className="text-sm leading-relaxed">
-          {activeTab === 'fulltext' && (
-            <div className="space-y-5">
-              {selectedArticle.titleVi && selectedArticle.titleVi !== selectedArticle.title && (
-                <div className="p-3.5 bg-white/30 dark:bg-white/5 border-l-3 border-accent-gold rounded-xl text-xs">
-                  <span className="text-[10px] font-black uppercase text-accent-gold block mb-1">Tiêu đề gốc</span>
-                  <p className="italic text-on-surface font-semibold">"{selectedArticle.title}"</p>
-                </div>
-              )}
-
-              <div className="space-y-4 text-on-surface-variant/90 font-medium leading-[1.8] text-[0.95rem]">
-                {(selectedArticle.contentVi || selectedArticle.content || "Nội dung đang được cập nhật...").split('\n\n').map((para, idx) => (
-                  <p key={idx} className={idx === 0 ? 'first-letter:text-2xl first-letter:font-black first-letter:text-primary first-letter:float-left first-letter:mr-1' : ''}>
-                    {para}
-                  </p>
-                ))}
-              </div>
-
-              {/* Source Link */}
-              <div className="mt-6 p-4 bg-white/30 dark:bg-white/5 border border-white/40 dark:border-white/10 rounded-xl flex items-center justify-between">
-                <div>
-                  <span className="text-[9px] font-black text-on-surface-variant/60 uppercase">Nguồn</span>
-                  <div className="font-black text-primary text-sm">{selectedArticle.source}</div>
-                </div>
-                <a 
-                  href={selectedArticle.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="flex items-center gap-1.5 px-4 py-2.5 bg-primary text-white text-xs font-black rounded-xl hover:brightness-110 active:scale-95 transition-all shadow-sm"
-                >
-                  Xem gốc <ExternalLink size={12} />
-                </a>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'ai' && (
-            <div className="space-y-5">
-              <div className="p-5 bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 rounded-2xl space-y-3">
-                <h4 className="text-xs font-black text-primary flex items-center gap-1.5 uppercase tracking-wider">
-                  <Sparkles size={15} className="text-secondary animate-pulse" />
-                  Tóm tắt nhanh AI
-                </h4>
-                <div 
-                  className="text-sm text-on-surface-variant space-y-2 font-bold border-t border-white/30 dark:border-white/10 pt-3 leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: selectedArticle.summary || '<ul><li>Đang cập nhật tóm tắt tự động...</li></ul>' }}
-                />
-              </div>
-
-              <div className="p-5 bg-gradient-to-br from-white/90 to-pink-50/50 dark:from-white/10 dark:to-pink-50/5 border border-secondary/15 dark:border-secondary/20 rounded-2xl flex items-start gap-4 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-20 h-20 bg-secondary/5 rounded-full -mr-5 -mt-5" />
-                <img 
-                  src="/drpig_mascot.png" 
-                  alt="Heo Hồng" 
-                  className="w-11 h-11 rounded-full border-2 border-secondary/40 flex-shrink-0"
-                  onError={(e) => { e.target.src = getFallbackImg() }}
-                />
-                <div className="z-10">
-                  <span className="text-[10px] font-black text-secondary uppercase flex items-center gap-1 mb-1">
-                    Nhận định Heo Hồng 🐷 <CheckCircle2 size={11} />
-                  </span>
-                  <p className="text-sm text-on-surface font-bold italic leading-relaxed">
-                    "{selectedArticle.drpigComment || '🐷 Heo Hồng 🐷: Trận này cứ bình tĩnh, kèo nảy lửa thế này đi nhẹ cửa EV dương là ngon ăn!'}"
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === 'social' && (
-            <div className="space-y-4">
-              <div className="p-5 bg-white/40 dark:bg-white/5 border border-white/30 dark:border-white/10 rounded-2xl text-center space-y-4">
-                <div className="w-16 h-16 mx-auto bg-gradient-to-br from-primary/10 to-secondary/10 rounded-full flex items-center justify-center">
-                  <span className="text-3xl">💬</span>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="text-sm font-black text-on-surface">Chưa có dữ liệu MXH thời gian thực</h4>
-                  <p className="text-xs text-on-surface-variant/80 font-medium leading-relaxed max-w-xs mx-auto">
-                    Phản hồi mạng xã hội cho bài viết này chưa được thu thập. Hãy xem nhận định trực tiếp từ Heo Hồng 🐷 trong phần chi tiết trận đấu để cập nhật bình luận AI thời gian thực!
-                  </p>
-                </div>
-                <div className="p-4 bg-gradient-to-br from-white/90 to-pink-50/50 dark:from-white/10 dark:to-pink-50/5 border border-secondary/15 dark:border-secondary/20 rounded-xl flex items-center gap-3">
-                  <img 
-                    src="/drpig_mascot.png" 
-                    alt="Heo Hồng" 
-                    className="w-10 h-10 rounded-full border-2 border-secondary/40 flex-shrink-0"
-                    onError={(e) => { e.target.style.display = 'none' }}
-                  />
-                  <p className="text-xs font-bold italic text-on-surface leading-relaxed text-left">
-                    🐷 Heo Hồng: "Các fen ơi, muốn xem bình luận nóng hổi thì vào xem trận đấu trực tiếp, Heo Hồng sẽ cập nhật phản hồi từ BLV và CĐV liên tục cho anh em nhé!"
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+      </ConfigProvider>
     );
   }
 
-  // ==========================================
-  // NEWS LIST VIEW — Magazine Layout
-  // ==========================================
-  const liveArticles = articles.filter(a => a.isLive);
-  const normalArticles = articles.filter(a => !a.isLive);
-  const featuredArticle = normalArticles[0];
-  const secondaryArticles = normalArticles.slice(1, 4);
-  const remainingArticles = normalArticles.slice(4);
+  if (detailArticle) {
+    const readingTime = getReadingTime(detailArticle.contentVi || detailArticle.content);
+    const relatedArticles = articles.filter(a => a.id !== detailArticle.id).slice(0, 8);
+    const contentHtml = detailArticle.contentVi || detailArticle.content || '';
+    const showCover = !(contentHtml.trim().startsWith('<p><img') || contentHtml.trim().startsWith('<figure') || contentHtml.trim().startsWith('<img'));
+    
+    const backPage = location.state?.fromPage || 1;
 
-  return (
-    <div className="space-y-5">
-      {/* Header */}
-      <div className="flex justify-between items-center">
-        <h2 className="font-black text-lg flex items-center gap-2 text-on-background">
-          <Newspaper size={20} className="text-primary" />
-          Tin Nóng WC 2026
-        </h2>
-        <button 
-          onClick={() => loadNews(true)} 
-          disabled={loading}
-          className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/50 dark:bg-white/5 border border-white/60 dark:border-white/10 text-xs font-bold text-on-surface hover:bg-white/80 dark:hover:bg-white/10 active:scale-95 transition-all disabled:opacity-50"
-        >
-          {loading ? (
-            <><Loader2 size={13} className="animate-spin text-primary" /> Đang tải...</>
-          ) : (
-            <><RefreshCw size={13} /> Làm mới</>
-          )}
-        </button>
-      </div>
+    return (
+      <ConfigProvider theme={newsTheme}>
+        <div className="font-sans">
+          {/* Breadcrumb */}
+          <Breadcrumb
+            className="mb-3"
+            items={[
+              {
+                title: (
+                  <a onClick={() => navigate(`/news?page=${backPage}`)} className="flex items-center gap-1 cursor-pointer text-[--color-primary] text-[13px] font-medium">
+                    <ReadOutlined className="text-[12px]" /> Tin tức
+                  </a>
+                ),
+              },
+              {
+                title: <span className="text-[13px] text-[--365-text-sub] font-medium">{detailArticle.source}</span>,
+              },
+            ]}
+          />
 
-      {loading ? (
-        <div className="flex flex-col items-center justify-center py-20 gap-3 text-on-surface-variant">
-          <Loader2 size={36} className="animate-spin text-primary" />
-          <span className="text-xs font-bold">Đang tổng hợp tin tức quốc tế...</span>
-        </div>
-      ) : articles.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 gap-2 text-on-surface-variant">
-          <Newspaper size={44} className="opacity-30 mb-2" />
-          <p className="text-xs font-bold">Chưa có tin tức mới</p>
-        </div>
-      ) : (
-        <div className="space-y-5">
-          {/* 🔴 LIVE MATCH BANNER */}
-          {liveArticles.map(article => (
-            <div 
-              key={article.id}
-              onClick={() => handleCardClick(article)}
-              className="relative p-5 bg-gradient-to-r from-red-500/10 to-primary/5 border-2 border-red-400/25 hover:border-red-400/50 rounded-2xl cursor-pointer transition-all active:scale-[0.99] group"
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <span className="px-2 py-0.5 rounded-full bg-red-500 text-white text-[9px] font-black uppercase flex items-center gap-1 animate-pulse">
-                  <span className="w-1.5 h-1.5 rounded-full bg-white" /> TRỰC TIẾP
-                </span>
-                <span className="text-[10px] text-on-surface-variant font-bold">{article.pubDateStr}</span>
-              </div>
-              
-              <h3 className="text-base font-black text-on-background group-hover:text-primary transition-colors leading-snug mb-2">
-                {article.titleVi || article.title}
-              </h3>
-
-              {article.liveInfo && (
-                <div className="flex items-center gap-3 p-2.5 bg-white/60 dark:bg-white/5 border border-white/70 dark:border-white/10 rounded-xl w-fit">
-                  <strong className="text-sm font-black text-primary">{article.liveInfo.home}</strong>
-                  <span className="text-lg font-black bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                    {article.liveInfo.score}
-                  </span>
-                  <strong className="text-sm font-black text-secondary">{article.liveInfo.away}</strong>
-                  <span className="text-[10px] font-bold border-l border-white/50 dark:border-white/10 pl-2.5 flex items-center gap-1">
-                    <Flame size={12} className="text-red-500" /> Phút {article.liveInfo.minute}'
-                  </span>
-                </div>
-              )}
-            </div>
-          ))}
-
-          {/* 🌟 FEATURED ARTICLE — Full-width Hero Card */}
-          {featuredArticle && (
-            <div 
-              onClick={() => handleCardClick(featuredArticle)}
-              className="relative rounded-2xl overflow-hidden cursor-pointer group active:scale-[0.995] transition-transform"
-            >
-              <div className="w-full h-[200px] sm:h-[280px] md:h-[320px] overflow-hidden bg-gray-100">
-                <img 
-                  src={getArticleImage(featuredArticle)} 
-                  alt={featuredArticle.titleVi || featuredArticle.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  referrerPolicy="no-referrer"
-                  onError={() => handleImgError(featuredArticle.id)}
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-              
-              <div className="absolute bottom-0 left-0 right-0 p-5 md:p-6">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="px-2 py-0.5 rounded bg-white/20 backdrop-blur-sm text-white text-[9px] font-black uppercase">
-                    {featuredArticle.source}
-                  </span>
-                  <span className="text-white/70 text-[10px] font-bold">
-                    {formatTimeAgo(featuredArticle.pubDate)}
-                  </span>
-                </div>
-                <h2 className="text-base md:text-xl font-black text-white leading-snug group-hover:text-blue-200 transition-colors">
-                  {featuredArticle.titleVi || featuredArticle.title}
-                </h2>
-                <p className="text-xs text-white/70 mt-2 line-clamp-2 font-semibold leading-relaxed hidden sm:block">
-                  {(featuredArticle.contentVi || featuredArticle.content || '').substring(0, 160)}...
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* 📰 SECONDARY STORIES — 3-column grid */}
-          {secondaryArticles.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {secondaryArticles.map(article => (
-                <div 
-                  key={article.id}
-                  onClick={() => handleCardClick(article)}
-                  className="bg-white/40 dark:bg-white/5 hover:bg-white/70 dark:hover:bg-white/10 border border-white/50 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30 rounded-2xl overflow-hidden cursor-pointer group transition-all active:scale-[0.98]"
-                >
-                  {/* Thumbnail */}
-                  <div className="w-full h-[140px] overflow-hidden bg-gray-100 relative">
-                    <img 
-                      src={getArticleImage(article)} 
-                      alt={article.titleVi || article.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      referrerPolicy="no-referrer"
-                      onError={() => handleImgError(article.id)}
-                    />
-                    {article.videoUrl && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/35 transition-colors">
-                        <div className="w-9 h-9 rounded-full bg-primary/90 text-white flex items-center justify-center shadow-md">
-                          <Play size={14} fill="currentColor" className="ml-0.5" />
-                        </div>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-3.5">
+            {/* Main Article Column */}
+            <div>
+              <Card
+                className="!rounded-xl overflow-hidden"
+                styles={{ body: { padding: 0 } }}
+              >
+                {/* Article Header */}
+                <div className="px-5 pt-5 pb-0">
+                  {/* Meta row */}
+                  <div className="flex items-center flex-wrap gap-2.5 mb-3">
+                    <SourceTag source={detailArticle.source} size="normal" />
+                    <div className="flex items-center gap-1.5 text-[12px] text-[--365-text-sub] font-medium">
+                      <ClockCircleOutlined className="text-[11px]" />
+                      <span>{detailArticle.pubDateStr}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[12px] text-[--365-text-sub] font-medium">
+                      <ReadOutlined className="text-[11px]" />
+                      <span>{readingTime} phút đọc</span>
+                    </div>
+                    {detailArticle.author && (
+                      <div className="flex items-center gap-1.5 text-[12px] text-[--365-text-sub] font-medium">
+                        <UserOutlined className="text-[11px]" />
+                        <span>{detailArticle.author}</span>
                       </div>
                     )}
                   </div>
 
-                  {/* Content */}
-                  <div className="p-4 space-y-2">
-                    <div className="flex items-center gap-2 text-[10px] font-bold text-on-surface-variant/80">
-                      <span className="text-primary font-black">{article.source}</span>
-                      <span>•</span>
-                      <span>{formatTimeAgo(article.pubDate)}</span>
-                    </div>
-                    <h3 className="text-sm font-black text-on-surface group-hover:text-primary transition-colors line-clamp-2 leading-snug">
-                      {article.titleVi || article.title}
-                    </h3>
-                    <p className="text-xs text-on-surface-variant line-clamp-2 leading-relaxed font-medium">
-                      {(article.contentVi || article.content || '').substring(0, 120)}...
+                  {/* Title */}
+                  <h1 className="text-[22px] sm:text-[24px] font-semibold leading-[1.4] text-[--365-text-main] m-0 mb-2">
+                    {detailArticle.titleVi || detailArticle.title}
+                  </h1>
+
+                  {/* Sapo */}
+                  {detailArticle.summary && (
+                    <p className="text-[14px] text-[--365-text-sub] leading-[1.65] italic font-medium m-0 pb-3 border-b border-[#f0f0f0]">
+                      {stripHtml(detailArticle.summary)}
                     </p>
-                  </div>
+                  )}
                 </div>
-              ))}
-            </div>
-          )}
 
-          {/* 📋 REMAINING STORIES — Compact list with thumbnails */}
-          {remainingArticles.length > 0 && (
-            <div className="space-y-3">
-              <h3 className="text-xs font-black text-on-surface-variant/60 uppercase tracking-wider flex items-center gap-1.5">
-                <TrendingUp size={14} /> Tin tức mới nhất
-              </h3>
-              
-              <div className="space-y-2">
-                {remainingArticles.map(article => (
-                  <div 
-                    key={article.id}
-                    onClick={() => handleCardClick(article)}
-                    className="flex gap-3.5 p-3 bg-white/30 dark:bg-white/5 hover:bg-white/60 dark:hover:bg-white/10 border border-white/40 dark:border-white/10 hover:border-primary/15 dark:hover:border-primary/25 rounded-xl cursor-pointer transition-all group active:scale-[0.99]"
-                  >
-                    {/* Thumbnail */}
-                    <div className="w-20 h-20 md:w-24 md:h-20 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
-                      <img 
-                        src={getArticleImage(article)} 
-                        alt=""
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        referrerPolicy="no-referrer"
-                        onError={() => handleImgError(article.id)}
-                      />
-                    </div>
-
-                    {/* Text Content */}
-                    <div className="flex-1 min-w-0 flex flex-col justify-center gap-1">
-                      <div className="flex items-center gap-1.5 text-[9px] font-bold text-on-surface-variant/70">
-                        <span className="text-primary font-black uppercase">{article.source}</span>
-                        <span>•</span>
-                        <span>{formatTimeAgo(article.pubDate)}</span>
-                      </div>
-                      <h4 className="text-xs font-black text-on-surface group-hover:text-primary transition-colors line-clamp-2 leading-snug">
-                        {article.titleVi || article.title}
-                      </h4>
-                    </div>
-                    
-                    <ChevronRight size={16} className="text-on-surface-variant/30 flex-shrink-0 self-center" />
+                {/* Cover Image */}
+                {showCover && (
+                  <div className="w-full overflow-hidden mt-3">
+                    <img
+                      src={getImg(detailArticle)}
+                      alt={detailArticle.title}
+                      onError={() => handleImgError(detailArticle.id)}
+                      className="w-full h-auto block"
+                    />
                   </div>
-                ))}
+                )}
+
+                {/* Article Content */}
+                <div
+                  className="article-content"
+                  dangerouslySetInnerHTML={{
+                    __html: contentHtml || "<p>Nội dung đang được cập nhật...</p>"
+                  }}
+                />
+
+                {/* Footer */}
+                <div className="flex items-center justify-between px-5 py-3 bg-[#f9fafb] border-t border-[#f0f0f0]">
+                  <div className="flex items-center gap-1.5 text-[13px] text-[--365-text-sub] font-medium">
+                    <span>Nguồn:</span>
+                    <span className="font-semibold" style={{ color: getSourceColor(detailArticle.source) }}>
+                      {detailArticle.source}
+                    </span>
+                  </div>
+                  <Button
+                    type="link"
+                    size="small"
+                    icon={<LinkOutlined />}
+                    href={detailArticle.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="!text-[13px] !text-[--color-primary] !p-0 !font-medium"
+                  >
+                    Xem bài gốc
+                  </Button>
+                </div>
+              </Card>
+
+              {/* Related — Mobile only */}
+              <div className="mt-4 lg:hidden">
+                <Card className="!rounded-xl" styles={{ body: { padding: '14px 16px' } }}>
+                  <div className="flex items-center gap-2 mb-2.5">
+                    <FireOutlined className="text-[14px] text-[--color-primary]" />
+                    <span className="text-[14px] font-semibold text-[--365-text-main]">Tin liên quan</span>
+                  </div>
+                  {relatedArticles.slice(0, 4).map(article => (
+                    <RelatedItem
+                      key={article.id}
+                      article={article}
+                      onClick={() => handleCardClick(article)}
+                      imgErrors={imgErrors}
+                      onImgError={handleImgError}
+                    />
+                  ))}
+                </Card>
               </div>
             </div>
-          )}
 
-          {/* Heo Hồng Prophet Corner */}
-          <div className="p-5 bg-gradient-to-br from-white/80 to-pink-50/40 dark:from-white/5 dark:to-pink-900/5 border border-secondary/15 dark:border-white/10 rounded-2xl flex items-start gap-4 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-secondary/5 rounded-full -mr-8 -mt-8" />
-            <img 
-              src="/drpig_mascot.png" 
-              alt="Heo Hồng AI" 
-              className="w-10 h-10 rounded-full border-2 border-primary/20 flex-shrink-0"
-              onError={(e) => { e.target.src = getFallbackImg() }}
-            />
-            <div className="z-10 space-y-1">
-              <span className="text-[10px] font-black text-secondary uppercase tracking-wider flex items-center gap-1">
-                Lời bàn Heo Hồng 🐷 <CheckCircle2 size={11} />
-              </span>
-              <p className="text-sm text-on-surface font-bold italic leading-relaxed">
-                "{normalArticles[0]?.drpigComment || 'Chào các fen! World Cup 2026 đang nóng lắm, cứ thong thả theo dõi nhé! 🐷⚽'}"
-              </p>
-              <span className="text-[9px] text-on-surface-variant/60 font-semibold">Mô hình: Gemini-2.5-Flash</span>
-            </div>
+            {/* Sidebar — Desktop */}
+            <aside className="hidden lg:block">
+              <div className="sticky top-[80px] flex flex-col gap-3">
+                <Button
+                  icon={<ArrowLeftOutlined />}
+                  onClick={() => navigate(`/news?page=${backPage}`)}
+                  block
+                  className="!text-[13px] !font-medium !text-[--365-text-sub] !border-[#e5e7eb] hover:!border-[--color-primary] hover:!text-[--color-primary] !rounded-lg !h-[36px] !shadow-sm"
+                >
+                  Quay lại danh sách
+                </Button>
+
+                <Card className="!rounded-xl" styles={{ body: { padding: '14px 16px' } }}>
+                  <div className="flex items-center gap-2 mb-2.5 pb-2.5 border-b-2 border-[--color-primary]">
+                    <FireOutlined className="text-[14px] text-[--color-primary]" />
+                    <span className="text-[14px] font-semibold text-[--365-text-main]">Đọc thêm</span>
+                  </div>
+                  {relatedArticles.map(article => (
+                    <RelatedItem
+                      key={article.id}
+                      article={article}
+                      onClick={() => handleCardClick(article)}
+                      imgErrors={imgErrors}
+                      onImgError={handleImgError}
+                    />
+                  ))}
+                </Card>
+              </div>
+            </aside>
           </div>
         </div>
-      )}
-    </div>
+      </ConfigProvider>
+    );
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // NEWS LISTING VIEW
+  // ═══════════════════════════════════════════════════════════════════════════
+  const featuredArticle = articles[0];
+  const listArticles = articles.slice(1);
+
+  return (
+    <ConfigProvider theme={newsTheme}>
+      <div className="font-sans">
+        {/* Header */}
+        <div className="flex items-center justify-between bg-white rounded-xl px-4 py-3 mb-3 shadow-sm">
+          <div className="flex items-center gap-3">
+            <div className="w-[36px] h-[36px] rounded-lg bg-gradient-to-br from-[#ea4c89] to-[#ff8c42] flex items-center justify-center text-white flex-shrink-0">
+              <ReadOutlined className="text-[16px]" />
+            </div>
+            <div>
+              <h2 className="text-[15px] font-semibold text-[--365-text-main] m-0 leading-tight">Tin tức bóng đá</h2>
+              <p className="text-[12px] text-[--365-text-sub] m-0 mt-0.5 font-medium">
+                {totalDocs > 0 ? `Tổng cộng ${totalDocs} bài viết` : 'Đang cập nhật...'}
+              </p>
+            </div>
+          </div>
+          <Button
+            icon={<ReloadOutlined spin={loading} />}
+            onClick={() => loadNews(true)}
+            disabled={loading}
+            size="small"
+            className="!text-[12px] !font-medium !rounded-full !border-[#e5e7eb] !text-[--365-text-sub] hover:!border-[--color-primary] hover:!text-[--color-primary]"
+          >
+            {loading ? 'Đang tải...' : 'Làm mới'}
+          </Button>
+        </div>
+
+        {/* Content */}
+        {loading && articles.length === 0 ? (
+          <NewsSkeletons />
+        ) : articles.length === 0 ? (
+          <div className="bg-white rounded-xl py-16 shadow-sm">
+            <Empty description="Chưa có tin tức mới" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-3.5">
+            {/* Main Column */}
+            <div className="flex flex-col gap-0">
+              {/* Featured */}
+              {featuredArticle && (
+                <FeaturedCard
+                  article={featuredArticle}
+                  onClick={() => handleCardClick(featuredArticle)}
+                  imgErrors={imgErrors}
+                  onImgError={handleImgError}
+                />
+              )}
+
+              {/* List */}
+              <Card
+                className="!rounded-xl mt-3"
+                styles={{ body: { padding: '4px 0' } }}
+              >
+                {listArticles.map((article, idx) => (
+                  <div key={article.id}>
+                    <NewsListItem
+                      article={article}
+                      onClick={() => handleCardClick(article)}
+                      imgErrors={imgErrors}
+                      onImgError={handleImgError}
+                    />
+                    {idx < listArticles.length - 1 && (
+                      <Divider className="!my-0 !mx-3.5" />
+                    )}
+                  </div>
+                ))}
+              </Card>
+
+              {/* Pagination */}
+              {totalDocs > 12 && (
+                <div className="flex justify-center mt-6 mb-4">
+                  <Pagination 
+                    current={currentPage} 
+                    total={totalDocs} 
+                    pageSize={12} 
+                    onChange={handlePageChange}
+                    showSizeChanger={false}
+                    className="custom-pagination"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Sidebar — Trending */}
+            <aside className="hidden lg:block">
+              <div className="sticky top-[80px]">
+                <Card className="!rounded-xl" styles={{ body: { padding: '14px 16px' } }}>
+                  <div className="flex items-center gap-2 mb-2.5 pb-2.5 border-b-2 border-[--color-primary]">
+                    <FireOutlined className="text-[14px] text-[--color-primary]" />
+                    <span className="text-[14px] font-semibold text-[--365-text-main]">Nổi bật</span>
+                  </div>
+                  {articles.slice(0, 8).map((article, idx) => (
+                    <SidebarItem
+                      key={article.id}
+                      article={article}
+                      rank={idx + 1}
+                      onClick={() => handleCardClick(article)}
+                      imgErrors={imgErrors}
+                      onImgError={handleImgError}
+                    />
+                  ))}
+                </Card>
+              </div>
+            </aside>
+          </div>
+        )}
+      </div>
+    </ConfigProvider>
   );
 }

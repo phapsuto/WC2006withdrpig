@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import { Send, Loader2, RefreshCw, Sparkles } from 'lucide-react';
 import { generalChatWithHeoHong } from '../services/gemini';
 import { useLanguage } from '../utils/LanguageContext';
+import { Send, RefreshCw, Sparkles, Loader2 } from 'lucide-react';
 
 export default function OracleChat() {
   const { language, t } = useLanguage();
@@ -15,7 +15,7 @@ export default function OracleChat() {
   ] : [
     'Analyze Group A for me 🐷',
     'Does Vietnam have a chance to advance?',
-    'Predict today\'s hottest match ⚽',
+    "Predict today's hottest match ⚽",
     'What will the opening score be?',
     'Who does Piggy think will win the World Cup? 🏆'
   ];
@@ -66,7 +66,6 @@ export default function OracleChat() {
     setLoading(true);
 
     try {
-      // Pass history (excluding first welcoming message) and current message
       const historyForApi = newMessages.slice(1, -1);
       const reply = await generalChatWithHeoHong(historyForApi, text);
       setMessages(prev => [...prev, { role: 'model', text: reply }]);
@@ -89,84 +88,71 @@ export default function OracleChat() {
   };
 
   return (
-    <div className="bento-glass p-4 md:p-6 flex flex-col h-[calc(100vh-160px)] md:h-[650px] relative overflow-hidden">
-      {/* Decorative Accent Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-tertiary-container/5 to-primary-fixed/5 pointer-events-none z-0"></div>
-
-      {/* Header section */}
-      <div className="flex justify-between items-center pb-3 border-b border-white/40 mb-4 z-10">
+    <div className="flex flex-col h-[calc(100vh-160px)] min-h-[650px] bg-white rounded-[32px] shadow-[var(--shadow-dribbble)] border border-gray-100 overflow-hidden">
+      
+      {/* Header */}
+      <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-accent-gold shadow-md flex-shrink-0 relative bg-white flex items-center justify-center">
-            <img 
-              src="/drpig_mascot.png" 
-              alt="Heo Hồng" 
-              className="w-full h-full object-cover"
-              onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=100'; }}
-            />
+          <div className="w-12 h-12 rounded-full overflow-hidden border border-gray-200 shadow-sm">
+            <img src="/drpig_mascot.png" alt="Oracle Mascot" className="w-full h-full object-cover bg-white" />
           </div>
           <div>
-            <h3 className="text-sm font-black text-on-surface flex items-center gap-1.5">
-              <span>{t('oracleChatTitle')}</span>
-              <span className="px-1.5 py-0.5 rounded bg-secondary-container/20 text-secondary text-[9px] font-bold uppercase animate-pulse">{language === 'vi' ? 'AI Tiên Tri' : 'AI Oracle'}</span>
-            </h3>
-            <p className="text-[10px] text-on-surface-variant">{t('oracleSubTitle')}</p>
+            <h2 className="text-lg font-semibold text-[var(--color-text-main)] m-0 flex items-center gap-2">
+              {t('oracleChatTitle')}
+              <span className="px-2 py-0.5 rounded-full bg-green-100 text-green-700 text-[10px] font-semibold animate-pulse uppercase tracking-wider">
+                {language === 'vi' ? 'AI Tiên Tri' : 'AI Oracle'}
+              </span>
+            </h2>
+            <p className="text-xs text-[var(--color-text-sub)] font-medium m-0">{t('oracleSubTitle')}</p>
           </div>
         </div>
-        <button
-          onClick={handleResetChat}
-          className="p-2 text-on-surface-variant hover:text-secondary hover:bg-white/45 rounded-xl border border-transparent hover:border-white/50 transition-all flex items-center justify-center"
+        <button 
+          onClick={handleResetChat} 
           title={t('oracleResetTitle')}
+          className="p-2 rounded-xl text-gray-400 hover:bg-gray-100 hover:text-[var(--color-primary)] transition-colors"
         >
-          <RefreshCw size={14} />
+          <RefreshCw size={20} />
         </button>
       </div>
 
-      {/* Suggestion Chips (only show when there's only 1 message) */}
-      {messages.length === 1 && (
-        <div className="mb-4 z-10 animate-fade-in">
-          <span className="text-[10px] font-bold text-on-surface-variant/75 flex items-center gap-1 mb-2">
-            <Sparkles size={11} className="text-tertiary" /> {t('oracleSuggestionHeader')}
-          </span>
-          <div className="flex flex-wrap gap-2 max-h-[90px] overflow-y-auto no-scrollbar">
-            {suggestions.map((s, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleSend(s)}
-                className="px-3 py-1.5 rounded-xl bg-white/40 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border border-white/60 dark:border-white/10 hover:border-primary/20 text-[11px] font-semibold text-on-surface-variant hover:text-primary transition-all text-left shadow-sm active:scale-95 duration-200"
-              >
-                {s}
-              </button>
-            ))}
+      {/* Chat Messages */}
+      <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
+        {messages.length === 1 && (
+          <div className="mb-4">
+            <span className="text-xs text-[var(--color-text-sub)] font-semibold flex items-center gap-1.5 mb-3">
+              <Sparkles size={14} className="text-yellow-500" /> {t('oracleSuggestionHeader')}
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {suggestions.map((s, idx) => (
+                <button 
+                  key={idx} 
+                  onClick={() => handleSend(s)}
+                  className="px-4 py-2 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 rounded-full text-[13px] font-semibold text-[var(--color-text-main)] shadow-sm transition-all active:scale-95"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Message List area */}
-      <div className="flex-1 overflow-y-auto pr-1 space-y-3 mb-4 z-10 no-scrollbar">
         {messages.map((msg, index) => {
           const isModel = msg.role === 'model';
           return (
-            <div
-              key={index}
-              className={`flex items-start gap-2 max-w-[85%] ${
-                isModel ? 'mr-auto' : 'ml-auto flex-row-reverse'
-              }`}
+            <div 
+              key={index} 
+              className={`flex gap-3 max-w-[85%] ${isModel ? 'self-start' : 'self-end flex-row-reverse'}`}
             >
               {isModel && (
-                <div className="w-7 h-7 rounded-full overflow-hidden border border-accent-gold shadow-sm flex-shrink-0 bg-white flex items-center justify-center p-0.5">
-                  <img 
-                    src="/drpig_mascot.png" 
-                    alt="Heo Hồng" 
-                    className="w-full h-full object-cover"
-                    onError={(e) => { e.target.src = 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=80'; }}
-                  />
+                <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+                  <img src="/drpig_mascot.png" alt="Oracle" className="w-full h-full object-cover bg-white" />
                 </div>
               )}
-              <div
-                className={`p-3.5 rounded-2xl text-[12px] leading-relaxed shadow-sm border ${
-                  isModel
-                    ? 'bg-white/65 dark:bg-white/5 border-white/80 dark:border-white/10 text-on-surface rounded-tl-sm'
-                    : 'bg-primary text-white border-primary/25 rounded-tr-sm shadow-[inset_0px_2px_4px_rgba(255,255,255,0.2)]'
+              <div 
+                className={`px-4 py-3 text-[14px] leading-relaxed font-medium shadow-sm ${
+                  isModel 
+                    ? 'bg-gray-50 border border-gray-100 text-[var(--color-text-main)] rounded-2xl rounded-tl-sm' 
+                    : 'bg-[var(--color-primary)] text-white rounded-2xl rounded-tr-sm'
                 }`}
               >
                 {msg.text}
@@ -176,43 +162,45 @@ export default function OracleChat() {
         })}
 
         {loading && (
-          <div className="flex items-start gap-2 max-w-[85%] mr-auto">
-            <div className="w-7 h-7 rounded-full overflow-hidden border border-accent-gold shadow-sm flex-shrink-0 bg-white flex items-center justify-center p-0.5 animate-spin">
-              <img src="/drpig_mascot.png" alt="Heo Hồng" className="w-full h-full object-cover" />
+          <div className="flex gap-3 max-w-[85%] self-start">
+            <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 flex-shrink-0">
+              <img src="/drpig_mascot.png" alt="Oracle" className="w-full h-full object-cover bg-white" />
             </div>
-            <div className="p-3.5 rounded-2xl text-[12px] leading-relaxed bg-white/65 dark:bg-white/5 border border-white/80 dark:border-white/10 text-on-surface-variant/75 rounded-tl-sm flex items-center gap-2">
-              <Loader2 size={12} className="animate-spin text-primary" />
-              <span>{t('oracleLoadingText')}</span>
+            <div className="px-4 py-3 bg-gray-50 border border-gray-100 rounded-2xl rounded-tl-sm flex items-center gap-2 shadow-sm">
+              <Loader2 size={16} className="animate-spin text-[var(--color-primary)]" />
+              <span className="text-[13px] font-medium text-[var(--color-text-sub)]">{t('oracleLoadingText')}</span>
             </div>
           </div>
         )}
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input Form area */}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSend();
-        }}
-        className="mt-auto flex items-center gap-2 pt-3 border-t border-white/30 z-10"
-      >
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder={t('oraclePlaceholder')}
-          disabled={loading}
-          className="flex-1 bg-white/50 dark:bg-white/5 focus:bg-white dark:focus:bg-white/10 text-[12px] border border-white/70 dark:border-white/10 focus:border-primary rounded-xl px-4 py-2.5 outline-none transition-all shadow-inner placeholder-on-surface-variant/55 disabled:opacity-60"
-        />
-        <button
-          type="submit"
-          disabled={!input.trim() || loading}
-          className="w-10 h-10 bg-primary disabled:bg-primary-fixed/40 text-white disabled:text-on-primary-fixed/40 rounded-xl flex items-center justify-center hover:brightness-105 active:scale-95 transition-all shadow-md shadow-primary/10 disabled:shadow-none flex-shrink-0"
+      {/* Input Form */}
+      <div className="p-4 border-t border-gray-100 bg-white">
+        <form 
+          onSubmit={(e) => { e.preventDefault(); handleSend(); }} 
+          className="flex gap-2 items-center bg-gray-50 border border-gray-200 rounded-full p-1.5 focus-within:border-[var(--color-primary)] focus-within:bg-white transition-all shadow-inner"
         >
-          <Send size={15} />
-        </button>
-      </form>
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder={t('oraclePlaceholder')}
+            disabled={loading}
+            className="flex-1 bg-transparent px-4 py-2 text-[14px] font-medium text-[var(--color-text-main)] focus:outline-none placeholder:text-gray-400"
+          />
+          <button
+            type="submit"
+            disabled={!input.trim() || loading}
+            className={`w-10 h-10 rounded-full flex items-center justify-center text-white transition-all ${
+              !input.trim() || loading
+                ? 'bg-gray-300 cursor-not-allowed'
+                : 'bg-[var(--color-primary)] hover:brightness-110 active:scale-95 shadow-md shadow-pink-500/30'
+            }`}
+          >
+            <Send size={18} />
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

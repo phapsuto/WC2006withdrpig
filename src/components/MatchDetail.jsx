@@ -188,28 +188,6 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
         console.warn('[MatchDetail] Fetch media_id.json failed:', e);
       }
 
-      // Trigger on-demand crawl
-      try {
-        const homeName = match.home?.name || 'Home';
-        const awayName = match.away?.name || 'Away';
-        const status = match.status || 'UPCOMING';
-        
-        const runResp = await fetch(`/api/run-scraper?mode=match&match_id=${match.id}&home=${encodeURIComponent(homeName)}&away=${encodeURIComponent(awayName)}&status=${status}`);
-        if (runResp.ok) {
-          const resp2 = await fetch(`/data/match_media/media_${match.id}.json`);
-          if (resp2.ok) {
-            const media2 = await resp2.json();
-            if (isSubscribed && media2) {
-              setMatchNews(media2.news || []);
-              setSocialReactions(media2.clips || []);
-              setLoadingSocial(false);
-              return;
-            }
-          }
-        }
-      } catch (err) {
-        console.error('[MatchDetail] On-demand scrape failed:', err);
-      }
 
       // Fallback to global news filter
       if (!isSubscribed) return;
@@ -527,6 +505,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
   });
 
   return (
+    <>
     <div className="flex flex-col gap-6 w-full">
       {/* Redesigned Match Scoreboard Card (Hero Bento style) */}
       <div className="bento-glass p-6 md:p-8 flex flex-col items-center justify-center relative overflow-hidden">
@@ -534,7 +513,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
         <div className="absolute top-4 left-4 right-4 flex justify-between items-center z-10">
           <button 
             onClick={onClose}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/40 border border-white/60 text-xs font-bold text-on-surface hover:bg-white/80 active:scale-95 transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/40 border border-white/60 text-xs font-semibold text-on-surface hover:bg-white/80 active:scale-95 transition-all"
           >
             <ArrowLeft size={14} />
             {t('backToList')}
@@ -549,13 +528,13 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
           </button>
         </div>
 
-        <div className="text-[10px] font-black tracking-widest text-primary/80 uppercase mt-4 mb-3">
+        <div className="text-[10px] font-semibold tracking-widest text-primary/80 uppercase mt-4 mb-3">
           {league.name}
         </div>
 
         {/* Local time & Stadium Info */}
         <div className="flex flex-col items-center gap-1 text-center mb-6">
-          <div className="text-xs font-bold text-on-surface-variant flex items-center gap-1">
+          <div className="text-xs font-semibold text-on-surface-variant flex items-center gap-1">
             <span className="material-symbols-outlined text-[15px] text-secondary">schedule</span>
             Giờ địa phương: <span className="text-secondary">{formattedKickoffTime}</span> ({formattedKickoffDate})
           </div>
@@ -566,10 +545,10 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
         </div>
 
         {/* Scoreboard teams layout */}
-        <div className="flex flex-col md:flex-row items-center justify-between w-full gap-4 max-w-2xl">
+        <div className="flex flex-row items-center justify-between w-full gap-2 md:gap-4 max-w-2xl">
           {/* Home Team */}
-          <div className="flex-1 flex flex-col items-center gap-3 w-full">
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white border-4 border-white shadow-md overflow-hidden flex items-center justify-center relative">
+          <div className="flex-1 flex flex-col items-center gap-2 md:gap-3 w-full">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-24 md:h-24 rounded-full bg-white border-2 md:border-4 border-white shadow-md overflow-hidden flex items-center justify-center relative shrink-0">
               <img 
                 src={`https://flagcdn.com/w160/${home.flag}.png`} 
                 alt={home.name} 
@@ -580,10 +559,10 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 }}
               />
             </div>
-            <div className="text-lg md:text-xl font-extrabold text-on-surface text-center leading-tight">
+            <div className="text-[13px] sm:text-base md:text-xl font-semibold text-on-surface text-center leading-tight line-clamp-2 min-h-[2.5em] md:min-h-[auto] flex items-center">
               {home.name}
             </div>
-            <span className="px-3 py-0.5 text-[10px] font-bold rounded-full bg-primary/10 text-primary border border-primary/10">
+            <span className="px-2 py-0.5 md:px-3 md:py-0.5 text-[9px] md:text-[10px] font-semibold rounded-full bg-primary/10 text-primary border border-primary/10 whitespace-nowrap">
               Đội nhà
             </span>
           </div>
@@ -591,29 +570,29 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
           {/* Score & Time */}
           <div className="flex flex-col items-center justify-center gap-1 py-4 px-6 md:px-0">
             {isLive ? (
-              <span className="flex items-center gap-1 px-3 py-0.5 rounded-full border border-danger/25 bg-danger/10 text-danger text-[10px] font-black uppercase tracking-wider animate-pulse">
+              <span className="flex items-center gap-1 px-3 py-0.5 rounded-full border border-danger/25 bg-danger/10 text-danger text-[10px] font-semibold uppercase tracking-wider animate-pulse">
                 <span className="w-1.5 h-1.5 rounded-full bg-danger"></span>
                 Trực tiếp • {clock.formatted}
               </span>
             ) : isFinished ? (
-              <span className="px-3 py-0.5 rounded-full bg-on-surface-variant/10 text-on-surface-variant text-[10px] font-bold uppercase tracking-wider">
+              <span className="px-3 py-0.5 rounded-full bg-on-surface-variant/10 text-on-surface-variant text-[10px] font-semibold uppercase tracking-wider">
                 Kết thúc
               </span>
             ) : (
-              <span className="px-3 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider">
+              <span className="px-3 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-semibold uppercase tracking-wider">
                 Sắp đá
               </span>
             )}
             
             <div className="flex items-center gap-4 mt-2">
               {(isLive || isFinished) ? (
-                <div className="text-4xl md:text-5xl font-black text-on-surface tracking-tighter flex items-center gap-3">
+                <div className="text-4xl md:text-5xl font-semibold text-on-surface tracking-tighter flex items-center gap-3">
                   <span className="text-primary">{homeScore}</span>
                   <span className="text-on-surface-variant/40 font-medium">-</span>
                   <span className="text-secondary">{awayScore}</span>
                 </div>
               ) : (
-                <div className="text-2xl md:text-3xl font-black text-on-surface-variant/40 tracking-widest">
+                <div className="text-2xl md:text-3xl font-semibold text-on-surface-variant/40 tracking-widest">
                   VS
                 </div>
               )}
@@ -621,8 +600,8 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
           </div>
 
           {/* Away Team */}
-          <div className="flex-1 flex flex-col items-center gap-3 w-full">
-            <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white border-4 border-white shadow-md overflow-hidden flex items-center justify-center relative">
+          <div className="flex-1 flex flex-col items-center gap-2 md:gap-3 w-full">
+            <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-24 md:h-24 rounded-full bg-white border-2 md:border-4 border-white shadow-md overflow-hidden flex items-center justify-center relative shrink-0">
               <img 
                 src={`https://flagcdn.com/w160/${away.flag}.png`} 
                 alt={away.name} 
@@ -633,11 +612,11 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 }}
               />
             </div>
-            <div className="text-lg md:text-xl font-extrabold text-on-surface text-center leading-tight">
+            <div className="text-[13px] sm:text-base md:text-xl font-semibold text-on-surface text-center leading-tight line-clamp-2 min-h-[2.5em] md:min-h-[auto] flex items-center">
               {away.name}
             </div>
-            <span className="px-3 py-0.5 text-[10px] font-bold rounded-full bg-secondary/10 text-secondary border border-secondary/10">
-              Sân khách
+            <span className="px-2 py-0.5 md:px-3 md:py-0.5 text-[9px] md:text-[10px] font-semibold rounded-full bg-secondary/10 text-secondary border border-secondary/10 whitespace-nowrap">
+              Đội khách
             </span>
           </div>
         </div>
@@ -652,7 +631,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 .map((event, idx) => (
                   <div key={idx} className="flex justify-end items-center gap-1.5 text-on-surface-variant/90">
                     <span className="font-medium">{event.detail}</span>
-                    <span className="font-extrabold text-primary">{event.minute}'</span>
+                    <span className="font-semibold text-primary">{event.minute}'</span>
                     <span className="text-[10px]">⚽</span>
                   </div>
                 ))}
@@ -664,7 +643,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 .map((event, idx) => (
                   <div key={idx} className="flex justify-start items-center gap-1.5 text-on-surface-variant/90">
                     <span className="text-[10px]">⚽</span>
-                    <span className="font-extrabold text-secondary">{event.minute}'</span>
+                    <span className="font-semibold text-secondary">{event.minute}'</span>
                     <span className="font-medium">{event.detail}</span>
                   </div>
                 ))}
@@ -674,7 +653,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
         {/* AI win probability bar chart */}
         <div className="w-full max-w-lg mt-8 p-4 bg-white/40 border border-white/50 rounded-2xl">
-          <div className="flex justify-between items-center text-[10px] font-bold text-on-surface-variant/85 mb-1.5">
+          <div className="flex justify-between items-center text-[10px] font-semibold text-on-surface-variant/85 mb-1.5">
             <span className="text-primary">{home.name} ({homeWin}%)</span>
             <span>Hòa ({draw}%)</span>
             <span className="text-secondary">{away.name} ({awayWin}%)</span>
@@ -688,13 +667,13 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
           
           <div className="flex justify-between items-center text-[9px] text-on-surface-variant/75 font-semibold mt-2">
             {hasSmPred ? (
-              <span className="px-1.5 py-0.5 rounded bg-primary/15 text-primary text-[8px] font-black uppercase tracking-wider">
+              <span className="px-1.5 py-0.5 rounded bg-primary/15 text-primary text-[8px] font-semibold uppercase tracking-wider">
                 👑 Sportmonks Premium
               </span>
             ) : (
               <span>ELO: {homeElo}</span>
             )}
-            <span className="text-tertiary font-bold flex items-center gap-0.5">
+            <span className="text-tertiary font-semibold flex items-center gap-0.5">
               <span className="material-symbols-outlined text-[11px]">auto_awesome</span>
               Tỷ số dễ xảy ra: {mostLikelyScore}
             </span>
@@ -722,14 +701,15 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
           <button 
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
-            className={`flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-bold rounded-xl transition-all border border-transparent whitespace-nowrap ${
+            className={`flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-semibold rounded-xl transition-all border border-transparent whitespace-nowrap ${
               activeTab === tab.key 
-                ? 'bg-white dark:bg-white/10 text-primary dark:text-primary shadow-[0_2px_8px_rgba(0,98,157,0.08)] border-white/60 dark:border-white/10' 
+                ? 'bg-white dark:bg-white/10 shadow-[0_2px_8px_rgba(0,98,157,0.08)] border-white/60 dark:border-white/10' 
                 : 'text-on-surface-variant hover:text-primary hover:bg-white/20 dark:hover:bg-white/5'
             }`}
+            style={activeTab === tab.key ? { color: '#ea4c89' } : {}}
           >
             {tab.icon}
-            {tab.label}
+            <span>{tab.label}</span>
           </button>
         ))}
       </div>
@@ -743,27 +723,28 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
             
             {/* 1X2 Market */}
             <div className="space-y-3">
-              <div className="text-xs font-black text-primary tracking-wider uppercase border-l-3 border-primary pl-2.5">
+              <div className="text-xs font-semibold text-primary tracking-wider uppercase border-l-3 border-primary pl-2.5">
                 {t('oddsEuro')}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 <button 
                   onClick={() => onAddBet(match, `1X2 - ${home.name}`, odds.h2h.home, `${match.id}-1x2-home`)}
-                  className={`flex flex-col gap-1.5 p-4 rounded-2xl border transition-all text-left shadow-sm active:scale-[0.98] ${
+                  style={activeBetId === `${match.id}-1x2-home` ? { background: 'linear-gradient(135deg, #ea4c89 0%, #ff8c42 100%)' } : {}}
+                  className={`flex flex-col gap-1.5 p-4 rounded-[16px] border transition-all duration-300 text-left active:scale-[0.96] ${
                     activeBetId === `${match.id}-1x2-home` 
-                      ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
+                      ? 'text-white border-transparent shadow-[0_8px_20px_rgba(234,76,137,0.35)] transform scale-[1.02] z-10' 
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-[#ea4c89]/40 hover:shadow-md shadow-sm'
                   }`}
                 >
                   <div className="flex justify-between items-center w-full">
                     <span className={`text-xs font-bold ${activeBetId === `${match.id}-1x2-home` ? 'text-white' : 'text-on-surface-variant'}`}>{home.name}</span>
-                    <span className={`text-base font-black flex items-center ${activeBetId === `${match.id}-1x2-home` ? 'text-white' : getOddsClass('h2h', 'home')}`}>
+                    <span className={`text-base font-black flex items-center ${activeBetId === `${match.id}-1x2-home` ? 'text-white drop-shadow-md' : getOddsClass('h2h', 'home')}`}>
                       {odds.h2h.home.toFixed(2)}
                       {renderOddsArrow('h2h', 'home')}
                     </span>
                   </div>
                   {evHome > 0.02 && (
-                    <span className={`text-[10px] font-bold align-self-end mt-1 ${activeBetId === `${match.id}-1x2-home` ? 'text-white/90' : 'text-tertiary'}`}>
+                    <span className={`text-[10px] font-bold align-self-end mt-1 px-2 py-0.5 rounded-full ${activeBetId === `${match.id}-1x2-home` ? 'bg-white/25 text-white' : 'bg-[#ff8c42]/10 text-[#ff8c42]'}`}>
                       🔥 Thơm (+{(evHome * 100).toFixed(0)}% EV)
                     </span>
                   )}
@@ -771,21 +752,22 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                 <button 
                   onClick={() => onAddBet(match, `1X2 - ${t('drawLabel')}`, odds.h2h.draw, `${match.id}-1x2-draw`)}
-                  className={`flex flex-col gap-1.5 p-4 rounded-2xl border transition-all text-left shadow-sm active:scale-[0.98] ${
+                  style={activeBetId === `${match.id}-1x2-draw` ? { background: 'linear-gradient(135deg, #ea4c89 0%, #ff8c42 100%)' } : {}}
+                  className={`flex flex-col gap-1.5 p-4 rounded-[16px] border transition-all duration-300 text-left active:scale-[0.96] ${
                     activeBetId === `${match.id}-1x2-draw` 
-                      ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
+                      ? 'text-white border-transparent shadow-[0_8px_20px_rgba(234,76,137,0.35)] transform scale-[1.02] z-10' 
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-[#ea4c89]/40 hover:shadow-md shadow-sm'
                   }`}
                 >
                   <div className="flex justify-between items-center w-full">
                     <span className={`text-xs font-bold ${activeBetId === `${match.id}-1x2-draw` ? 'text-white' : 'text-on-surface-variant'}`}>Hòa</span>
-                    <span className={`text-base font-black flex items-center ${activeBetId === `${match.id}-1x2-draw` ? 'text-white' : getOddsClass('h2h', 'draw')}`}>
+                    <span className={`text-base font-black flex items-center ${activeBetId === `${match.id}-1x2-draw` ? 'text-white drop-shadow-md' : getOddsClass('h2h', 'draw')}`}>
                       {odds.h2h.draw.toFixed(2)}
                       {renderOddsArrow('h2h', 'draw')}
                     </span>
                   </div>
                   {evDraw > 0.02 && (
-                    <span className={`text-[10px] font-bold align-self-end mt-1 ${activeBetId === `${match.id}-1x2-draw` ? 'text-white/90' : 'text-tertiary'}`}>
+                    <span className={`text-[10px] font-bold align-self-end mt-1 px-2 py-0.5 rounded-full ${activeBetId === `${match.id}-1x2-draw` ? 'bg-white/25 text-white' : 'bg-[#ff8c42]/10 text-[#ff8c42]'}`}>
                       🔥 Thơm (+{(evDraw * 100).toFixed(0)}% EV)
                     </span>
                   )}
@@ -793,21 +775,22 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                 <button 
                   onClick={() => onAddBet(match, `1X2 - ${away.name}`, odds.h2h.away, `${match.id}-1x2-away`)}
-                  className={`flex flex-col gap-1.5 p-4 rounded-2xl border transition-all text-left shadow-sm active:scale-[0.98] ${
+                  style={activeBetId === `${match.id}-1x2-away` ? { background: 'linear-gradient(135deg, #ea4c89 0%, #ff8c42 100%)' } : {}}
+                  className={`flex flex-col gap-1.5 p-4 rounded-[16px] border transition-all duration-300 text-left active:scale-[0.96] ${
                     activeBetId === `${match.id}-1x2-away` 
-                      ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
+                      ? 'text-white border-transparent shadow-[0_8px_20px_rgba(234,76,137,0.35)] transform scale-[1.02] z-10' 
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-[#ea4c89]/40 hover:shadow-md shadow-sm'
                   }`}
                 >
                   <div className="flex justify-between items-center w-full">
                     <span className={`text-xs font-bold ${activeBetId === `${match.id}-1x2-away` ? 'text-white' : 'text-on-surface-variant'}`}>{away.name}</span>
-                    <span className={`text-base font-black flex items-center ${activeBetId === `${match.id}-1x2-away` ? 'text-white' : getOddsClass('h2h', 'away')}`}>
+                    <span className={`text-base font-black flex items-center ${activeBetId === `${match.id}-1x2-away` ? 'text-white drop-shadow-md' : getOddsClass('h2h', 'away')}`}>
                       {odds.h2h.away.toFixed(2)}
                       {renderOddsArrow('h2h', 'away')}
                     </span>
                   </div>
                   {evAway > 0.02 && (
-                    <span className={`text-[10px] font-bold align-self-end mt-1 ${activeBetId === `${match.id}-1x2-away` ? 'text-white/90' : 'text-tertiary'}`}>
+                    <span className={`text-[10px] font-bold align-self-end mt-1 px-2 py-0.5 rounded-full ${activeBetId === `${match.id}-1x2-away` ? 'bg-white/25 text-white' : 'bg-[#ff8c42]/10 text-[#ff8c42]'}`}>
                       🔥 Thơm (+{(evAway * 100).toFixed(0)}% EV)
                     </span>
                   )}
@@ -817,20 +800,21 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
             {/* Handicap Market */}
             <div className="space-y-3">
-              <div className="text-xs font-black text-primary tracking-wider uppercase border-l-3 border-primary pl-2.5">
+              <div className="text-xs font-semibold text-primary tracking-wider uppercase border-l-3 border-primary pl-2.5">
                 {t('oddsHandicap')} ({odds.handicap.line})
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <button 
                   onClick={() => onAddBet(match, `${language === 'vi' ? 'Chấp' : 'Handicap'} ${odds.handicap.line} - ${home.name}`, odds.handicap.home, `${match.id}-handicap-home_${odds.handicap.line}`)}
-                  className={`flex items-center justify-between p-4 rounded-2xl border transition-all shadow-sm active:scale-[0.98] ${
+                  style={activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-home` ? { background: 'linear-gradient(135deg, #ea4c89 0%, #ff8c42 100%)' } : {}}
+                  className={`flex items-center justify-between p-4 rounded-[16px] border transition-all duration-300 active:scale-[0.96] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-home` 
-                      ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
+                      ? 'text-white border-transparent shadow-[0_8px_20px_rgba(234,76,137,0.35)] transform scale-[1.02] z-10' 
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-[#ea4c89]/40 hover:shadow-md shadow-sm'
                   }`}
                 >
                   <span className={`text-xs font-bold ${activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-home` ? 'text-white' : 'text-on-surface-variant'}`}>{home.name} ({odds.handicap.line})</span>
-                  <span className={`text-base font-black flex items-center ${activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-home` ? 'text-white' : getOddsClass('handicap', 'home')}`}>
+                  <span className={`text-base font-black flex items-center ${activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-home` ? 'text-white drop-shadow-md' : getOddsClass('handicap', 'home')}`}>
                     {odds.handicap.home.toFixed(2)}
                     {renderOddsArrow('handicap', 'home')}
                   </span>
@@ -838,14 +822,15 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                 <button 
                   onClick={() => onAddBet(match, `${language === 'vi' ? 'Được chấp' : 'Receive Handicap'} ${odds.handicap.line.startsWith('-') ? odds.handicap.line.replace('-', '+') : `-${odds.handicap.line}`} - ${away.name}`, odds.handicap.away, `${match.id}-handicap-away_${-parseFloat(odds.handicap.line)}`)}
-                  className={`flex items-center justify-between p-4 rounded-2xl border transition-all shadow-sm active:scale-[0.98] ${
+                  style={activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-away` ? { background: 'linear-gradient(135deg, #ea4c89 0%, #ff8c42 100%)' } : {}}
+                  className={`flex items-center justify-between p-4 rounded-[16px] border transition-all duration-300 active:scale-[0.96] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-away` 
-                      ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
+                      ? 'text-white border-transparent shadow-[0_8px_20px_rgba(234,76,137,0.35)] transform scale-[1.02] z-10' 
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-[#ea4c89]/40 hover:shadow-md shadow-sm'
                   }`}
                 >
                   <span className={`text-xs font-bold ${activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-away` ? 'text-white' : 'text-on-surface-variant'}`}>{away.name} ({odds.handicap.line.startsWith('-') ? odds.handicap.line.replace('-', '+') : `-${odds.handicap.line}`})</span>
-                  <span className={`text-base font-black flex items-center ${activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-away` ? 'text-white' : getOddsClass('handicap', 'away')}`}>
+                  <span className={`text-base font-black flex items-center ${activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-away` ? 'text-white drop-shadow-md' : getOddsClass('handicap', 'away')}`}>
                     {odds.handicap.away.toFixed(2)}
                     {renderOddsArrow('handicap', 'away')}
                   </span>
@@ -855,27 +840,28 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
             {/* Over/Under Market */}
             <div className="space-y-3">
-              <div className="text-xs font-black text-primary tracking-wider uppercase border-l-3 border-primary pl-2.5">
+              <div className="text-xs font-semibold text-primary tracking-wider uppercase border-l-3 border-primary pl-2.5">
                 {t('oddsOverUnder')} ({odds.overUnder.line})
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <button 
                   onClick={() => onAddBet(match, `${t('overLabel')} ${odds.overUnder.line}`, odds.overUnder.over, `${match.id}-ou-over_${odds.overUnder.line}`)}
-                  className={`flex flex-col gap-1.5 p-4 rounded-2xl border transition-all text-left shadow-sm active:scale-[0.98] ${
+                  style={activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-over` ? { background: 'linear-gradient(135deg, #ea4c89 0%, #ff8c42 100%)' } : {}}
+                  className={`flex flex-col gap-1.5 p-4 rounded-[16px] border transition-all duration-300 text-left active:scale-[0.96] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-over` 
-                      ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
+                      ? 'text-white border-transparent shadow-[0_8px_20px_rgba(234,76,137,0.35)] transform scale-[1.02] z-10' 
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-[#ea4c89]/40 hover:shadow-md shadow-sm'
                   }`}
                 >
                   <div className="flex justify-between items-center w-full">
                     <span className={`text-xs font-bold ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-over` ? 'text-white' : 'text-on-surface-variant'}`}>{t('overLabel')} ({odds.overUnder.line})</span>
-                    <span className={`text-base font-black flex items-center ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-over` ? 'text-white' : getOddsClass('overUnder', 'over')}`}>
+                    <span className={`text-base font-black flex items-center ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-over` ? 'text-white drop-shadow-md' : getOddsClass('overUnder', 'over')}`}>
                       {odds.overUnder.over.toFixed(2)}
                       {renderOddsArrow('overUnder', 'over')}
                     </span>
                   </div>
                   {evOver > 0.02 && (
-                    <span className={`text-[10px] font-bold align-self-end mt-1 ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-over` ? 'text-white/90' : 'text-tertiary'}`}>
+                    <span className={`text-[10px] font-bold align-self-end mt-1 px-2 py-0.5 rounded-full ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-over` ? 'bg-white/25 text-white' : 'bg-[#ff8c42]/10 text-[#ff8c42]'}`}>
                       🔥 Thơm (+{(evOver * 100).toFixed(0)}% EV)
                     </span>
                   )}
@@ -883,21 +869,22 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                 <button 
                   onClick={() => onAddBet(match, `${t('underLabel')} ${odds.overUnder.line}`, odds.overUnder.under, `${match.id}-ou-under_${odds.overUnder.line}`)}
-                  className={`flex flex-col gap-1.5 p-4 rounded-2xl border transition-all text-left shadow-sm active:scale-[0.98] ${
+                  style={activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-under` ? { background: 'linear-gradient(135deg, #ea4c89 0%, #ff8c42 100%)' } : {}}
+                  className={`flex flex-col gap-1.5 p-4 rounded-[16px] border transition-all duration-300 text-left active:scale-[0.96] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-under` 
-                      ? 'bg-primary text-white border-primary shadow-[0_4px_12px_rgba(0,98,157,0.2)]' 
-                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-primary/20 dark:hover:border-primary/30'
+                      ? 'text-white border-transparent shadow-[0_8px_20px_rgba(234,76,137,0.35)] transform scale-[1.02] z-10' 
+                      : 'bg-white/50 dark:bg-white/5 hover:bg-white dark:hover:bg-white/10 border-white/60 dark:border-white/10 hover:border-[#ea4c89]/40 hover:shadow-md shadow-sm'
                   }`}
                 >
                   <div className="flex justify-between items-center w-full">
                     <span className={`text-xs font-bold ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-under` ? 'text-white' : 'text-on-surface-variant'}`}>{t('underLabel')} ({odds.overUnder.line})</span>
-                    <span className={`text-base font-black flex items-center ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-under` ? 'text-white' : getOddsClass('overUnder', 'under')}`}>
+                    <span className={`text-base font-black flex items-center ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-under` ? 'text-white drop-shadow-md' : getOddsClass('overUnder', 'under')}`}>
                       {odds.overUnder.under.toFixed(2)}
                       {renderOddsArrow('overUnder', 'under')}
                     </span>
                   </div>
                   {evUnder > 0.02 && (
-                    <span className={`text-[10px] font-bold align-self-end mt-1 ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-under` ? 'text-white/90' : 'text-tertiary'}`}>
+                    <span className={`text-[10px] font-bold align-self-end mt-1 px-2 py-0.5 rounded-full ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-under` ? 'bg-white/25 text-white' : 'bg-[#ff8c42]/10 text-[#ff8c42]'}`}>
                       🔥 Thơm (+{(evUnder * 100).toFixed(0)}% EV)
                     </span>
                   )}
@@ -914,14 +901,14 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
             {loadingAnalytics ? (
               <div className="flex flex-col items-center justify-center gap-3 py-10 text-on-surface-variant">
                 <Loader2 size={32} className="animate-spin text-primary" />
-                <span className="text-xs font-bold">Heo Hồng đang phân tích sâu dữ liệu trận đấu...</span>
+                <span className="text-xs font-semibold">Heo Hồng đang phân tích sâu dữ liệu trận đấu...</span>
               </div>
             ) : analyticsData ? (
               <div className="space-y-6">
                 
                 {/* Expected Scorelines Card */}
                 <div className="p-4 bg-white/50 border border-white/60 rounded-2xl">
-                  <h4 className="text-xs font-black text-on-background flex items-center gap-1.5 mb-3">
+                  <h4 className="text-xs font-semibold text-on-background flex items-center gap-1.5 mb-3">
                     <span className="material-symbols-outlined text-primary text-[18px]">target</span>
                     Top 3 Tỷ số có xác suất xảy ra cao nhất
                   </h4>
@@ -935,9 +922,9 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                             : 'bg-white/40 border-white/60 text-on-surface'
                         }`}
                       >
-                        <div className="text-[10px] font-black tracking-wider uppercase opacity-75">Khả năng {idx + 1}</div>
-                        <div className="text-2xl font-black my-1">{item.score}</div>
-                        <div className="text-xs font-black">{item.percent}% khả năng</div>
+                        <div className="text-[10px] font-semibold tracking-wider uppercase opacity-75">Khả năng {idx + 1}</div>
+                        <div className="text-2xl font-semibold my-1">{item.score}</div>
+                        <div className="text-xs font-semibold">{item.percent}% khả năng</div>
                       </div>
                     ))}
                   </div>
@@ -945,12 +932,12 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                 {/* Score Probability Heatmap Grid */}
                 <div className="p-4 bg-white/50 border border-white/60 rounded-2xl">
-                  <h4 className="text-xs font-black text-on-background flex items-center gap-1.5 mb-3 uppercase tracking-wider">
+                  <h4 className="text-xs font-semibold text-on-background flex items-center gap-1.5 mb-3 uppercase tracking-wider">
                     <span className="material-symbols-outlined text-primary text-[18px]">grid_on</span>
                     Bản đồ nhiệt xác suất tỷ số (Dixon-Coles)
                   </h4>
                   <div className="overflow-x-auto min-w-[280px]">
-                    <div className="grid grid-cols-6 gap-1 text-center font-bold text-[9px]">
+                    <div className="grid grid-cols-6 gap-1 text-center font-semibold text-[9px]">
                       {/* Header row */}
                       <div className="p-1 text-on-surface-variant/70 flex items-center justify-center border border-white/20 bg-white/20 rounded-md">Nhà \ Khách</div>
                       <div className="p-1 bg-white/40 rounded-md flex items-center justify-center">0</div>
@@ -962,7 +949,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                       {/* Grid content */}
                       {heatmapGrid?.map((row, h) => (
                         <div key={`h-row-${h}`} className="contents">
-                          <div className="p-1 bg-white/40 rounded-md flex items-center justify-center font-black text-on-surface-variant">
+                          <div className="p-1 bg-white/40 rounded-md flex items-center justify-center font-semibold text-on-surface-variant">
                             {h}
                           </div>
                           {row.map((cell, a) => {
@@ -977,7 +964,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                                   color: prob > 3 ? '#ffffff' : 'var(--md-sys-color-on-surface)'
                                 }}
                                 className={`p-1.5 rounded-md border border-black/[0.02] flex flex-col justify-center items-center ${
-                                  prob > 3 ? 'font-black shadow-sm' : 'font-medium'
+                                  prob > 3 ? 'font-semibold shadow-sm' : 'font-medium'
                                 }`}
                               >
                                 <span className="text-[10px] leading-tight">{cell.scoreText}</span>
@@ -996,13 +983,13 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                 {/* Expected Goals Comparison Card */}
                 <div className="p-4 bg-white/50 border border-white/60 rounded-2xl space-y-3">
-                  <h4 className="text-xs font-black text-on-background flex items-center gap-1.5">
+                  <h4 className="text-xs font-semibold text-on-background flex items-center gap-1.5">
                     <span className="material-symbols-outlined text-secondary text-[18px]">sports_soccer</span>
                     Chỉ số xG (Bàn thắng kỳ vọng dự tính của AI)
                   </h4>
                   <div className="space-y-2">
                     <div className="space-y-1">
-                      <div className="flex justify-between items-center text-xs font-bold">
+                      <div className="flex justify-between items-center text-xs font-semibold">
                         <span className="text-primary">{home.name}: {prediction.analytics.expectedHomeGoals?.toFixed(2)} xG</span>
                         <span className="text-secondary">{away.name}: {prediction.analytics.expectedAwayGoals?.toFixed(2)} xG</span>
                       </div>
@@ -1021,17 +1008,17 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                     {/* Strengths & Forms display */}
                     <div className="grid grid-cols-2 gap-3 pt-2 text-[10px] border-t border-black/[0.05]">
                       <div>
-                        <div className="font-black text-primary uppercase">Phong độ {home.name}:</div>
+                        <div className="font-semibold text-primary uppercase">Phong độ {home.name}:</div>
                         <div className="text-on-surface-variant font-medium">{prediction.analytics.homeFormDesc}</div>
                         {prediction.analytics.homeIsHost && (
-                          <div className="text-[9px] text-secondary font-black mt-0.5">🏟️ Lợi thế nước chủ nhà (+10% Tấn công)</div>
+                          <div className="text-[9px] text-secondary font-semibold mt-0.5">🏟️ Lợi thế nước chủ nhà (+10% Tấn công)</div>
                         )}
                       </div>
                       <div>
-                        <div className="font-black text-secondary uppercase">Phong độ {away.name}:</div>
+                        <div className="font-semibold text-secondary uppercase">Phong độ {away.name}:</div>
                         <div className="text-on-surface-variant font-medium">{prediction.analytics.awayFormDesc}</div>
                         {prediction.analytics.awayIsHost && (
-                          <div className="text-[9px] text-secondary font-black mt-0.5">🏟️ Lợi thế nước chủ nhà (+10% Tấn công)</div>
+                          <div className="text-[9px] text-secondary font-semibold mt-0.5">🏟️ Lợi thế nước chủ nhà (+10% Tấn công)</div>
                         )}
                       </div>
                     </div>
@@ -1045,24 +1032,24 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {/* BTTS */}
                   <div className="p-3 bg-white/50 border border-white/60 rounded-2xl text-center flex flex-col justify-between">
-                    <div className="text-[9px] font-black uppercase text-on-surface-variant/80 tracking-wider">Cả hai đội ghi bàn (BTTS)</div>
-                    <div className="text-xl font-black text-primary my-1">{btts}%</div>
+                    <div className="text-[9px] font-semibold uppercase text-on-surface-variant/80 tracking-wider">Cả hai đội ghi bàn (BTTS)</div>
+                    <div className="text-xl font-semibold text-primary my-1">{btts}%</div>
                     <div className="h-1.5 w-full bg-white/60 border border-white/30 rounded-full overflow-hidden">
                       <div style={{ width: `${btts}%` }} className="h-full bg-primary"></div>
                     </div>
                   </div>
                   {/* Home Clean Sheet */}
                   <div className="p-3 bg-white/50 border border-white/60 rounded-2xl text-center flex flex-col justify-between">
-                    <div className="text-[9px] font-black uppercase text-on-surface-variant/80 tracking-wider">Sạch lưới ({home.name})</div>
-                    <div className="text-xl font-black text-secondary my-1">{homeCleanSheet}%</div>
+                    <div className="text-[9px] font-semibold uppercase text-on-surface-variant/80 tracking-wider">Sạch lưới ({home.name})</div>
+                    <div className="text-xl font-semibold text-secondary my-1">{homeCleanSheet}%</div>
                     <div className="h-1.5 w-full bg-white/60 border border-white/30 rounded-full overflow-hidden">
                       <div style={{ width: `${homeCleanSheet}%` }} className="h-full bg-secondary"></div>
                     </div>
                   </div>
                   {/* Away Clean Sheet */}
                   <div className="p-3 bg-white/50 border border-white/60 rounded-2xl text-center flex flex-col justify-between">
-                    <div className="text-[9px] font-black uppercase text-on-surface-variant/80 tracking-wider">Sạch lưới ({away.name})</div>
-                    <div className="text-xl font-black text-on-surface-variant my-1">{awayCleanSheet}%</div>
+                    <div className="text-[9px] font-semibold uppercase text-on-surface-variant/80 tracking-wider">Sạch lưới ({away.name})</div>
+                    <div className="text-xl font-semibold text-on-surface-variant my-1">{awayCleanSheet}%</div>
                     <div className="h-1.5 w-full bg-white/60 border border-white/30 rounded-full overflow-hidden">
                       <div style={{ width: `${awayCleanSheet}%` }} className="h-full bg-on-surface-variant"></div>
                     </div>
@@ -1072,7 +1059,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 {/* Value Bets Highlight Card */}
                 {valueBets && valueBets.length > 0 && (
                   <div className="p-4 bg-primary/10 border border-primary/20 rounded-2xl space-y-3">
-                    <h4 className="text-xs font-black text-primary flex items-center gap-1.5 uppercase tracking-wide">
+                    <h4 className="text-xs font-semibold text-primary flex items-center gap-1.5 uppercase tracking-wide">
                       <span className="material-symbols-outlined text-[18px]">verified</span>
                       {language === 'vi' ? 'Gợi ý Cửa Sáng của Heo Hồng (+EV Value Bets)' : 'Heo Hong\'s Value Choices (+EV Value Bets)'}
                     </h4>
@@ -1080,10 +1067,10 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                       {valueBets.map((item, idx) => (
                         <div key={idx} className="flex items-center justify-between p-3 bg-white/60 border border-white/80 rounded-xl hover:bg-white/80 transition-colors">
                           <div className="flex flex-col">
-                            <span className="text-xs font-black text-on-surface">{item.label}</span>
+                            <span className="text-xs font-semibold text-on-surface">{item.label}</span>
                             <span className="text-[10px] text-on-surface-variant/70">{t('oddsLabel')}: {item.odds} • {language === 'vi' ? 'Lợi nhuận kỳ vọng' : 'Est. Yield'}: +{(item.ev * 100).toFixed(1)}%</span>
                           </div>
-                          <span className="px-2.5 py-1 bg-primary text-white rounded-lg text-[10px] font-black flex items-center gap-1 shadow-sm">
+                          <span className="px-2.5 py-1 bg-primary text-white rounded-lg text-[10px] font-semibold flex items-center gap-1 shadow-sm">
                             🔥 +{(item.ev * 100).toFixed(1)}% EV
                           </span>
                         </div>
@@ -1098,7 +1085,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 {/* Tactical & Player Matchups Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-white/50 border border-white/60 rounded-2xl space-y-2">
-                    <h5 className="text-xs font-black text-on-background uppercase tracking-wider">
+                    <h5 className="text-xs font-semibold text-on-background uppercase tracking-wider">
                       📋 Nhận định chiến thuật
                     </h5>
                     <p className="text-xs text-on-surface-variant leading-relaxed">
@@ -1106,7 +1093,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                     </p>
                   </div>
                   <div className="p-4 bg-white/50 border border-white/60 rounded-2xl space-y-2">
-                    <h5 className="text-xs font-black text-on-background uppercase tracking-wider">
+                    <h5 className="text-xs font-semibold text-on-background uppercase tracking-wider">
                       ⚔️ Cặp đối đầu chủ chốt
                     </h5>
                     <p className="text-xs text-on-surface-variant leading-relaxed">
@@ -1118,7 +1105,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 {/* Head to Head & Injury List Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 bg-white/50 border border-white/60 rounded-2xl space-y-2">
-                    <h5 className="text-xs font-black text-on-background uppercase tracking-wider">
+                    <h5 className="text-xs font-semibold text-on-background uppercase tracking-wider">
                       📊 Lịch sử đối đầu gần đây
                     </h5>
                     <p className="text-xs text-on-surface-variant leading-relaxed">
@@ -1126,7 +1113,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                     </p>
                   </div>
                   <div className="p-4 bg-white/50 border border-white/60 rounded-2xl space-y-2">
-                    <h5 className="text-xs font-black text-on-background uppercase tracking-wider">
+                    <h5 className="text-xs font-semibold text-on-background uppercase tracking-wider">
                       🏥 Tình hình chấn thương & treo giò
                     </h5>
                     <p className="text-xs text-on-surface-variant leading-relaxed">
@@ -1137,18 +1124,18 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                 {/* Kelly Criterion capital management recommendation */}
                 <div className="p-4 bg-tertiary/10 border border-tertiary/20 rounded-2xl space-y-3">
-                  <h4 className="text-xs font-black text-tertiary flex items-center gap-1.5 uppercase tracking-wide">
+                  <h4 className="text-xs font-semibold text-tertiary flex items-center gap-1.5 uppercase tracking-wide">
                     <span className="material-symbols-outlined text-tertiary text-[18px]">trending_up</span>
                     {language === 'vi' ? 'Quản lý vốn AI (Công thức Kelly Criterion)' : 'AI Bankroll Management (Kelly Criterion)'}
                   </h4>
                   <div className="flex items-center gap-4">
                     <div className="px-4 py-2 bg-tertiary text-white rounded-xl text-center min-w-[90px] shadow-sm">
-                      <div className="text-[9px] font-black uppercase opacity-90 leading-none mb-1">{language === 'vi' ? 'Vốn đề xuất' : 'Rec. Stake'}</div>
-                      <div className="text-xl font-black leading-none">{analyticsData.kellyCriterion?.stakePercent}%</div>
+                      <div className="text-[9px] font-semibold uppercase opacity-90 leading-none mb-1">{language === 'vi' ? 'Vốn đề xuất' : 'Rec. Stake'}</div>
+                      <div className="text-xl font-semibold leading-none">{analyticsData.kellyCriterion?.stakePercent}%</div>
                     </div>
                     <div>
-                      <div className="text-[10px] text-on-surface-variant/80 font-bold">{language === 'vi' ? 'Quẻ đề xuất của mô hình:' : 'Model\'s Recommended Choice:'}</div>
-                      <div className="text-sm font-black text-on-surface">
+                      <div className="text-[10px] text-on-surface-variant/80 font-semibold">{language === 'vi' ? 'Quẻ đề xuất của mô hình:' : 'Model\'s Recommended Choice:'}</div>
+                      <div className="text-sm font-semibold text-on-surface">
                         {analyticsData.kellyCriterion?.recommendedBet}
                       </div>
                     </div>
@@ -1167,15 +1154,15 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                 {/* SHAP Explainability parameters */}
                 <div className="p-4 bg-white/50 border border-white/60 rounded-2xl space-y-3">
-                  <h4 className="text-xs font-black text-on-background">
+                  <h4 className="text-xs font-semibold text-on-background">
                     ⚙️ Các nhân tố tác động chính đến Dự đoán AI
                   </h4>
                   <div className="space-y-3">
                     {analyticsData.shapExplainability?.map((item, idx) => (
                       <div key={idx} className="space-y-1">
-                        <div className="flex justify-between items-center text-[11px] font-bold">
+                        <div className="flex justify-between items-center text-[11px] font-semibold">
                           <span className="text-on-surface-variant">{item.factor}</span>
-                          <span className="text-primary font-black">{item.weight}%</span>
+                          <span className="text-primary font-semibold">{item.weight}%</span>
                         </div>
                         <div className="h-1.5 w-full bg-white/60 border border-white/30 rounded-full overflow-hidden">
                           <div 
@@ -1209,8 +1196,8 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   className="w-8 h-8 rounded-full border border-primary/30"
                 />
                 <div>
-                  <div className="text-xs font-black text-on-surface">{language === 'vi' ? 'Giải mã trận đấu cùng Heo Hồng 🐷' : 'Decode Match with Heo Hong 🐷'}</div>
-                  <div className="text-[9px] text-tertiary font-bold flex items-center gap-1">
+                  <div className="text-xs font-semibold text-on-surface">{language === 'vi' ? 'Giải mã trận đấu cùng Heo Hồng 🐷' : 'Decode Match with Heo Hong 🐷'}</div>
+                  <div className="text-[9px] text-tertiary font-semibold flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
                     {language === 'vi' ? 'Trực tuyến • Trợ lý AI thế hệ mới' : 'Online • Next-Gen AI Assistant'}
                   </div>
@@ -1291,7 +1278,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   onClick={() => {
                     setChatInput(text);
                   }}
-                  className="px-3 py-1 bg-white/65 hover:bg-white text-[10px] font-bold text-on-surface-variant hover:text-primary border border-white/60 rounded-full whitespace-nowrap active:scale-95 transition-all"
+                  className="px-3 py-1 bg-white/65 hover:bg-white text-[10px] font-semibold text-on-surface-variant hover:text-primary border border-white/60 rounded-full whitespace-nowrap active:scale-95 transition-all"
                 >
                   {text}
                 </button>
@@ -1339,7 +1326,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 
                 return (
                   <div key={stat.key} className="space-y-1">
-                    <div className="flex justify-between items-center text-xs font-bold">
+                    <div className="flex justify-between items-center text-xs font-semibold">
                       <span className="text-on-surface">{displayHome}</span>
                       <span className="text-on-surface-variant/80 font-semibold">{stat.label}</span>
                       <span className="text-on-surface">{displayAway}</span>
@@ -1387,7 +1374,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                     className="absolute -left-[22px] w-2.5 h-2.5 rounded-full border-2 shadow-sm"
                   ></span>
                   
-                  <span className="text-xs font-black text-secondary/90 w-8">{event.minute}'</span>
+                  <span className="text-xs font-semibold text-secondary/90 w-8">{event.minute}'</span>
                   <div className="flex-1 p-3 bg-white/50 dark:bg-white/5 border border-white/60 dark:border-white/10 rounded-xl flex items-center justify-between text-xs shadow-sm">
                     <div>
                       <strong className="mr-2">
@@ -1401,7 +1388,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                       </strong>
                       <span className="text-on-surface-variant">{event.detail}</span>
                     </div>
-                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
                       event.team === 'home' 
                         ? 'bg-primary/10 text-primary' 
                         : 'bg-secondary/10 text-secondary'
@@ -1432,7 +1419,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                     alt="Heo Hồng Mascot" 
                     className="w-7 h-7 rounded-full border border-secondary/35"
                   />
-                  <strong className="text-xs font-extrabold text-secondary">Nhận định Tiên Tri từ Heo Hồng 🐷</strong>
+                  <strong className="text-xs font-semibold text-secondary">Nhận định Tiên Tri từ Heo Hồng 🐷</strong>
                 </div>
                 
                 <button 
@@ -1446,7 +1433,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
               </div>
 
               {loadingAi ? (
-                <div className="flex items-center gap-2 py-2 text-xs font-bold text-on-surface-variant">
+                <div className="flex items-center gap-2 py-2 text-xs font-semibold text-on-surface-variant">
                   <Loader2 size={14} className="animate-spin text-secondary" />
                   <span>{language === 'vi' ? 'Heo Hồng đang lắc mai rùa xin quẻ bóng đá... 🔮' : 'Heo Hong is shaking turtle shell to predict... 🔮'}</span>
                 </div>
@@ -1459,13 +1446,13 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
             {/* Social Media Reactions section */}
             <div className="space-y-3">
-              <h4 className="text-xs font-black text-on-surface uppercase tracking-wider pl-1 flex items-center gap-1.5">
+              <h4 className="text-xs font-semibold text-on-surface uppercase tracking-wider pl-1 flex items-center gap-1.5">
                 <span className="material-symbols-outlined text-secondary text-[18px]">forum</span>
                 Bản tin mạng xã hội nóng (Social Reactions)
               </h4>
               
               {loadingSocial ? (
-                <div className="flex items-center gap-2 py-4 px-3 bg-white/40 border border-white/50 rounded-2xl text-xs font-bold text-on-surface-variant justify-center">
+                <div className="flex items-center gap-2 py-4 px-3 bg-white/40 border border-white/50 rounded-2xl text-xs font-semibold text-on-surface-variant justify-center">
                   <Loader2 size={14} className="animate-spin text-secondary" />
                   <span>Đang cập nhật các bài đăng MXH mới nhất...</span>
                 </div>
@@ -1478,11 +1465,11 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                       className="p-3.5 bg-white/45 hover:bg-white border border-white/50 hover:border-primary/20 rounded-2xl transition-all cursor-pointer shadow-sm flex flex-col justify-between gap-3 group relative overflow-hidden"
                     >
                       <div className="space-y-2">
-                        <div className="flex justify-between items-center text-[10px] font-bold">
-                          <span className="text-primary font-black truncate max-w-[150px]">{post.source}</span>
+                        <div className="flex justify-between items-center text-[10px] font-semibold">
+                          <span className="text-primary font-semibold truncate max-w-[150px]">{post.source}</span>
                           <span className="text-on-surface-variant/80 whitespace-nowrap">{post.time}</span>
                         </div>
-                        <h5 className="text-[11px] font-black text-on-surface leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+                        <h5 className="text-[11px] font-semibold text-on-surface leading-snug line-clamp-2 group-hover:text-primary transition-colors">
                           {post.title}
                         </h5>
                         <p className="text-[10px] text-on-surface-variant/90 line-clamp-2 leading-relaxed font-semibold">
@@ -1490,7 +1477,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                         </p>
                       </div>
 
-                      <div className="flex justify-between items-center text-[9px] font-black text-on-surface-variant/85 border-t border-white/30 pt-2.5">
+                      <div className="flex justify-between items-center text-[9px] font-semibold text-on-surface-variant/85 border-t border-white/30 pt-2.5">
                         <div className="flex gap-2">
                           <span>👍 {post.upvotes?.toLocaleString()}</span>
                           <span>💬 {post.comments?.toLocaleString()}</span>
@@ -1553,7 +1540,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                       {/* Content */}
                       <div className="flex-1 min-w-0 flex flex-col justify-between">
                         <div>
-                          <h4 className="text-xs font-black text-on-surface leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+                          <h4 className="text-xs font-semibold text-on-surface leading-snug line-clamp-2 group-hover:text-primary transition-colors">
                             {title}
                           </h4>
                           {desc && (
@@ -1563,7 +1550,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                           )}
                         </div>
                         <div className="flex items-center gap-2 mt-1.5">
-                          <span className="text-[10px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{source}</span>
+                          <span className="text-[10px] font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{source}</span>
                           {timeAgo && <span className="text-[10px] text-on-surface-variant/70">{timeAgo}</span>}
                         </div>
                       </div>
@@ -1573,7 +1560,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
               ) : (
                 <div className="text-center py-8 text-on-surface-variant/60">
                   <Newspaper size={32} className="mx-auto mb-2 opacity-40" />
-                  <p className="text-xs font-bold">Chưa có tin tức liên quan đến trận đấu này</p>
+                  <p className="text-xs font-semibold">Chưa có tin tức liên quan đến trận đấu này</p>
                   <p className="text-[10px] mt-1">Tin tức sẽ được cập nhật khi có bài viết mới về {match.home?.name} hoặc {match.away?.name}</p>
                 </div>
               )}
@@ -1590,7 +1577,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Home Lineup Column */}
                   <div className="space-y-3">
-                    <h4 className="text-xs font-black text-on-surface flex items-center gap-2 border-b border-white/60 dark:border-white/10 pb-2">
+                    <h4 className="text-xs font-semibold text-on-surface flex items-center gap-2 border-b border-white/60 dark:border-white/10 pb-2">
                       <img 
                         src={`https://flagcdn.com/w40/${home.flag}.png`} 
                         alt={home.name} 
@@ -1606,13 +1593,13 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                           <div className="flex items-center gap-2.5">
                             <span 
                               style={{ backgroundColor: home.color || 'var(--primary)', color: home.textColor || 'white' }}
-                              className="w-5 h-5 rounded-full text-[9px] font-black flex items-center justify-center border border-white shadow-sm"
+                              className="w-5 h-5 rounded-full text-[9px] font-semibold flex items-center justify-center border border-white shadow-sm"
                             >
                               {player.number}
                             </span>
-                            <span className="font-bold text-on-surface">{player.name}</span>
+                            <span className="font-semibold text-on-surface">{player.name}</span>
                           </div>
-                          <span className="px-2 py-0.5 bg-white/70 dark:bg-white/10 border border-white/80 dark:border-white/20 rounded text-[9px] font-black text-on-surface-variant">
+                          <span className="px-2 py-0.5 bg-white/70 dark:bg-white/10 border border-white/80 dark:border-white/20 rounded text-[9px] font-semibold text-on-surface-variant">
                             {player.role || 'MF'}
                           </span>
                         </div>
@@ -1622,7 +1609,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                   {/* Away Lineup Column */}
                   <div className="space-y-3">
-                    <h4 className="text-xs font-black text-on-surface flex items-center gap-2 border-b border-white/60 dark:border-white/10 pb-2">
+                    <h4 className="text-xs font-semibold text-on-surface flex items-center gap-2 border-b border-white/60 dark:border-white/10 pb-2">
                       <img 
                         src={`https://flagcdn.com/w40/${away.flag}.png`} 
                         alt={away.name} 
@@ -1638,13 +1625,13 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                           <div className="flex items-center gap-2.5">
                             <span 
                               style={{ backgroundColor: away.color || 'var(--secondary)', color: away.textColor || 'white' }}
-                              className="w-5 h-5 rounded-full text-[9px] font-black flex items-center justify-center border border-white shadow-sm"
+                              className="w-5 h-5 rounded-full text-[9px] font-semibold flex items-center justify-center border border-white shadow-sm"
                             >
                               {player.number}
                             </span>
-                            <span className="font-bold text-on-surface">{player.name}</span>
+                            <span className="font-semibold text-on-surface">{player.name}</span>
                           </div>
-                          <span className="px-2 py-0.5 bg-white/70 dark:bg-white/10 border border-white/80 dark:border-white/20 rounded text-[9px] font-black text-on-surface-variant">
+                          <span className="px-2 py-0.5 bg-white/70 dark:bg-white/10 border border-white/80 dark:border-white/20 rounded text-[9px] font-semibold text-on-surface-variant">
                             {player.role || 'MF'}
                           </span>
                         </div>
@@ -1655,7 +1642,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                 {/* Tactical Pitch Board */}
                 <div className="space-y-3">
-                  <h4 className="text-xs font-black text-on-surface uppercase tracking-wider text-center">
+                  <h4 className="text-xs font-semibold text-on-surface uppercase tracking-wider text-center">
                     Sa bàn chiến thuật (Vertical Field)
                   </h4>
                   
@@ -1698,11 +1685,11 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                         >
                           <span 
                             style={{ backgroundColor: home.color || 'var(--primary)', color: home.textColor || 'white' }}
-                            className="w-5 h-5 rounded-full text-[9px] font-black flex items-center justify-center border border-white shadow-md cursor-pointer group-hover:scale-110 transition-transform"
+                            className="w-5 h-5 rounded-full text-[9px] font-semibold flex items-center justify-center border border-white shadow-md cursor-pointer group-hover:scale-110 transition-transform"
                           >
                             {player.number}
                           </span>
-                          <span className="px-1 py-0.2 bg-black/60 text-white font-bold text-[7px] rounded-md whitespace-nowrap shadow scale-90">
+                          <span className="px-1 py-0.2 bg-black/60 text-white font-semibold text-[7px] rounded-md whitespace-nowrap shadow scale-90">
                             {player.name.split(' ').pop()}
                           </span>
                         </div>
@@ -1718,11 +1705,11 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                         >
                           <span 
                             style={{ backgroundColor: away.color || 'var(--secondary)', color: away.textColor || 'white' }}
-                            className="w-5 h-5 rounded-full text-[9px] font-black flex items-center justify-center border border-white shadow-md cursor-pointer group-hover:scale-110 transition-transform"
+                            className="w-5 h-5 rounded-full text-[9px] font-semibold flex items-center justify-center border border-white shadow-md cursor-pointer group-hover:scale-110 transition-transform"
                           >
                             {player.number}
                           </span>
-                          <span className="px-1 py-0.2 bg-black/60 text-white font-bold text-[7px] rounded-md whitespace-nowrap shadow scale-90">
+                          <span className="px-1 py-0.2 bg-black/60 text-white font-semibold text-[7px] rounded-md whitespace-nowrap shadow scale-90">
                             {player.name.split(' ').pop()}
                           </span>
                         </div>
@@ -1742,14 +1729,14 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
         {/* H2H TAB */}
         {activeTab === 'H2H' && (
           <div className="space-y-6">
-            <h4 className="text-xs font-black text-on-surface flex items-center gap-2 border-b border-white/60 pb-2 uppercase tracking-wider">
+            <h4 className="text-xs font-semibold text-on-surface flex items-center gap-2 border-b border-white/60 pb-2 uppercase tracking-wider">
               <History size={14} className="text-primary" />
               Lịch sử đối đầu trực tiếp
             </h4>
             {loadingH2h ? (
               <div className="flex flex-col items-center justify-center gap-3 py-10 text-on-surface-variant">
                 <Loader2 size={24} className="animate-spin text-primary" />
-                <span className="text-xs font-bold">Đang tải lịch sử đối đầu...</span>
+                <span className="text-xs font-semibold">Đang tải lịch sử đối đầu...</span>
               </div>
             ) : h2hData && h2hData.overall ? (
               <div className="space-y-5">
@@ -1757,26 +1744,26 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {/* Overall card */}
                   <div className="p-4 bg-white/40 border border-white/50 rounded-2xl flex flex-col justify-center items-center text-center">
-                    <span className="text-[10px] font-black text-on-surface-variant/80 uppercase tracking-wider mb-2">Thành tích lịch sử</span>
-                    <div className="text-lg font-black text-primary">
-                      {h2hData.overall.homeWins} <span className="text-xs font-bold text-on-surface-variant">Thắng</span>
+                    <span className="text-[10px] font-semibold text-on-surface-variant/80 uppercase tracking-wider mb-2">Thành tích lịch sử</span>
+                    <div className="text-lg font-semibold text-primary">
+                      {h2hData.overall.homeWins} <span className="text-xs font-semibold text-on-surface-variant">Thắng</span>
                       <span className="mx-2 text-on-surface-variant/45">/</span>
-                      {h2hData.overall.draws} <span className="text-xs font-bold text-on-surface-variant">Hòa</span>
+                      {h2hData.overall.draws} <span className="text-xs font-semibold text-on-surface-variant">Hòa</span>
                       <span className="mx-2 text-on-surface-variant/45">/</span>
-                      {h2hData.overall.awayWins} <span className="text-xs font-bold text-on-surface-variant">Thua</span>
+                      {h2hData.overall.awayWins} <span className="text-xs font-semibold text-on-surface-variant">Thua</span>
                     </div>
                     <span className="text-[9px] text-on-surface-variant/65 mt-1 font-semibold">Tính cho {home.name} vs {away.name}</span>
                   </div>
 
                   {/* Last 5 meetings card */}
                   <div className="p-4 bg-white/40 border border-white/50 rounded-2xl flex flex-col justify-center items-center text-center">
-                    <span className="text-[10px] font-black text-on-surface-variant/80 uppercase tracking-wider mb-2">5 trận đối đầu gần nhất</span>
-                    <div className="text-lg font-black text-secondary">
-                      {h2hData.last5.homeWins} <span className="text-xs font-bold text-on-surface-variant">Thắng</span>
+                    <span className="text-[10px] font-semibold text-on-surface-variant/80 uppercase tracking-wider mb-2">5 trận đối đầu gần nhất</span>
+                    <div className="text-lg font-semibold text-secondary">
+                      {h2hData.last5.homeWins} <span className="text-xs font-semibold text-on-surface-variant">Thắng</span>
                       <span className="mx-2 text-on-surface-variant/45">/</span>
-                      {h2hData.last5.draws} <span className="text-xs font-bold text-on-surface-variant">Hòa</span>
+                      {h2hData.last5.draws} <span className="text-xs font-semibold text-on-surface-variant">Hòa</span>
                       <span className="mx-2 text-on-surface-variant/45">/</span>
-                      {h2hData.last5.awayWins} <span className="text-xs font-bold text-on-surface-variant">Thua</span>
+                      {h2hData.last5.awayWins} <span className="text-xs font-semibold text-on-surface-variant">Thua</span>
                     </div>
                     <span className="text-[9px] text-on-surface-variant/65 mt-1 font-semibold">Tỷ lệ thắng của {home.name}: {Math.round((h2hData.last5.homeWins / 5) * 100)}%</span>
                   </div>
@@ -1784,7 +1771,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                 {/* Match list */}
                 <div className="flex flex-col gap-2.5">
-                  <span className="text-[10px] font-black text-on-surface-variant/80 uppercase tracking-wider pl-1">Danh sách các trận đối đầu</span>
+                  <span className="text-[10px] font-semibold text-on-surface-variant/80 uppercase tracking-wider pl-1">Danh sách các trận đối đầu</span>
                   {h2hData.matches.length > 0 ? (
                     h2hData.matches.map((fixture) => {
                       const dateStr = fixture.date 
@@ -1796,15 +1783,15 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                           className="flex items-center justify-between p-3.5 bg-white/45 border border-white/50 rounded-2xl hover:bg-white/55 transition-all shadow-sm"
                         >
                           {/* Date / Competition info */}
-                          <div className="w-[120px] flex flex-col text-[10px] text-on-surface-variant/80 font-bold leading-tight">
+                          <div className="w-[120px] flex flex-col text-[10px] text-on-surface-variant/80 font-semibold leading-tight">
                             <span className="text-primary truncate max-w-[110px]">{fixture.competition}</span>
                             <span className="text-[9px] text-on-surface-variant/60">{dateStr} ({fixture.year})</span>
                           </div>
 
                           {/* Scoreline and Team names */}
-                          <div className="flex-1 flex items-center justify-center px-4 gap-3 text-xs md:text-sm font-bold">
+                          <div className="flex-1 flex items-center justify-center px-4 gap-3 text-xs md:text-sm font-semibold">
                             <span className="flex-1 text-right truncate text-on-surface max-w-[120px] md:max-w-[160px]">{fixture.homeName}</span>
-                            <div className="flex items-center gap-1.5 px-3 py-1 bg-white/65 border border-white/80 rounded-xl font-black text-sm text-primary shadow-inner">
+                            <div className="flex items-center gap-1.5 px-3 py-1 bg-white/65 border border-white/80 rounded-xl font-semibold text-sm text-primary shadow-inner">
                               <span>{fixture.homeScore}</span>
                               <span className="opacity-45 font-normal">-</span>
                               <span>{fixture.awayScore}</span>
@@ -1849,19 +1836,19 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
               
               <button 
                 onClick={() => setSelectedSocial(null)}
-                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 text-white border-none flex items-center justify-center text-sm font-bold active:scale-95 cursor-pointer hover:bg-black"
+                className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 text-white border-none flex items-center justify-center text-sm font-semibold active:scale-95 cursor-pointer hover:bg-black"
               >
                 ✕
               </button>
             </div>
             
             <div className="p-5 space-y-4">
-              <div className="flex gap-2 items-center text-[10px] font-bold">
+              <div className="flex gap-2 items-center text-[10px] font-semibold">
                 <span className="px-2.5 py-0.5 rounded-full bg-primary/15 text-primary border border-primary/10">{selectedSocial.source}</span>
                 <span className="text-on-surface-variant/80">{selectedSocial.time}</span>
               </div>
               
-              <h4 className="text-base font-black leading-snug text-on-surface">
+              <h4 className="text-base font-semibold leading-snug text-on-surface">
                 {selectedSocial.title}
               </h4>
               
@@ -1869,7 +1856,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 {selectedSocial.summary}
               </p>
 
-              <div className="flex gap-4 text-[10px] text-on-surface-variant/80 font-black pt-3.5 border-t border-white/40">
+              <div className="flex gap-4 text-[10px] text-on-surface-variant/80 font-semibold pt-3.5 border-t border-white/40">
                 <span>👍 {selectedSocial.upvotes?.toLocaleString()} lượt thích</span>
                 <span>💬 {selectedSocial.comments?.toLocaleString()} bình luận</span>
               </div>
@@ -1878,6 +1865,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
         </div>
       )}
 
-    </div>
+      </div>
+    </>
   );
 }
