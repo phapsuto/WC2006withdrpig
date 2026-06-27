@@ -15,8 +15,21 @@ const app = express();
 // Middleware
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } })); // Allow serving images cross-origin
 app.use(morgan('dev'));
+const allowedOrigins = [
+  'http://localhost:5173', 
+  'http://localhost:4173',
+  'https://banhbong.io', 
+  'https://www.banhbong.io'
+];
+
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173', // Must specify origin for credentials
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true // Allow cookies to be sent
 }));
 app.use(express.json());
