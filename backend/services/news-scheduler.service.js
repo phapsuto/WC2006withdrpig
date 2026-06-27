@@ -11,7 +11,7 @@ let isFetching = false;
 /**
  * Initialize all cron jobs.
  */
-function initScheduler() {
+function initNewsScheduler() {
   console.log('[Scheduler] ═══ Khởi tạo Cron Jobs ═══');
 
   // ─── Mỗi 30 phút: Cào RSS feeds ──────────────────────────────────
@@ -61,4 +61,4 @@ function initScheduler() {
   }, 10000);
 }
 
-module.exports = { initScheduler };
+module.exports = { initNewsScheduler };
