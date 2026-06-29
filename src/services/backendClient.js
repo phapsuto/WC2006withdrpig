@@ -152,6 +152,13 @@ export const backendClient = {
     return res.data;
   },
 
+  async getMatchAnalytics(id, homeName, awayName) {
+    const res = await apiClient.get(`/matches/${id}/analytics`, {
+      params: { homeName, awayName }
+    });
+    return res.data;
+  },
+
   async getMatchOdds(id) {
     const res = await apiClient.get(`/matches/${id}/odds`);
     return res.data;

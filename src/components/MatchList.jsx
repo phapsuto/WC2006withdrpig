@@ -5,6 +5,8 @@ import { useLiveMatchClock } from '../services/useLiveMatchClock';
 import { useLanguage } from '../utils/LanguageContext';
 import { Bell, ChevronRight, CalendarDays, Trophy } from 'lucide-react';
 import { Segmented, DatePicker, ConfigProvider, Skeleton } from 'antd';
+import { predictMatch } from '../utils/aiPredictor';
+import GroupStandings from './GroupStandings';
 
 function LiveClockDisplay({ minute, second, isLive }) {
   const clock = useLiveMatchClock(minute, second, isLive);
@@ -170,6 +172,44 @@ export default function MatchList({ groupedMatches = { popular: [], countries: [
 
   const { language, t } = useLanguage();
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [ringingMatchId, setRingingMatchId] = useState(null);
+
+  // Calculate AI historic accuracy rate
+  const finishedMatches = matches.filter(m => m.status === 'FINISHED');
+  let correctCount = 0;
+
+  finishedMatches.forEach(match => {
+    let actualOutcome = 'DRAW';
+    if (match.homeScore > match.awayScore) actualOutcome = 'HOME_WIN';
+    else if (match.homeScore < match.awayScore) actualOutcome = 'AWAY_WIN';
+
+    const prediction = predictMatch(
+      match.home?.nameEn || match.home?.name || 'Unknown',
+      match.away?.nameEn || match.away?.name || 'Unknown',
+      0,
+      0,
+      'UPCOMING',
+      0,
+      matches,
+      match.odds
+    );
+    const { homeWin, draw, awayWin } = prediction.probabilities;
+
+    let predictedOutcome = 'DRAW';
+    if (homeWin > draw && homeWin > awayWin) {
+      predictedOutcome = 'HOME_WIN';
+    } else if (awayWin > homeWin && awayWin > draw) {
+      predictedOutcome = 'AWAY_WIN';
+    }
+
+    if (predictedOutcome === actualOutcome) {
+      correctCount++;
+    }
+  });
+
+  const accuracyRate = finishedMatches.length > 0 
+    ? ((correctCount / finishedMatches.length) * 100).toFixed(1)
+    : '0.0';
 
   useEffect(() => {
     if ((groupedMatches.popular.length > 0 || groupedMatches.countries.length > 0) && isInitialLoad) {
@@ -208,6 +248,18 @@ export default function MatchList({ groupedMatches = { popular: [], countries: [
     const homeName = language === 'vi' ? match.home.name : match.home.nameEn || match.home.name;
     const awayName = language === 'vi' ? match.away.name : match.away.nameEn || match.away.name;
 
+    const prediction = predictMatch(
+      match.home?.nameEn || match.home?.name || 'Unknown',
+      match.away?.nameEn || match.away?.name || 'Unknown',
+      match.homeScore,
+      match.awayScore,
+      match.status,
+      match.minute,
+      matches,
+      match.odds
+    );
+    const { homeWin, awayWin } = prediction.probabilities;
+
     return (
       <div 
         key={match.id}
@@ -218,8 +270,15 @@ export default function MatchList({ groupedMatches = { popular: [], countries: [
         <div className="flex items-center justify-center">
           <Bell 
             size={16} 
-            className={`cursor-pointer transition-colors ${isSaved ? 'text-[#ea4c89] fill-[#ea4c89]' : 'text-gray-300 hover:text-gray-400'}`} 
-            onClick={(e) => { e.stopPropagation(); onToggleBookmark(match.id); }}
+            className={`cursor-pointer transition-colors ${isSaved ? 'text-[#ea4c89] fill-[#ea4c89]' : 'text-gray-300 hover:text-gray-400'} ${ringingMatchId === match.id ? 'animate-ring' : ''}`} 
+            onClick={(e) => { 
+              e.stopPropagation(); 
+              if (!isSaved) {
+                setRingingMatchId(match.id);
+                setTimeout(() => setRingingMatchId(null), 1000);
+              }
+              onToggleBookmark(match.id); 
+            }}
           />
         </div>
 
@@ -236,8 +295,8 @@ export default function MatchList({ groupedMatches = { popular: [], countries: [
         </div>
 
         <div className="m-team home">
-          <span className={match.status === 'FINISHED' && match.homeScore > match.awayScore ? 'font-semibold' : ''}>{homeName}</span>
-          <img src={match.home.flag !== 'xx' ? `https://flagcdn.com/w40/${match.home.flag}.png` : 'https://www.svgrepo.com/show/475656/google-color.svg'} alt={homeName} className="m-logo" />
+          <span className={match.status === 'FINISHED' && match.homeScore > match.awayScore ? 'font-semibold truncate' : 'truncate'}>{homeName}</span>
+          <img src={match.home.flag !== 'xx' ? `https://flagcdn.com/w40/${match.home.flag}.png` : 'https://www.svgrepo.com/show/475656/google-color.svg'} alt={homeName} className="m-logo shrink-0" />
         </div>
 
         <div className={`m-score ${match.status === 'LIVE' ? 'live' : ''}`}>
@@ -245,8 +304,23 @@ export default function MatchList({ groupedMatches = { popular: [], countries: [
         </div>
 
         <div className="m-team away">
-          <img src={match.away.flag !== 'xx' ? `https://flagcdn.com/w40/${match.away.flag}.png` : 'https://www.svgrepo.com/show/475656/google-color.svg'} alt={awayName} className="m-logo" />
-          <span className={match.status === 'FINISHED' && match.awayScore > match.homeScore ? 'font-semibold' : ''}>{awayName}</span>
+          <img src={match.away.flag !== 'xx' ? `https://flagcdn.com/w40/${match.away.flag}.png` : 'https://www.svgrepo.com/show/475656/google-color.svg'} alt={awayName} className="m-logo shrink-0" />
+          <span className={match.status === 'FINISHED' && match.awayScore > match.homeScore ? 'font-semibold truncate' : 'truncate'}>{awayName}</span>
+        </div>
+
+        <div className="flex flex-col items-center justify-center pl-1 border-l border-gray-100">
+          <span className="text-[10px] text-gray-500 font-medium leading-tight text-center">
+            {homeWin}%<br/>{awayWin}%
+          </span>
+          {match.odds && match.odds.h2h && match.odds.h2h.home ? (
+            <span className="text-[9px] text-[#ea4c89] font-bold mt-0.5 whitespace-nowrap">
+              1: {match.odds.h2h.home.toFixed(2)}
+            </span>
+          ) : (
+            <span className="text-[9px] text-[#ea4c89] font-semibold flex items-center gap-0.5 mt-0.5" title="Nhận định AI">
+              <span className="material-symbols-outlined text-[10px]">auto_awesome</span>
+            </span>
+          )}
         </div>
       </div>
     );
@@ -380,7 +454,8 @@ export default function MatchList({ groupedMatches = { popular: [], countries: [
               { label: t('tabAll') || 'Tất cả', value: 'ALL' },
               { label: 'Đã lưu', value: 'SAVED' },
               { label: t('tabFinished') || 'Đã kết thúc', value: 'FINISHED' },
-              { label: t('tabUpcoming') || 'Lịch thi đấu', value: 'UPCOMING' }
+              { label: t('tabUpcoming') || 'Lịch thi đấu', value: 'UPCOMING' },
+              { label: 'BXH', value: 'STANDINGS' }
             ]}
             value={activeTab === 'LIVE' ? 'ALL' : activeTab} // If Live is selected via red button, don't mess up Segmented
             onChange={(v) => setActiveTab(v)}
@@ -390,9 +465,11 @@ export default function MatchList({ groupedMatches = { popular: [], countries: [
         </div>
       </div>
 
-      {/* Matches List */}
+      {/* Matches List or Standings */}
       <div className="flex flex-col gap-4 pb-20">
-        {isLoadingMatches || isInitialLoad ? (
+        {activeTab === 'STANDINGS' ? (
+          <GroupStandings matches={matches} />
+        ) : isLoadingMatches || isInitialLoad ? (
           <div className="flex flex-col gap-2">
             <MatchSkeleton />
             <MatchSkeleton />
@@ -408,6 +485,48 @@ export default function MatchList({ groupedMatches = { popular: [], countries: [
           />
         ) : (
           <>
+            {/* AI Prediction Performance Tracker */}
+            {finishedMatches.length > 0 && (
+              <div className="bg-white p-4 rounded-[6px] border border-gray-100 shadow-sm flex flex-col gap-3 mb-2">
+                <div className="flex justify-between items-center pb-2 border-b border-gray-50">
+                  <span className="text-[12px] font-semibold text-[#151e22] flex items-center gap-1.5 uppercase tracking-wide">
+                    <img src="/drpig_logo.png" alt="Heo Hồng" className="w-4 h-4" />
+                    Hiệu suất Dự đoán AI
+                  </span>
+                  <span className="text-[10px] text-gray-400 font-medium bg-gray-50 px-2 py-0.5 rounded border border-gray-100">
+                    Heo Hồng AI
+                  </span>
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="flex flex-col items-center justify-center bg-pink-50/50 p-2 rounded-lg border border-pink-100/50 min-w-[70px]">
+                    <div className="text-[20px] font-bold text-[#ea4c89] leading-none mb-1">
+                      {accuracyRate}%
+                    </div>
+                    <div className="text-[9px] text-[#ea4c89] uppercase font-semibold">
+                      Chính xác
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[13px] font-bold text-[#151e22] mb-1">
+                      {t('aiAccuracyText', { correct: correctCount, total: finishedMatches.length }) || `Dự đoán đúng ${correctCount}/${finishedMatches.length} trận`}
+                    </div>
+                    <div className="text-[11px] text-[#6b7173] leading-relaxed">
+                      Kết quả được đối chiếu tự động giữa phân tích nhận định AI và tỷ số thực tế sau khi trận đấu kết thúc.
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden mt-1">
+                  <div 
+                    style={{ width: `${accuracyRate}%` }} 
+                    className="h-full bg-gradient-to-r from-[#ea4c89] to-[#ff8c42] rounded-full transition-all duration-1000 ease-out"
+                  ></div>
+                </div>
+              </div>
+            )}
+
             {/* --- TRẬN ĐẤU THẾ GIỚI --- */}
             {groupedMatches.popular.length > 0 && (
               <div className="flex flex-col">

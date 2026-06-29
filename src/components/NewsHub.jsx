@@ -114,11 +114,20 @@ function SourceTag({ source, size = 'small' }) {
   );
 }
 
+function getArticleImage(article, imgErrors) {
+  if (imgErrors && imgErrors[article.id]) return FALLBACK_IMG;
+  if (article.localImage) {
+    const baseUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5001').replace('/api/v1', '');
+    return `${baseUrl}${article.localImage}`;
+  }
+  return article.image || FALLBACK_IMG;
+}
+
 // ═════════════════════════════════════════════════════════════════════════════
 // FEATURED CARD — Hero article
 // ═════════════════════════════════════════════════════════════════════════════
 function FeaturedCard({ article, onClick, imgErrors, onImgError }) {
-  const img = imgErrors[article.id] ? FALLBACK_IMG : (article.image || FALLBACK_IMG);
+  const img = getArticleImage(article, imgErrors);
   const excerpt = stripHtml(article.contentVi || article.content || '').substring(0, 180);
 
   return (
@@ -166,7 +175,7 @@ function FeaturedCard({ article, onClick, imgErrors, onImgError }) {
 // NEWS LIST ITEM — Horizontal card
 // ═════════════════════════════════════════════════════════════════════════════
 function NewsListItem({ article, onClick, imgErrors, onImgError }) {
-  const img = imgErrors[article.id] ? FALLBACK_IMG : (article.image || FALLBACK_IMG);
+  const img = getArticleImage(article, imgErrors);
   const excerpt = stripHtml(article.contentVi || article.content || '').substring(0, 120);
 
   return (
@@ -205,7 +214,7 @@ function NewsListItem({ article, onClick, imgErrors, onImgError }) {
 // SIDEBAR TRENDING ITEM
 // ═════════════════════════════════════════════════════════════════════════════
 function SidebarItem({ article, rank, onClick, imgErrors, onImgError }) {
-  const img = imgErrors[article.id] ? FALLBACK_IMG : (article.image || FALLBACK_IMG);
+  const img = getArticleImage(article, imgErrors);
 
   return (
     <div
@@ -253,7 +262,7 @@ function SidebarItem({ article, rank, onClick, imgErrors, onImgError }) {
 // RELATED ITEM — For detail sidebar + mobile
 // ═════════════════════════════════════════════════════════════════════════════
 function RelatedItem({ article, onClick, imgErrors, onImgError }) {
-  const img = imgErrors[article.id] ? FALLBACK_IMG : (article.image || FALLBACK_IMG);
+  const img = getArticleImage(article, imgErrors);
 
   return (
     <div
@@ -389,7 +398,7 @@ export default function NewsHub({ matches = [] }) {
   };
 
   const handleImgError = (id) => setImgErrors(prev => ({ ...prev, [id]: true }));
-  const getImg = (article) => imgErrors[article.id] ? FALLBACK_IMG : (article.image || FALLBACK_IMG);
+  const getImg = (article) => getArticleImage(article, imgErrors);
 
   // ═══════════════════════════════════════════════════════════════════════════
   // ARTICLE DETAIL VIEW

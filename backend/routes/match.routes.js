@@ -7,6 +7,7 @@ router.get('/grouped', matchController.getGroupedMatches);
 router.get('/:id/details', matchController.getMatchDetails);
 router.get('/:id/odds', matchController.getMatchOdds);
 router.get('/:id', matchController.getMatchById);
+router.get('/:id/analytics', matchController.getMatchAnalytics);
 router.post('/sync', matchController.syncMatches);
 router.post('/:id/simulate-finish', matchController.simulateFinishMatch);
 

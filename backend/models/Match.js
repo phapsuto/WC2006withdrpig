@@ -34,6 +34,11 @@ const matchSchema = new mongoose.Schema({
   events: { type: mongoose.Schema.Types.Mixed },
   lineups: { type: mongoose.Schema.Types.Mixed },
   prediction: { type: mongoose.Schema.Types.Mixed },
+  
+  // Real AI Odds Analysis cache
+  aiAnalytics: { type: mongoose.Schema.Types.Mixed },
+  aiAnalyticsUpdatedAt: { type: Date },
+  
   reminderSent: { type: Boolean, default: false },
 
   updatedAt: { type: Date, default: Date.now }

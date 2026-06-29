@@ -16,9 +16,9 @@ const app = express();
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } })); // Allow serving images cross-origin
 app.use(morgan('dev'));
 const allowedOrigins = [
-  'http://localhost:5173', 
+  'http://localhost:5173',
   'http://localhost:4173',
-  'https://banhbong.io', 
+  'https://banhbong.io',
   'https://www.banhbong.io'
 ];
 
@@ -85,10 +85,10 @@ app.listen(PORT, () => {
   try {
     const { initNewsScheduler } = require('./services/news-scheduler.service');
     const { initMatchScheduler } = require('./services/match-scheduler.service');
-    
+
     initNewsScheduler();
     console.log('[Server] News Scheduler initialized ✅');
-    
+
     initMatchScheduler();
     console.log('[Server] Match Scheduler initialized ✅');
   } catch (error) {

@@ -166,3 +166,56 @@ exports.simulateFinishMatch = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+const aiService = require('../services/aiService');
+
+exports.getMatchAnalytics = async (req, res) => {
+  const Match = require('../models/Match');
+  try {
+    const match = await Match.findOne({ id: req.params.id });
+    if (!match) return res.status(404).json({ message: 'Match not found' });
+
+    let ttlMs = 120000; // 2 min default for LIVE
+    if (match.status === 'FINISHED') ttlMs = 24 * 60 * 60 * 1000 * 365; // 1 year
+    if (match.status === 'UPCOMING') ttlMs = 180 * 60 * 1000; // 3 hours
+
+    const queryHomeName = req.query.homeName;
+    const queryAwayName = req.query.awayName;
+
+    // Check if the actual names from frontend differ from the DB names (e.g. placeholder resolution)
+    const nameChanged = (queryHomeName && queryHomeName !== match.home.name) || 
+                        (queryAwayName && queryAwayName !== match.away.name);
+
+    if (queryHomeName) {
+      if (!match.home) match.home = {};
+      match.home.name = queryHomeName;
+    }
+    if (queryAwayName) {
+      if (!match.away) match.away = {};
+      match.away.name = queryAwayName;
+    }
+
+    const now = new Date();
+    // If the team names changed, we MUST bypass the cache and regenerate with the real names
+    const isFresh = !nameChanged && match.aiAnalytics && match.aiAnalyticsUpdatedAt && (now - new Date(match.aiAnalyticsUpdatedAt) < ttlMs);
+
+    if (isFresh) {
+      return res.json(match.aiAnalytics);
+    }
+
+    // Need to regenerate. Fetch finished matches for team form context
+    const allMatches = await Match.find({ status: 'FINISHED' }).lean();
+    
+    console.log(`[AI] Generating new analytics for match ${match.id} (${match.status})...`);
+    const analytics = await aiService.generateMatchAnalytics(match, allMatches);
+    
+    match.aiAnalytics = analytics;
+    match.aiAnalyticsUpdatedAt = now;
+    await match.save();
+
+    res.json(analytics);
+  } catch (err) {
+    console.error('Error generating AI analytics:', err);
+    res.status(500).json({ message: err.message });
+  }
+};

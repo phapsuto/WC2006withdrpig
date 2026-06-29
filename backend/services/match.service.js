@@ -1,5 +1,6 @@
 const sportmonksService = require('./sportmonks.service');
 const mapper = require('./sportmonks.mapper');
+const Match = require('../models/Match');
 
 exports.syncMatches = async (leagueId) => {
   try {
@@ -51,9 +52,35 @@ exports.getAllMatches = async (leagueId = 732) => {
     
     return mappedMatches;
   } catch (error) {
-    console.error('Error proxying to Sportmonks:', error);
-    if (cacheEntry.data) return cacheEntry.data;
-    throw error;
+    console.error('Error proxying to Sportmonks:', error.message || error);
+    
+    // Fallback 1: Memory Cache
+    if (cacheEntry.data && cacheEntry.data.length > 0) {
+      console.log('Falling back to memory cache for matches');
+      return cacheEntry.data;
+    }
+    
+    // Fallback 2: MongoDB
+    try {
+      console.log('Falling back to MongoDB for matches');
+      const dbMatches = await Match.find({ 'league.id': leagueId }).lean();
+      if (dbMatches && dbMatches.length > 0) {
+        // Map _id back to id if needed, though schema has 'id'
+        const mappedDb = dbMatches.map(m => {
+          m.id = m.id || m._id.toString();
+          return m;
+        });
+        cacheEntry.data = mappedDb;
+        cacheEntry.lastFetch = Date.now() - (CACHE_TTL / 2); // Set half TTL so it tries to fetch fresh sooner
+        return mappedDb;
+      }
+    } catch (dbErr) {
+      console.error('Error fetching fallback from MongoDB:', dbErr);
+    }
+    
+    // Fallback 3: Return empty array to prevent crashing UI
+    console.warn('Sportmonks down, cache empty, DB empty. Returning empty array.');
+    return [];
   }
 };
 
@@ -262,20 +289,34 @@ exports.getRichMatchDetails = async (fixtureId) => {
       });
     }
 
-    events = raw.events.map(e => ({
-      id: e.id,
-      minute: e.minute,
-      extraMinute: e.extra_minute,
-      type: e.type?.name || e.type?.developer_name || 'Unknown',
-      playerId: e.player_id || null,
-      playerName: e.player_name,
-      playerImage: playerImageMap[e.player_id] || null,
-      relatedPlayerId: e.related_player_id || null,
-      relatedPlayerName: e.related_player_name,
-      relatedPlayerImage: playerImageMap[e.related_player_id] || null,
-      result: e.result || null, // e.g. "1 - 0" after a goal
-      isHome: e.participant_id === homeTeamId
-    })).sort((a, b) => a.minute - b.minute);
+    events = raw.events.map(e => {
+      // Mock Option A: Simulating a scraper finding live images for goals/red cards
+      let eventImage = null;
+      const typeLower = (e.type?.name || e.type?.developer_name || '').toLowerCase();
+      
+      // Simulating that the scraper found an image on Twitter/Reddit for goals
+      if (typeLower.includes('goal')) {
+        eventImage = `https://loremflickr.com/500/300/soccer,goal,celebration?lock=${e.id}`;
+      } else if (typeLower.includes('red card')) {
+        eventImage = `https://loremflickr.com/500/300/soccer,referee,redcard?lock=${e.id}`;
+      }
+
+      return {
+        id: e.id,
+        minute: e.minute,
+        extraMinute: e.extra_minute,
+        type: e.type?.name || e.type?.developer_name || 'Unknown',
+        playerId: e.player_id || null,
+        playerName: e.player_name,
+        playerImage: playerImageMap[e.player_id] || null,
+        eventImage: eventImage,
+        relatedPlayerId: e.related_player_id || null,
+        relatedPlayerName: e.related_player_name,
+        relatedPlayerImage: playerImageMap[e.related_player_id] || null,
+        result: e.result || null, // e.g. "1 - 0" after a goal
+        isHome: e.participant_id === homeTeamId
+      };
+    }).sort((a, b) => a.minute - b.minute);
   }
 
   // Map Statistics from raw Sportmonks format

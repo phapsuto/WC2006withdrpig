@@ -11,6 +11,19 @@ exports.placeBet = async (userId, matchId, betData) => {
     match = await Match.findOne({ id: matchId.toString() });
   }
 
+  if (!match) {
+    try {
+      const matchService = require('./match.service');
+      const fetchedMatch = await matchService.getMatchById(matchId.toString());
+      if (fetchedMatch) {
+        match = new Match(fetchedMatch);
+        await match.save();
+      }
+    } catch (e) {
+      console.warn('Auto-sync match for bet failed:', e.message);
+    }
+  }
+
   if (!match) throw new Error('Match not found');
   if (match.status !== 'UPCOMING' && match.status !== 'LIVE') {
     throw new Error('Trận đấu đã kết thúc hoặc không thể cược');

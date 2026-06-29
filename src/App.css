@@ -1,1 +1,17 @@
 /* Local styles for App.jsx (if any) */
+
+@keyframes ring {
+  0% { transform: rotate(0); }
+  15% { transform: rotate(20deg); }
+  30% { transform: rotate(-20deg); }
+  45% { transform: rotate(15deg); }
+  60% { transform: rotate(-15deg); }
+  75% { transform: rotate(10deg); }
+  85% { transform: rotate(-10deg); }
+  100% { transform: rotate(0); }
+}
+
+.animate-ring {
+  animation: ring 0.5s ease-in-out;
+  transform-origin: top center;
+}

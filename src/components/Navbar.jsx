@@ -1,6 +1,6 @@
 import { useLanguage } from '../utils/LanguageContext';
 import { Search, Menu, X, Settings, Sparkles, User, Calendar, Trophy, Newspaper } from 'lucide-react';
-import { Avatar, Drawer, Modal, Input } from 'antd';
+import { Avatar, Drawer, Modal, Input, Menu as AntMenu, Divider, Button } from 'antd';
 import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { backendClient } from '../services/backendClient';
@@ -114,13 +114,13 @@ export default function Navbar({ user, onGoogleLoginClick, toggleTheme }) {
                 <div
                   key={item.key}
                   onClick={() => navigate(item.key)}
-                  className={`relative flex items-center h-[40px] px-4 rounded-full cursor-pointer font-medium text-[15px] transition-all duration-300 overflow-hidden group ${activePage.startsWith(item.key)
+                  className={`relative flex items-center h-[40px] px-4 rounded-full cursor-pointer font-medium text-[15px] transition-all duration-300 overflow-hidden group ${activePage === item.key
                     ? 'shadow-md'
                     : 'text-gray-500 hover:text-gray-800 hover:bg-gray-100/50'
                     }`}
-                  style={{ color: activePage.startsWith(item.key) ? 'white' : undefined }}
+                  style={{ color: activePage === item.key ? 'white' : undefined }}
                 >
-                  {activePage.startsWith(item.key) && (
+                  {activePage === item.key && (
                     <div className="absolute inset-0 opacity-100" style={{ background: 'linear-gradient(to right, #ea4c89, #ff8c42)' }}></div>
                   )}
                   <span className="relative z-10 flex items-center gap-2 whitespace-nowrap">
@@ -321,92 +321,74 @@ export default function Navbar({ user, onGoogleLoginClick, toggleTheme }) {
         </div>
       </Modal>
 
-      {/* Mobile Drawer - Full Screen */}
+      {/* Mobile Drawer */}
       <Drawer
         placement="right"
         width="100%"
         onClose={() => setMobileMenuOpen(false)}
         open={mobileMenuOpen}
-        closable={false}
-        styles={{ body: { padding: 0, display: 'flex', flexDirection: 'column', backgroundColor: '#ffffff' } }}
-      >
-        {/* Drawer Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-100">
-          <div className="flex items-center">
-            <img src="/drpig_logo.png" alt="Heo Hồng Mascot" className="h-12 w-auto object-contain mr-3 drop-shadow-md" />
-            <div className="flex flex-col justify-center leading-[1.1]">
-              <span className="text-[22px] font-black text-[#ea4c89] pb-0.5 tracking-tight">Worldcup 2026</span>
-              <span className="text-[14px] font-bold text-[#ff8c42] mt-[-2px]">cùng Heo Hồng</span>
+        title={
+          <div className="flex items-center gap-2">
+            <img src="/drpig_logo.png" alt="Heo Hồng Mascot" className="h-8 w-auto object-contain" />
+            <div className="flex flex-col leading-tight">
+              <span className="text-[16px] font-black text-[#ea4c89]">Worldcup 2026</span>
+              <span className="text-[11px] font-bold text-[#ff8c42]">cùng Heo Hồng</span>
             </div>
           </div>
-          <button 
-            onClick={() => setMobileMenuOpen(false)}
-            className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"
-          >
-            <X size={24} />
-          </button>
-        </div>
+        }
+        styles={{ body: { padding: 0 } }}
+      >
+        <AntMenu
+          mode="inline"
+          selectedKeys={[activePage]}
+          style={{ borderRight: 'none', padding: '16px 8px' }}
+          items={menuItems.map(item => ({
+            key: item.key,
+            icon: <item.icon size={18} />,
+            label: <span className="font-semibold">{item.label}</span>,
+          }))}
+          onClick={({ key }) => {
+            navigate(key);
+            setMobileMenuOpen(false);
+          }}
+        />
 
-        {/* Drawer Content */}
-        <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
-          <div className="flex flex-col gap-3">
-            {menuItems.map(item => (
-              <div
-                key={item.key}
-                className={`py-4 px-5 font-bold text-[16px] rounded-2xl cursor-pointer transition-all flex items-center justify-between ${
-                  activePage.startsWith(item.key) 
-                    ? 'text-white shadow-md shadow-pink-500/20' 
-                    : 'text-gray-600 bg-gray-50 hover:bg-gray-100'
-                }`}
-                style={activePage.startsWith(item.key) ? { background: 'linear-gradient(to right, #ea4c89, #ff8c42)' } : {}}
-                onClick={() => {
-                  navigate(item.key);
-                  setMobileMenuOpen(false);
-                }}
-              >
-                <div className="flex items-center gap-3">
-                  <item.icon size={20} className={activePage.startsWith(item.key) ? "text-white" : "text-gray-400"} />
-                  <span>{item.label}</span>
-                </div>
-                {activePage.startsWith(item.key) && <Sparkles size={18} className="text-white/90" />}
-              </div>
-            ))}
-          </div>
-        </div>
+        <Divider style={{ margin: 0 }} />
 
-        {/* Drawer Footer */}
-        <div className="p-6 border-t border-gray-100 mt-auto bg-gray-50/50">
+        <div className="p-4">
           {!user ? (
-            <div
-              className="py-4 px-5 font-bold text-[16px] text-white rounded-2xl cursor-pointer flex justify-center items-center gap-2 shadow-lg shadow-gray-900/10 hover:shadow-xl transition-all active:scale-95"
-              style={{ background: 'linear-gradient(135deg, #151e22 0%, #2b3a42 100%)' }}
+            <Button 
+              type="primary" 
+              size="large" 
+              block 
+              icon={<User size={18} />}
+              style={{ background: '#ea4c89', fontWeight: 'bold', borderRadius: '8px' }}
               onClick={() => {
                 onGoogleLoginClick();
                 setMobileMenuOpen(false);
               }}
             >
-              <User size={20} />
               Đăng nhập / Đăng ký
-            </div>
+            </Button>
           ) : (
             <div
-              className="py-3 px-5 font-bold text-[16px] text-[#151e22] bg-white rounded-2xl cursor-pointer flex items-center gap-4 border border-gray-200 shadow-sm hover:shadow-md transition-all active:scale-95"
+              className="py-3 px-4 rounded-xl cursor-pointer flex items-center gap-3 hover:bg-gray-50 transition-all border border-gray-100"
               onClick={() => {
                 navigate('/profile');
                 setMobileMenuOpen(false);
               }}
             >
               <Avatar 
-                size={42} 
+                size={36} 
                 src={user.avatar ? (user.avatar.startsWith('http') ? user.avatar : `${(import.meta.env.VITE_API_URL || 'http://localhost:5001').replace('/api/v1', '')}${user.avatar}`) : null}
-                className="text-white font-bold text-[16px] shadow-inner border-2 border-white flex-shrink-0" 
+                className="text-white font-bold text-[14px]" 
                 style={{ background: 'linear-gradient(to top right, #ea4c89, #ff8c42)' }}
               >
                 {!user.avatar && (user.initials || user.name.charAt(0))}
               </Avatar>
               <div className="flex flex-col min-w-0">
-                <span className="leading-tight truncate w-full text-[15px]">Hồ sơ của tôi</span>
-                <span className="text-[12px] font-semibold text-gray-500 mt-1 truncate w-full">{user.name}</span>
+                <span className="text-[14px] font-semibold text-gray-800 leading-tight">Hồ sơ của tôi</span>
+                <span className="text-[12px] text-gray-500 mt-0.5 truncate">{user.name}</span>
               </div>
             </div>
           )}

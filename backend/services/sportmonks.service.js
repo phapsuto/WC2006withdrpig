@@ -37,7 +37,7 @@ exports.getFixtures = async (leagueId = 732) => {
   }
 
   while (hasMore) {
-    const res = await fetchFromSportmonks(`/fixtures/between/${startDate}/${endDate}?page=${page}&include=participants;scores;events;state;group&filters=fixtureLeagues:${leagueId}`);
+    const res = await fetchFromSportmonks(`/fixtures/between/${startDate}/${endDate}?page=${page}&include=participants;scores;events;state;group;round;stage&filters=fixtureLeagues:${leagueId}`);
     allData = allData.concat(res.data || []);
     hasMore = res.pagination?.has_more || false;
     page++;

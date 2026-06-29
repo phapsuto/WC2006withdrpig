@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { ArrowLeft, BarChart2, ListTodo, Users, BadgePercent, ArrowUp, ArrowDown, MessageSquare, Newspaper, Loader2, RefreshCw, Cpu, Send, Star, History, Play, CalendarDays } from 'lucide-react';
-import { getHeoHongPrediction, getSportsAnalytics, chatWithHeoHong } from '../services/gemini';
+import { ArrowLeft, BarChart2, ListTodo, Users, BadgePercent, ArrowUp, ArrowDown, MessageSquare, Newspaper, Loader2, RefreshCw, Cpu, Send, Star, History, Play, CalendarDays, TrendingUp, Swords, PieChart, Bell, Target, Grid } from 'lucide-react';
+import { getHeoHongPrediction, chatWithHeoHong } from '../services/gemini';
 import { predictMatch } from '../utils/aiPredictor';
 import { fetchSportmonksFixtureDetail, fetchSportmonksH2H } from '../services/api';
 import { STADIUMS_INFO, convertToUserTimezone } from '../services/worldcup26api';
-import { Card, Typography, Row, Col, Statistic, Divider, Space, Tag, Avatar, Button, Tabs, Tooltip, Skeleton, Input } from 'antd';
+import { Card, Typography, Row, Col, Statistic, Divider, Space, Tag, Avatar, Button, Tabs, Tooltip, Skeleton, Input, Progress } from 'antd';
 import { useLiveMatchClock } from '../services/useLiveMatchClock';
 import { useLanguage } from '../utils/LanguageContext';
 import { backendClient } from '../services/backendClient';
@@ -19,7 +19,16 @@ const seedRandom = (seed) => {
 };
 
 export default function MatchDetail({ match, onAddBet, activeBetId, onClose, user, onToggleBookmark, matches = [] }) {
-  const [activeTab, setActiveTab] = useState('ODDS'); // STATS, ODDS, NEWS, ANALYTICS, CHAT
+  const [activeTab, setActiveTab] = useState('ANALYTICS'); // STATS, ODDS, NEWS, ANALYTICS, CHAT
+  const [ringing, setRinging] = useState(false);
+  const isTBD = Boolean(
+    match?.home?.name?.toLowerCase().includes('winner') ||
+    match?.away?.name?.toLowerCase().includes('winner') ||
+    match?.home?.name?.toLowerCase().includes('loser') ||
+    match?.away?.name?.toLowerCase().includes('loser') ||
+    match?.home?.name?.toLowerCase().includes('tbc') ||
+    match?.away?.name?.toLowerCase().includes('tbc')
+  );
   const { t, language } = useLanguage();
   const [aiPrediction, setAiPrediction] = useState('');
   const [matchNews, setMatchNews] = useState([]);
@@ -72,7 +81,9 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
     if (!match) return;
     setLoadingAnalytics(true);
     try {
-      const data = await getSportsAnalytics(match, matches);
+      const activeHomeName = enrichedMatch?.home?.name || match.home?.name;
+      const activeAwayName = enrichedMatch?.away?.name || match.away?.name;
+      const data = await backendClient.getMatchAnalytics(match.id, activeHomeName, activeAwayName);
       setAnalyticsData(data);
     } catch (e) {
       console.error('Lỗi khi tải AI Phân tích xG:', e);
@@ -85,7 +96,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
   useEffect(() => {
     if (!match) return;
     setTimeout(() => {
-      setActiveTab('ODDS');
+      setActiveTab(isTBD ? 'ODDS' : 'ANALYTICS');
       setAiPrediction('');
       setMatchNews([]);
       setAnalyticsData(null);
@@ -231,6 +242,19 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
   const isLive = status === 'LIVE';
   const isFinished = status === 'FINISHED';
 
+  const prediction = predictMatch(
+    home?.nameEn || home?.name || 'Unknown',
+    away?.nameEn || away?.name || 'Unknown',
+    homeScore,
+    awayScore,
+    status,
+    minute,
+    matches,
+    odds
+  );
+  
+  const { homeWin: aiHomeWin, draw: aiDraw, awayWin: aiAwayWin } = prediction.probabilities;
+
   let homeWin = 33, draw = 33, awayWin = 34;
 
   // Safe odds fallback so we never crash when accessing odds.h2h.home etc.
@@ -331,10 +355,16 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
           >
             Trở lại
           </Button>
-          <Star
+          <Bell
             size={20}
-            className={`cursor-pointer ${isBookmarked ? 'text-[#ffb800] fill-[#ffb800]' : 'text-[#6b7173]'}`}
-            onClick={() => onToggleBookmark && onToggleBookmark(match.id)}
+            className={`cursor-pointer transition-colors ${isBookmarked ? 'text-[#ea4c89] fill-[#ea4c89]' : 'text-[#6b7173]'} ${ringing ? 'animate-ring' : ''}`}
+            onClick={() => {
+              if (!isBookmarked) {
+                setRinging(true);
+                setTimeout(() => setRinging(false), 1000);
+              }
+              if (onToggleBookmark) onToggleBookmark(match.id);
+            }}
           />
         </div>
 
@@ -344,9 +374,9 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
         </div>
 
         {/* Scoreboard */}
-        <div className="flex justify-center items-center px-4 pb-6 gap-8">
+        <div className="flex justify-center items-center px-4 pb-2 gap-8 mt-2">
           <div className="flex flex-col items-center flex-1">
-            <img src={`https://flagcdn.com/w80/${home.flag}.png`} alt={home.name} className="w-12 h-12 object-cover border border-gray-100 rounded-full mb-2" />
+            <img src={`https://flagcdn.com/w80/${home.flag}.png`} alt={home.name} className="w-12 h-12 object-cover border border-gray-100 rounded-full mb-2 shadow-sm" />
             <span className="text-[14px] font-semibold text-[#151e22] text-center leading-tight">{home.name}</span>
           </div>
 
@@ -361,25 +391,85 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
           </div>
 
           <div className="flex flex-col items-center flex-1">
-            <img src={`https://flagcdn.com/w80/${away.flag}.png`} alt={away.name} className="w-12 h-12 object-cover border border-gray-100 rounded-full mb-2" />
+            <img src={`https://flagcdn.com/w80/${away.flag}.png`} alt={away.name} className="w-12 h-12 object-cover border border-gray-100 rounded-full mb-2 shadow-sm" />
             <span className="text-[14px] font-semibold text-[#151e22] text-center leading-tight">{away.name}</span>
           </div>
         </div>
 
-        <div className="text-center pb-4 text-[11px] text-[#6b7173]">
-          Sân: {stadium.name}, {stadium.city}
+        {/* Goalscorers List */}
+        {(isLive || isFinished) && (
+          <div className="w-full max-w-md mx-auto mb-4 px-4">
+            {(() => {
+              let homeGoals = [];
+              let awayGoals = [];
+              
+              if (enrichedMatch?.events && enrichedMatch.events.some(e => e.type?.toLowerCase().includes('goal'))) {
+                homeGoals = enrichedMatch.events.filter(e => e.type?.toLowerCase().includes('goal') && e.isHome).map(e => ({ name: e.playerName, min: e.minute, image: e.playerImage }));
+                awayGoals = enrichedMatch.events.filter(e => e.type?.toLowerCase().includes('goal') && !e.isHome).map(e => ({ name: e.playerName, min: e.minute, image: e.playerImage }));
+              } else if (match.timeline && match.timeline.some(e => e.type === 'GOAL')) {
+                homeGoals = match.timeline.filter(e => e.type === 'GOAL' && e.team === 'home').map(e => ({ name: e.player || e.detail, min: e.minute, image: e.playerImage }));
+                awayGoals = match.timeline.filter(e => e.type === 'GOAL' && e.team === 'away').map(e => ({ name: e.player || e.detail, min: e.minute, image: e.playerImage }));
+              }
+              
+              if (homeGoals.length === 0 && awayGoals.length === 0) return null;
+              
+              return (
+                <div className="grid grid-cols-2 gap-4 text-[13px] pt-1">
+                  <div className="text-right space-y-2 pr-4 border-r border-gray-100">
+                    {homeGoals.map((g, idx) => (
+                      <div key={`hg-${idx}`} className="flex justify-end items-center gap-2 text-[#151e22]">
+                        <span className="font-semibold truncate max-w-[130px]" title={g.name}>{g.name}</span>
+                        {g.image && <img src={g.image} alt={g.name} className="w-6 h-6 rounded-full object-cover border-[1.5px] border-white shadow-sm bg-gray-50" />}
+                        <span className="font-semibold text-gray-400 w-6">{g.min}'</span>
+                        <span className="text-[12px]">⚽</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="text-left space-y-2 pl-4">
+                    {awayGoals.map((g, idx) => (
+                      <div key={`ag-${idx}`} className="flex justify-start items-center gap-2 text-[#151e22]">
+                        <span className="text-[12px]">⚽</span>
+                        <span className="font-semibold text-gray-400 w-6 text-right">{g.min}'</span>
+                        {g.image && <img src={g.image} alt={g.name} className="w-6 h-6 rounded-full object-cover border-[1.5px] border-white shadow-sm bg-gray-50" />}
+                        <span className="font-semibold truncate max-w-[130px]" title={g.name}>{g.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
+          </div>
+        )}
+
+        {/* Match Info Details (Referees, Attendance, Stadium) */}
+        <div className="flex flex-wrap justify-center items-center gap-x-4 gap-y-2 pb-5 px-4 text-[12px] font-medium text-[#6b7173]">
+          <span className="flex items-center gap-1.5 bg-gray-50/80 px-3 py-1.5 rounded-full border border-gray-100 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+            <span className="material-symbols-outlined text-[15px] text-gray-400">stadium</span>
+            <span className="text-[#151e22]">{enrichedMatch?.venue?.name || stadium.name}</span>
+          </span>
+          <span className="flex items-center gap-1.5 bg-gray-50/80 px-3 py-1.5 rounded-full border border-gray-100 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+            <span className="material-symbols-outlined text-[15px] text-gray-400">sports</span>
+            Trọng tài: <span className="text-[#151e22]">{enrichedMatch?.referees && Array.isArray(enrichedMatch.referees) ? (enrichedMatch.referees.map(r => typeof r === 'object' ? (r?.name || '') : r).filter(r => r && String(r).trim() !== '').join(', ') || 'Đang cập nhật') : (enrichedMatch?.referees || 'Đang cập nhật')}</span>
+          </span>
+          {(enrichedMatch?.attendance || stats?.attendance) && (
+            <span className="flex items-center gap-1.5 bg-gray-50/80 px-3 py-1.5 rounded-full border border-gray-100 shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+              <span className="material-symbols-outlined text-[15px] text-gray-400">groups</span>
+              Khán giả: <span className="text-[#151e22]">{(enrichedMatch?.attendance || stats?.attendance).toLocaleString('vi-VN')}</span>
+            </span>
+          )}
         </div>
 
+
         {/* Horizontal Navigation Tabs */}
-        <div className="flex px-4 overflow-x-auto no-scrollbar gap-6 border-t border-gray-100 mt-2">
-          {['EVENTS', 'LINEUPS', 'STATS', 'ODDS', 'NEWS', 'CHAT'].map(tabKey => {
+        <div className="flex px-4 overflow-x-auto no-scrollbar gap-6 border-t border-gray-100 mt-0">
+          {['ANALYTICS', 'EVENTS', 'LINEUPS', 'STATS', 'ODDS', 'NEWS', 'CHAT'].filter(tabKey => !(isTBD && tabKey === 'ANALYTICS')).map(tabKey => {
             const labels = {
               'EVENTS': 'Sự kiện',
               'LINEUPS': 'Đội hình',
               'STATS': 'Thống kê',
               'ODDS': 'Tỷ lệ cược',
               'NEWS': 'Tin tức',
-              'CHAT': 'Hỏi Heo Hồng'
+              'ANALYTICS': 'Dự đoán AI'
             };
             return (
               <div
@@ -447,23 +537,35 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                         // Render player info block
                         const renderPlayerInfo = (alignRight) => (
-                          <div className={`flex items-center gap-2 ${alignRight ? 'flex-row-reverse text-right' : 'text-left'}`}>
-                            {ev.playerImage ? (
-                              <img src={ev.playerImage} alt="" className="w-9 h-9 rounded-full object-cover border-[2px] border-white shadow-sm flex-shrink-0" />
-                            ) : (
-                              <div className="w-9 h-9 rounded-full bg-gray-100 border-[2px] border-white shadow-sm flex-shrink-0 flex items-center justify-center text-gray-400 text-[11px]">?</div>
-                            )}
-                            <div className="flex flex-col min-w-0">
-                              <span className="text-[13px] font-bold text-[#151e22] leading-tight truncate">{ev.playerName || 'N/A'}</span>
-                              {isSub && ev.relatedPlayerName && (
-                                <span className="text-[11px] text-[#ff495c] leading-tight flex items-center gap-0.5 truncate" style={{ flexDirection: alignRight ? 'row-reverse' : 'row' }}>
-                                  <svg className="w-2.5 h-2.5 text-red-400 flex-shrink-0" viewBox="0 0 10 10" fill="currentColor"><polygon points="0,0 10,0 5,8" /></svg> <span className="truncate">{ev.relatedPlayerName}</span>
-                                </span>
+                          <div className={`flex flex-col gap-2 ${alignRight ? 'items-end text-right' : 'items-start text-left'}`}>
+                            <div className={`flex items-center gap-2 ${alignRight ? 'flex-row-reverse' : 'flex-row'}`}>
+                              {ev.playerImage ? (
+                                <img src={ev.playerImage} alt="" className="w-9 h-9 rounded-full object-cover border-[2px] border-white shadow-sm flex-shrink-0" />
+                              ) : (
+                                <div className="w-9 h-9 rounded-full bg-gray-100 border-[2px] border-white shadow-sm flex-shrink-0 flex items-center justify-center text-gray-400 text-[11px]">?</div>
                               )}
-                              {isGoal && ev.result && <span className="text-[10px] text-[#6b7173] font-semibold">{ev.result}</span>}
-                              {isGoal && !ev.result && <span className="text-[10px] text-[#1bc165] font-semibold">Bàn thắng</span>}
-                              {isOwnGoal && <span className="text-[10px] text-[#ff495c] font-semibold">Phản lưới</span>}
+                              <div className="flex flex-col min-w-0">
+                                <span className="text-[13px] font-bold text-[#151e22] leading-tight truncate">{ev.playerName || 'N/A'}</span>
+                                {isSub && ev.relatedPlayerName && (
+                                  <span className="text-[11px] text-[#ff495c] leading-tight flex items-center gap-0.5 truncate" style={{ flexDirection: alignRight ? 'row-reverse' : 'row' }}>
+                                    <svg className="w-2.5 h-2.5 text-red-400 flex-shrink-0" viewBox="0 0 10 10" fill="currentColor"><polygon points="0,0 10,0 5,8" /></svg> <span className="truncate">{ev.relatedPlayerName}</span>
+                                  </span>
+                                )}
+                                {isGoal && ev.result && <span className="text-[10px] text-[#6b7173] font-semibold">{ev.result}</span>}
+                                {isGoal && !ev.result && <span className="text-[10px] text-[#1bc165] font-semibold">Bàn thắng</span>}
+                                {isOwnGoal && <span className="text-[10px] text-[#ff495c] font-semibold">Phản lưới</span>}
+                              </div>
                             </div>
+                            
+                            {/* Option A: Scraped Event Media (Goals/Fouls) */}
+                            {ev.eventImage && (
+                              <div className="mt-1 overflow-hidden rounded-md border border-gray-100 shadow-sm max-w-[160px] relative">
+                                <img src={ev.eventImage} alt="Event" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-300" />
+                                <div className="bg-gray-800/80 absolute bottom-1 right-1 text-white text-[9px] px-1.5 py-0.5 rounded flex items-center gap-1 backdrop-blur-sm shadow-md">
+                                  <span className="material-symbols-outlined text-[10px]">photo_camera</span> Live
+                                </div>
+                              </div>
+                            )}
                           </div>
                         );
 
@@ -519,7 +621,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 </div>
               )}
               <div className="flex items-center gap-3 text-[13px] text-[#6b7173]">
-                <Users size={16} /> <span>Trọng tài: {enrichedMatch?.referees?.join(', ') || 'Đang cập nhật'}</span>
+                <Users size={16} /> <span>Trọng tài: {enrichedMatch?.referees && Array.isArray(enrichedMatch.referees) ? (enrichedMatch.referees.map(r => typeof r === 'object' ? (r?.name || '') : r).filter(r => r && String(r).trim() !== '').join(', ') || 'Đang cập nhật') : (enrichedMatch?.referees || 'Đang cập nhật')}</span>
               </div>
             </div>
           </div>
@@ -1461,85 +1563,230 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 <Skeleton active title={false} paragraph={{ rows: 1 }} className="mb-4" />
                 <Skeleton active paragraph={{ rows: 6 }} />
               </div>
-            ) : (
-              <div className="bg-white p-4 shadow-sm rounded-[6px]">
-                <div className="flex items-center gap-2 mb-3">
-                  <Cpu size={16} className="text-[#2194ff]" />
-                  <span className="text-[13px] font-semibold text-[#151e22]">AI Phân tích Chiến thuật</span>
-                </div>
-                {analyticsData ? (
-                  <div className="text-[13px] text-[#151e22] leading-relaxed">
-                    <div dangerouslySetInnerHTML={{ __html: analyticsData.replace(/\n/g, '<br/>') }} />
+            ) : analyticsData && typeof analyticsData === 'object' ? (
+              <div className="flex flex-col gap-4">
+                {/* Premium Value Bet Widget - Standard Ant Design */}
+                <div className="bg-white p-4 shadow-sm rounded-[6px] border border-[#f0f0f0]">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <img src="/drpig_logo.png" alt="Heo Hồng" className="w-8 h-8" />
+                      <span className="text-[14px] font-bold text-[#151e22]">Heo Hồng Phán: Kèo sáng nhất hôm nay</span>
+                    </div>
+                    {analyticsData.kellyCriterion?.confidenceScore && (
+                      <Tag color="magenta" className="m-0 border-0 bg-[#ea4c89]/10 text-[#ea4c89] font-bold px-2 text-[12px]">
+                        Tự tin: {analyticsData.kellyCriterion.confidenceScore}%
+                      </Tag>
+                    )}
                   </div>
-                ) : (
-                  <div className="text-center text-[12px] text-[#6b7173] py-4">
-                    Hệ thống AI đang tổng hợp dữ liệu, vui lòng thử lại sau.
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* CHAT TAB */}
-        {activeTab === 'CHAT' && (
-          <div className="flex flex-col h-[400px] bg-white shadow-sm rounded-[6px] overflow-hidden animate-fadeIn">
-            <div className="px-4 py-3 bg-gradient-to-r from-[#ea4c89]/10 to-[#ff8c42]/10 border-b border-[#f0f0f0] flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <img src="/drpig_mascot.png" alt="Heo Hồng" className="w-8 h-8 rounded-full border border-white shadow-sm" />
-                <div>
-                  <div className="text-[12px] font-bold text-[var(--365-text-main)]">Hỏi Heo Hồng 🐷</div>
-                  <div className="text-[10px] text-[var(--365-text-sub)] flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
-                    Trực tuyến
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="flex-1 p-4 overflow-y-auto flex flex-col gap-3 custom-scrollbar">
-              {chatMessages.map((msg, idx) => {
-                const isModel = msg.role === 'model';
-                return (
-                  <div key={idx} className={`flex items-start gap-2 max-w-[85%] ${isModel ? 'self-start' : 'self-end flex-row-reverse'}`}>
-                    {isModel && <img src="/drpig_mascot.png" alt="AI" className="w-6 h-6 rounded-full border border-gray-100 flex-shrink-0 mt-0.5" />}
-                    <div className={`p-3 rounded-[12px] text-[13px] leading-relaxed shadow-sm ${isModel ? 'bg-gray-50 border border-gray-100 text-[#151e22] rounded-tl-none'
-                        : 'bg-[#2194ff] text-white rounded-tr-none'
-                      }`}>
-                      <div dangerouslySetInnerHTML={{ __html: msg.text.replace(/\n/g, '<br/>') }} />
+                  
+                  <div className="bg-[#fafafa] rounded-md p-3 mb-3 border border-[#f0f0f0] text-center">
+                    <div className="text-[16px] font-bold text-[#ea4c89] mb-1">
+                      {analyticsData.kellyCriterion?.recommendedBet}
+                    </div>
+                    <div className="text-[12px] font-medium text-[#6b7173]">
+                      Vốn khuyên dùng: {analyticsData.kellyCriterion?.stakePercent}% Vốn
                     </div>
                   </div>
-                );
-              })}
-              {sendingChat && (
-                <div className="flex items-start gap-2 self-start">
-                  <img src="/drpig_mascot.png" alt="AI" className="w-6 h-6 rounded-full border border-gray-100 flex-shrink-0 mt-0.5" />
-                  <div className="p-3 rounded-[12px] bg-gray-50 border border-gray-100 rounded-tl-none text-[12px] text-[#6b7173] flex items-center gap-1 shadow-sm">
-                    <Loader2 size={14} className="animate-spin text-[#ea4c89]" /> Heo Hồng đang bấm quẻ...
+                  
+                  <div className="text-[13px] text-[#6b7173] leading-relaxed mb-4">
+                    <span className="font-semibold text-[#151e22] mr-1">Lý do chọn:</span>
+                    {analyticsData.kellyCriterion?.rationale}
+                  </div>
+
+                  <Button 
+                    type="primary" 
+                    block 
+                    className="bg-[#ea4c89] border-none font-bold"
+                    onClick={() => setActiveTab('ODDS')}
+                  >
+                    Theo Kèo Này Ngay!
+                  </Button>
+                </div>
+
+                {/* Value Bets Highlight Card */}
+                {analyticsData.valueBets && analyticsData.valueBets.length > 0 && (
+                  <div className="bg-[#ea4c89]/5 p-4 shadow-sm rounded-[6px] border border-[#ea4c89]/20">
+                    <div className="flex items-center gap-2 mb-3">
+                      <BadgePercent size={16} className="text-[#ea4c89]" />
+                      <span className="text-[14px] font-bold text-[#ea4c89] uppercase">Gợi ý Cửa Sáng (+EV Value Bets)</span>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      {analyticsData.valueBets.map((item, idx) => (
+                        <div key={idx} className="flex items-center justify-between p-2.5 bg-white border border-[#ea4c89]/20 rounded-[6px]">
+                          <div className="flex flex-col">
+                            <span className="text-[13px] font-bold text-[#151e22]">{item.label}</span>
+                            <span className="text-[11px] text-[#6b7173]">Tỉ lệ cược: {item.odds}</span>
+                          </div>
+                          <Tag color="magenta" className="m-0 border-0 bg-[#ea4c89] text-white font-bold shadow-sm">
+                            🔥 +{(item.ev * 100).toFixed(1)}% EV
+                          </Tag>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Tactical Review & Expected Goals */}
+                <div className="bg-white p-4 shadow-sm rounded-[6px] border border-[#f0f0f0]">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Cpu size={16} className="text-[#151e22]" />
+                    <span className="text-[14px] font-bold text-[#151e22]">Phân tích Chiến thuật (xG)</span>
+                  </div>
+                  
+                  <div className="mb-4">
+                    <div className="flex justify-between items-center text-[12px] font-semibold mb-1">
+                      <span className="text-[#151e22]">{home.name}: {analyticsData.homeXG?.toFixed(2)} xG</span>
+                      <span className="text-[#151e22]">{away.name}: {analyticsData.awayXG?.toFixed(2)} xG</span>
+                    </div>
+                    <Progress 
+                      percent={(analyticsData.homeXG / ((analyticsData.homeXG + analyticsData.awayXG) || 1)) * 100} 
+                      showInfo={false} 
+                      strokeColor="#ea4c89" 
+                      trailColor="#3b82f6" 
+                      size="small"
+                      className="m-0"
+                    />
+                    <p className="text-[11px] text-[#6b7173] mt-2 italic">
+                      {analyticsData.xgTimeline}
+                    </p>
+                  </div>
+
+                  <div className="text-[13px] text-[#6b7173] leading-relaxed border-t border-[#f0f0f0] pt-3">
+                    {analyticsData.tacticalReview}
                   </div>
                 </div>
-              )}
-              <div ref={chatEndRef} />
-            </div>
 
-            <div className="p-3 bg-white border-t border-[#f0f0f0] flex items-center gap-2">
-              <Input
-                value={chatInput}
-                onChange={e => setChatInput(e.target.value)}
-                onPressEnter={handleSendChat}
-                placeholder="Hỏi về chiến thuật, tỉ số..."
-                disabled={sendingChat}
-                className="rounded-full text-[13px] bg-gray-50 hover:bg-white focus:bg-white border-gray-200"
-              />
-              <Button
-                type="primary"
-                shape="circle"
-                icon={<Send size={16} />}
-                onClick={handleSendChat}
-                disabled={!chatInput.trim() || sendingChat}
-                className="bg-[var(--365-primary)] border-none shadow-sm flex items-center justify-center"
-              />
-            </div>
+                {/* BTTS & Clean Sheet Percentages Grid */}
+                {(analyticsData.btts !== undefined) && (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-white p-3 shadow-sm rounded-[6px] border border-[#f0f0f0] text-center">
+                      <div className="text-[11px] font-bold text-[#6b7173] uppercase mb-1">Cả hai đội ghi bàn</div>
+                      <div className="text-[18px] font-black text-[#ea4c89] mb-1">{analyticsData.btts}%</div>
+                      <Progress percent={analyticsData.btts} showInfo={false} strokeColor="#ea4c89" size="small" className="m-0" />
+                    </div>
+                    <div className="bg-white p-3 shadow-sm rounded-[6px] border border-[#f0f0f0] text-center">
+                      <div className="text-[11px] font-bold text-[#6b7173] uppercase mb-1">Sạch lưới ({home.short || 'Nhà'})</div>
+                      <div className="text-[18px] font-black text-[#3b82f6] mb-1">{analyticsData.homeCleanSheet}%</div>
+                      <Progress percent={analyticsData.homeCleanSheet} showInfo={false} strokeColor="#3b82f6" size="small" className="m-0" />
+                    </div>
+                    <div className="bg-white p-3 shadow-sm rounded-[6px] border border-[#f0f0f0] text-center">
+                      <div className="text-[11px] font-bold text-[#6b7173] uppercase mb-1">Sạch lưới ({away.short || 'Khách'})</div>
+                      <div className="text-[18px] font-black text-[#8b5cf6] mb-1">{analyticsData.awayCleanSheet}%</div>
+                      <Progress percent={analyticsData.awayCleanSheet} showInfo={false} strokeColor="#8b5cf6" size="small" className="m-0" />
+                    </div>
+                  </div>
+                )}
+
+                {/* Expected Scorelines */}
+                {analyticsData.topScorelines && (
+                  <div className="bg-white p-4 shadow-sm rounded-[6px] border border-[#f0f0f0]">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Target size={16} className="text-[#151e22]" />
+                      <span className="text-[14px] font-bold text-[#151e22]">Top 3 tỷ số khả dĩ nhất</span>
+                    </div>
+                    <div className="grid grid-cols-3 gap-2">
+                      {analyticsData.topScorelines.map((item, idx) => (
+                        <div key={idx} className={`p-2 rounded-md border text-center ${idx === 0 ? 'bg-[#ea4c89]/5 border-[#ea4c89]/30 text-[#ea4c89]' : 'bg-[#fafafa] border-[#f0f0f0] text-[#6b7173]'}`}>
+                          <div className="text-[16px] font-black">{item.score}</div>
+                          <div className="text-[11px] font-semibold">{item.percent}%</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Score Probability Heatmap Grid */}
+                {analyticsData.heatmapGrid && (
+                  <div className="bg-white p-4 shadow-sm rounded-[6px] border border-[#f0f0f0]">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Grid size={16} className="text-[#151e22]" />
+                      <span className="text-[14px] font-bold text-[#151e22]">Bản đồ nhiệt xác suất tỷ số (Poisson)</span>
+                    </div>
+                    <div className="overflow-x-auto min-w-[280px]">
+                      <div className="grid grid-cols-6 gap-1 text-center font-bold text-[10px]">
+                        <div className="p-1 flex items-center justify-center border border-[#f0f0f0] bg-[#fafafa] text-[#6b7173] rounded-sm">Nhà \ Khách</div>
+                        {[0,1,2,3,4].map(n => <div key={`col-${n}`} className="p-1 bg-[#fafafa] text-[#6b7173] rounded-sm flex items-center justify-center border border-[#f0f0f0]">{n}</div>)}
+                        
+                        {analyticsData.heatmapGrid.map((row, h) => (
+                          <div key={`h-row-${h}`} className="contents">
+                            <div className="p-1 bg-[#fafafa] text-[#6b7173] rounded-sm flex items-center justify-center border border-[#f0f0f0]">{h}</div>
+                            {row.map((cell, a) => {
+                              const prob = cell.probability;
+                              const opacity = Math.min(0.85, prob / 10);
+                              return (
+                                <div 
+                                  key={`c-${h}-${a}`} 
+                                  style={{ 
+                                    backgroundColor: prob > 0.5 ? `rgba(234, 76, 137, ${opacity})` : '#fafafa',
+                                    color: prob > 3 ? '#ffffff' : '#6b7173'
+                                  }}
+                                  className={`p-1.5 rounded-sm border border-[#f0f0f0] flex flex-col justify-center items-center ${prob > 3 ? 'font-bold shadow-sm' : 'font-medium'}`}
+                                >
+                                  <span className="text-[11px] leading-none mb-1">{cell.scoreText}</span>
+                                  <span className="text-[9px] opacity-80 leading-none">{prob}%</span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Matchups & H2H */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="bg-white p-4 shadow-sm rounded-[6px] border border-[#f0f0f0]">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Swords size={16} className="text-[#151e22]" />
+                      <span className="text-[14px] font-bold text-[#151e22]">Đối đầu then chốt</span>
+                    </div>
+                    <div className="text-[13px] text-[#6b7173] leading-relaxed">
+                      {analyticsData.keyPlayerMatchups}
+                    </div>
+                  </div>
+                  
+                  <div className="bg-white p-4 shadow-sm rounded-[6px] border border-[#f0f0f0]">
+                    <div className="flex items-center gap-2 mb-3">
+                      <History size={16} className="text-[#151e22]" />
+                      <span className="text-[14px] font-bold text-[#151e22]">Lịch sử chạm trán</span>
+                    </div>
+                    <div className="text-[13px] text-[#6b7173] leading-relaxed">
+                      {analyticsData.headToHead}
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Explainability (SHAP) */}
+                <div className="bg-white p-4 shadow-sm rounded-[6px] border border-[#f0f0f0]">
+                  <div className="flex items-center gap-2 mb-4">
+                    <PieChart size={16} className="text-[#151e22]" />
+                    <span className="text-[14px] font-bold text-[#151e22]">Mức độ ảnh hưởng (AI SHAP)</span>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+                    {analyticsData.shapExplainability?.map((item, idx) => (
+                      <div key={idx} className="flex flex-col gap-1">
+                        <div className="flex justify-between text-[12px] font-semibold text-[#151e22]">
+                          <span>{item.factor}</span>
+                          <span>{item.weight}%</span>
+                        </div>
+                        <Progress 
+                          percent={item.weight} 
+                          showInfo={false} 
+                          strokeColor="#ea4c89"
+                          size="small"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
+            ) : (
+              <div className="bg-white p-4 shadow-sm rounded-[6px] text-center text-[12px] text-[#6b7173] py-8 border border-gray-100">
+                Hệ thống AI đang tổng hợp dữ liệu, vui lòng thử lại sau.
+              </div>
+            )}
           </div>
         )}
 

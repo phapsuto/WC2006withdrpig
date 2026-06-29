@@ -277,8 +277,10 @@ function App() {
       const index = savedMatches.indexOf(matchId);
       if (index > -1) {
         savedMatches.splice(index, 1);
+        message.info('Đã hủy theo dõi trận đấu.');
       } else {
         savedMatches.push(matchId);
+        message.success('Đã theo dõi trận đấu! Bạn sẽ nhận được email nhắc nhở.');
       }
       
       const updatedUser = { ...user, savedMatches };

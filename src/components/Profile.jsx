@@ -66,7 +66,7 @@ export default function Profile({ user, onLogout, onSelectMatch, matches, onTogg
     return `${Math.round(value || 0).toLocaleString('vi-VN')} ${t('coinMascot')}`;
   };
 
-  const bookmarkedMatches = (matches || []).filter(m => user.bookmarks && user.bookmarks.includes(m.id));
+  const bookmarkedMatches = (matches || []).filter(m => user.savedMatches && user.savedMatches.includes(m.id));
   const allTeamsList = Object.values(TEAMS);
 
   const tabs = [

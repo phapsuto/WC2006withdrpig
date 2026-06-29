@@ -190,9 +190,10 @@ body::before {
 /* Tabular Match Row */
 .match-row-365 {
   display: grid;
-  grid-template-columns: 40px 60px 1fr auto 1fr;
+  grid-template-columns: 32px 50px 1fr auto 1fr 65px;
   align-items: center;
-  padding: 8px 16px;
+  gap: 4px;
+  padding: 8px 12px;
   background-color: var(--365-card-surface);
   border-bottom: 1px solid #f0f0f0;
   cursor: pointer;

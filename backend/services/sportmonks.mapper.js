@@ -169,6 +169,8 @@ exports.mapSportmonksMatch = (raw) => {
     minute: raw.state?.minute || 0,
     date: new Date(raw.starting_at ? raw.starting_at.replace(' ', 'T') + 'Z' : new Date()),
     group: raw.group?.name?.replace('Group ', '') || 'A',
+    round: raw.round?.name || null,
+    stage: raw.stage?.name || null,
     stadiumId: raw.venue_id?.toString() || "11",
     odds: exports.parseSportmonksOdds(raw.odds, status, homeScore, awayScore)
   };
