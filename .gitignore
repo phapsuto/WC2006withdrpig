@@ -38,3 +38,4 @@ logs_eslint.txt
 diff_app.txt
 __pycache__/
 *.pyc
+backend/public/uploads/

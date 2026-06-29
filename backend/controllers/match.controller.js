@@ -171,47 +171,65 @@ const aiService = require('../services/aiService');
 
 exports.getMatchAnalytics = async (req, res) => {
   const Match = require('../models/Match');
+  const matchService = require('../services/match.service');
   try {
-    const match = await Match.findOne({ id: req.params.id });
-    if (!match) return res.status(404).json({ message: 'Match not found' });
+    let dbMatch = await Match.findOne({ id: req.params.id });
+    
+    // Fetch live match data from service to guarantee it exists
+    let liveMatch;
+    try {
+      liveMatch = await matchService.getMatchById(req.params.id);
+    } catch (e) {
+      return res.status(404).json({ message: 'Match not found in system' });
+    }
+
+    if (!dbMatch) {
+      // Upsert into DB if missing
+      dbMatch = new Match(liveMatch);
+    } else {
+      // Update basic fields
+      dbMatch.status = liveMatch.status;
+      dbMatch.score = liveMatch.score;
+    }
 
     let ttlMs = 120000; // 2 min default for LIVE
-    if (match.status === 'FINISHED') ttlMs = 24 * 60 * 60 * 1000 * 365; // 1 year
-    if (match.status === 'UPCOMING') ttlMs = 180 * 60 * 1000; // 3 hours
+    if (dbMatch.status === 'FINISHED') ttlMs = 24 * 60 * 60 * 1000 * 365; // 1 year
+    if (dbMatch.status === 'UPCOMING') ttlMs = 180 * 60 * 1000; // 3 hours
 
     const queryHomeName = req.query.homeName;
     const queryAwayName = req.query.awayName;
 
     // Check if the actual names from frontend differ from the DB names (e.g. placeholder resolution)
-    const nameChanged = (queryHomeName && queryHomeName !== match.home.name) || 
-                        (queryAwayName && queryAwayName !== match.away.name);
+    const nameChanged = (queryHomeName && queryHomeName !== dbMatch.home?.name) || 
+                        (queryAwayName && queryAwayName !== dbMatch.away?.name);
 
     if (queryHomeName) {
-      if (!match.home) match.home = {};
-      match.home.name = queryHomeName;
+      if (!dbMatch.home) dbMatch.home = {};
+      dbMatch.home.name = queryHomeName;
     }
     if (queryAwayName) {
-      if (!match.away) match.away = {};
-      match.away.name = queryAwayName;
+      if (!dbMatch.away) dbMatch.away = {};
+      dbMatch.away.name = queryAwayName;
     }
 
     const now = new Date();
     // If the team names changed, we MUST bypass the cache and regenerate with the real names
-    const isFresh = !nameChanged && match.aiAnalytics && match.aiAnalyticsUpdatedAt && (now - new Date(match.aiAnalyticsUpdatedAt) < ttlMs);
+    const isFresh = !nameChanged && dbMatch.aiAnalytics && dbMatch.aiAnalyticsUpdatedAt && (now - new Date(dbMatch.aiAnalyticsUpdatedAt) < ttlMs);
 
     if (isFresh) {
-      return res.json(match.aiAnalytics);
+      return res.json(dbMatch.aiAnalytics);
     }
 
     // Need to regenerate. Fetch finished matches for team form context
     const allMatches = await Match.find({ status: 'FINISHED' }).lean();
     
-    console.log(`[AI] Generating new analytics for match ${match.id} (${match.status})...`);
-    const analytics = await aiService.generateMatchAnalytics(match, allMatches);
+    console.log(`[AI] Generating new analytics for match ${dbMatch.id} (${dbMatch.status})...`);
+    // Pass the combined real match object to AI
+    const analytics = await aiService.generateMatchAnalytics(dbMatch, allMatches);
     
-    match.aiAnalytics = analytics;
-    match.aiAnalyticsUpdatedAt = now;
-    await match.save();
+    dbMatch.aiAnalytics = analytics;
+    dbMatch.aiAnalyticsUpdatedAt = now;
+    await dbMatch.save();
 
     res.json(analytics);
   } catch (err) {
