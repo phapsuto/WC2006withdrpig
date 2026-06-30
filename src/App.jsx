@@ -13,6 +13,7 @@ import TeamDetail from './components/TeamDetail';
 import AuthModal from './components/AuthModal';
 import ResetPassword from './pages/ResetPassword';
 import VerifyEmail from './pages/VerifyEmail';
+import EntertainmentOnly from './pages/EntertainmentOnly';
 import { subscribeToFootballData, getApiConfig } from './services/api';
 import { useLanguage } from './utils/LanguageContext';
 import { X, Flame, Ticket } from 'lucide-react';
@@ -117,29 +118,10 @@ function App() {
           setLeagueStatus('ACTIVE'); // Fallback since grouping doesn't return leagueStatus yet
           setSeasonInfo(null);
 
-          if (allMatches.length > 0) {
-            setActiveMatchId(prev => {
-              if (!prev) {
-                const liveMatch = allMatches.find(m => m.status === 'LIVE');
-                if (liveMatch) return liveMatch.id;
-
-                const todayStr = new Date().toISOString().slice(0, 10);
-                const todayMatches = allMatches.filter(m => (m.date || '').startsWith(todayStr));
-                if (todayMatches.length > 0) {
-                  const todayUpcoming = todayMatches.find(m => m.status === 'UPCOMING');
-                  return todayUpcoming ? todayUpcoming.id : todayMatches[todayMatches.length - 1].id;
-                }
-
-                const upcoming = allMatches.filter(m => m.status === 'UPCOMING').sort((a, b) => new Date(a.date) - new Date(b.date));
-                if (upcoming.length > 0) return upcoming[0].id;
-
-                return allMatches[0].id;
-              }
-              return prev;
-            });
-          } else {
-            setActiveMatchId(null);
-          }
+          // We no longer auto-select a match here to prevent
+          // jumping straight into detail view on mobile.
+          // setActiveMatchId will remain whatever it was (default null)
+          // unless explicitly selected by the user.
         }
       } catch (error) {
         console.error('Failed to fetch matches from backend:', error);
@@ -330,11 +312,11 @@ function App() {
         setUser(updatedUser);
         localStorage.setItem('wc2026_user_profile', JSON.stringify(updatedUser));
         
-        message.success('Đặt cược thành công!');
+        message.success('Gieo quẻ thành công!');
         return Promise.resolve({ success: true, betId: res.bet._id });
       } else {
-        message.error(res.message || 'Lỗi khi đặt cược');
-        return Promise.reject(res.message || 'Lỗi khi đặt cược');
+        message.error(res.message || 'Lỗi khi gieo quẻ');
+        return Promise.reject(res.message || 'Lỗi khi gieo quẻ');
       }
     } catch (err) {
       console.error(err);
@@ -367,6 +349,7 @@ function App() {
           <div className={`flex-1 flex flex-col gap-4 min-w-0 ${location.pathname === '/matches' && activeMatchId ? 'hidden xl:flex' : ''}`}>
             <Routes>
               <Route path="/admin" element={<AdminDashboard />} />
+              <Route path="/giai-tri-lanh-manh" element={<EntertainmentOnly />} />
               <Route path="/news" element={<NewsHub matches={matches} />} />
               <Route path="/news/:slug" element={<NewsHub matches={matches} />} />
               <Route path="/player/:playerId" element={<PlayerDetail />} />

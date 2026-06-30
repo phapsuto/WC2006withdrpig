@@ -213,7 +213,7 @@ ${modelName} của chúng ta đã tính toán các thông số xác suất cho t
 
 Hãy viết một đoạn nhận định giải mã bóng đá ngắn (khoảng 150-200 từ) bằng tiếng Việt cho trận đấu này:
 Trận đấu: ${match.home.name} vs ${match.away.name} (Tỷ số hiện tại: ${match.homeScore}-${match.awayScore}, phút thứ ${match.minute}, trạng thái: ${match.status}).
-Nhân tố tâm linh/Tỷ lệ cược hiện tại (1X2): ${match.home.name} thắng: ${match.odds.h2h.home}, Hòa: ${match.odds.h2h.draw}, ${match.away.name} thắng: ${match.odds.h2h.away}.
+Nhân tố tâm linh/Chỉ số dự đoán hiện tại (1X2): ${match.home.name} thắng: ${match.odds.h2h.home}, Hòa: ${match.odds.h2h.draw}, ${match.away.name} thắng: ${match.odds.h2h.away}.
 Thông số trận đấu: Kiểm soát bóng: ${match.stats?.possession.home}% - ${match.stats?.possession.away}%, Sút: ${match.stats?.shots.home} - ${match.stats?.shots.away}.
 
 Yêu cầu phong cách viết:
@@ -295,7 +295,7 @@ Chỉ trả về chuỗi JSON, không kèm markdown \`\`\`json hay bất kỳ ch
         source: "Facebook - Ghiền Bóng Đá",
         time: "3 phút trước",
         title: "BÃO BÌNH LUẬN DƯỚI POST ⚽🔥",
-        summary: `Các ông có nghĩ Việt Nam hay các đội bóng châu Á làm nên chuyện kỳ này không? Kèo cược đang biến động cực mạnh, Heo Hồng 🐷 vừa phím kèo cực thơm kìa anh em!`,
+        summary: `Các ông có nghĩ Việt Nam hay các đội bóng châu Á làm nên chuyện kỳ này không? Chỉ số đang biến động cực mạnh, Heo Hồng 🐷 vừa phím quẻ cực thơm kìa anh em!`,
         upvotes: 489,
         comments: 215,
         hasVideo: false
@@ -532,13 +532,13 @@ export async function getSportsAnalytics(match, matches = []) {
 
   if (edgeH > 0 && edgeH >= edgeD && edgeH >= edgeA) {
     kellyStake = (edgeH / (oddsHome - 1)) * 100;
-    recommendedBet = `Kèo 1X2 - ${match.home.name} thắng`;
+    recommendedBet = `Chỉ số 1X2 - ${match.home.name} thắng`;
   } else if (edgeD > 0 && edgeD >= edgeH && edgeD >= edgeA) {
     kellyStake = (edgeD / (oddsDraw - 1)) * 100;
-    recommendedBet = `Kèo 1X2 - Hòa`;
+    recommendedBet = `Chỉ số 1X2 - Hòa`;
   } else if (edgeA > 0 && edgeA >= edgeH && edgeA >= edgeD) {
     kellyStake = (edgeA / (oddsAway - 1)) * 100;
-    recommendedBet = `Kèo 1X2 - ${match.away.name} thắng`;
+    recommendedBet = `Chỉ số 1X2 - ${match.away.name} thắng`;
   }
 
   // Fractional Kelly (50% size) capped at 10% to prevent bankruptcy
@@ -555,7 +555,7 @@ Chúng tôi đã chạy ${modelDesc} và thu được các kết quả khoa họ
 Hãy viết báo cáo phân tích bằng tiếng Việt dựa trên các thông số khoa học trên:
 Đội nhà: ${match.home.name} vs Đội khách: ${match.away.name} (Tỷ số: ${match.homeScore}-${match.awayScore}, phút: ${match.minute}, trạng thái: ${match.status}).
 Thống kê hiện tại: Kiểm soát bóng: ${match.stats?.possession.home}%-${match.stats?.possession.away}%, Sút: ${match.stats?.shots.home}-${match.stats?.shots.away}, Sút trúng đích: ${match.stats?.shotsOnTarget.home}-${match.stats?.shotsOnTarget.away}.
-Tỷ lệ kèo: 1X2 (${oddsHome} - ${oddsDraw} - ${oddsAway}), Chấp (${match.odds?.handicap?.line}: ${match.odds?.handicap?.home} - ${match.odds?.handicap?.away}).
+Tỷ lệ dự đoán: 1X2 (${oddsHome} - ${oddsDraw} - ${oddsAway}), Lợi thế (${match.odds?.handicap?.line}: ${match.odds?.handicap?.home} - ${match.odds?.handicap?.away}).
 
 Yêu cầu về từ ngữ:
 - Tuyệt đối TRÁNH sử dụng các thuật ngữ chuyên môn quá phức tạp như "xG", "Kelly", "SHAP", "Poisson", "ELO", "Expected Value" trong các phần văn bản giải thích cho người dùng (như "xgTimeline", "rationale", "factor").
@@ -637,7 +637,7 @@ Thông tin trận đấu hiện tại:
 - Tỷ số: ${match.homeScore} - ${match.awayScore}
 - Phút: ${match.minute}
 - Trạng thái: ${match.status}
-- Tỷ lệ cược 1X2: ${match.home.name} (${match.odds?.h2h?.home || 'N/A'}), Hòa (${match.odds?.h2h?.draw || 'N/A'}), ${match.away.name} (${match.odds?.h2h?.away || 'N/A'})
+- Tỷ lệ dự đoán 1X2: ${match.home.name} (${match.odds?.h2h?.home || 'N/A'}), Hòa (${match.odds?.h2h?.draw || 'N/A'}), ${match.away.name} (${match.odds?.h2h?.away || 'N/A'})
 
 Hãy trò chuyện với người dùng về trận đấu này. Trả lời bằng tiếng Việt thân thiện, hài hước kiểu Gen Z, xưng "Heo Hồng 🐷" và gọi người dùng là "các fen", "fen".
 Sử dụng các từ Gen Z/tâm linh: "đặt cửa", "gieo quẻ bóng đá", "chọn phe", "đặt niềm tin", "xem bản đồ tâm linh AI", "giải mã trận đấu", "gáy sớm", "về bờ vui vẻ".
@@ -706,7 +706,7 @@ Thông tin trận đấu hiện tại:
 - Tỷ số: ${match.homeScore} - ${match.awayScore}
 - Phút: ${match.minute}
 - Trạng thái: ${match.status}
-- Tỷ lệ cược 1X2: ${match.home.name} (${match.odds?.h2h?.home || 'N/A'}), Hòa (${match.odds?.h2h?.draw || 'N/A'}), ${match.away.name} (${match.odds?.h2h?.away || 'N/A'})
+- Tỷ lệ dự đoán 1X2: ${match.home.name} (${match.odds?.h2h?.home || 'N/A'}), Hòa (${match.odds?.h2h?.draw || 'N/A'}), ${match.away.name} (${match.odds?.h2h?.away || 'N/A'})
 
 Hãy trò chuyện với người dùng về trận đấu này. Trả lời bằng tiếng Việt thân thiện, hài hước kiểu Gen Z, xưng "Heo Hồng 🐷" và gọi người dùng là "các fen", "fen".
 Sử dụng các từ Gen Z/tâm linh: "đặt cửa", "gieo quẻ bóng đá", "chọn phe", "đặt niềm tin", "xem bản đồ tâm linh AI", "giải mã trận đấu", "gáy sớm", "về bờ vui vẻ".
@@ -742,7 +742,7 @@ export async function generalChatWithHeoHong(history, userMsg) {
     const matches = await getLiveMatchesForApp();
     const activeMatches = matches.slice(0, 8); // Top 8 matches
     const matchesStr = activeMatches.map(m => 
-      `- Trận [${m.status === 'LIVE' ? 'Đang diễn ra - Phút ' + m.minute : m.status}]: ${m.home.name} vs ${m.away.name} (${m.homeScore}-${m.awayScore}) ngày ${m.date} ${m.time}. Kèo: Chấp ${m.odds.handicap.line}, Tài Xỉu ${m.odds.overUnder.line}.`
+      `- Trận [${m.status === 'LIVE' ? 'Đang diễn ra - Phút ' + m.minute : m.status}]: ${m.home.name} vs ${m.away.name} (${m.homeScore}-${m.awayScore}) ngày ${m.date} ${m.time}. Thử thách: Lợi thế ${m.odds.handicap.line}, Tài Xỉu ${m.odds.overUnder.line}.`
     ).join('\n');
     
     const standings = await getLiveGroupStandings();
@@ -759,7 +759,7 @@ ${matchesStr}
 BẢNG XẾP HẠNG HIỆN TẠI:
 ${standingsStr}
 
-Hãy sử dụng dữ liệu trên để trả lời cực kỳ chính xác nếu người dùng hỏi về lịch thi đấu, bảng xếp hạng, tỉ số hiện tại hoặc nhận định kèo của các trận đấu này.`;
+Hãy sử dụng dữ liệu trên để trả lời cực kỳ chính xác nếu người dùng hỏi về lịch thi đấu, bảng xếp hạng, tỉ số hiện tại hoặc nhận định quẻ của các trận đấu này.`;
   } catch (err) {
     console.warn('Lỗi lấy ngữ cảnh trận đấu cho Heo Hồng:', err);
   }

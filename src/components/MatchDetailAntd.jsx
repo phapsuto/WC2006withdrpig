@@ -96,7 +96,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
   useEffect(() => {
     if (!match) return;
     setTimeout(() => {
-      setActiveTab(isTBD ? 'ODDS' : 'ANALYTICS');
+      setActiveTab(isTBD || match.status === 'FINISHED' ? 'ANALYTICS' : 'ODDS');
       setAiPrediction('');
       setMatchNews([]);
       setAnalyticsData(null);
@@ -462,14 +462,18 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
         {/* Horizontal Navigation Tabs */}
         <div className="flex px-4 overflow-x-auto no-scrollbar gap-6 border-t border-gray-100 mt-0">
-          {['ANALYTICS', 'EVENTS', 'LINEUPS', 'STATS', 'ODDS', 'NEWS', 'CHAT'].filter(tabKey => !(isTBD && tabKey === 'ANALYTICS')).map(tabKey => {
+          {['ANALYTICS', 'EVENTS', 'LINEUPS', 'STATS', 'ODDS', 'NEWS', 'CHAT'].filter(tabKey => {
+            if (isTBD && tabKey === 'ANALYTICS') return false;
+            if (isFinished && tabKey === 'ODDS') return false;
+            return true;
+          }).map(tabKey => {
             const labels = {
               'EVENTS': 'Sự kiện',
               'LINEUPS': 'Đội hình',
               'STATS': 'Thống kê',
-              'ODDS': 'Tỷ lệ cược',
+              'ODDS': 'Gieo Quẻ',
               'NEWS': 'Tin tức',
-              'ANALYTICS': 'Dự đoán AI'
+              'ANALYTICS': 'Nhận định AI'
             };
             return (
               <div
@@ -1031,7 +1035,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
           <div className="flex flex-col gap-3 animate-fadeIn">
             {loadingOdds ? (
               <div className="bg-white p-8 shadow-sm rounded-[6px] flex items-center justify-center gap-2 text-[#6b7173]">
-                <Loader2 className="w-5 h-5 animate-spin" /> <span className="text-[13px]">Đang tải tỷ lệ cược...</span>
+                <Loader2 className="w-5 h-5 animate-spin" /> <span className="text-[13px]">Đang tải chỉ số...</span>
               </div>
             ) : (
               <>
@@ -1051,6 +1055,31 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                 {/* Markets from API */}
                 {oddsData?.markets?.map((market) => {
+                  const getCuteMarketName = (name) => {
+                    if (name.includes('Kèo Châu Âu')) return 'Gieo Quẻ Thắng Thua (1X2)';
+                    if (name.includes('Kèo Châu Á') || name.includes('Handicap')) return 'Thử thách Lợi Thế';
+                    if (name.includes('Cơ hội kép')) return 'Quẻ Kép An Toàn';
+                    if (name.includes('Tài/Xỉu') || name.includes('Over/Under')) return 'Dự đoán Bàn Thắng';
+                    if (name.includes('Hoà trả tiền')) return 'Hoà Hồi Xu';
+                    if (name.includes('Cả hai đội ghi bàn')) return 'Cả hai cùng nổ súng';
+                    if (name.includes('Kết quả hiệp 1')) return 'Chốt Quẻ Hiệp 1';
+                    if (name.includes('Hiệp 1 / Cả trận')) return 'Quẻ Xuyên Suốt (HT/FT)';
+                    if (name.includes('Tỷ số chính xác')) return 'Bắt Vị Tỷ Số';
+                    return name;
+                  };
+                  
+                  const getCuteBkName = (name) => {
+                    const l = name.toLowerCase();
+                    if (l.includes('10bet')) return 'Hội Tâm Linh';
+                    if (l.includes('bet365')) return 'Cục Tình Báo Heo Hồng';
+                    if (l.includes('betmgm')) return 'Trạm Phát Sóng';
+                    if (l.includes('draftkings')) return 'Ban Kỷ Luật';
+                    if (l.includes('william') || l.includes('hill')) return 'Nhà Thông Thái';
+                    if (l.includes('unibet')) return 'Hội Đồng Heo';
+                    if (l.includes('bovada') || l.includes('bov')) return 'Sứ Giả Tâm Linh';
+                    if (l.includes('bet')) return 'Hội Yêu Mèo';
+                    return name;
+                  };
                   const bestBk = market.bookmakers[0];
                   if (!bestBk) return null;
                   const isExpanded = expandedMarkets[market.key];
@@ -1102,9 +1131,9 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                       return (
                         <div className="flex flex-col bg-gray-50/50">
                           <div className="grid grid-cols-3 items-center px-4 py-2 bg-gray-100/80 border-b border-gray-200 text-[11px] font-bold text-gray-500 uppercase">
-                            <span>Tỉ lệ</span>
-                            <span className="text-center">{home.short || 'Chủ'} {market.key === 'goal_line' ? '(Tài)' : ''}</span>
-                            <span className="text-center">{away.short || 'Khách'} {market.key === 'goal_line' ? '(Xỉu)' : ''}</span>
+                            <span>Chỉ số</span>
+                            <span className="text-center">{home.short || 'Chủ'} {market.key === 'goal_line' ? '(Trên)' : ''}</span>
+                            <span className="text-center">{away.short || 'Khách'} {market.key === 'goal_line' ? '(Dưới)' : ''}</span>
                           </div>
                           <div className="divide-y divide-gray-200">
                             {lineKeys.map(lk => (
@@ -1114,7 +1143,12 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                                   const betId = `${market.key}-${lk}-${e.label}`;
                                   return (
                                     <div key={i} className="px-1">
-                                      <div onClick={() => onAddBet && onAddBet(match, `${market.name} ${e.label} ${lk}`, e.value, betId)} className={`flex justify-between items-center px-3 py-1.5 rounded-md cursor-pointer transition-all border ${activeBetId === betId ? 'border-[#ea4c89] bg-[#ea4c89]/10' : 'border-gray-200 bg-white hover:border-[#ea4c89]/50 shadow-sm'}`}>
+                                      <div onClick={() => {
+                                        if (onAddBet) {
+                                          const lineLabel = e.label === 'Over' ? 'Tài (Nhiều bàn)' : e.label === 'Under' ? 'Xỉu (Ít bàn)' : e.label === 'Home' ? home.name : e.label === 'Away' ? away.name : e.label;
+                                          onAddBet(match, `${getCuteMarketName(market.name)} - Chọn ${lineLabel} (Mốc ${lk})`, e.value, betId);
+                                        }
+                                      }} className={`flex justify-between items-center px-3 py-1.5 rounded-md cursor-pointer transition-all border ${activeBetId === betId ? 'border-[#ea4c89] bg-[#ea4c89]/10' : 'border-gray-200 bg-white hover:border-[#ea4c89]/50 shadow-sm'}`}>
                                         <span className="text-[11px] font-medium text-gray-500">{e.label}</span>
                                         <span className="text-[14px] font-black text-[#2194ff]">{e.value.toFixed(2)}</span>
                                       </div>
@@ -1136,7 +1170,21 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                         <div className={`grid ${gridClass} gap-2 p-3`}>
                           {bkEntries.slice(0, cols).map((e, i) => {
                             const betId = `${market.key}-${e.label}`;
-                            const labelMap = { 'Home': home.name, 'Away': away.name, 'Draw': 'Hòa', '1': home.name, 'X': 'Hòa', '2': away.name, 'Over': 'Tài', 'Under': 'Xỉu', 'Yes': 'Có', 'No': 'Không', 'Home/Draw': `${home.short}/H`, 'Draw/Away': `H/${away.short}`, 'Home/Away': `${home.short}/${away.short}` };
+                            const labelMap = { 
+                              'Home': `${home.name} Thắng`, 
+                              'Away': `${away.name} Thắng`, 
+                              'Draw': 'Hai đội Hoà', 
+                              '1': `${home.name} Thắng`, 
+                              'X': 'Hai đội Hoà', 
+                              '2': `${away.name} Thắng`, 
+                              'Over': 'Tài (Nhiều bàn)', 
+                              'Under': 'Xỉu (Ít bàn)', 
+                              'Yes': 'Chắc chắn Có', 
+                              'No': 'Chắc chắn Không', 
+                              'Home/Draw': `${home.name} hoặc Hoà`, 
+                              'Draw/Away': `Hoà hoặc ${away.name}`, 
+                              'Home/Away': `${home.name} hoặc ${away.name}` 
+                            };
                             const displayLabel = labelMap[e.label] || e.label;
                             
                             return (
@@ -1157,9 +1205,9 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                         className="bg-gray-50 px-4 py-2.5 border-b border-gray-100 flex items-center justify-between cursor-pointer hover:bg-gray-100 transition-colors"
                         onClick={() => setExpandedMarkets(prev => ({ ...prev, [market.key]: !prev[market.key] }))}
                       >
-                        <span className="text-[13px] font-semibold text-[#151e22]">{market.name}</span>
+                        <span className="text-[13px] font-semibold text-[#151e22]">{getCuteMarketName(market.name)}</span>
                         <div className="flex items-center gap-2">
-                          <span className="text-[10px] text-[#9ca3af] font-medium">{bestBk.name}</span>
+                          <span className="text-[10px] text-[#9ca3af] font-medium">{getCuteBkName(bestBk.name)}</span>
                           {market.bookmakers.length > 1 && (
                             <span className="text-[9px] bg-[#2194ff]/10 text-[#2194ff] px-1.5 py-0.5 rounded-full font-semibold">+{market.bookmakers.length - 1}</span>
                           )}
@@ -1170,7 +1218,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                       {/* Expanded bookmakers */}
                       {isExpanded && market.bookmakers.slice(1).map(bk => (
                         <div key={bk.id} className="border-t border-gray-100">
-                          <div className="px-4 py-1.5 bg-gray-50/50 text-[10px] font-semibold text-[#9ca3af] uppercase tracking-wide">{bk.name}</div>
+                          <div className="px-4 py-1.5 bg-gray-50/50 text-[10px] font-semibold text-[#9ca3af] uppercase tracking-wide">{getCuteBkName(bk.name)}</div>
                           {renderEntries(bk.entries, bk.name)}
                         </div>
                       ))}
@@ -1180,7 +1228,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
 
                 {(!oddsData || oddsData.markets?.length === 0) && (
                   <div className="bg-white p-6 shadow-sm rounded-[6px] text-center text-[#6b7173] text-[13px]">
-                    Dữ liệu tỷ lệ cược chưa có cho trận đấu này.
+                    Dữ liệu chỉ số chưa có cho trận đấu này.
                   </div>
                 )}
               </>
@@ -1570,7 +1618,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
                       <img src="/drpig_logo.png" alt="Heo Hồng" className="w-8 h-8" />
-                      <span className="text-[14px] font-bold text-[#151e22]">Heo Hồng Phán: Kèo sáng nhất hôm nay</span>
+                      <span className="text-[14px] font-bold text-[#151e22]">Heo Hồng Phán: Quẻ sáng nhất hôm nay</span>
                     </div>
                     {analyticsData.kellyCriterion?.confidenceScore && (
                       <Tag color="magenta" className="m-0 border-0 bg-[#ea4c89]/10 text-[#ea4c89] font-bold px-2 text-[12px]">
@@ -1599,7 +1647,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                     className="bg-[#ea4c89] border-none font-bold"
                     onClick={() => setActiveTab('ODDS')}
                   >
-                    Theo Kèo Này Ngay!
+                    Theo Quẻ Này Ngay!
                   </Button>
                 </div>
 
@@ -1608,17 +1656,17 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   <div className="bg-[#ea4c89]/5 p-4 shadow-sm rounded-[6px] border border-[#ea4c89]/20">
                     <div className="flex items-center gap-2 mb-3">
                       <BadgePercent size={16} className="text-[#ea4c89]" />
-                      <span className="text-[14px] font-bold text-[#ea4c89] uppercase">Gợi ý Cửa Sáng (+EV Value Bets)</span>
+                      <span className="text-[14px] font-bold text-[#ea4c89] uppercase">Heo Hồng Chỉ Điểm (Các Quẻ Thơm)</span>
                     </div>
                     <div className="flex flex-col gap-2">
                       {analyticsData.valueBets.map((item, idx) => (
                         <div key={idx} className="flex items-center justify-between p-2.5 bg-white border border-[#ea4c89]/20 rounded-[6px]">
                           <div className="flex flex-col">
                             <span className="text-[13px] font-bold text-[#151e22]">{item.label}</span>
-                            <span className="text-[11px] text-[#6b7173]">Tỉ lệ cược: {item.odds}</span>
+                            <span className="text-[11px] text-[#6b7173]">Chỉ số: {item.odds}</span>
                           </div>
                           <Tag color="magenta" className="m-0 border-0 bg-[#ea4c89] text-white font-bold shadow-sm">
-                            🔥 +{(item.ev * 100).toFixed(1)}% EV
+                            🔥 +{(item.ev * 100).toFixed(1)}% Độ Linh Ứng
                           </Tag>
                         </div>
                       ))}

@@ -224,3 +224,26 @@ exports.addBalance = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+exports.claimShareReward = async (req, res) => {
+  try {
+    const User = require('../models/User');
+    const user = await User.findById(req.user.id);
+    
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+    
+    if (user.hasSharedForReward) {
+      return res.status(400).json({ success: false, message: 'Bạn đã nhận thưởng chia sẻ rồi nha!' });
+    }
+    
+    user.balance += 1000;
+    user.hasSharedForReward = true;
+    await user.save();
+    
+    res.json({ success: true, balance: user.balance, message: 'Nhận 1,000 Xu thành công!' });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

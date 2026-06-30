@@ -21,7 +21,7 @@ export default function OddsTab({ match, odds, activeBetId, onAddBet, evHome, ev
       </div>
       {ev > 0.02 && (
         <div style={{ marginTop: 4, textAlign: 'right' }}>
-          <Tag color="orange" bordered={false}>🔥 Thơm (+{(ev * 100).toFixed(0)}% EV)</Tag>
+          <Tag color="orange" bordered={false}>🔥 Thơm (+{(ev * 100).toFixed(0)}% Uy tín)</Tag>
         </div>
       )}
     </Card>
@@ -70,7 +70,7 @@ export default function OddsTab({ match, odds, activeBetId, onAddBet, evHome, ev
               `${home.name} (${odds.handicap.line})`, 
               odds.handicap.home, 
               activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-home`, 
-              () => onAddBet(match, `Chấp ${odds.handicap.line} - ${home.name}`, odds.handicap.home, `${match.id}-handicap-home_${odds.handicap.line}`)
+              () => onAddBet(match, `Lợi thế ${odds.handicap.line} - ${home.name}`, odds.handicap.home, `${match.id}-handicap-home_${odds.handicap.line}`)
             )}
           </Col>
           <Col xs={24} md={12}>
@@ -78,7 +78,7 @@ export default function OddsTab({ match, odds, activeBetId, onAddBet, evHome, ev
               `${away.name} (${odds.handicap.line.startsWith('-') ? odds.handicap.line.replace('-', '+') : `-${odds.handicap.line}`})`, 
               odds.handicap.away, 
               activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-away`, 
-              () => onAddBet(match, `Được chấp ${odds.handicap.line.startsWith('-') ? odds.handicap.line.replace('-', '+') : `-${odds.handicap.line}`} - ${away.name}`, odds.handicap.away, `${match.id}-handicap-away_${-parseFloat(odds.handicap.line)}`)
+              () => onAddBet(match, `Được lợi thế ${odds.handicap.line.startsWith('-') ? odds.handicap.line.replace('-', '+') : `-${odds.handicap.line}`} - ${away.name}`, odds.handicap.away, `${match.id}-handicap-away_${-parseFloat(odds.handicap.line)}`)
             )}
           </Col>
         </Row>

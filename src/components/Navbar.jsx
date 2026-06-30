@@ -71,7 +71,8 @@ export default function Navbar({ user, onGoogleLoginClick, toggleTheme }) {
   const menuItems = [
     { key: '/matches', label: t('navMatches') || 'Trận đấu', icon: Calendar },
     { key: '/standings', label: t('navStandings') || 'Bảng xếp hạng', icon: Trophy },
-    { key: '/news', label: t('navNews') || 'Tin tức', icon: Newspaper }
+    { key: '/news', label: t('navNews') || 'Tin tức', icon: Newspaper },
+    { key: '/giai-tri-lanh-manh', label: 'Góc Giải Trí', icon: Sparkles }
   ];
 
   return (

@@ -100,6 +100,11 @@ export const backendClient = {
     return res.data;
   },
 
+  async claimShareReward() {
+    const res = await apiClient.post('/users/share-reward');
+    return res.data;
+  },
+
   async updateProfile(data) {
     const res = await apiClient.put('/users/profile', data);
     return res.data;

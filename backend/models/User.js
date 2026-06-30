@@ -18,6 +18,7 @@ const userSchema = new mongoose.Schema({
   refreshToken: { type: String },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
+  hasSharedForReward: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now },
 });
 

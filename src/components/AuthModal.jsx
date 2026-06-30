@@ -132,7 +132,7 @@ export default function AuthModal({ isOpen, onClose, setUser }) {
             {view === 'login' ? 'Đăng Nhập' : view === 'register' ? 'Đăng Ký' : 'Quên Mật Khẩu'}
           </Title>
           <Text type="secondary" className="text-[14px]">
-            {view === 'login' ? 'Chào mừng bạn quay lại!' : view === 'register' ? 'Bắt đầu dự đoán với Heo Hồng' : 'Khôi phục tài khoản của bạn'}
+            {view === 'login' ? 'Chào mừng bạn quay lại!' : view === 'register' ? 'Bắt đầu gieo quẻ cùng Heo Hồng' : 'Khôi phục tài khoản của bạn'}
           </Text>
         </div>
 

@@ -9,7 +9,7 @@ export default function OracleChat() {
   const suggestions = language === 'vi' ? [
     'Nhận định bảng A xem heo 🐷',
     'Đội tuyển Việt Nam có cơ hội đi tiếp không?',
-    'Dự đoán trận đấu HOT nhất hôm nay ⚽',
+    'Xin quẻ trận đấu HOT nhất hôm nay ⚽',
     'Tỉ số trận đấu khai mạc ra sao?',
     'Heo nghĩ đội nào vô địch World Cup 2026? 🏆'
   ] : [

@@ -21,6 +21,7 @@ router.put('/profile', protect, userController.updateProfile);
 router.post('/upload-avatar', protect, uploadAvatar.single('avatar'), userController.uploadAvatar);
 router.put('/favorites', protect, userController.updateFavorites);
 router.post('/saved-matches', protect, userController.toggleSaveMatch);
+router.post('/share-reward', protect, userController.claimShareReward);
 
 // Admin Routes
 router.get('/', protect, authorizeAdmin, userController.getAllUsers);

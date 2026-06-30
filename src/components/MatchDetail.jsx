@@ -62,7 +62,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
   // Reset states when match changes
   useEffect(() => {
     setTimeout(() => {
-      setActiveTab('ODDS');
+      setActiveTab(match.status === 'FINISHED' ? 'ANALYTICS' : 'ODDS');
       setAiPrediction('');
       setMatchNews([]);
       setAnalyticsData(null);
@@ -697,7 +697,10 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
           { key: 'TIMELINE', icon: <ListTodo size={14} />, label: t('tabTimeline') },
           { key: 'NEWS', icon: <Newspaper size={14} />, label: language === 'vi' ? 'Tin tức & MXH' : 'News & Social' },
           { key: 'LINEUPS', icon: <Users size={14} />, label: t('tabLineups') }
-        ].map(tab => (
+        ].filter(tab => {
+          if (isFinished && tab.key === 'ODDS') return false;
+          return true;
+        }).map(tab => (
           <button 
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
@@ -745,7 +748,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   </div>
                   {evHome > 0.02 && (
                     <span className={`text-[10px] font-bold align-self-end mt-1 px-2 py-0.5 rounded-full ${activeBetId === `${match.id}-1x2-home` ? 'bg-white/25 text-white' : 'bg-[#ff8c42]/10 text-[#ff8c42]'}`}>
-                      🔥 Thơm (+{(evHome * 100).toFixed(0)}% EV)
+                      🔥 Thơm (+{(evHome * 100).toFixed(0)}% Uy tín)
                     </span>
                   )}
                 </button>
@@ -768,7 +771,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   </div>
                   {evDraw > 0.02 && (
                     <span className={`text-[10px] font-bold align-self-end mt-1 px-2 py-0.5 rounded-full ${activeBetId === `${match.id}-1x2-draw` ? 'bg-white/25 text-white' : 'bg-[#ff8c42]/10 text-[#ff8c42]'}`}>
-                      🔥 Thơm (+{(evDraw * 100).toFixed(0)}% EV)
+                      🔥 Thơm (+{(evDraw * 100).toFixed(0)}% Uy tín)
                     </span>
                   )}
                 </button>
@@ -791,7 +794,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   </div>
                   {evAway > 0.02 && (
                     <span className={`text-[10px] font-bold align-self-end mt-1 px-2 py-0.5 rounded-full ${activeBetId === `${match.id}-1x2-away` ? 'bg-white/25 text-white' : 'bg-[#ff8c42]/10 text-[#ff8c42]'}`}>
-                      🔥 Thơm (+{(evAway * 100).toFixed(0)}% EV)
+                      🔥 Thơm (+{(evAway * 100).toFixed(0)}% Uy tín)
                     </span>
                   )}
                 </button>
@@ -805,7 +808,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <button 
-                  onClick={() => onAddBet(match, `${language === 'vi' ? 'Chấp' : 'Handicap'} ${odds.handicap.line} - ${home.name}`, odds.handicap.home, `${match.id}-handicap-home_${odds.handicap.line}`)}
+                  onClick={() => onAddBet(match, `${language === 'vi' ? 'Lợi thế' : 'Handicap'} ${odds.handicap.line} - ${home.name}`, odds.handicap.home, `${match.id}-handicap-home_${odds.handicap.line}`)}
                   style={activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-home` ? { background: 'linear-gradient(135deg, #ea4c89 0%, #ff8c42 100%)' } : {}}
                   className={`flex items-center justify-between p-4 rounded-[16px] border transition-all duration-300 active:scale-[0.96] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-home` 
@@ -821,7 +824,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 </button>
 
                 <button 
-                  onClick={() => onAddBet(match, `${language === 'vi' ? 'Được chấp' : 'Receive Handicap'} ${odds.handicap.line.startsWith('-') ? odds.handicap.line.replace('-', '+') : `-${odds.handicap.line}`} - ${away.name}`, odds.handicap.away, `${match.id}-handicap-away_${-parseFloat(odds.handicap.line)}`)}
+                  onClick={() => onAddBet(match, `${language === 'vi' ? 'Được lợi thế' : 'Receive Handicap'} ${odds.handicap.line.startsWith('-') ? odds.handicap.line.replace('-', '+') : `-${odds.handicap.line}`} - ${away.name}`, odds.handicap.away, `${match.id}-handicap-away_${-parseFloat(odds.handicap.line)}`)}
                   style={activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-away` ? { background: 'linear-gradient(135deg, #ea4c89 0%, #ff8c42 100%)' } : {}}
                   className={`flex items-center justify-between p-4 rounded-[16px] border transition-all duration-300 active:scale-[0.96] ${
                     activeBetId && activeBetId.split('_')[0] === `${match.id}-handicap-away` 
@@ -862,7 +865,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   </div>
                   {evOver > 0.02 && (
                     <span className={`text-[10px] font-bold align-self-end mt-1 px-2 py-0.5 rounded-full ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-over` ? 'bg-white/25 text-white' : 'bg-[#ff8c42]/10 text-[#ff8c42]'}`}>
-                      🔥 Thơm (+{(evOver * 100).toFixed(0)}% EV)
+                      🔥 Thơm (+{(evOver * 100).toFixed(0)}% Uy tín)
                     </span>
                   )}
                 </button>
@@ -885,7 +888,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   </div>
                   {evUnder > 0.02 && (
                     <span className={`text-[10px] font-bold align-self-end mt-1 px-2 py-0.5 rounded-full ${activeBetId && activeBetId.split('_')[0] === `${match.id}-ou-under` ? 'bg-white/25 text-white' : 'bg-[#ff8c42]/10 text-[#ff8c42]'}`}>
-                      🔥 Thơm (+{(evUnder * 100).toFixed(0)}% EV)
+                      🔥 Thơm (+{(evUnder * 100).toFixed(0)}% Uy tín)
                     </span>
                   )}
                 </button>
@@ -1061,23 +1064,23 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                   <div className="p-4 bg-primary/10 border border-primary/20 rounded-2xl space-y-3">
                     <h4 className="text-xs font-semibold text-primary flex items-center gap-1.5 uppercase tracking-wide">
                       <span className="material-symbols-outlined text-[18px]">verified</span>
-                      {language === 'vi' ? 'Gợi ý Cửa Sáng của Heo Hồng (+EV Value Bets)' : 'Heo Hong\'s Value Choices (+EV Value Bets)'}
+                      {language === 'vi' ? 'Quẻ Thơm Heo Hồng Phím' : 'Heo Hong\'s Recommended Choices'}
                     </h4>
                     <div className="flex flex-col gap-2">
                       {valueBets.map((item, idx) => (
                         <div key={idx} className="flex items-center justify-between p-3 bg-white/60 border border-white/80 rounded-xl hover:bg-white/80 transition-colors">
                           <div className="flex flex-col">
                             <span className="text-xs font-semibold text-on-surface">{item.label}</span>
-                            <span className="text-[10px] text-on-surface-variant/70">{t('oddsLabel')}: {item.odds} • {language === 'vi' ? 'Lợi nhuận kỳ vọng' : 'Est. Yield'}: +{(item.ev * 100).toFixed(1)}%</span>
+                            <span className="text-[10px] text-on-surface-variant/70">{t('oddsLabel')}: {item.odds} • {language === 'vi' ? 'Độ uy tín' : 'Confidence'}: +{(item.ev * 100).toFixed(1)}%</span>
                           </div>
                           <span className="px-2.5 py-1 bg-primary text-white rounded-lg text-[10px] font-semibold flex items-center gap-1 shadow-sm">
-                            🔥 +{(item.ev * 100).toFixed(1)}% EV
+                            🔥 +{(item.ev * 100).toFixed(1)}% Uy tín
                           </span>
                         </div>
                       ))}
                     </div>
                     <p className="text-[9px] text-on-surface-variant/85 italic leading-relaxed">
-                      * {language === 'vi' ? 'Cửa sáng (+EV) là các lựa chọn có tỷ lệ trả thưởng cao hơn tỷ số xác suất thực của trận đấu. Chọn phe này đem lại lợi thế toán học lâu dài.' : 'Value Choices (+EV) are selections with higher payouts than their actual mathematical probability. Choosing these offers a long-term mathematical advantage.'}
+                      * {language === 'vi' ? 'Quẻ thơm là những lựa chọn được Heo Hồng đánh giá có độ uy tín cao dựa trên hệ thống tâm linh AI.' : 'Recommended choices are highly reliable picks based on our AI oracle.'}
                     </p>
                   </div>
                 )}
@@ -1155,7 +1158,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 {/* SHAP Explainability parameters */}
                 <div className="p-4 bg-white/50 border border-white/60 rounded-2xl space-y-3">
                   <h4 className="text-xs font-semibold text-on-background">
-                    ⚙️ Các nhân tố tác động chính đến Dự đoán AI
+                    🔮 Các nhân tố ảnh hưởng đến Quẻ AI
                   </h4>
                   <div className="space-y-3">
                     {analyticsData.shapExplainability?.map((item, idx) => (
@@ -1262,7 +1265,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
               {(language === 'vi' 
                 ? [
                     "Chọn phe nào ngon nhất?",
-                    "Có nên gieo quẻ cửa Tài không?",
+                    "Có nên gieo quẻ cửa Nhiều Bàn Thắng không?",
                     "Giải mã đội gáy sớm",
                     "Xem phong độ & chấn thương"
                   ]
@@ -1439,7 +1442,7 @@ export default function MatchDetail({ match, onAddBet, activeBetId, onClose, use
                 </div>
               ) : (
                 <p className="text-xs text-on-surface-variant leading-relaxed">
-                  {aiPrediction || (language === 'vi' ? 'Heo Hồng đang nghiên cứu các nguồn tin tức bóng đá quốc tế. Click nút xoay tròn để xem quẻ dự đoán nóng hổi từ heo! 🐷' : 'Heo Hong is studying international football news. Click reload to see the latest predictions! 🐷')}
+                  {aiPrediction || (language === 'vi' ? 'Heo Hồng đang nghiên cứu các nguồn tin tức bóng đá quốc tế. Click nút xoay tròn để xem quẻ nóng hổi từ heo! 🐷' : 'Heo Hong is studying international football news. Click reload to see the latest predictions! 🐷')}
                 </p>
               )}
             </div>

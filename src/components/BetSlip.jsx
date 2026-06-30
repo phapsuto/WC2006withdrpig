@@ -113,11 +113,11 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
                 
                 <div className="bg-gray-50 rounded-lg p-2.5 flex justify-between items-center border border-gray-100">
                   <div className="flex flex-col">
-                    <span className="text-[10px] text-gray-500 font-medium mb-0.5">Lựa chọn của bạn</span>
+                    <span className="text-[10px] text-gray-500 font-medium mb-0.5">Quẻ Bạn Gieo</span>
                     <span className="text-[14px] font-bold text-[#ea4c89] leading-none">{label}</span>
                   </div>
                   <div className="flex flex-col items-end">
-                    <span className="text-[10px] text-gray-500 font-medium mb-0.5">Tỷ lệ (Odds)</span>
+                    <span className="text-[10px] text-gray-500 font-medium mb-0.5">Độ Linh Ứng</span>
                     <span className="text-[18px] font-black text-[#2194ff] leading-none">x{value.toFixed(2)}</span>
                   </div>
                 </div>
@@ -126,9 +126,9 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
               {/* Stake Input Area */}
               <div className="bg-white">
                 <div className="flex justify-between items-end mb-1.5 px-1">
-                  <span className="text-[12px] font-bold text-gray-700">Số tiền cược</span>
+                  <span className="text-[12px] font-bold text-gray-700">Góp Heo Đất</span>
                   <div className="flex items-center gap-1 text-[11px]">
-                    <span className="text-gray-400">Số dư:</span>
+                    <span className="text-gray-400">Heo đất:</span>
                     <span className="font-bold text-[#1bc165] flex items-center gap-0.5">
                       {user?.balance?.toLocaleString() || 0} <Coins size={10} />
                     </span>
@@ -167,14 +167,14 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
                     onClick={() => { if (user?.balance) setStake(user.balance); }}
                     className="bg-[#ea4c89]/5 border border-[#ea4c89]/30 text-[#ea4c89] hover:bg-[#ea4c89] hover:text-white font-bold text-[12px] py-1.5 rounded transition-colors flex items-center justify-center gap-1"
                   >
-                    <Zap size={10} /> MAX
+                    <Zap size={10} /> HẾT XU
                   </button>
                 </div>
               </div>
 
               {/* Payout Area */}
               <div className="bg-[#1bc165]/5 border border-[#1bc165]/20 rounded-lg p-2.5 flex justify-between items-center">
-                <span className="text-[11px] font-bold text-[#1bc165] uppercase tracking-wide">Tiền thắng dự kiến</span>
+                <span className="text-[11px] font-bold text-[#1bc165] uppercase tracking-wide">Lộc Lá Dự Kiến</span>
                 <div className="text-[18px] font-black text-[#1bc165] flex items-baseline gap-1 leading-none">
                   {parseFloat(potentialPayout).toLocaleString()} <span className="text-[10px] font-bold">XU</span>
                 </div>
@@ -190,7 +190,7 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
                 loading={isPlacing}
                 className="h-11 bg-[#ea4c89] hover:bg-[#d83a77] border-0 rounded-lg font-bold text-[14px] shadow-sm shadow-[#ea4c89]/20"
               >
-                XÁC NHẬN ĐẶT CƯỢC
+                CHỐT QUẺ NGAY
               </Button>
             </div>
           ) : (
@@ -198,8 +198,8 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
               <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-3">
                 <Ticket size={24} className="text-gray-300" />
               </div>
-              <div className="text-[14px] font-bold text-gray-500 mb-1">Phiếu cược trống</div>
-              <div className="text-[12px] text-gray-400 px-4">Vui lòng chọn một kèo từ danh sách trận đấu.</div>
+              <div className="text-[14px] font-bold text-gray-500 mb-1">Chưa chọn phe nào</div>
+              <div className="text-[12px] text-gray-400 px-4">Vui lòng chọn một lựa chọn tâm linh từ danh sách trận đấu.</div>
             </div>
           )}
         </div>
@@ -260,7 +260,7 @@ export default function BetSlip({ activeBet, onClearBet, user, onPlaceBet, onCle
                       <div className="flex flex-col">
                         <span className="font-bold text-[14px] text-[#151e22]">{bet.optionLabel || bet.choice}</span>
                         <div className="flex items-center gap-1 mt-0.5 text-[11px] text-gray-500">
-                          <span>Tiền cược:</span>
+                          <span>Xu gieo quẻ:</span>
                           <span className="font-semibold text-[#151e22]">{parseFloat(bet.stake).toLocaleString()}</span>
                         </div>
                       </div>

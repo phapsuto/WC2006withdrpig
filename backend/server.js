@@ -85,12 +85,16 @@ app.listen(PORT, () => {
   try {
     const { initNewsScheduler } = require('./services/news-scheduler.service');
     const { initMatchScheduler } = require('./services/match-scheduler.service');
+    const newsletterScheduler = require('./services/newsletter-scheduler.service');
 
     initNewsScheduler();
     console.log('[Server] News Scheduler initialized ✅');
 
     initMatchScheduler();
     console.log('[Server] Match Scheduler initialized ✅');
+
+    newsletterScheduler.start();
+    console.log('[Server] Newsletter Scheduler initialized ✅');
   } catch (error) {
     console.error('[Server] Failed to init Schedulers:', error.message);
   }

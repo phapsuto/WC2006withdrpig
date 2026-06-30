@@ -54,7 +54,7 @@
 
 
 
-body {
+body, html {
   background-color: var(--color-background);
   color: var(--color-text-main);
   font-family: var(--font-sans);
@@ -62,6 +62,7 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
 }
 
 #root {
@@ -190,15 +191,23 @@ body::before {
 /* Tabular Match Row */
 .match-row-365 {
   display: grid;
-  grid-template-columns: 32px 50px 1fr auto 1fr 65px;
+  grid-template-columns: 32px 45px 1fr auto 1fr 60px;
   align-items: center;
   gap: 4px;
-  padding: 8px 12px;
+  padding: 8px 8px;
   background-color: var(--365-card-surface);
   border-bottom: 1px solid #f0f0f0;
   cursor: pointer;
   transition: background-color 0.15s ease;
   min-height: 52px;
+}
+
+@media (max-width: 640px) {
+  .match-row-365 {
+    grid-template-columns: 24px 40px minmax(0, 1fr) auto minmax(0, 1fr) 50px;
+    gap: 2px;
+    padding: 8px 4px;
+  }
 }
 
 .match-row-365:hover {
@@ -217,6 +226,12 @@ body::before {
   text-align: center;
 }
 
+@media (max-width: 640px) {
+  .m-status {
+    font-size: 10px;
+  }
+}
+
 .m-status.live {
   color: var(--365-danger);
 }
@@ -228,6 +243,16 @@ body::before {
   font-size: 14px;
   font-weight: 500;
   color: var(--365-text-main);
+  min-width: 0; /* Important for flex children truncation */
+}
+
+@media (max-width: 640px) {
+  .m-team {
+    font-size: 12px;
+    gap: 4px;
+    text-align: center;
+    line-height: 1.2;
+  }
 }
 
 .m-team.home {
@@ -235,15 +260,38 @@ body::before {
   text-align: right;
 }
 
+@media (max-width: 640px) {
+  .m-team.home {
+    flex-direction: column-reverse;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
 .m-team.away {
   justify-content: flex-start;
   text-align: left;
+}
+
+@media (max-width: 640px) {
+  .m-team.away {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
 }
 
 .m-logo {
   width: 24px;
   height: 24px;
   object-fit: contain;
+}
+
+@media (max-width: 640px) {
+  .m-logo {
+    width: 22px;
+    height: 22px;
+  }
 }
 
 .m-score {
@@ -253,8 +301,16 @@ body::before {
   font-size: 16px;
   font-weight: 600;
   color: var(--365-text-main);
-  min-width: 60px;
-  padding: 0 8px;
+  min-width: 40px;
+  padding: 0 4px;
+}
+
+@media (max-width: 640px) {
+  .m-score {
+    font-size: 14px;
+    min-width: 32px;
+    padding: 0 2px;
+  }
 }
 
 .m-score.live {

@@ -295,7 +295,7 @@ export default function MatchList({ groupedMatches = { popular: [], countries: [
         </div>
 
         <div className="m-team home">
-          <span className={match.status === 'FINISHED' && match.homeScore > match.awayScore ? 'font-semibold truncate' : 'truncate'}>{homeName}</span>
+          <span className={match.status === 'FINISHED' && match.homeScore > match.awayScore ? 'font-semibold line-clamp-2 sm:truncate' : 'line-clamp-2 sm:truncate'}>{homeName}</span>
           <img src={match.home.flag !== 'xx' ? `https://flagcdn.com/w40/${match.home.flag}.png` : 'https://www.svgrepo.com/show/475656/google-color.svg'} alt={homeName} className="m-logo shrink-0" />
         </div>
 
@@ -305,7 +305,7 @@ export default function MatchList({ groupedMatches = { popular: [], countries: [
 
         <div className="m-team away">
           <img src={match.away.flag !== 'xx' ? `https://flagcdn.com/w40/${match.away.flag}.png` : 'https://www.svgrepo.com/show/475656/google-color.svg'} alt={awayName} className="m-logo shrink-0" />
-          <span className={match.status === 'FINISHED' && match.awayScore > match.homeScore ? 'font-semibold truncate' : 'truncate'}>{awayName}</span>
+          <span className={match.status === 'FINISHED' && match.awayScore > match.homeScore ? 'font-semibold line-clamp-2 sm:truncate' : 'line-clamp-2 sm:truncate'}>{awayName}</span>
         </div>
 
         <div className="flex flex-col items-center justify-center pl-1 border-l border-gray-100">
@@ -491,7 +491,7 @@ export default function MatchList({ groupedMatches = { popular: [], countries: [
                 <div className="flex justify-between items-center pb-2 border-b border-gray-50">
                   <span className="text-[12px] font-semibold text-[#151e22] flex items-center gap-1.5 uppercase tracking-wide">
                     <img src="/drpig_logo.png" alt="Heo Hồng" className="w-4 h-4" />
-                    Hiệu suất Dự đoán AI
+                    Độ chuẩn xác của Heo Hồng
                   </span>
                   <span className="text-[10px] text-gray-400 font-medium bg-gray-50 px-2 py-0.5 rounded border border-gray-100">
                     Heo Hồng AI
@@ -510,7 +510,7 @@ export default function MatchList({ groupedMatches = { popular: [], countries: [
                   
                   <div className="flex-1 min-w-0">
                     <div className="text-[13px] font-bold text-[#151e22] mb-1">
-                      {t('aiAccuracyText', { correct: correctCount, total: finishedMatches.length }) || `Dự đoán đúng ${correctCount}/${finishedMatches.length} trận`}
+                      {t('aiAccuracyText', { correct: correctCount, total: finishedMatches.length }) || `Gieo quẻ trúng ${correctCount}/${finishedMatches.length} trận`}
                     </div>
                     <div className="text-[11px] text-[#6b7173] leading-relaxed">
                       Kết quả được đối chiếu tự động giữa phân tích nhận định AI và tỷ số thực tế sau khi trận đấu kết thúc.

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { TEAMS } from '../services/simulator';
 import { useLanguage } from '../utils/LanguageContext';
-import { Trophy, Wallet, Star, Heart, History, LogOut, Activity, Percent, ArrowRight, Settings, User as UserIcon, Lock, Camera } from 'lucide-react';
+import { Trophy, Wallet, Star, Heart, History, LogOut, Activity, Percent, ArrowRight, Settings, User as UserIcon, Lock, Camera, Gift, Share2 } from 'lucide-react';
 import { Button, Card, Tabs, Tag, Statistic, Row, Col, Avatar, List, Typography, Empty, Form, Input, Alert } from 'antd';
 import { backendClient } from '../services/backendClient';
 
@@ -11,6 +11,7 @@ export default function Profile({ user, onLogout, onSelectMatch, matches, onTogg
   const [profileError, setProfileError] = useState('');
   const [form] = Form.useForm();
   const { t } = useLanguage();
+  const [isSharing, setIsSharing] = useState(false);
 
   const [userBets, setUserBets] = useState([]);
 
@@ -95,10 +96,53 @@ export default function Profile({ user, onLogout, onSelectMatch, matches, onTogg
     }
   };
 
-
+  const handleShareReward = async () => {
+    setIsSharing(true);
+    // Open share window
+    const shareUrl = encodeURIComponent(window.location.origin);
+    const quote = encodeURIComponent('Chơi Gieo Quẻ mùa World Cup cùng Heo Hồng! 🐷💖');
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}&quote=${quote}`, '_blank', 'width=600,height=400');
+    
+    try {
+      const res = await backendClient.claimShareReward();
+      if (res.success) {
+        setUser({ ...user, balance: res.balance, hasSharedForReward: true });
+        setProfileSuccess('Heo Hồng đã chuyển 1,000 Xu vào túi bạn! Cảm ơn bạn đã lan toả yêu thương 🐷💖');
+      }
+    } catch (err) {
+      setProfileError(err.response?.data?.message || 'Có lỗi khi nhận thưởng.');
+    } finally {
+      setIsSharing(false);
+    }
+  };
 
   return (
     <div className="w-full max-w-[1200px] mx-auto py-6 px-2 md:px-6">
+      
+      {!user.hasSharedForReward && (
+        <div className="mb-6 bg-gradient-to-r from-[#ea4c89]/10 to-[#ff8c42]/10 border border-[#ea4c89]/20 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between shadow-sm">
+          <div className="flex items-center gap-3 mb-3 sm:mb-0">
+            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm text-[#ea4c89]">
+              <Gift size={20} />
+            </div>
+            <div>
+              <h3 className="text-[15px] font-bold text-gray-800 m-0">Lan toả Heo Hồng - Nhận nóng 1,000 Xu!</h3>
+              <p className="text-[13px] text-gray-500 m-0">Chia sẻ website để ủng hộ Heo Hồng và nhận ngay lộc lá nhé 🎁</p>
+            </div>
+          </div>
+          <Button 
+            type="primary" 
+            icon={<Share2 size={16} />} 
+            onClick={handleShareReward}
+            loading={isSharing}
+            style={{ backgroundColor: '#ea4c89', border: 'none', borderRadius: 8, fontWeight: 'bold', height: 40 }}
+            className="shadow-md hover:shadow-lg w-full sm:w-auto"
+          >
+            Chia sẻ ngay
+          </Button>
+        </div>
+      )}
+
       <Row gutter={[24, 24]}>
         {/* Left Column: Profile Card */}
         <Col xs={24} md={8} lg={6}>
@@ -334,7 +378,7 @@ export default function Profile({ user, onLogout, onSelectMatch, matches, onTogg
                                     color={isPending ? 'processing' : isWon ? 'success' : isRefund ? 'default' : 'error'}
                                     className="m-0 rounded border-none font-medium"
                                   >
-                                    {isWon ? t('statusWon') : isLost ? t('statusLost') : isRefund ? 'HOÀ CƯỢC' : t('statusPending')}
+                                    {isWon ? t('statusWon') : isLost ? t('statusLost') : isRefund ? 'HOÀ XU' : t('statusPending')}
                                   </Tag>
                                 </div>
                                 
